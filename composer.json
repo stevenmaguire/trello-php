@@ -1,0 +1,40 @@
+{
+    "name" : "trello/trello-php",
+    "description" : "PHP wrapper for Trello API",
+    "keywords" : ["trello","php","client","wrapper","trello gold"],
+    "homepage" : "http://github.com/stevenmaguire/trello-php",
+    "license" : "GPL-3.0",
+    "authors" : [
+        {
+            "name" : "Steven Maguire",
+            "email" : "stevenmaguire@gmail.com",
+            "homepage" : "http://stevenmaguire.com",
+            "role" : "Developer"
+        }
+    ],
+    "require" : {
+        "php": ">=5.4.1",
+        "ext-curl": "*",
+        "ext-dom": "*",
+        "ext-hash": "*",
+        "ext-openssl": "*",
+        "ext-simplexml": "*",
+        "ext-xmlwriter": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/Trello.php",
+            "src/Trello"
+        ],
+        "files": [
+            ".environment.php"
+        ],
+        "psr-0": {
+            "Trello\\": "src/",
+            "Trello_": "src/"
+        }
+    }
+}
