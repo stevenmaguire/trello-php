@@ -1,5 +1,5 @@
 {
-    "name" : "trello/trello-php",
+    "name" : "stevenmaguire/trello-php",
     "description" : "PHP wrapper for Trello API",
     "keywords" : ["trello","php","client","wrapper","trello gold"],
     "homepage" : "http://github.com/stevenmaguire/trello-php",

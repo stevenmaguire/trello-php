@@ -54,6 +54,20 @@ abstract class Trello_Model
      * @param array $params
      * @return mixed
      */
+    protected static function _doFetch($url, $params = [])
+    {
+        $response = Trello_Http::get($url, $params);
+        return self::factory($response);
+    }
+
+    /**
+     * sends the create request to the gateway
+     *
+     * @ignore
+     * @param string $url
+     * @param array $params
+     * @return mixed
+     */
     protected static function _doSearch($keyword = null, $params = [])
     {
         $params['query'] = $keyword;
