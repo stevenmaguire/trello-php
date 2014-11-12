@@ -34,7 +34,7 @@ class Trello_Http
         $responseCode = $response['status'];
         if($responseCode === 200 || $responseCode === 201 || $responseCode === 422) {
             $object = Trello_Json::buildObjectFromJson($response['body']);
-            return $object
+            return $object;
         } else {
             Trello_Util::throwStatusCodeException($responseCode);
         }
@@ -46,7 +46,7 @@ class Trello_Http
         $responseCode = $response['status'];
         if($responseCode === 200 || $responseCode === 201 || $responseCode === 422) {
             $object = Trello_Json::buildObjectFromJson($response['body']);
-            return $object
+            return $object;
         } else {
             Trello_Util::throwStatusCodeException($responseCode);
         }
