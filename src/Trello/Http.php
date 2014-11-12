@@ -60,7 +60,8 @@ class Trello_Http
 
     private static function _includeKeyInUrl($url)
     {
-        if (!empty(Trello_Configuration::key())) {
+        $key = Trello_Configuration::key();
+        if (!empty($key)) {
             if (strpos($url, '?') !== false) {
                 if (substr($url, -1) != '?') {
                     $url .= '&';
@@ -70,7 +71,9 @@ class Trello_Http
             }
             $url .= 'key='.Trello_Configuration::key();
         }
-        if (!empty(Trello_Configuration::token())) {
+
+        $token = Trello_Configuration::token();
+        if (!empty($token)) {
             if (strpos($url, '?') !== false) {
                 if (substr($url, -1) != '?') {
                     $url .= '&';
