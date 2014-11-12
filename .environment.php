@@ -1,9 +1,9 @@
 <?php
 
 $GLOBALS['trello_test_config'] = array(
-    'environment' => 'development',
-    'key' => '',
-    'secret' => '',
-    'token' => '',
-    'app_name' => 'Trello PHP Test'
+    'environment' => getenv('TRELLO_API_ENVIRONMENT') ?: 'qa',
+    'key' => getenv('TRELLO_API_KEY') ?: '',
+    'secret' => getenv('TRELLO_API_SECRET') ?: '',
+    'token' => getenv('TRELLO_API_TOKEN') ?: '',
+    'app_name' => getenv('TRELLO_API_APPNAME') ?: 'Trello PHP Test'
 );
