@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/stevenmaguire/trello-php.svg?branch=develop)](https://travis-ci.org/stevenmaguire/trello-php)
+
 Trello API Client for PHP
 ==========
 
