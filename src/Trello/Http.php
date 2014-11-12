@@ -21,7 +21,8 @@ class Trello_Http
     {
         $response = self::_doRequest('GET', $path);
         if($response['status'] === 200) {
-            return Trello_Json::buildObjectFromJson($response['body']);
+            $object = Trello_Json::buildObjectFromJson($response['body']);
+            return $object;
         } else {
             Trello_Util::throwStatusCodeException($response['status']);
         }
@@ -32,7 +33,8 @@ class Trello_Http
         $response = self::_doRequest('POST', $path, self::_buildJson($params));
         $responseCode = $response['status'];
         if($responseCode === 200 || $responseCode === 201 || $responseCode === 422) {
-            return Trello_Json::buildObjectFromJson($response['body']);
+            $object = Trello_Json::buildObjectFromJson($response['body']);
+            return $object
         } else {
             Trello_Util::throwStatusCodeException($responseCode);
         }
@@ -43,7 +45,8 @@ class Trello_Http
         $response = self::_doRequest('PUT', $path, self::_buildJson($params));
         $responseCode = $response['status'];
         if($responseCode === 200 || $responseCode === 201 || $responseCode === 422) {
-            return Trello_Json::buildObjectFromJson($response['body']);
+            $object = Trello_Json::buildObjectFromJson($response['body']);
+            return $object
         } else {
             Trello_Util::throwStatusCodeException($responseCode);
         }
@@ -51,7 +54,8 @@ class Trello_Http
 
     private static function _buildJson($params)
     {
-        return empty($params) ? null : Trello_Json::buildJsonFromArray($params);
+        $json = empty($params) ? null : Trello_Json::buildJsonFromArray($params);
+        return $json;
     }
 
     private static function _includeKeyInUrl($url)
@@ -81,7 +85,8 @@ class Trello_Http
 
     private static function _doRequest($httpVerb, $path, $requestBody = null)
     {
-        return self::_doUrlRequest($httpVerb, Trello_Configuration::serviceUrl() . self::_includeKeyInUrl($path) , $requestBody);
+        $response = self::_doUrlRequest($httpVerb, Trello_Configuration::serviceUrl() . self::_includeKeyInUrl($path) , $requestBody);
+        return $response;
     }
 
     public static function _doUrlRequest($httpVerb, $url, $requestBody = null)
