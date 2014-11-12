@@ -8,4 +8,10 @@
  */
 class Trello_Exception extends Exception
 {
+    public function __construct($message = "", $code = 0, $previous = null)
+    {
+        if (!empty($message)) {
+            Trello_Configuration::logMessage($message);
+        }
+    }
 }

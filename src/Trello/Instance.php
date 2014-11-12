@@ -59,7 +59,7 @@ abstract class Trello_Instance
     }
     /**
      * initializes instance properties from the keys/values of an array
-     * @ignore
+     * @codeCoverageIgnore
      * @access protected
      * @param <type> $aAttribs array of properties to set - single level
      * @return none

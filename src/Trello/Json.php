@@ -9,7 +9,7 @@
 final class Trello_Json
 {
     /**
-     * @ignore
+     * @codeCoverageIgnore
      */
     protected function  __construct()
     {

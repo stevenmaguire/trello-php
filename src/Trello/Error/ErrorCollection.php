@@ -90,7 +90,7 @@ class Trello_Error_ErrorCollection
 
     /**
      *
-     * @ignore
+     * @codeCoverageIgnore
      */
     public function  __get($name)
     {
@@ -100,7 +100,7 @@ class Trello_Error_ErrorCollection
 
     /**
      *
-     * @ignore
+     * @codeCoverageIgnore
      */
     public function  __toString()
     {

@@ -22,14 +22,14 @@ set_include_path(
 abstract class Trello
 {
     /**
-     * @ignore
+     * @codeCoverageIgnore
      * don't permit an explicit call of the constructor!
      */
     protected function __construct()
     {
     }
     /**
-     * @ignore
+     * @codeCoverageIgnore
      *  don't permit cloning the instances (like $x = clone $v)
      */
     protected function __clone()
@@ -38,7 +38,7 @@ abstract class Trello
 
     /**
      * returns private/nonexistent instance properties
-     * @ignore
+     * @codeCoverageIgnore
      * @access public
      * @param string $name property name
      * @return mixed contents of instance properties
@@ -55,6 +55,7 @@ abstract class Trello
     }
 
     /**
+     * @codeCoverageIgnore
      * used by isset() and empty()
      * @access public
      * @param string $name property name
@@ -65,13 +66,19 @@ abstract class Trello
         return array_key_exists($name, $this->_attributes);
     }
 
+    /**
+     * @codeCoverageIgnore
+     *
+     * @param [type] $key   [description]
+     * @param [type] $value [description]
+     */
     public function _set($key, $value)
     {
         $this->_attributes[$key] = $value;
     }
 
     /**
-     *
+     * @codeCoverageIgnore
      * @param string $className
      * @param object $resultObj
      * @return object returns the passed object if successful
@@ -125,7 +132,7 @@ require_once('Trello/Xml/Generator.php');
 require_once('Trello/Xml/Parser.php');
 
 if (version_compare(PHP_VERSION, '5.4.1', '<')) {
-    throw new Trello_Exception('PHP version >= 5.4.1 required');
+    throw new Trello_Exception('PHP version >= 5.4.1 required'); // @codeCoverageIgnore
 }
 
 
@@ -133,7 +140,7 @@ function requireDependencies() {
     $requiredExtensions = array('xmlwriter', 'SimpleXML', 'openssl', 'dom', 'hash', 'curl');
     foreach ($requiredExtensions AS $ext) {
         if (!extension_loaded($ext)) {
-            throw new Trello_Exception('The Trello library requires the ' . $ext . ' extension.');
+            throw new Trello_Exception('The Trello library requires the ' . $ext . ' extension.'); // @codeCoverageIgnore
         }
     }
 }

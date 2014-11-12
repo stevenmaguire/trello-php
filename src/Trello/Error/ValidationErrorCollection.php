@@ -19,7 +19,7 @@ class Trello_Error_ValidationErrorCollection extends Trello_Collection
     private $_nested = [];
 
     /**
-     * @ignore
+     * @codeCoverageIgnore
      */
     public function  __construct($data)
     {
@@ -84,7 +84,7 @@ class Trello_Error_ValidationErrorCollection extends Trello_Collection
 
     /**
      *
-     * @ignore
+     * @codeCoverageIgnore
      */
     public function  __get($name)
     {
@@ -93,7 +93,7 @@ class Trello_Error_ValidationErrorCollection extends Trello_Collection
     }
 
     /**
-     * @ignore
+     * @codeCoverageIgnore
      */
     public function __toString()
     {
@@ -112,7 +112,7 @@ class Trello_Error_ValidationErrorCollection extends Trello_Collection
     }
 
     /**
-     * @ignore
+     * @codeCoverageIgnore
      */
     private function _inspect($errors, $scope = null)
     {

@@ -1,6 +1,6 @@
 <?php
 
-class Http_Test extends TestCase
+class Http_Test extends IntegrationTestCase
 {
     protected $username = 'stevenmaguire';
     protected $board_name = 'icanhasdevelopmentenvironment';

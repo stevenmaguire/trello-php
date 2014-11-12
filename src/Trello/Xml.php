@@ -9,7 +9,7 @@
 final class Trello_Xml
 {
     /**
-     * @ignore
+     * @codeCoverageIgnore
      */
     protected function  __construct()
     {

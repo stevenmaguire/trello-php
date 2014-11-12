@@ -54,11 +54,7 @@ class Trello_Board extends Trello_Model
     {
         $filters['modelTypes'] = 'boards';
         $results = self::_doSearch($keyword, $filters);
-        if (array_key_exists('boards', $results)) {
-            return new Trello_Collection($results->boards);
-        } else {
-            throw new Trello_Exception_DownForMaintenance();
-        }
+        return new Trello_Collection($results->boards);
     }
 
     /**
@@ -79,16 +75,27 @@ class Trello_Board extends Trello_Model
     }
 
     /**
-     * close a board
+     * close a board by board id
      *
      * @param  string $board_id Board id to close
-     * @return bool  Newly minted trello board
+     * @return bool  Did the board close?
      * @throws Trello_Exception_ValidationsFailed
      */
-    public static function close($board_id = null)
+    public static function closeBoard($board_id = null)
     {
         $result = Trello_Http::put('/boards/'.$board_id.'/closed', ['value' => true]);
         return $result->closed;
+    }
+
+    /**
+     * close current board
+     *
+     * @return bool  Did the board close?
+     * @throws Trello_Exception_ValidationsFailed
+     */
+    public function close()
+    {
+        return self::closeBoard($this->id);
     }
 
     /**
@@ -139,9 +146,9 @@ class Trello_Board extends Trello_Model
      * @return array List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
-    protected function addPowerUp($powerup = null)
+    public function addPowerUp($powerup = null)
     {
-        if ($powerup && preg_match('/voting|cardAging|calendar|recap/', $powerup)) {
+        if (preg_match('/voting|cardAging|calendar|recap/', $powerup)) {
             return Trello_Http::post('/boards/'.$this->id.'/powerUps', ['value' => $powerup]);
         }
         throw new Trello_Exception_ValidationsFailed(
@@ -156,7 +163,7 @@ class Trello_Board extends Trello_Model
      * @return array List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
-    protected function removePowerUp($powerup = null)
+    public function removePowerUp($powerup = null)
     {
         if ($powerup && preg_match('/voting|cardAging|calendar|recap/', $powerup)) {
             return Trello_Http::delete('/boards/'.$this->id.'/powerUps/'.$powerup);

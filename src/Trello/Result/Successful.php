@@ -37,7 +37,7 @@ class Trello_Result_Successful extends Trello_Instance
     private $_returnObjectName;
 
     /**
-     * @ignore
+     * @codeCoverageIgnore
      * @param string $classToReturn name of class to instantiate
      */
     public function __construct($objToReturn = null, $propertyName = null)
@@ -62,7 +62,7 @@ class Trello_Result_Successful extends Trello_Instance
 
    /**
     *
-    * @ignore
+    * @codeCoverageIgnore
     * @return string string representation of the object's structure
     */
    public function __toString()

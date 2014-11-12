@@ -22,7 +22,7 @@ abstract class Trello_Model
      *  factory method: returns an instance of Trello_Model
      *  to the requesting method, with populated properties
      *
-     * @ignore
+     * @codeCoverageIgnore
      * @return object instance of Trello_Model
      */
     public static function factory($response = null)
@@ -35,7 +35,7 @@ abstract class Trello_Model
     /**
      * sends the create request to the gateway
      *
-     * @ignore
+     * @codeCoverageIgnore
      * @param string $url
      * @param array $params
      * @return mixed
@@ -49,7 +49,7 @@ abstract class Trello_Model
     /**
      * sends the create request to the gateway
      *
-     * @ignore
+     * @codeCoverageIgnore
      * @param string $url
      * @param array $params
      * @return mixed
@@ -63,7 +63,7 @@ abstract class Trello_Model
     /**
      * sends the create request to the gateway
      *
-     * @ignore
+     * @codeCoverageIgnore
      * @param string $url
      * @param array $params
      * @return mixed

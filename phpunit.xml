@@ -37,10 +37,4 @@
             </exclude>
         </whitelist>
     </filter>
-    <php>
-        <env name="TRELLO_API_ENVIRONMENT" value=""/>
-        <env name="TRELLO_API_KEY" value=""/>
-        <env name="TRELLO_API_SECRET" value=""/>
-        <env name="TRELLO_API_TOKEN" value=""/>
-    </php>
 </phpunit>

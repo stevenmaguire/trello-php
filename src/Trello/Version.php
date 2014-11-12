@@ -15,7 +15,7 @@ final class Trello_Version
     const TINY = 0;
 
     /**
-     * @ignore
+     * @codeCoverageIgnore
      * @access protected
      */
     protected function  __construct()

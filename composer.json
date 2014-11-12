@@ -28,7 +28,8 @@
     "autoload": {
         "classmap": [
             "src/Trello.php",
-            "src/Trello"
+            "src/Trello",
+            "tests"
         ],
         "files": [
             ".environment.php"

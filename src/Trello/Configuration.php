@@ -40,7 +40,7 @@ class Trello_Configuration extends Trello
                     'development',
                     'sandbox',
                     'production',
-                    'qa',
+                    'qa'
                     ];
 
     /**
@@ -62,7 +62,7 @@ class Trello_Configuration extends Trello
     /**
      * performs sanity checks when config settings are being set
      *
-     * @ignore
+     * @codeCoverageIgnore
      * @access protected
      * @param string $key name of config setting
      * @param string $value value to set
@@ -74,22 +74,30 @@ class Trello_Configuration extends Trello
     private static function validate($key=null, $value=null)
     {
         if (empty($key) && empty($value)) {
-             throw new InvalidArgumentException('nothing to validate');
+            // @codeCoverageIgnoreStart
+            throw new InvalidArgumentException('nothing to validate');
+            // @codeCoverageIgnoreEnd
         }
 
         if ($key === 'environment' &&
            !in_array($value, self::$_validEnvironments) ) {
+            // @codeCoverageIgnoreStart
             throw new Trello_Exception_Configuration('"' .
                                     $value . '" is not a valid environment.');
+            // @codeCoverageIgnoreEnd
         }
 
         if (!isset(self::$_cache[$key])) {
-             throw new Trello_Exception_Configuration($key .
+             // @codeCoverageIgnoreStart
+            throw new Trello_Exception_Configuration($key .
                                     ' is not a valid configuration setting.');
+             // @codeCoverageIgnoreEnd
         }
 
         if (empty($value)) {
-             throw new InvalidArgumentException($key . ' cannot be empty.');
+            // @codeCoverageIgnoreStart
+            throw new InvalidArgumentException($key . ' cannot be empty.');
+            // @codeCoverageIgnoreEnd
         }
 
         return true;
@@ -109,9 +117,11 @@ class Trello_Configuration extends Trello
         // throw an exception if the value hasn't been set
         if (isset(self::$_cache[$key]) &&
            (empty(self::$_cache[$key]))) {
+            // @codeCoverageIgnoreStart
             throw new Trello_Exception_Configuration(
                       $key.' needs to be set.'
                       );
+            // @codeCoverageIgnoreEnd
         }
 
         if (array_key_exists($key, self::$_cache)) {
@@ -119,7 +129,7 @@ class Trello_Configuration extends Trello
         }
 
         // return null by default to prevent __set from overloading
-        return null;
+        return null; // @codeCoverageIgnore
     }
 
 
@@ -210,33 +220,6 @@ class Trello_Configuration extends Trello
     }
 
     /**
-     * sets the physical path for the location of the CA certs
-     *
-     * @access public
-     * @static
-     * @param none
-     * @return string filepath
-     */
-
-    public static function caFile($sslPath = NULL)
-    {
-        $sslPath = $sslPath ? $sslPath : DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR .
-                   'ssl' . DIRECTORY_SEPARATOR;
-
-        $caPath = realpath(
-            dirname(__FILE__) .
-            $sslPath .  'api_trello_com.ca.crt'
-        );
-
-        if (!file_exists($caPath))
-        {
-            throw new Braintree_Exception_SSLCaFileNotFound();
-        }
-
-        return $caPath;
-    }
-
-    /**
      * returns http protocol depending on environment
      *
      * @access public
@@ -246,7 +229,7 @@ class Trello_Configuration extends Trello
      */
     public static function protocol()
     {
-        return self::sslOn() ? 'https' : 'http';
+        return 'https';
     }
 
     /**
@@ -272,60 +255,16 @@ class Trello_Configuration extends Trello
         return $serverName;
     }
 
-    public static function authUrl()
-    {
-        switch(self::environment()) {
-         case 'production':
-             $serverName = 'https://auth.venmo.com';
-             break;
-         case 'qa':
-             $serverName = 'https://auth.qa.venmo.com';
-             break;
-         case 'sandbox':
-             $serverName = 'https://auth.sandbox.venmo.com';
-             break;
-         case 'development':
-         default:
-             $serverName = 'http://auth.venmo.dev:9292';
-             break;
-        }
-
-        return $serverName;
-    }
-
-    /**
-     * returns boolean indicating SSL is on or off for this session,
-     * depending on environment
-     *
-     * @access public
-     * @static
-     * @param none
-     * @return boolean
-     */
-    public static function sslOn()
-    {
-        switch(self::environment()) {
-         case 'development':
-         case 'production':
-         case 'qa':
-         case 'sandbox':
-         default:
-             $ssl = true;
-             break;
-        }
-
-       return $ssl;
-    }
-
     /**
      * log message to default logger
      *
      * @param string $message
-     *
+     * @codeCoverageIgnore
      */
     public static function logMessage($message)
     {
-        error_log('[Trello] ' . $message);
+        if (self::environment() != 'qa') {
+            error_log('[Trello] ' . $message);
+        }
     }
-
 }

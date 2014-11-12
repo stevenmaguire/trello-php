@@ -8,6 +8,7 @@
  */
 class Trello_Authorization extends Trello
 {
+    /*
     public static function readOnly($forever = false)
     {
         $signature = Trello_Util::makeQueryStringFromArray([
@@ -28,4 +29,5 @@ class Trello_Authorization extends Trello
         ]);
         return Trello_Http::get('/authorize?'.$signature);
     }
+    */
 }

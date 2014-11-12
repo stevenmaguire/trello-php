@@ -1,6 +1,6 @@
 <?php
 
-class Board_Test extends TestCase
+class Board_Test extends IntegrationTestCase
 {
     protected $board_name = 'Hank Hill';
     protected $board_description = 'The patriarch of the Arlen, TX community.';
@@ -67,11 +67,32 @@ class Board_Test extends TestCase
     /**
      * @depends test_It_Can_Get_A_Board
      */
+    public function test_It_Can_Add_A_Checklist_With_A_Name($board)
+    {
+        $result = $board->addChecklist($this->checklist_name);
+
+        $this->assertEquals('Trello_Checklist', get_class($result));
+        $this->assertEquals($this->checklist_name, $result->name);
+    }
+
+    /**
+     * @depends test_It_Can_Get_A_Board
+     * @expectedException Trello_Exception_ValidationsFailed
+     */
+    public function test_It_Can_Not_Add_A_Checklist_Without_A_Name($board)
+    {
+        $result = $board->addChecklist();
+    }
+
+    /**
+     * @depends test_It_Can_Get_A_Board
+     */
     public function test_It_Can_Add_A_List_With_A_Name($board)
     {
         $result = $board->addList($this->list_name);
 
         $this->assertEquals('Trello_List', get_class($result));
+        $this->assertEquals($this->list_name, $result->name);
     }
 
     /**
@@ -80,7 +101,59 @@ class Board_Test extends TestCase
      */
     public function test_It_Can_Not_Add_A_List_Without_A_Name($board)
     {
-        $result = $board->addChecklist();
+        $result = $board->addList();
+    }
+
+    /**
+     * @depends test_It_Can_Get_A_Board
+     */
+    public function test_It_Can_Add_A_List_With_A_Name_And_Position($board)
+    {
+        $result = $board->addList($this->list_name, 1);
+
+        $this->assertEquals('Trello_List', get_class($result));
+        $this->assertEquals($this->list_name, $result->name);
+    }
+
+    /**
+     * @depends test_It_Can_Get_A_Board
+     */
+    public function test_It_Can_Add_Powerup_With_Valid_Powerup_Name($board)
+    {
+        $powerup = 'cardAging';
+        $result = $board->addPowerUp($powerup);
+
+        $this->assertEquals('array', gettype($result));
+        $this->assertContains($powerup, $result);
+    }
+
+    /**
+     * @depends test_It_Can_Get_A_Board
+     * @expectedException Trello_Exception_ValidationsFailed
+     */
+    public function test_It_Can_Not_Add_Powerup_Without_Valid_Powerup_Name($board)
+    {
+        $result = $board->addPowerUp();
+    }
+
+    /**
+     * @depends test_It_Can_Get_A_Board
+     */
+    public function test_It_Can_Remove_Powerup_With_Valid_Powerup_Name($board)
+    {
+        $powerup = 'cardAging';
+        $result = $board->removePowerUp($powerup);
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @depends test_It_Can_Get_A_Board
+     * @expectedException Trello_Exception_ValidationsFailed
+     */
+    public function test_It_Can_Not_Remove_Powerup_Without_Valid_Powerup_Name($board)
+    {
+        $result = $board->removePowerUp();
     }
 
     /**
@@ -175,7 +248,6 @@ class Board_Test extends TestCase
         $this->assertTrue($result);
     }
 
-
     /**
      * @depends test_It_Can_Get_A_Board
      */
@@ -206,21 +278,49 @@ class Board_Test extends TestCase
         $this->assertNotNull($result);
     }
 
-    public function test_It_Can_Search_Boards()
+    public function test_It_Can_Search_Boards_With_Valid_Keyword()
     {
-        $results = Trello_Board::search($this->board_name);
+        $keyword = $this->board_name;
+
+        $results = Trello_Board::search($keyword);
 
         $this->assertEquals('Trello_Collection', get_class($results));
         return $results;
     }
 
+    public function test_It_Can_Search_Boards_With_Valid_Keyword_And_No_Results()
+    {
+        $keyword = uniqid();
+
+        $results = Trello_Board::search($keyword);
+
+        $this->assertEquals('Trello_Collection', get_class($results));
+    }
+
     /**
-     * @depends test_It_Can_Search_Boards
+     * @expectedException Trello_Exception_Unexpected
      */
-    public function test_It_Can_Close_A_Board($boards)
+    public function test_It_Can_Not_Search_Boards_Without_Valid_Keyword()
+    {
+        $results = Trello_Board::search();
+    }
+
+    /**
+     * @depends test_It_Can_Get_A_Board
+     */
+    public function test_It_Can_Close_A_Current_Board($board)
+    {
+        $result = $board->close();
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @depends test_It_Can_Search_Boards_With_Valid_Keyword
+     */
+    public function test_It_Can_Close_A_Specific_Board($boards)
     {
         foreach ($boards as $board) {
-            $result = Trello_Board::close($board->id);
+            $result = Trello_Board::closeBoard($board->id);
             $this->assertTrue($result);
         }
     }

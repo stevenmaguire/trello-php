@@ -59,7 +59,7 @@ class Trello_Result_Error extends Trello
 
    /**
     * overrides default constructor
-    * @ignore
+    * @codeCoverageIgnore
     * @param array $response gateway response array
     */
    public function  __construct($response)
@@ -95,7 +95,7 @@ class Trello_Result_Error extends Trello
    /**
      * create a printable representation of the object as:
      * ClassName[property=value, property=value]
-     * @ignore
+     * @codeCoverageIgnore
      * @return var
      */
     public function  __toString()

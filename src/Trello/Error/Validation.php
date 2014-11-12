@@ -22,7 +22,7 @@ class Trello_Error_Validation
    private $_message;
 
     /**
-     * @ignore
+     * @codeCoverageIgnore
      * @param array $attributes
      */
     public function  __construct($attributes)
@@ -31,7 +31,7 @@ class Trello_Error_Validation
     }
     /**
      * initializes instance properties from the keys/values of an array
-     * @ignore
+     * @codeCoverageIgnore
      * @access protected
      * @param array $attributes array of properties to set - single level
      * @return none
@@ -46,7 +46,7 @@ class Trello_Error_Validation
 
     /**
      *
-     * @ignore
+     * @codeCoverageIgnore
      */
     public function  __get($name)
     {
