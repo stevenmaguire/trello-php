@@ -3,7 +3,7 @@
     "description" : "PHP wrapper for Trello API",
     "keywords" : ["trello","php","client","wrapper","trello gold"],
     "homepage" : "http://github.com/stevenmaguire/trello-php",
-    "license" : "GPL-3.0",
+    "license" : "MIT",
     "authors" : [
         {
             "name" : "Steven Maguire",
