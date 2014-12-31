@@ -11,7 +11,8 @@ abstract class Trello_Model
      *
      * @access protected
      * @param array $creditCardAttribs array of creditcard data
-     * @return none
+     *
+     * @return object Initialized object
      */
     protected function _initialize($response = null)
     {
@@ -56,7 +57,7 @@ abstract class Trello_Model
      */
     protected static function _doFetch($url, $params = [])
     {
-        $response = Trello_Http::get($url, $params);
+        $response = Trello_Http::get($url);
         return self::factory($response);
     }
 

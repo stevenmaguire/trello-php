@@ -29,7 +29,7 @@ class Trello_Xml_Generator
         // open the root element
         $writer->startElement(Trello_Util::camelCaseToDelimiter($rootElementName));
         // create the body
-        self::_createElementsFromArray($writer, $aData[$rootElementName], $rootElementName);
+        self::_createElementsFromArray($writer, $aData[$rootElementName]);
 
         // close the root element and document
         $writer->endElement();
@@ -120,19 +120,5 @@ class Trello_Xml_Generator
     {
         $dateTime->setTimeZone(new DateTimeZone('UTC'));
         return ($dateTime->format('Y-m-d\TH:i:s') . 'Z');
-    }
-
-    private static function _castDateTime($string)
-    {
-        try {
-            if (empty($string)) {
-               return false;
-            }
-            $dateTime = new DateTime($string);
-            return self::_dateTimeToXmlTimestamp($dateTime);
-        } catch (Exception $e) {
-            // not a datetime
-            return false;
-        }
     }
 }

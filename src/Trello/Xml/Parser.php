@@ -45,7 +45,6 @@ class Trello_Xml_Parser
     private static function _iteratorToArray($iterator)
     {
         $xmlArray = [];
-        $value = null;
 
         // rewind the iterator and check if the position is valid
         // if not, return the string it contains
@@ -133,13 +132,10 @@ class Trello_Xml_Parser
         switch ($attribs->type) {
             case 'datetime':
                 return self::_timestampToUTC((string) $valueObj);
-                break;
             case 'date':
                 return new DateTime((string)$valueObj);
-                break;
             case 'integer':
                 return (int) $valueObj;
-                break;
             case 'boolean':
                 $value =  (string) $valueObj;
                 // look for a number inside the string
@@ -149,7 +145,6 @@ class Trello_Xml_Parser
                     // look for the string "true", return false in all other cases
                     return ($value != "true") ? FALSE : TRUE;
                 }
-                break;
             case 'array':
                 return [];
             default:

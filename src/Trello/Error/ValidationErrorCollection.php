@@ -114,7 +114,7 @@ class Trello_Error_ValidationErrorCollection extends Trello_Collection
     /**
      * @codeCoverageIgnore
      */
-    private function _inspect($errors, $scope = null)
+    private function _inspect($errors)
     {
         $eOutput = '[' . __CLASS__ . '/errors:[';
         $outputErrs = [];

@@ -56,25 +56,18 @@ class Trello_Util
         switch($statusCode) {
             case 401:
                 throw new Trello_Exception_Authentication($message);
-                break;
             case 403:
                 throw new Trello_Exception_Authorization($message);
-                break;
             case 404:
                 throw new Trello_Exception_NotFound($message);
-                break;
             case 426:
                 throw new Trello_Exception_UpgradeRequired($message);
-                break;
             case 500:
                 throw new Trello_Exception_ServerError($message);
-                break;
             case 503:
                 throw new Trello_Exception_DownForMaintenance($message);
-                break;
             default:
                 throw new Trello_Exception_Unexpected('Unexpected HTTP_RESPONSE #'.$statusCode);
-                break;
         }
     }
 
