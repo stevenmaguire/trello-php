@@ -64,6 +64,7 @@ final class Trello_Xml
                 return false;
             }
         }
+
         libxml_clear_errors();
         return true;
     }

@@ -35,20 +35,24 @@ class Trello_Xml_Parser
      */
     public static function arrayFromXml($xml)
     {
-        try  {
-            // SimpleXML provides the root information on construct
-            $iterator = new SimpleXMLIterator($xml);
-            $xmlRoot = Trello_Util::delimiterToCamelCase($iterator->getName());
-            $type = $iterator->attributes()->type;
+        if (class_exists('SimpleXMLIterator')) {
+            try {
+                // SimpleXML provides the root information on construct
+                $iterator = new SimpleXMLIterator($xml);
+                $xmlRoot = Trello_Util::delimiterToCamelCase($iterator->getName());
 
-            self::$_xmlRoot = $iterator->getName();
-            self::$_responseType = $type;
+                $type = $iterator->attributes()->type;
 
-            // return the mapped array with the root element as the header
-            return [$xmlRoot => self::_iteratorToArray($iterator)];
-        } catch (Exception $e) {
-            return [];
+                self::$_xmlRoot = $iterator->getName();
+                self::$_responseType = $type;
+
+                // return the mapped array with the root element as the header
+                return [$xmlRoot => self::_iteratorToArray($iterator)];
+            } catch (Exception $e) {
+
+            }
         }
+        return [];
     }
 
     /**
