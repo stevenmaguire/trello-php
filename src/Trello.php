@@ -38,9 +38,11 @@ abstract class Trello
 
     /**
      * returns private/nonexistent instance properties
+     *
      * @codeCoverageIgnore
      * @access public
      * @param string $name property name
+     *
      * @return mixed contents of instance properties
      */
     public function __get($name)
@@ -55,10 +57,12 @@ abstract class Trello
     }
 
     /**
-     * @codeCoverageIgnore
      * used by isset() and empty()
+     *
+     * @codeCoverageIgnore
      * @access public
      * @param string $name property name
+     *
      * @return boolean
      */
     public function __isset($name)
@@ -81,6 +85,7 @@ abstract class Trello
      * @codeCoverageIgnore
      * @param string $className
      * @param object $resultObj
+     *
      * @return object returns the passed object if successful
      * @throws Trello_Exception_ValidationsFailed
      */

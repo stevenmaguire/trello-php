@@ -23,6 +23,9 @@ final class Trello_Version
     }
 
     /**
+     * Get current configured version
+     *
+     * @access public
      *
      * @return string the current library version
      */

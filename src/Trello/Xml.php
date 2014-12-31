@@ -17,8 +17,11 @@ final class Trello_Xml
     }
 
     /**
+     * Build array from XML document
      *
+     * @access public
      * @param string $xml
+     *
      * @return array
      */
     public static function buildArrayFromXml($xml)
@@ -27,8 +30,11 @@ final class Trello_Xml
     }
 
     /**
+     * Build XML document from array
      *
+     * @access public
      * @param array $array
+     *
      * @return string
      */
     public static function buildXmlFromArray($array)
