@@ -31,7 +31,7 @@ $ phpunit
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/stevenmaguire/trello-php/blob/master/CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details. You can see the current [PROGRESS](PROGRESS.md).
 
 ## Credits
 
