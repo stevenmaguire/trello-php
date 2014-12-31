@@ -11,28 +11,44 @@
  */
 class Trello_Xml_Parser
 {
-
+    /**
+     * [$_xmlRoot description]
+     *
+     * @var [type]
+     */
     private static $_xmlRoot;
+
+    /**
+     * [$_responseType description]
+     *
+     * @var [type]
+     */
     private static $_responseType;
 
     /**
      * sets up the SimpleXMLIterator and starts the parsing
+     *
      * @access public
      * @param string $xml
+     *
      * @return array array mapped to the passed xml
      */
     public static function arrayFromXml($xml)
     {
-        // SimpleXML provides the root information on construct
-        $iterator = new SimpleXMLIterator($xml);
-        $xmlRoot = Trello_Util::delimiterToCamelCase($iterator->getName());
-        $type = $iterator->attributes()->type;
+        try  {
+            // SimpleXML provides the root information on construct
+            $iterator = new SimpleXMLIterator($xml);
+            $xmlRoot = Trello_Util::delimiterToCamelCase($iterator->getName());
+            $type = $iterator->attributes()->type;
 
-        self::$_xmlRoot = $iterator->getName();
-        self::$_responseType = $type;
+            self::$_xmlRoot = $iterator->getName();
+            self::$_responseType = $type;
 
-        // return the mapped array with the root element as the header
-        return [$xmlRoot => self::_iteratorToArray($iterator)];
+            // return the mapped array with the root element as the header
+            return [$xmlRoot => self::_iteratorToArray($iterator)];
+        } catch (Exception $e) {
+            return [];
+        }
     }
 
     /**
@@ -40,6 +56,7 @@ class Trello_Xml_Parser
      *
      * @access protected
      * @param object $iterator
+     *
      * @return array xml converted to array
      */
     private static function _iteratorToArray($iterator)
@@ -116,7 +133,9 @@ class Trello_Xml_Parser
 
     /**
      * typecast xml value based on attributes
+     *
      * @param object $valueObj SimpleXMLElement
+     *
      * @return mixed value for placing into array
      */
     private static function _typecastXmlValue($valueObj)
@@ -155,7 +174,9 @@ class Trello_Xml_Parser
 
     /**
      * convert xml timestamps into DateTime
+     *
      * @param string $timestamp
+     *
      * @return string UTC formatted datetime string
      */
     private static function _timestampToUTC($timestamp)
