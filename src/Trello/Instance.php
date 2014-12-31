@@ -9,6 +9,13 @@
 abstract class Trello_Instance
 {
     /**
+     * Attributes
+     *
+     * @property array $_attributes
+     */
+    protected $_attributes = [];
+
+    /**
      *
      * @param array $aAttribs
      */

@@ -27,11 +27,11 @@
  */
 class Trello_Result_Error extends Trello
 {
-   /**
-    *
-    * @var boolean always false
-    */
-   public $success = false;
+    /**
+     *
+     * @var boolean always false
+     */
+    public $success = false;
 
     /**
      * return original value for a field
@@ -45,6 +45,7 @@ class Trello_Result_Error extends Trello
    {
        $pieces = preg_split("/[\[\]]+/", $field, 0, PREG_SPLIT_NO_EMPTY);
        $params = $this->params;
+       $key = null;
        foreach(array_slice($pieces, 0, -1) as $key) {
            $params = $params[Trello_Util::delimiterToCamelCase($key)];
        }

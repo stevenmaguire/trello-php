@@ -57,7 +57,7 @@ abstract class Trello_Model
      */
     protected static function _doFetch($url, $params = [])
     {
-        $response = Trello_Http::get($url);
+        $response = Trello_Http::get($url. Trello_Util::makeQueryStringFromArray($params));
         return self::factory($response);
     }
 

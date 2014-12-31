@@ -22,6 +22,13 @@ set_include_path(
 abstract class Trello
 {
     /**
+     * Attributes
+     *
+     * @property array $_attributes
+     */
+    protected $_attributes = [];
+
+    /**
      * @codeCoverageIgnore
      * don't permit an explicit call of the constructor!
      */
