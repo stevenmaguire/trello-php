@@ -26,7 +26,10 @@ final class Trello_Xml
      */
     public static function buildArrayFromXml($xml)
     {
-        return Trello_Xml_Parser::arrayFromXml($xml);
+        if (self::isXml($xml)) {
+            return Trello_Xml_Parser::arrayFromXml($xml);
+        }
+        return [];
     }
 
     /**
@@ -40,5 +43,28 @@ final class Trello_Xml
     public static function buildXmlFromArray($array)
     {
         return Trello_Xml_Generator::arrayToXml($array);
+    }
+
+    /**
+     * Check if string is Xml
+     *
+     * @param  string $string Xml string candidate
+     *
+     * @return boolean It is Xml!
+     */
+    public static function isXml($string)
+    {
+        libxml_use_internal_errors(true);
+
+        $doc = simplexml_load_string($string);
+
+        if (!$doc) {
+            $errors = libxml_get_errors();
+            if (!empty($errors)) {
+                return false;
+            }
+        }
+        libxml_clear_errors();
+        return true;
     }
 }

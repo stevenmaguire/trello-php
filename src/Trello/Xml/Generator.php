@@ -10,32 +10,30 @@ class Trello_Xml_Generator
     /**
      * arrays passed to this method should have a single root element
      * with an array as its value
+     *
      * @param array $aData the array of data
+     *
      * @return var XML string
      */
-    public static function arrayToXml($aData)
+    public static function arrayToXml($array = [])
     {
-        // set up the XMLWriter
         $writer = new XMLWriter();
         $writer->openMemory();
 
-        $writer->setIndent(true);
-        $writer->setIndentString(' ');
-        $writer->startDocument('1.0', 'UTF-8');
+        if (!empty($array)) {
+            $writer->setIndent(true);
+            $writer->setIndentString(' ');
+            $writer->startDocument('1.0', 'UTF-8');
 
-        // get the root element name
-        $aKeys = array_keys($aData);
-        $rootElementName = $aKeys[0];
-        // open the root element
-        $writer->startElement(Trello_Util::camelCaseToDelimiter($rootElementName));
-        // create the body
-        self::_createElementsFromArray($writer, $aData[$rootElementName]);
+            $array_keys = array_keys($array);
+            $rootElementName = $array_keys[0];
+            $writer->startElement(Trello_Util::camelCaseToDelimiter($rootElementName));
+            self::_createElementsFromArray($writer, $array[$rootElementName]);
+        }
 
-        // close the root element and document
         $writer->endElement();
         $writer->endDocument();
 
-        // send the output as string
         return $writer->outputMemory();
     }
 
