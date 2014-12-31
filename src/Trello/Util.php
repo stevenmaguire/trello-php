@@ -15,69 +15,76 @@ class Trello_Util
      * of its child arrays to objects of type Trello_$attributeName, or returns
      * an array with a single element containing the value of that array element
      *
+     * @access public
      * @param array $attribArray attributes from a search response
      * @param string $attributeName indicates which element of the passed array to extract
      *
      * @return array array of Trello_$attributeName objects, or a single element array
      */
-    public static function extractAttributeAsArray(& $attribArray, $attributeName)
+    public static function extractAttributeAsArray(&$attribArray, $attributeName)
     {
-        if(!isset($attribArray[$attributeName])):
+        if (!isset($attribArray[$attributeName])) {
             return [];
-        endif;
+        }
 
-        // get what should be an array from the passed array
         $data = $attribArray[$attributeName];
-        // set up the class that will be used to convert each array element
+
         $classFactory = self::buildClassName($attributeName) . '::factory';
-        if(is_array($data)):
-            // create an object from the data in each element
+
+        if (is_array($data)) {
             $objectArray = array_map($classFactory, $data);
-        else:
+        } else {
             return [$data];
-        endif;
+        }
 
         unset($attribArray[$attributeName]);
+
         return $objectArray;
     }
+
     /**
-     * throws an exception based on the type of error
-     * @param string $statusCode HTTP status code to throw exception from
-     * @throws Trello_Exception multiple types depending on the error
+     * Throws an exception based on the type of error
      *
+     * @access public
+     * @param string $statusCode    HTTP status code to throw exception from
+     * @param string $message       Optional message
+     *
+     * @throws Trello_Exception     multiple types depending on the error
      */
-    public static function throwStatusCodeException($statusCode, $message=null)
+    public static function throwStatusCodeException($statusCode, $message = null)
     {
         switch($statusCode) {
-         case 401:
-            throw new Trello_Exception_Authentication();
-            break;
-         case 403:
-             throw new Trello_Exception_Authorization($message);
-            break;
-         case 404:
-             throw new Trello_Exception_NotFound();
-            break;
-         case 426:
-             throw new Trello_Exception_UpgradeRequired();
-            break;
-         case 500:
-             throw new Trello_Exception_ServerError();
-            break;
-         case 503:
-             throw new Trello_Exception_DownForMaintenance();
-            break;
-         default:
-            throw new Trello_Exception_Unexpected('Unexpected HTTP_RESPONSE #'.$statusCode);
-            break;
+            case 401:
+                throw new Trello_Exception_Authentication($message);
+                break;
+            case 403:
+                throw new Trello_Exception_Authorization($message);
+                break;
+            case 404:
+                throw new Trello_Exception_NotFound($message);
+                break;
+            case 426:
+                throw new Trello_Exception_UpgradeRequired($message);
+                break;
+            case 500:
+                throw new Trello_Exception_ServerError($message);
+                break;
+            case 503:
+                throw new Trello_Exception_DownForMaintenance($message);
+                break;
+            default:
+                throw new Trello_Exception_Unexpected('Unexpected HTTP_RESPONSE #'.$statusCode);
+                break;
         }
     }
 
     /**
-     * removes the Trello_ header from a classname
+     * Removes the Trello_ header from a classname
      *
+     * @access public
      * @param string $name Trello_ClassName
-     * @return camelCased classname minus Trello_ header
+     *
+     * @return string camelCased classname minus Trello_ header
      */
     public static function cleanClassName($name)
     {
@@ -101,8 +108,11 @@ class Trello_Util
     }
 
     /**
+     * Addes Trello_ header to classname
      *
+     * @access public
      * @param string $name className
+     *
      * @return string Trello_ClassName
      */
     public static function buildClassName($name)
@@ -129,6 +139,7 @@ class Trello_Util
      *
      * @access public
      * @param string $string
+     *
      * @return string modified string
      */
     public static function delimiterToCamelCase($string, $delimiter = '[\-\_]')
@@ -149,6 +160,7 @@ class Trello_Util
      *
      * @access public
      * @param string $string
+     *
      * @return string modified string
      */
     public static function delimiterToUnderscore($string)
@@ -162,6 +174,7 @@ class Trello_Util
      *
      * @access public
      * @param string $string
+     *
      * @return string modified string
      */
     public static function camelCaseToDelimiter($string, $delimiter = '-')
@@ -178,29 +191,40 @@ class Trello_Util
     }
 
     /**
+     * Convert associative array to string
      *
+     * @access public
      * @param array $array associative array to implode
      * @param string $separator (optional, defaults to =)
      * @param string $glue (optional, defaults to ', ')
+     *
+     * @return string Imploded array
      */
     public static function implodeAssociativeArray($array, $separator = '=', $glue = ', ')
     {
         // build a new array with joined keys and values
         $tmpArray = null;
         foreach ($array AS $key => $value) {
-                $tmpArray[] = $key . $separator . $value;
-
+            $tmpArray[] = $key . $separator . $value;
         }
         // implode and return the new array
         return (is_array($tmpArray)) ? implode($glue, $tmpArray) : false;
     }
 
+    /**
+     * Convert attributes to string
+     *
+     * @access public
+     * @param  array $attributes Attributes to convert
+     *
+     * @return string Converted string
+     */
     public static function attributesToString($attributes) {
         $printableAttribs = [];
         foreach ($attributes AS $key => $value) {
             if (is_array($value)) {
                 $pAttrib = Trello_Util::attributesToString($value);
-            } else if ($value instanceof DateTime) {
+            } elseif ($value instanceof DateTime) {
                 $pAttrib = $value->format(DateTime::RFC850);
             } else {
                 $pAttrib = $value;
@@ -216,8 +240,11 @@ class Trello_Util
      * compares the expected signature of a gateway request
      * against the actual structure sent by the user
      *
+     * @access public
      * @param array $signature
      * @param array $attributes
+     *
+     * @throws InvalidArgumentException
      */
     public static function verifyKeys($signature, $attributes)
     {
@@ -233,6 +260,14 @@ class Trello_Util
         }
     }
 
+    /**
+     * Build quesry string from array
+     *
+     * @access public
+     * @param  array Array to convert
+     *
+     * @return string Query string
+     */
     public static function makeQueryStringFromArray($array = [])
     {
         return http_build_query($array);
@@ -240,8 +275,11 @@ class Trello_Util
 
     /**
      * flattens a numerically indexed nested array to a single level
+     *
+     * @access private
      * @param array $keys
      * @param string $namespace
+     *
      * @return array
      */
     private static function _flattenArray($keys, $namespace = null)
@@ -266,6 +304,7 @@ class Trello_Util
     /**
      * Flatten user keys
      *
+     * @access private
      * @param  array $keys Keys to flatten
      * @param  string $namespace Optional namespace
      *
@@ -296,8 +335,11 @@ class Trello_Util
 
     /**
      * removes wildcard entries from the invalid keys array
+     *
+     * @access private
      * @param array $validKeys
      * @param array $invalidKeys
+     *
      * @return array
      */
     private static function _removeWildcardKeys($validKeys, $invalidKeys)
