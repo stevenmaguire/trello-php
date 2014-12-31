@@ -117,6 +117,7 @@ class Trello_Error_ValidationErrorCollection extends Trello_Collection
     private function _inspect($errors, $scope = null)
     {
         $eOutput = '[' . __CLASS__ . '/errors:[';
+        $outputErrs = [];
         foreach($errors AS $error => $errorObj) {
             $outputErrs[] = "({$errorObj->error['code']} {$errorObj->error['message']})";
         }

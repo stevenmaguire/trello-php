@@ -69,8 +69,8 @@ abstract class Trello
     /**
      * @codeCoverageIgnore
      *
-     * @param [type] $key   [description]
-     * @param [type] $value [description]
+     * @param string $key   Name of property
+     * @param string $value Value of property
      */
     public function _set($key, $value)
     {

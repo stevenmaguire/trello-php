@@ -126,6 +126,7 @@ class Trello_Board extends Trello_Model
      */
     public function addList($name = null, $position = null)
     {
+        $config = [];
         if ($name) {
             $config['name'] = $name;
             if ($position && preg_match('/[0-9]+|top|bottom/', $position)) {

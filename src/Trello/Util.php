@@ -161,8 +161,8 @@ class Trello_Util
      * find capitals and convert to delimiter + lowercase
      *
      * @access public
-     * @param var $string
-     * @return var modified string
+     * @param string $string
+     * @return string modified string
      */
     public static function camelCaseToDelimiter($string, $delimiter = '-')
     {
@@ -263,6 +263,14 @@ class Trello_Util
         return $flattenedArray;
     }
 
+    /**
+     * Flatten user keys
+     *
+     * @param  array $keys Keys to flatten
+     * @param  string $namespace Optional namespace
+     *
+     * @return array Flattened array of Keys
+     */
     private static function _flattenUserKeys($keys, $namespace = null)
     {
        $flattenedArray = [];
@@ -289,7 +297,7 @@ class Trello_Util
     /**
      * removes wildcard entries from the invalid keys array
      * @param array $validKeys
-     * @param <array $invalidKeys
+     * @param array $invalidKeys
      * @return array
      */
     private static function _removeWildcardKeys($validKeys, $invalidKeys)
