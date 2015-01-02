@@ -19,6 +19,8 @@ $ composer require stevenmaguire/trello-php
 
 ## Usage
 
+Make sure you have secured your Trello API keys before going further. There is [a handy guide](https://trello.com/docs/gettingstarted/index.html) for that.
+
 ### Configuration
 
 ``` php

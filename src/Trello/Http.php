@@ -16,7 +16,7 @@ class Trello_Http
      * @param  string $path Endpoint path
      * @param  array $params Optional params
      *
-     * @return boolean Operation successful
+     * @return boolean|null Operation successful
      * @throws Trello_Exception
      */
     public static function delete($path, $params = [])
@@ -132,9 +132,9 @@ class Trello_Http
     /**
      * Append query string params to url, if available
      *
-     * @param  string $url Url
+     * @param  string $path Url
      *
-     * @return string $url Modified url
+     * @return string Modified url
      */
     private static function _buildPath($path, $params = [])
     {
@@ -167,7 +167,7 @@ class Trello_Http
      *
      * @param  string $verb Http verb to execute
      * @param  string $path Path to service endpoint
-     * @param  mixed  $request_body Additional payload
+     * @param  string  $request_body Additional payload
      *
      * @return array Response object
      */
@@ -183,7 +183,7 @@ class Trello_Http
      *
      * @param  string $verb Http verb to execute
      * @param  string $url  Service url
-     * @param  mixed  $request_body Additional payload
+     * @param  string  $request_body Additional payload
      *
      * @return array Response object
      */

@@ -102,6 +102,12 @@ class Trello_Configuration extends Trello
         return true;
     }
 
+    /**
+     * Set configuration value
+     *
+     * @param string $key Configuration key
+     * @param string $value Configuration value
+     */
     private static function set($key, $value)
     {
         // this method will raise an exception on invalid data
@@ -111,6 +117,14 @@ class Trello_Configuration extends Trello
 
     }
 
+    /**
+     * Get configuration value
+     *
+     * @param  string $key Configuration key
+     *
+     * @return string|null
+     * @throws Trello_Exception
+     */
     private static function get($key)
     {
         // throw an exception if the value hasn't been set
