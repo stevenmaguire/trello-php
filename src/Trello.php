@@ -89,8 +89,8 @@ abstract class Trello
 
     /**
      * @codeCoverageIgnore
-     * @param string $className
-     * @param object $resultObj
+     * @param string $class_name
+     * @param object $result_obj
      *
      * @return object returns the passed object if successful
      * @throws Trello_Exception_ValidationsFailed

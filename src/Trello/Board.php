@@ -234,7 +234,7 @@ class Trello_Board extends Trello_Model
      *
      * @param string $powerup Powerup name
      *
-     * @return stdClass|null List of existing powerups
+     * @return boolean|null List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function removePowerUp($powerup = null)
@@ -261,7 +261,7 @@ class Trello_Board extends Trello_Model
     /**
      * remove card aging powerup from current board
      *
-     * @return stdClass|null List of existing powerups
+     * @return boolean|null List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function removePowerUpCardAging()
@@ -283,7 +283,7 @@ class Trello_Board extends Trello_Model
     /**
      * remove calendar powerup from current board
      *
-     * @return stdClass|null List of existing powerups
+     * @return boolean|null List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function removePowerUpCalendar()
@@ -305,7 +305,7 @@ class Trello_Board extends Trello_Model
     /**
      * remove recap powerup from current board
      *
-     * @return stdClass|null List of existing powerups
+     * @return boolean|null List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function removePowerUpRecap()
@@ -327,7 +327,7 @@ class Trello_Board extends Trello_Model
     /**
      * remove voting powerup from current board
      *
-     * @return stdClass|null List of existing powerups
+     * @return boolean|null List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function removePowerUpVoting()
@@ -358,7 +358,7 @@ class Trello_Board extends Trello_Model
     /**
      * generate email key for current board
      *
-     * @return mixed Email key object
+     * @return stdClass|null Marked as viewed
      */
     public function markAsViewed()
     {
