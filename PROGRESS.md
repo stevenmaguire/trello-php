@@ -1,5 +1,6 @@
 [notstarted]: https://img.shields.io/badge/status-not%20started-orange.svg?style=flat
 [tested]: https://img.shields.io/badge/status-tested-green.svg?style=flat
+[wip]: https://img.shields.io/badge/status-in%20progress-yellow.svg?style=flat
 
 # Progress
 
@@ -61,7 +62,7 @@
 |GET|/1/boards/[board_id]/organization/[field]|![notstarted]|
 |PUT|/1/boards/[board_id]|![notstarted]|
 |PUT|/1/boards/[board_id]/closed|![tested]|
-|PUT|/1/boards/[board_id]/desc|![notstarted]|
+|PUT|/1/boards/[board_id]/desc|![tested]|
 |PUT|/1/boards/[board_id]/idOrganization|![notstarted]|
 |PUT|/1/boards/[board_id]/labelNames/blue|![notstarted]|
 |PUT|/1/boards/[board_id]/labelNames/green|![notstarted]|
@@ -79,7 +80,7 @@
 |PUT|/1/boards/[board_id]/myPrefs/showSidebarActivity|![notstarted]|
 |PUT|/1/boards/[board_id]/myPrefs/showSidebarBoardActions|![notstarted]|
 |PUT|/1/boards/[board_id]/myPrefs/showSidebarMembers|![notstarted]|
-|PUT|/1/boards/[board_id]/name|![notstarted]|
+|PUT|/1/boards/[board_id]/name|![tested]|
 |PUT|/1/boards/[board_id]/prefs/background|![notstarted]|
 |PUT|/1/boards/[board_id]/prefs/calendarFeedEnabled|![notstarted]|
 |PUT|/1/boards/[board_id]/prefs/cardAging|![notstarted]|

@@ -3,7 +3,9 @@
 class Board_Test extends IntegrationTestCase
 {
     protected $board_name = 'Hank Hill';
+    protected $new_board_name = 'Hank Hill 2';
     protected $board_description = 'The patriarch of the Arlen, TX community.';
+    protected $new_board_description = 'The patriarch of the Arlen, TX community. And master griller';
     protected $checklist_name = 'To complete';
     protected $list_name = 'To do';
 
@@ -13,6 +15,7 @@ class Board_Test extends IntegrationTestCase
 
         $this->assertEquals('Trello_Board', get_class($result));
         $this->assertEquals($this->board_name, $result->name);
+        $this->assertNull($result->cash_money);
 
         return $result->id;
     }
@@ -62,6 +65,37 @@ class Board_Test extends IntegrationTestCase
     public function test_It_Can_Not_Get_A_Board_With_Invalid_Id()
     {
         $result = Trello_Board::fetch(uniqid());
+    }
+
+    /**
+     * @depends test_It_Can_Get_A_Board
+     */
+    public function test_It_Can_Update_A_Board_Name($board)
+    {
+        $result = $board->updateName($this->new_board_name);
+
+        $this->assertEquals('Trello_Board', get_class($result));
+        $this->assertEquals($this->new_board_name, $result->name);
+    }
+
+    /**
+     * @depends test_It_Can_Get_A_Board
+     * @expectedException Trello_Exception_ValidationsFailed
+     */
+    public function test_It_Can_Not_Update_A_Board_Name_With_No_Name($board)
+    {
+        $result = $board->updateName();
+    }
+
+    /**
+     * @depends test_It_Can_Get_A_Board
+     */
+    public function test_It_Can_Update_A_Board_Description($board)
+    {
+        $result = $board->updateDescription($this->new_board_description);
+
+        $this->assertEquals('Trello_Board', get_class($result));
+        $this->assertEquals($this->new_board_description, $result->desc);
     }
 
     /**

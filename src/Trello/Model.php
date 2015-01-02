@@ -7,6 +7,21 @@
 abstract class Trello_Model
 {
     /**
+     * Get model attribute
+     *
+     * @param  string  Attribute name
+     *
+     * @return mixed  Attribute value
+     */
+    public function __get($property)
+    {
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        }
+        return null;
+    }
+
+    /**
      * sets instance properties from an object of values
      *
      * @access protected
@@ -118,9 +133,6 @@ abstract class Trello_Model
      */
     protected static function _mapAs($destination, $sourceObject)
     {
-        if (is_string($destination)) {
-            $destination = new $destination();
-        }
         $sourceReflection = new ReflectionObject($sourceObject);
         $destinationReflection = new ReflectionObject($destination);
         $sourceProperties = $sourceReflection->getProperties();
@@ -131,7 +143,7 @@ abstract class Trello_Model
             if ($destinationReflection->hasProperty($name)) {
                 $propDest = $destinationReflection->getProperty($name);
                 $propDest->setAccessible(true);
-                $propDest->setValue($destination,$value);
+                $propDest->setValue($destination, $value);
             } else {
                 $destination->$name = $value;
             }

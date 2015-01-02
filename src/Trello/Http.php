@@ -14,7 +14,7 @@ class Trello_Http
         if($response['status'] === 200) {
             return true;
         } else {
-            Trello_Util::throwStatusCodeException($response['status']);
+            Trello_Util::throwStatusCodeException($response['status']); // @codeCoverageIgnore
         }
     } // @codeCoverageIgnore
 
@@ -26,7 +26,7 @@ class Trello_Http
             $object = Trello_Json::buildObjectFromJson($response['body']);
             return $object;
         } else {
-            Trello_Util::throwStatusCodeException($response['status']);
+            Trello_Util::throwStatusCodeException($response['status']); // @codeCoverageIgnore
         }
     } // @codeCoverageIgnore
 
@@ -39,7 +39,7 @@ class Trello_Http
             $object = Trello_Json::buildObjectFromJson($response['body']);
             return $object;
         } else {
-            Trello_Util::throwStatusCodeException($responseCode);
+            Trello_Util::throwStatusCodeException($responseCode); // @codeCoverageIgnore
         }
     } // @codeCoverageIgnore
 
@@ -52,7 +52,7 @@ class Trello_Http
             $object = Trello_Json::buildObjectFromJson($response['body']);
             return $object;
         } else {
-            Trello_Util::throwStatusCodeException($responseCode);
+            Trello_Util::throwStatusCodeException($responseCode); // @codeCoverageIgnore
         }
     } // @codeCoverageIgnore
 

@@ -11,9 +11,9 @@
  * @property-read string $name
  * @property-read string $desc
  * @property-read string $descData
- * @property-read string $closed
+ * @property-read bool $closed
  * @property-read string $idOrganization
- * @property-read string $pinned
+ * @property-read bool $pinned
  * @property-read string $url
  * @property-read string $shortUrl
  * @property-read stdClass $prefs
@@ -21,6 +21,72 @@
  */
 class Trello_Board extends Trello_Model
 {
+    /**
+     * Board id
+     * @property string $id
+     */
+    protected $id;
+
+    /**
+     * Board name
+     * @property string $name
+     */
+    protected $name;
+
+    /**
+     * Board description
+     * @property string $desc
+     */
+    protected $desc;
+
+    /**
+     * Board description data
+     * @property string $descData
+     */
+    protected $descData;
+
+    /**
+     * Board closed
+     * @property bool $closed
+     */
+    protected $closed;
+
+    /**
+     * Board organization id
+     * @property string $idOrganization
+     */
+    protected $idOrganization;
+
+    /**
+     * Board is pinned
+     * @property bool $pinned
+     */
+    protected $pinned;
+
+    /**
+     * Board url
+     * @property string $url
+     */
+    protected $url;
+
+    /**
+     * Board short url
+     * @property string $shortUrl
+     */
+    protected $shortUrl;
+
+    /**
+     * Board preferences
+     * @property stdClass $prefs
+     */
+    protected $prefs;
+
+    /**
+     * Board label names
+     * @property stdClass $labelNames
+     */
+    protected $labelNames;
+
     /**
      * create a new board
      *
@@ -290,5 +356,35 @@ class Trello_Board extends Trello_Model
     public function markAsViewed()
     {
         return Trello_Http::post('/boards/'.$this->id.'/markAsViewed');
+    }
+
+    /**
+     * Update board description
+     *
+     * @param  string  $description
+     *
+     * @return Trello_Board Updated board object
+     */
+    public function updateDescription($description = null)
+    {
+        return self::_doStore('/boards/'.$this->id.'/desc', ['value' => $description]);
+    }
+
+    /**
+     * Update board name
+     *
+     * @param  string  $name
+     *
+     * @return Trello_Board Updated board object
+     * @throws Trello_Exception_ValidationsFailed
+     */
+    public function updateName($name = null)
+    {
+        if (empty($name)) {
+            throw new Trello_Exception_ValidationsFailed(
+                'attempted to update board name without new name; it\'s gotta have a name'
+            );
+        }
+        return self::_doStore('/boards/'.$this->id.'/name', ['value' => $name]);
     }
 }
