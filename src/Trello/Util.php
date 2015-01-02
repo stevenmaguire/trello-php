@@ -160,14 +160,47 @@ class Trello_Util
      * Throws an exception based on the type of error
      *
      * @access public
-     * @param string $statusCode    HTTP status code to throw exception from
+     * @param string $status_code    HTTP status code to throw exception from
      * @param string $message       Optional message
      *
      * @throws Trello_Exception     multiple types depending on the error
      */
-    public static function throwStatusCodeException($statusCode, $message = null)
+    public static function throwStatusCodeException($status_code, $message = null)
     {
-        switch($statusCode) {
+        $exceptions = [
+            'default' => function ($status_code) {
+                throw new Trello_Exception_Unexpected(
+                    'Unexpected HTTP_RESPONSE #'.$status_code
+                );
+            },
+            401 => function ($message) {
+                throw new Trello_Exception_Authentication($message);
+            },
+            403 => function ($message) {
+                throw new Trello_Exception_Authorization($message);
+            },
+            404 => function ($message) {
+                throw new Trello_Exception_NotFound($message);
+            },
+            426 => function ($message) {
+                throw new Trello_Exception_UpgradeRequired($message);
+            },
+            500 => function ($message) {
+                throw new Trello_Exception_ServerError($message);
+            },
+            503 => function ($message) {
+                throw new Trello_Exception_DownForMaintenance($message);
+            }
+        ];
+
+        if (array_key_exists($status_code, $exceptions)) {
+            $exceptions[$status_code]($message);
+        } else { // @codeCoverageIgnore
+            $exceptions['default']($status_code);
+        }
+
+        /*
+        switch($status_code) {
             case 401:
                 throw new Trello_Exception_Authentication($message);
             case 403:
@@ -181,7 +214,8 @@ class Trello_Util
             case 503:
                 throw new Trello_Exception_DownForMaintenance($message);
             default:
-                throw new Trello_Exception_Unexpected('Unexpected HTTP_RESPONSE #'.$statusCode);
+                throw new Trello_Exception_Unexpected('Unexpected HTTP_RESPONSE #'.$status_code);
         }
-    }
+        */
+    } // @codeCoverageIgnore
 }

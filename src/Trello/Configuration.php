@@ -277,13 +277,7 @@ class Trello_Configuration extends Trello
      */
     public static function serverName()
     {
-        switch(self::environment()) {
-            default:
-                $serverName = 'api.trello.com';
-                break;
-        }
-
-        return $serverName;
+        return 'api.trello.com';
     }
 
     /**
