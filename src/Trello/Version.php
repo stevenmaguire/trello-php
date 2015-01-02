@@ -1,8 +1,10 @@
 <?php
 /**
  * Trello Library Version
- * stores version information about the Braintree library
+ * stores version information about the Trello library
  *
+ * @package    Trello
+ * @subpackage Utility
  * @copyright  Steven Maguire
  */
 final class Trello_Version

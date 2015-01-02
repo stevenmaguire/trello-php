@@ -2,7 +2,10 @@
 /**
  * Base class for models
  *
+ * @package    Trello
+ * @subpackage Models
  * @copyright  2014 Steven Maguire
+ * @abstract
  */
 abstract class Trello_Model
 {

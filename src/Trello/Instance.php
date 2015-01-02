@@ -1,6 +1,7 @@
 <?php
 /**
  * Trello Class Instance template
+ *
  * @package    Trello
  * @subpackage Utility
  * @copyright  2014 Steven Maguire

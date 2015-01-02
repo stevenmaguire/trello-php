@@ -91,6 +91,7 @@ class Trello_Board extends Trello_Model
      * create a new board
      *
      * @param  array $attribs Board attributes to set
+     *
      * @return Trello_Board  Newly minted trello board
      * @throws Trello_Exception_ValidationsFailed
      */
@@ -127,6 +128,7 @@ class Trello_Board extends Trello_Model
      * fetch a board
      *
      * @param  string $board_id Board id to close
+     *
      * @return Trello_Board  Trello board matching id
      * @throws Trello_Exception_ValidationsFailed
      */
@@ -144,6 +146,7 @@ class Trello_Board extends Trello_Model
      * close a board by board id
      *
      * @param  string $board_id Board id to close
+     *
      * @return bool  Did the board close?
      * @throws Trello_Exception_ValidationsFailed
      */
@@ -168,6 +171,7 @@ class Trello_Board extends Trello_Model
      * add checklist to current board
      *
      * @param  string $name Name of checklist
+     *
      * @return Trello_Checklist Newly minted checlist object
      * @throws Trello_Exception_ValidationsFailed
      */
@@ -187,6 +191,7 @@ class Trello_Board extends Trello_Model
      *
      * @param  string $name Name of list
      * @param  mixed $position Optional position of list in board
+     *
      * @return Trello_Checklist Newly minted checlist object
      * @throws Trello_Exception_ValidationsFailed
      */
@@ -210,6 +215,7 @@ class Trello_Board extends Trello_Model
      * add specific powerup to current board
      *
      * @param string Powerup name
+     *
      * @return array List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
@@ -227,6 +233,7 @@ class Trello_Board extends Trello_Model
      * remove specific powerup from current board
      *
      * @param string Powerup name
+     *
      * @return array List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */

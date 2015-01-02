@@ -1,7 +1,7 @@
 <?php
 /**
- * Trello action
- * Reads and manages actions
+ * Trello checklist
+ * Reads and manages checklists
  *
  * @package    Trello
  * @subpackage Models

@@ -1,9 +1,10 @@
 <?php
 /**
  * Trello Utility methods
- * PHP version 5
  *
- * @copyright  2014 Steven Maguire
+ * @package    Trello
+ * @subpackage Utility
+ * @copyright  Steven Maguire
  */
 
 class Trello_Util

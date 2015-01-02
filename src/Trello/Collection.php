@@ -1,9 +1,6 @@
 <?php
 /**
  * Trello Generic collection
- *
- * PHP Version 5
- *
  * Based on Generic Collection class from:
  * {@link http://codeutopia.net/code/library/CU/Collection.php}
  *

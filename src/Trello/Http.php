@@ -3,7 +3,10 @@
  * Trello HTTP Client
  * processes Http requests using curl
  *
+ * @package    Trello
+ * @subpackage Utility
  * @copyright  Steven Maguire
+ *
  */
 class Trello_Http
 {

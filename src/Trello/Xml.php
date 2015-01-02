@@ -1,10 +1,11 @@
 <?php
 /**
  * Trello Xml parser and generator
- * PHP version 5
  * superclass for Trello XML parsing and generation
  *
- * @copyright  2014 Steven Maguire
+ * @package    Trello
+ * @subpackage Utility
+ * @copyright  Steven Maguire
  */
 final class Trello_Xml
 {

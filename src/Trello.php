@@ -5,11 +5,9 @@
  * Trello base class and initialization
  * Provides methods to child classes. This class cannot be instantiated.
  *
- *  PHP version 5
- *
- * @copyright  2014 Steven Maguire
+ * @package    Trello
+ * @copyright  Steven Maguire
  */
-
 
 set_include_path(
     get_include_path() .
@@ -35,6 +33,7 @@ abstract class Trello
     protected function __construct()
     {
     }
+
     /**
      * @codeCoverageIgnore
      *  don't permit cloning the instances (like $x = clone $v)

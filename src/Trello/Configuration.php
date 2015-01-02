@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Configuration registry
  *
  * @package    Trello
