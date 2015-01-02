@@ -41,8 +41,9 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
      */
     public function set($index, $value)
     {
-        if($index >= $this->count())
+        if ($index >= $this->count()) {
             throw new OutOfRangeException('Index out of range');
+        }
 
         $this->_collection[$index] = $value;
     }
@@ -54,9 +55,9 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
      */
     public function remove($index)
     {
-        if($index >= $this->count())
+        if ($index >= $this->count()) {
             throw new OutOfRangeException('Index out of range');
-
+        }
         array_splice($this->_collection, $index, 1);
     }
 
@@ -68,9 +69,9 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
      */
     public function get($index)
     {
-        if($index >= $this->count())
+        if ($index >= $this->count()) {
             throw new OutOfRangeException('Index out of range');
-
+        }
         return $this->_collection[$index];
     }
 
@@ -81,9 +82,9 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
      */
     public function exists($index)
     {
-        if($index >= $this->count())
+        if ($index >= $this->count()) {
             return false;
-
+        }
         return true;
     }
     /**

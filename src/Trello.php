@@ -118,10 +118,6 @@ require_once('Trello/Model.php');
 require_once('Trello/Util.php');
 require_once('Trello/Version.php');
 
-require_once('Trello/Error/Codes.php');
-require_once('Trello/Error/ErrorCollection.php');
-require_once('Trello/Error/Validation.php');
-require_once('Trello/Error/ValidationErrorCollection.php');
 require_once('Trello/Exception/Authentication.php');
 require_once('Trello/Exception/Authorization.php');
 require_once('Trello/Exception/Configuration.php');
