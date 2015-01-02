@@ -9,7 +9,8 @@ class Trello_Http
 {
     public static function delete($path, $params = [])
     {
-        $response = self::_doRequest('DELETE', $path, $params);
+        $path = self::_buildPath($path, $params);
+        $response = self::_doRequest('DELETE', $path);
         if($response['status'] === 200) {
             return true;
         } else {
@@ -19,7 +20,8 @@ class Trello_Http
 
     public static function get($path, $params = [])
     {
-        $response = self::_doRequest('GET', $path, $params);
+        $path = self::_buildPath($path, $params);
+        $response = self::_doRequest('GET', $path);
         if($response['status'] === 200) {
             $object = Trello_Json::buildObjectFromJson($response['body']);
             return $object;
@@ -28,9 +30,23 @@ class Trello_Http
         }
     } // @codeCoverageIgnore
 
+    public static function patch($path, $params = [])
+    {
+        $request_body = self::_buildJson($params);
+        $response = self::_doRequest('PATCH', $path, $request_body);
+        $responseCode = $response['status'];
+        if($responseCode === 200 || $responseCode === 201 || $responseCode === 422) {
+            $object = Trello_Json::buildObjectFromJson($response['body']);
+            return $object;
+        } else {
+            Trello_Util::throwStatusCodeException($responseCode);
+        }
+    } // @codeCoverageIgnore
+
     public static function post($path, $params = [])
     {
-        $response = self::_doRequest('POST', $path, $params);
+        $request_body = self::_buildJson($params);
+        $response = self::_doRequest('POST', $path, $request_body);
         $responseCode = $response['status'];
         if($responseCode === 200 || $responseCode === 201 || $responseCode === 422) {
             $object = Trello_Json::buildObjectFromJson($response['body']);
@@ -42,7 +58,8 @@ class Trello_Http
 
     public static function put($path, $params = [])
     {
-        $response = self::_doRequest('PUT', $path, $params);
+        $request_body = self::_buildJson($params);
+        $response = self::_doRequest('PUT', $path, $request_body);
         $responseCode = $response['status'];
         if($responseCode === 200 || $responseCode === 201 || $responseCode === 422) {
             $object = Trello_Json::buildObjectFromJson($response['body']);
@@ -85,20 +102,8 @@ class Trello_Http
         return $path . $query_string;
     }
 
-    private static function _doRequest($verb, $path, $request_body = [])
+    private static function _doRequest($verb, $path, $request_body = null)
     {
-        switch (strtolower($verb)) {
-            case 'patch':
-            case 'post':
-            case 'put':
-                $request_body = self::_buildJson($request_body);
-                break;
-            case 'get':
-            case 'delete';
-                $path = self::_buildPath($path, $request_body);
-                $request_body = null;
-                break;
-        }
         $response = self::_doUrlRequest($verb, Trello_Configuration::serviceUrl() . self::_includeKeyInUrl($path), $request_body);
         return $response;
     }
