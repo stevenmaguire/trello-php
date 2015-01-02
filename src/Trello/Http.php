@@ -10,6 +10,15 @@
  */
 class Trello_Http
 {
+    /**
+     * Send delete request
+     *
+     * @param  string $path Endpoint path
+     * @param  array $params Optional params
+     *
+     * @return boolean Operation successful
+     * @throws Trello_Exception
+     */
     public static function delete($path, $params = [])
     {
         $path = self::_buildPath($path, $params);
@@ -21,6 +30,15 @@ class Trello_Http
         }
     } // @codeCoverageIgnore
 
+    /**
+     * Send get request
+     *
+     * @param  string $path Endpoint path
+     * @param  array $params Optional params
+     *
+     * @return stdClass Located object
+     * @throws Trello_Exception
+     */
     public static function get($path, $params = [])
     {
         $path = self::_buildPath($path, $params);
@@ -33,6 +51,15 @@ class Trello_Http
         }
     } // @codeCoverageIgnore
 
+    /**
+     * Send post request
+     *
+     * @param  string $path Endpoint path
+     * @param  array $params Optional params
+     *
+     * @return stdClass Located object
+     * @throws Trello_Exception
+     */
     public static function post($path, $params = [])
     {
         $request_body = self::_buildJson($params);
@@ -46,6 +73,15 @@ class Trello_Http
         }
     } // @codeCoverageIgnore
 
+    /**
+     * Send put request
+     *
+     * @param  string $path Endpoint path
+     * @param  array $params Optional params
+     *
+     * @return stdClass Located object
+     * @throws Trello_Exception
+     */
     public static function put($path, $params = [])
     {
         $request_body = self::_buildJson($params);
@@ -59,12 +95,26 @@ class Trello_Http
         }
     } // @codeCoverageIgnore
 
+    /**
+     * Build JSON payload from array
+     *
+     * @param  array  Parameters
+     *
+     * @return string  JSON payload
+     */
     private static function _buildJson($params)
     {
         $json = empty($params) ? null : Trello_Json::buildJsonFromArray($params);
         return $json;
     }
 
+    /**
+     * Append key and token to url, if available
+     *
+     * @param  string $url Url
+     *
+     * @return string $url Modified url
+     */
     private static function _includeKeyInUrl($url)
     {
         $key = Trello_Configuration::key();
@@ -79,6 +129,13 @@ class Trello_Http
         return $url;
     }
 
+    /**
+     * Append query string params to url, if available
+     *
+     * @param  string $url Url
+     *
+     * @return string $url Modified url
+     */
     private static function _buildPath($path, $params = [])
     {
         $query_string = Trello_Util::buildQueryStringFromArray($params);
@@ -92,12 +149,28 @@ class Trello_Http
         return $path . $query_string;
     }
 
+    /**
+     * Build service url
+     *
+     * @param  string $path
+     *
+     * @return string Service url
+     */
     private static function _makeUrl($path)
     {
         return Trello_Configuration::serviceUrl() .
             self::_includeKeyInUrl($path);
     }
 
+    /**
+     * Build service url and perform request
+     *
+     * @param  string $verb Http verb to execute
+     * @param  string $path Path to service endpoint
+     * @param  mixed  $request_body Additional payload
+     *
+     * @return array Response object
+     */
     private static function _doRequest($verb, $path, $request_body = null)
     {
         $url = self::_makeUrl($path);
@@ -105,6 +178,15 @@ class Trello_Http
         return $response;
     }
 
+    /**
+     * Perform request
+     *
+     * @param  string $verb Http verb to execute
+     * @param  string $url  Service url
+     * @param  mixed  $request_body Additional payload
+     *
+     * @return array Response object
+     */
     private static function _doUrlRequest($verb, $url, $request_body = null)
     {
         $curl = curl_init();

@@ -131,7 +131,12 @@ class Trello_Configuration extends Trello
         return null; // @codeCoverageIgnore
     }
 
-
+    /**
+     * Set or set attribute
+     *
+     * @param string $name Name of property
+     * @param mixed $value Optional value to set
+     */
     private static function setOrGet($name, $value = null)
     {
         if (!empty($value) && is_array($value)) {
@@ -144,11 +149,14 @@ class Trello_Configuration extends Trello
         }
         return true;
     }
-    /**#@+
+
+    /**
      * sets or returns the property after validation
+     *
      * @access public
      * @static
      * @param string $value pass a string to set, empty to get
+     *
      * @return mixed returns true on set
      */
     public static function environment($value = null)
@@ -156,21 +164,57 @@ class Trello_Configuration extends Trello
         return self::setOrGet(__FUNCTION__, $value);
     }
 
+    /**
+     * sets or returns the property after validation
+     *
+     * @access public
+     * @static
+     * @param string $value pass a string to set, empty to get
+     *
+     * @return mixed returns true on set
+     */
     public static function key($value = null)
     {
         return self::setOrGet(__FUNCTION__, $value);
     }
 
+    /**
+     * sets or returns the property after validation
+     *
+     * @access public
+     * @static
+     * @param string $value pass a string to set, empty to get
+     *
+     * @return mixed returns true on set
+     */
     public static function secret($value = null)
     {
         return self::setOrGet(__FUNCTION__, $value);
     }
 
+    /**
+     * sets or returns the property after validation
+     *
+     * @access public
+     * @static
+     * @param string $value pass a string to set, empty to get
+     *
+     * @return mixed returns true on set
+     */
     public static function token($value = null)
     {
         return self::setOrGet(__FUNCTION__, $value);
     }
 
+    /**
+     * sets or returns the property after validation
+     *
+     * @access public
+     * @static
+     * @param string $value pass a string to set, empty to get
+     *
+     * @return mixed returns true on set
+     */
     public static function applicationName($value = null)
     {
         return self::setOrGet(__FUNCTION__, $value);

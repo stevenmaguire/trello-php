@@ -42,7 +42,7 @@ abstract class Trello_Model
      *  to the requesting method, with populated properties
      *
      * @codeCoverageIgnore
-     * @return object instance of Trello_Model
+     * @return Trello_Model instance of Trello_Model
      */
     public static function factory($response = null)
     {
@@ -58,7 +58,7 @@ abstract class Trello_Model
      * @param string $url
      * @param array $params
      *
-     * @return mixed
+     * @return Trello_Model
      */
     protected static function _doCreate($url, $params)
     {
@@ -73,7 +73,7 @@ abstract class Trello_Model
      * @param string $url
      * @param array $params
      *
-     * @return mixed
+     * @return Trello_Model
      */
     protected static function _doDelete($url, $params = [])
     {
@@ -88,7 +88,7 @@ abstract class Trello_Model
      * @param string $url
      * @param array $params
      *
-     * @return mixed
+     * @return Trello_Model
      */
     protected static function _doFetch($url, $params = [])
     {
@@ -103,7 +103,7 @@ abstract class Trello_Model
      * @param string $url
      * @param array $params
      *
-     * @return mixed
+     * @return stdClass|null
      */
     protected static function _doSearch($keyword = null, $params = [])
     {
@@ -118,7 +118,7 @@ abstract class Trello_Model
      * @param string $url
      * @param array $params
      *
-     * @return mixed
+     * @return Trello_Model
      */
     protected static function _doStore($url, $params)
     {
@@ -132,7 +132,7 @@ abstract class Trello_Model
      * @param  mixed $destination Object to receive the mapping
      * @param  object sourceObject Object from which to map data
      *
-     * @return object Mapped object
+     * @return Trello_Model Mapped object
      */
     protected static function _mapAs($destination, $sourceObject)
     {
