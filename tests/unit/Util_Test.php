@@ -80,9 +80,10 @@ class Util_Test extends TestCase
     {
         $now = new DateTime();
         $now->setTimestamp(0);
+        $now->setTimezone(new DateTimeZone('UTC'));
         $array = ['key1' => 'value1', 'key2' => ['value1','value2','value3'], 'key3' => $now];
         $expected_string = 'key1=value1, key2=0=value1, 1=value2, 2=value3, '.
-            'key3=Thursday, 01-Jan-70 01:00:00 CET';
+            'key3=Thursday, 01-Jan-70 00:00:00 UTC';
 
         $attribute_string = Trello_Util::attributesToString($array);
 
