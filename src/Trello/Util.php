@@ -195,7 +195,7 @@ class Trello_Util
             $exceptions[$status_code]($message);
         } else { // @codeCoverageIgnore
             $message = self::_defaultExceptionMessage($status_code, $message);
-            $exceptions['default']($status_code);
+            $exceptions['default']($message);
         }
     } // @codeCoverageIgnore
 
