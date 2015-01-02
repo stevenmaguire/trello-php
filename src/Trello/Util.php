@@ -198,24 +198,5 @@ class Trello_Util
         } else { // @codeCoverageIgnore
             $exceptions['default']($status_code);
         }
-
-        /*
-        switch($status_code) {
-            case 401:
-                throw new Trello_Exception_Authentication($message);
-            case 403:
-                throw new Trello_Exception_Authorization($message);
-            case 404:
-                throw new Trello_Exception_NotFound($message);
-            case 426:
-                throw new Trello_Exception_UpgradeRequired($message);
-            case 500:
-                throw new Trello_Exception_ServerError($message);
-            case 503:
-                throw new Trello_Exception_DownForMaintenance($message);
-            default:
-                throw new Trello_Exception_Unexpected('Unexpected HTTP_RESPONSE #'.$status_code);
-        }
-        */
     } // @codeCoverageIgnore
 }

@@ -194,12 +194,7 @@ class Trello_Http
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $verb);
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_ENCODING, 'gzip');
-        curl_setopt($curl, CURLOPT_HTTPHEADER, [
-            'Accept: application/json',
-            'Content-Type: application/json',
-            'User-Agent: ' . Trello_Configuration::applicationName() . ' ' . Trello_Version::get(),
-            'X-ApiVersion: ' . Trello_Configuration::API_VERSION
-        ]);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, self::_curlHeaders());
 
         if(!empty($request_body)) {
             curl_setopt($curl, CURLOPT_POSTFIELDS, $request_body);
@@ -211,5 +206,20 @@ class Trello_Http
         curl_close($curl);
 
         return ['status' => $http_status, 'body' => $response];
+    }
+
+    /**
+     * Build curl headers
+     *
+     * @return array Curl headers
+     */
+    private static function _curlHeaders()
+    {
+        return [
+            'Accept: application/json',
+            'Content-Type: application/json',
+            'User-Agent: ' . Trello_Configuration::applicationName() . ' ' . Trello_Version::get(),
+            'X-ApiVersion: ' . Trello_Configuration::API_VERSION
+        ];
     }
 }
