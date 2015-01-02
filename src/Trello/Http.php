@@ -30,19 +30,6 @@ class Trello_Http
         }
     } // @codeCoverageIgnore
 
-    public static function patch($path, $params = [])
-    {
-        $request_body = self::_buildJson($params);
-        $response = self::_doRequest('PATCH', $path, $request_body);
-        $responseCode = $response['status'];
-        if($responseCode === 200 || $responseCode === 201 || $responseCode === 422) {
-            $object = Trello_Json::buildObjectFromJson($response['body']);
-            return $object;
-        } else {
-            Trello_Util::throwStatusCodeException($responseCode);
-        }
-    } // @codeCoverageIgnore
-
     public static function post($path, $params = [])
     {
         $request_body = self::_buildJson($params);
@@ -102,13 +89,20 @@ class Trello_Http
         return $path . $query_string;
     }
 
+    private static function _makeUrl($path)
+    {
+        return Trello_Configuration::serviceUrl() .
+            self::_includeKeyInUrl($path);
+    }
+
     private static function _doRequest($verb, $path, $request_body = null)
     {
-        $response = self::_doUrlRequest($verb, Trello_Configuration::serviceUrl() . self::_includeKeyInUrl($path), $request_body);
+        $url = self::_makeUrl($path);
+        $response = self::_doUrlRequest($verb, $url, $request_body);
         return $response;
     }
 
-    public static function _doUrlRequest($verb, $url, $request_body = null)
+    private static function _doUrlRequest($verb, $url, $request_body = null)
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_TIMEOUT, 60);
