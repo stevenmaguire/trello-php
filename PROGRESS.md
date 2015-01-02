@@ -4,6 +4,12 @@
 
 # Progress
 
+## authorization
+
+|Method|Endpoint|Status|
+|------|--------|------|
+|GET|/1/authorize|![notstarted]|
+
 ## action
 
 |Method|Endpoint|Status|

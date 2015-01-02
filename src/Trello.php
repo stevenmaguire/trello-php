@@ -113,12 +113,10 @@ require_once('Trello/Collection.php');
 require_once('Trello/Configuration.php');
 require_once('Trello/Exception.php');
 require_once('Trello/Http.php');
-require_once('Trello/Instance.php');
 require_once('Trello/Json.php');
 require_once('Trello/Model.php');
 require_once('Trello/Util.php');
 require_once('Trello/Version.php');
-require_once('Trello/Xml.php');
 
 require_once('Trello/Error/Codes.php');
 require_once('Trello/Error/ErrorCollection.php');
@@ -137,10 +135,6 @@ require_once('Trello/Exception/SSLCaFileNotFound.php');
 require_once('Trello/Exception/Unexpected.php');
 require_once('Trello/Exception/UpgradeRequired.php');
 require_once('Trello/Exception/ValidationsFailed.php');
-require_once('Trello/Result/Error.php');
-require_once('Trello/Result/Successful.php');
-require_once('Trello/Xml/Generator.php');
-require_once('Trello/Xml/Parser.php');
 
 if (version_compare(PHP_VERSION, '5.4.1', '<')) {
     throw new Trello_Exception('PHP version >= 5.4.1 required'); // @codeCoverageIgnore
