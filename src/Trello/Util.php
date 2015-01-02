@@ -168,10 +168,8 @@ class Trello_Util
     public static function throwStatusCodeException($status_code, $message = null)
     {
         $exceptions = [
-            'default' => function ($status_code) {
-                throw new Trello_Exception_Unexpected(
-                    'Unexpected HTTP_RESPONSE #'.$status_code
-                );
+            'default' => function ($message) {
+                throw new Trello_Exception_Unexpected($message);
             },
             401 => function ($message) {
                 throw new Trello_Exception_Authentication($message);
@@ -196,7 +194,22 @@ class Trello_Util
         if (array_key_exists($status_code, $exceptions)) {
             $exceptions[$status_code]($message);
         } else { // @codeCoverageIgnore
+            $message = self::_defaultExceptionMessage($status_code, $message);
             $exceptions['default']($status_code);
         }
     } // @codeCoverageIgnore
+
+    /**
+     * Builds default exception message
+     *
+     * @access private
+     * @param string $status_code   HTTP status code to throw exception from
+     * @param string $message       Optional message
+     *
+     * @return string Exception message
+     */
+    private static function _defaultExceptionMessage($status_code, $message = null)
+    {
+        return 'Unexpected HTTP_RESPONSE #' . $status_code . ($message ? ': ' . $message : '');
+    }
 }

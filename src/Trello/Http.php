@@ -211,15 +211,15 @@ class Trello_Http
     /**
      * Build curl headers
      *
-     * @return array Curl headers
+     * @return string[] Curl headers
      */
     private static function _curlHeaders()
     {
-        return array(
+        return [
             'Accept: application/json',
             'Content-Type: application/json',
             'User-Agent: ' . Trello_Configuration::applicationName() . ' ' . Trello_Version::get(),
             'X-ApiVersion: ' . Trello_Configuration::API_VERSION
-        );
+        ];
     }
 }
