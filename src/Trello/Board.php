@@ -192,7 +192,7 @@ class Trello_Board extends Trello_Model
      * @param  string $name Name of list
      * @param  mixed $position Optional position of list in board
      *
-     * @return Trello_Checklist Newly minted checlist object
+     * @return Trello_List Newly minted List object
      * @throws Trello_Exception_ValidationsFailed
      */
     public function addList($name = null, $position = null)
@@ -214,9 +214,9 @@ class Trello_Board extends Trello_Model
     /**
      * add specific powerup to current board
      *
-     * @param string Powerup name
+     * @param string $powerup Powerup name
      *
-     * @return array List of existing powerups
+     * @return stdClass|null List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function addPowerUp($powerup = null)
@@ -232,9 +232,9 @@ class Trello_Board extends Trello_Model
     /**
      * remove specific powerup from current board
      *
-     * @param string Powerup name
+     * @param string $powerup Powerup name
      *
-     * @return array List of existing powerups
+     * @return stdClass|null List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function removePowerUp($powerup = null)
@@ -250,7 +250,7 @@ class Trello_Board extends Trello_Model
     /**
      * add card aging powerup to current board
      *
-     * @return array List of existing powerups
+     * @return stdClass|null List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function addPowerUpCardAging()
@@ -261,7 +261,7 @@ class Trello_Board extends Trello_Model
     /**
      * remove card aging powerup from current board
      *
-     * @return array List of existing powerups
+     * @return stdClass|null List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function removePowerUpCardAging()
@@ -272,7 +272,7 @@ class Trello_Board extends Trello_Model
     /**
      * add calendar powerup to current board
      *
-     * @return array List of existing powerups
+     * @return stdClass|null List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function addPowerUpCalendar()
@@ -283,7 +283,7 @@ class Trello_Board extends Trello_Model
     /**
      * remove calendar powerup from current board
      *
-     * @return array List of existing powerups
+     * @return stdClass|null List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function removePowerUpCalendar()
@@ -294,7 +294,7 @@ class Trello_Board extends Trello_Model
     /**
      * add recap powerup to current board
      *
-     * @return array List of existing powerups
+     * @return stdClass|null List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function addPowerUpRecap()
@@ -305,7 +305,7 @@ class Trello_Board extends Trello_Model
     /**
      * remove recap powerup from current board
      *
-     * @return array List of existing powerups
+     * @return stdClass|null List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function removePowerUpRecap()
@@ -316,7 +316,7 @@ class Trello_Board extends Trello_Model
     /**
      * add voting powerup to current board
      *
-     * @return array List of existing powerups
+     * @return stdClass|null List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function addPowerUpVoting()
@@ -327,7 +327,7 @@ class Trello_Board extends Trello_Model
     /**
      * remove voting powerup from current board
      *
-     * @return array List of existing powerups
+     * @return stdClass|null List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function removePowerUpVoting()
@@ -338,7 +338,7 @@ class Trello_Board extends Trello_Model
     /**
      * generate calendar key for current board
      *
-     * @return mixed Calendar key object
+     * @return stdClass|null Calendar key object
      */
     public function generateCalendarKey()
     {
@@ -348,7 +348,7 @@ class Trello_Board extends Trello_Model
     /**
      * generate email key for current board
      *
-     * @return mixed Email key object
+     * @return stdClass|null Email key object
      */
     public function generateEmailKey()
     {

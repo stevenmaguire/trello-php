@@ -95,11 +95,11 @@ abstract class Trello
      * @return object returns the passed object if successful
      * @throws Trello_Exception_ValidationsFailed
      */
-    public static function returnObjectOrThrowException($className, $resultObj)
+    public static function returnObjectOrThrowException($class_name, $result_obj)
     {
-        $resultObjName = Trello_Util::cleanClassName($className);
-        if ($resultObj->success) {
-            return $resultObj->$resultObjName;
+        $result_obj_name = Trello_Util::cleanClassName($class_name);
+        if ($result_obj->success) {
+            return $result_obj->$result_obj_name;
         } else {
             throw new Trello_Exception_ValidationsFailed();
         }
@@ -136,10 +136,9 @@ if (version_compare(PHP_VERSION, '5.4.1', '<')) {
     throw new Trello_Exception('PHP version >= 5.4.1 required'); // @codeCoverageIgnore
 }
 
-
 function requireDependencies() {
-    $requiredExtensions = array('xmlwriter', 'SimpleXML', 'openssl', 'dom', 'hash', 'curl');
-    foreach ($requiredExtensions AS $ext) {
+    $required_extensions = array('xmlwriter', 'SimpleXML', 'openssl', 'dom', 'hash', 'curl');
+    foreach ($required_extensions AS $ext) {
         if (!extension_loaded($ext)) {
             throw new Trello_Exception('The Trello library requires the ' . $ext . ' extension.'); // @codeCoverageIgnore
         }
