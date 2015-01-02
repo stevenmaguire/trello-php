@@ -57,12 +57,10 @@ final class Trello_Xml
         libxml_use_internal_errors(true);
 
         $doc = simplexml_load_string($string);
+        $errors = libxml_get_errors();
 
-        if (!$doc) {
-            $errors = libxml_get_errors();
-            if (!empty($errors)) {
-                return false;
-            }
+        if (!$doc && !empty($errors)) {
+            return false;
         }
 
         libxml_clear_errors();

@@ -10,11 +10,11 @@ abstract class Trello_Model
      * sets instance properties from an object of values
      *
      * @access protected
-     * @param array $creditCardAttribs array of creditcard data
+     * @param mixed $response
      *
      * @return object Initialized object
      */
-    protected function _initialize($response = null)
+    protected function _initialize($response)
     {
         return self::_mapAs($this, $response);
     }
@@ -39,6 +39,7 @@ abstract class Trello_Model
      * @codeCoverageIgnore
      * @param string $url
      * @param array $params
+     *
      * @return mixed
      */
     protected static function _doCreate($url, $params)
@@ -48,31 +49,63 @@ abstract class Trello_Model
     }
 
     /**
-     * sends the create request to the gateway
+     * sends the delete request to the gateway
      *
      * @codeCoverageIgnore
      * @param string $url
      * @param array $params
+     *
      * @return mixed
      */
-    protected static function _doFetch($url, $params = [])
+    protected static function _doDelete($url, $params = [])
     {
-        $response = Trello_Http::get($url. Trello_Util::makeQueryStringFromArray($params));
+        $response = Trello_Http::delete($url, $params);
         return self::factory($response);
     }
 
     /**
-     * sends the create request to the gateway
+     * sends the fetch request to the gateway
      *
      * @codeCoverageIgnore
      * @param string $url
      * @param array $params
+     *
+     * @return mixed
+     */
+    protected static function _doFetch($url, $params = [])
+    {
+        $response = Trello_Http::get($url, $params);
+        return self::factory($response);
+    }
+
+    /**
+     * sends the search request to the gateway
+     *
+     * @codeCoverageIgnore
+     * @param string $url
+     * @param array $params
+     *
      * @return mixed
      */
     protected static function _doSearch($keyword = null, $params = [])
     {
         $params['query'] = $keyword;
-        return Trello_Http::get('/search?'. Trello_Util::makeQueryStringFromArray($params));
+        return Trello_Http::get('/search', $params);
+    }
+
+    /**
+     * sends the store request to the gateway
+     *
+     * @codeCoverageIgnore
+     * @param string $url
+     * @param array $params
+     *
+     * @return mixed
+     */
+    protected static function _doStore($url, $params)
+    {
+        $response = Trello_Http::put($url, $params);
+        return self::factory($response);
     }
 
     /**

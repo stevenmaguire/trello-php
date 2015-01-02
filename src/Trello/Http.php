@@ -7,7 +7,7 @@
  */
 class Trello_Http
 {
-    public static function delete($path)
+    public static function delete($path, $params = [])
     {
         $response = self::_doRequest('DELETE', $path);
         if($response['status'] === 200) {
@@ -15,10 +15,11 @@ class Trello_Http
         } else {
             Trello_Util::throwStatusCodeException($response['status']);
         }
-    }
+    } // @codeCoverageIgnore
 
-    public static function get($path)
+    public static function get($path, $params = [])
     {
+        $path = $path . '?' . Trello_Util::buildQueryStringFromArray($params);
         $response = self::_doRequest('GET', $path);
         if($response['status'] === 200) {
             $object = Trello_Json::buildObjectFromJson($response['body']);
@@ -26,9 +27,9 @@ class Trello_Http
         } else {
             Trello_Util::throwStatusCodeException($response['status']);
         }
-    }
+    } // @codeCoverageIgnore
 
-    public static function post($path, $params = null)
+    public static function post($path, $params = [])
     {
         $response = self::_doRequest('POST', $path, self::_buildJson($params));
         $responseCode = $response['status'];
@@ -38,9 +39,9 @@ class Trello_Http
         } else {
             Trello_Util::throwStatusCodeException($responseCode);
         }
-    }
+    } // @codeCoverageIgnore
 
-    public static function put($path, $params = null)
+    public static function put($path, $params = [])
     {
         $response = self::_doRequest('PUT', $path, self::_buildJson($params));
         $responseCode = $response['status'];
@@ -50,7 +51,7 @@ class Trello_Http
         } else {
             Trello_Util::throwStatusCodeException($responseCode);
         }
-    }
+    } // @codeCoverageIgnore
 
     private static function _buildJson($params)
     {
@@ -86,13 +87,13 @@ class Trello_Http
         return $url;
     }
 
-    private static function _doRequest($httpVerb, $path, $requestBody = null)
+    private static function _doRequest($httpVerb, $path, $requestBody = [])
     {
         $response = self::_doUrlRequest($httpVerb, Trello_Configuration::serviceUrl() . self::_includeKeyInUrl($path) , $requestBody);
         return $response;
     }
 
-    public static function _doUrlRequest($httpVerb, $url, $requestBody = null)
+    public static function _doUrlRequest($httpVerb, $url, $requestBody = [])
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_TIMEOUT, 60);
