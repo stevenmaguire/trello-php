@@ -149,7 +149,7 @@ class Trello_Configuration extends Trello
      * Set or set attribute
      *
      * @param string $name Name of property
-     * @param mixed $value Optional value to set
+     * @param string|null $value Optional value to set
      */
     private static function setOrGet($name, $value = null)
     {
@@ -171,7 +171,7 @@ class Trello_Configuration extends Trello
      * @static
      * @param string $value pass a string to set, empty to get
      *
-     * @return mixed returns true on set
+     * @return string returns true on set
      */
     public static function environment($value = null)
     {
@@ -185,7 +185,7 @@ class Trello_Configuration extends Trello
      * @static
      * @param string $value pass a string to set, empty to get
      *
-     * @return mixed returns true on set
+     * @return string returns true on set
      */
     public static function key($value = null)
     {
@@ -199,7 +199,7 @@ class Trello_Configuration extends Trello
      * @static
      * @param string $value pass a string to set, empty to get
      *
-     * @return mixed returns true on set
+     * @return string returns true on set
      */
     public static function secret($value = null)
     {
@@ -213,7 +213,7 @@ class Trello_Configuration extends Trello
      * @static
      * @param string $value pass a string to set, empty to get
      *
-     * @return mixed returns true on set
+     * @return string returns true on set
      */
     public static function token($value = null)
     {
@@ -227,7 +227,7 @@ class Trello_Configuration extends Trello
      * @static
      * @param string $value pass a string to set, empty to get
      *
-     * @return mixed returns true on set
+     * @return string returns true on set
      */
     public static function applicationName($value = null)
     {

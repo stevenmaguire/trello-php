@@ -30,7 +30,7 @@ abstract class Trello_Model
      * @access protected
      * @param mixed $response
      *
-     * @return object Initialized object
+     * @return Trello_Model Initialized object
      */
     protected function _initialize($response)
     {
@@ -100,7 +100,7 @@ abstract class Trello_Model
      * sends the search request to the gateway
      *
      * @codeCoverageIgnore
-     * @param string $url
+     * @param string $keyword
      * @param array $params
      *
      * @return stdClass|null
@@ -129,7 +129,7 @@ abstract class Trello_Model
     /**
      * Map an object as another given object
      *
-     * @param  mixed $destination Object to receive the mapping
+     * @param  Trello_Model $destination Object to receive the mapping
      * @param  object sourceObject Object from which to map data
      *
      * @return Trello_Model Mapped object
