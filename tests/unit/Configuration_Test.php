@@ -45,6 +45,16 @@ class Configuration_Test extends TestCase
     }
 
     /**
+     * @expectedException Trello_Exception_Configuration
+     */
+    public function test_It_Cannot_Set_Invalid_Environment()
+    {
+        $environment = rand(1000,9999);
+
+        Trello_Configuration::environment($environment);
+    }
+
+    /**
      * @depends test_It_Can_Set_Configuration
      */
     public function test_It_Can_Reset_Configuration()

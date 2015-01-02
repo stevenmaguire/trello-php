@@ -61,42 +61,21 @@ class Trello_Configuration extends Trello
     /**
      * performs sanity checks when config settings are being set
      *
-     * @codeCoverageIgnore
-     * @access protected
+     * @access private
+     * @static
      * @param string $key name of config setting
      * @param string $value value to set
+     *
+     * @return boolean
      * @throws InvalidArgumentException
      * @throws Trello_Exception_Configuration
-     * @static
-     * @return boolean
      */
-    private static function validate($key=null, $value=null)
+    private static function validate($key = null, $value = null)
     {
-        if (empty($key) && empty($value)) {
-            // @codeCoverageIgnoreStart
-            throw new InvalidArgumentException('nothing to validate');
-            // @codeCoverageIgnoreEnd
-        }
-
         if ($key === 'environment' &&
-           !in_array($value, self::$_validEnvironments) ) {
-            // @codeCoverageIgnoreStart
-            throw new Trello_Exception_Configuration('"' .
-                                    $value . '" is not a valid environment.');
-            // @codeCoverageIgnoreEnd
-        }
-
-        if (!isset(self::$_cache[$key])) {
-             // @codeCoverageIgnoreStart
-            throw new Trello_Exception_Configuration($key .
-                                    ' is not a valid configuration setting.');
-             // @codeCoverageIgnoreEnd
-        }
-
-        if (empty($value)) {
-            // @codeCoverageIgnoreStart
-            throw new InvalidArgumentException($key . ' cannot be empty.');
-            // @codeCoverageIgnoreEnd
+            !in_array($value, self::$_validEnvironments)) {
+                throw new Trello_Exception_Configuration('"' .
+                    $value . '" is not a valid environment.');
         }
 
         return true;
@@ -110,11 +89,8 @@ class Trello_Configuration extends Trello
      */
     private static function set($key, $value)
     {
-        // this method will raise an exception on invalid data
         self::validate($key, $value);
-        // set the value in the cache
         self::$_cache[$key] = $value;
-
     }
 
     /**
