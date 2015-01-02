@@ -103,22 +103,7 @@ class Trello_Configuration extends Trello
      */
     private static function get($key)
     {
-        // throw an exception if the value hasn't been set
-        if (isset(self::$_cache[$key]) &&
-           (empty(self::$_cache[$key]))) {
-            // @codeCoverageIgnoreStart
-            throw new Trello_Exception_Configuration(
-                      $key.' needs to be set.'
-                      );
-            // @codeCoverageIgnoreEnd
-        }
-
-        if (array_key_exists($key, self::$_cache)) {
-            return self::$_cache[$key];
-        }
-
-        // return null by default to prevent __set from overloading
-        return null; // @codeCoverageIgnore
+        return self::$_cache[$key];
     }
 
     /**
@@ -209,7 +194,6 @@ class Trello_Configuration extends Trello
     {
         return self::setOrGet(__FUNCTION__, $value);
     }
-    /**#@-*/
 
     /**
      * returns the full service URL based on config values
@@ -221,8 +205,7 @@ class Trello_Configuration extends Trello
      */
     public static function serviceUrl()
     {
-        return self::baseUrl() .
-               self::versionPath();
+        return self::baseUrl() . self::versionPath();
     }
 
     /**
@@ -235,8 +218,7 @@ class Trello_Configuration extends Trello
      */
     public static function baseUrl()
     {
-        return self::protocol() . '://' .
-                  self::serverName();
+        return self::protocol() . '://' . self::serverName();
     }
 
     /**
