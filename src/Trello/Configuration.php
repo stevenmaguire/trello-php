@@ -225,6 +225,7 @@ class Trello_Configuration extends Trello
      * @access public
      * @static
      * @param none
+     *
      * @return string http || https
      */
     public static function protocol()
@@ -238,6 +239,7 @@ class Trello_Configuration extends Trello
      * @access public
      * @static
      * @param none
+     *
      * @return string server domain name
      */
     public static function serverName()

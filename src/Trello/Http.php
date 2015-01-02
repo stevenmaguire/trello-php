@@ -9,7 +9,7 @@ class Trello_Http
 {
     public static function delete($path, $params = [])
     {
-        $response = self::_doRequest('DELETE', $path);
+        $response = self::_doRequest('DELETE', $path, $params);
         if($response['status'] === 200) {
             return true;
         } else {
@@ -19,8 +19,7 @@ class Trello_Http
 
     public static function get($path, $params = [])
     {
-        $path = $path . '?' . Trello_Util::buildQueryStringFromArray($params);
-        $response = self::_doRequest('GET', $path);
+        $response = self::_doRequest('GET', $path, $params);
         if($response['status'] === 200) {
             $object = Trello_Json::buildObjectFromJson($response['body']);
             return $object;
@@ -31,7 +30,7 @@ class Trello_Http
 
     public static function post($path, $params = [])
     {
-        $response = self::_doRequest('POST', $path, self::_buildJson($params));
+        $response = self::_doRequest('POST', $path, $params);
         $responseCode = $response['status'];
         if($responseCode === 200 || $responseCode === 201 || $responseCode === 422) {
             $object = Trello_Json::buildObjectFromJson($response['body']);
@@ -43,7 +42,7 @@ class Trello_Http
 
     public static function put($path, $params = [])
     {
-        $response = self::_doRequest('PUT', $path, self::_buildJson($params));
+        $response = self::_doRequest('PUT', $path, $params);
         $responseCode = $response['status'];
         if($responseCode === 200 || $responseCode === 201 || $responseCode === 422) {
             $object = Trello_Json::buildObjectFromJson($response['body']);
@@ -63,41 +62,52 @@ class Trello_Http
     {
         $key = Trello_Configuration::key();
         if (!empty($key)) {
-            if (strpos($url, '?') !== false) {
-                if (substr($url, -1) != '?') {
-                    $url .= '&';
-                }
-            } else {
-                $url .= '?';
-            }
-            $url .= 'key='.Trello_Configuration::key();
+            $url = self::_buildPath($url, ['key' => $key]);
         }
 
         $token = Trello_Configuration::token();
         if (!empty($token)) {
-            if (strpos($url, '?') !== false) {
-                if (substr($url, -1) != '?') {
-                    $url .= '&';
-                }
-            } else {
-                $url .= '?';
-            }
-            $url .= 'token='.Trello_Configuration::token();
+            $url = self::_buildPath($url, ['token' => $token]);
         }
         return $url;
     }
 
-    private static function _doRequest($httpVerb, $path, $requestBody = [])
+    private static function _buildPath($path, $params = [])
     {
-        $response = self::_doUrlRequest($httpVerb, Trello_Configuration::serviceUrl() . self::_includeKeyInUrl($path) , $requestBody);
+        $query_string = Trello_Util::buildQueryStringFromArray($params);
+        if (strpos($path, '?') !== false) {
+            if (substr($path, -1) != '?') {
+                $path .= '&';
+            }
+        } else {
+            $path .= '?';
+        }
+        return $path . $query_string;
+    }
+
+    private static function _doRequest($verb, $path, $request_body = [])
+    {
+        switch (strtolower($verb)) {
+            case 'patch':
+            case 'post':
+            case 'put':
+                $request_body = self::_buildJson($request_body);
+                break;
+            case 'get':
+            case 'delete';
+                $path = self::_buildPath($path, $request_body);
+                $request_body = null;
+                break;
+        }
+        $response = self::_doUrlRequest($verb, Trello_Configuration::serviceUrl() . self::_includeKeyInUrl($path), $request_body);
         return $response;
     }
 
-    public static function _doUrlRequest($httpVerb, $url, $requestBody = [])
+    public static function _doUrlRequest($verb, $url, $request_body = null)
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_TIMEOUT, 60);
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $httpVerb);
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $verb);
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_ENCODING, 'gzip');
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -107,15 +117,15 @@ class Trello_Http
             'X-ApiVersion: ' . Trello_Configuration::API_VERSION
         ]);
 
-        if(!empty($requestBody)) {
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $requestBody);
+        if(!empty($request_body)) {
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $request_body);
         }
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($curl);
-        $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $http_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
 
-        return ['status' => $httpStatus, 'body' => $response];
+        return ['status' => $http_status, 'body' => $response];
     }
 }
