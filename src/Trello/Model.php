@@ -7,23 +7,8 @@
  * @copyright  2014 Steven Maguire
  * @abstract
  */
-abstract class Trello_Model
+abstract class Trello_Model extends Trello
 {
-    /**
-     * Get model attribute
-     *
-     * @param  string  Attribute name
-     *
-     * @return mixed  Attribute value
-     */
-    public function __get($property)
-    {
-        if (property_exists($this, $property)) {
-            return $this->$property;
-        }
-        return null;
-    }
-
     /**
      * sets instance properties from an object of values
      *
@@ -124,6 +109,19 @@ abstract class Trello_Model
     {
         $response = Trello_Http::put($url, $params);
         return self::factory($response);
+    }
+
+    protected static function _doBatch($urls)
+    {
+        $collection = new Trello_Collection;
+        $response = Trello_Http::get('/batch', ['urls' => $urls]);
+        foreach ($response as $item) {
+            if ($item->{'200'}) {
+                $model = self::factory($item->{'200'});
+                $collection->add($model);
+            }
+        }
+        return $collection;
     }
 
     /**

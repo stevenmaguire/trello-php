@@ -37,7 +37,7 @@
 
 |Method|Endpoint|Status|
 |------|--------|------|
-|GET|/1/batch|![notstarted]|
+|GET|/1/batch|![wip]|
 
 ## board
 

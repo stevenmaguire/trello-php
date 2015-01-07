@@ -127,6 +127,8 @@ class Board_Test extends IntegrationTestCase
 
         $this->assertEquals('Trello_List', get_class($result));
         $this->assertEquals($this->list_name, $result->name);
+
+        return $board;
     }
 
     /**
@@ -147,6 +149,16 @@ class Board_Test extends IntegrationTestCase
 
         $this->assertEquals('Trello_List', get_class($result));
         $this->assertEquals($this->list_name, $result->name);
+    }
+
+    /**
+     * @depends test_It_Can_Add_A_List_With_A_Name
+     */
+    public function test_It_Can_Get_All_Lists($board)
+    {
+        $result = $board->getLists();
+
+        $this->assertInstanceOf('Trello_Collection', $result);
     }
 
     /**

@@ -50,6 +50,53 @@ class Trello_List extends Trello_Model
     protected $fields;
 
     /**
+     * fetch a list
+     *
+     * @param  string $list_id List id to fetch
+     *
+     * @return Trello_List  Trello list matching id
+     * @throws Trello_Exception_ValidationsFailed
+     */
+    public static function fetch($list_id = null)
+    {
+        if ($list_id) {
+            if (is_array($list_id)) {
+                $urls = [];
+                foreach ($list_id as $id) {
+                    $urls[] = '/list/'.$id;
+                }
+                return self::_doBatch($urls);
+            }
+            return self::_doFetch('/list/'.$list_id);
+        }
+        throw new Trello_Exception_ValidationsFailed(
+            'attempted to fetch list without id; it\'s gotta have an id'
+        );
+    }
+
+    /**
+     * Get card models for list
+     *
+     * @return Trello_Collection Collection of card models
+     */
+    public function getCards()
+    {
+        $ids = [];
+        if (is_array($this->cards)) {
+            foreach ($this->cards as $card_id) {
+                $ids[] = $card_id;
+            }
+        } else {
+            $cards = Trello_Http::get('/list/'.$this->id.'/cards');
+            $ids = [];
+            foreach ($cards as $card) {
+                $ids[] = $card->id;
+            }
+        }
+        //return Trello_Card::fetch($ids);
+    }
+
+    /**
      * create a new card
      *
      * @param  array $attributes Card attributes to set
