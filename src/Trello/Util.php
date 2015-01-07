@@ -7,7 +7,7 @@
  * @copyright  Steven Maguire
  */
 
-class Trello_Util
+class Trello_Util extends Trello
 {
     /**
      * Removes the Trello_ header from classname

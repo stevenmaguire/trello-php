@@ -88,6 +88,16 @@ class Trello_Board extends Trello_Model
     protected $labelNames;
 
     /**
+     * Get model base url
+     *
+     * @return string Base url
+     */
+    public static function getBaseUrl($board_id = null)
+    {
+        return '/boards'.($board_id ? '/'.$board_id : '');
+    }
+
+    /**
      * create a new board
      *
      * @param  array $attribs Board attributes to set
@@ -105,7 +115,7 @@ class Trello_Board extends Trello_Model
         if (!empty($name)) {
             $attribs['name'] = $name;
         }
-        return self::_doCreate('/boards', $attribs);
+        return self::_doCreate(self::getBaseUrl(), $attribs);
     }
 
     /**
@@ -127,7 +137,7 @@ class Trello_Board extends Trello_Model
     /**
      * fetch a board
      *
-     * @param  string $board_id Board id to close
+     * @param  string $board_id Board id to fetch
      *
      * @return Trello_Board  Trello board matching id
      * @throws Trello_Exception_ValidationsFailed
@@ -135,7 +145,7 @@ class Trello_Board extends Trello_Model
     public static function fetch($board_id = null)
     {
         if ($board_id) {
-            return self::_doFetch('/boards/'.$board_id);
+            return self::_doFetch(self::getBaseUrl($board_id));
         }
         throw new Trello_Exception_ValidationsFailed(
             'attempted to fetch board without id; it\'s gotta have an id'
@@ -152,8 +162,13 @@ class Trello_Board extends Trello_Model
      */
     public static function closeBoard($board_id = null)
     {
-        $result = Trello_Http::put('/boards/'.$board_id.'/closed', ['value' => true]);
-        return $result->closed;
+        if ($board_id) {
+            $result = Trello_Http::put(self::getBaseUrl($board_id).'/closed', ['value' => true]);
+            return $result->closed;
+        }
+        throw new Trello_Exception_ValidationsFailed(
+            'attempted to close board without id; it\'s gotta have an id'
+        );
     }
 
     /**
@@ -178,7 +193,7 @@ class Trello_Board extends Trello_Model
     public function addChecklist($name = null)
     {
         if ($name) {
-            $result = Trello_Http::post('/boards/'.$this->id.'/checklists', ['name' => $name]);
+            $result = Trello_Http::post(self::getBaseUrl($this->id).'/checklists', ['name' => $name]);
             return Trello_Checklist::factory($result);
         }
         throw new Trello_Exception_ValidationsFailed(
@@ -353,6 +368,21 @@ class Trello_Board extends Trello_Model
     public function generateEmailKey()
     {
         return Trello_Http::post('/boards/'.$this->id.'/emailKey/generate');
+    }
+
+    /**
+     * Get lists attached to board
+     *
+     * @return Trello_Collection Collection of Trello_List
+     */
+    public function getLists()
+    {
+        $lists = Trello_Http::get('/boards/'.$this->id.'/lists');
+        $ids = [];
+        foreach ($lists as $list) {
+            $ids[] = $list->id;
+        }
+        return Trello_List::fetch($ids);
     }
 
     /**

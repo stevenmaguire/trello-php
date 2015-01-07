@@ -19,7 +19,20 @@ set_include_path(
 
 abstract class Trello
 {
-
+    /**
+     * Get attribute
+     *
+     * @param  string  Attribute name
+     *
+     * @return mixed  Attribute value
+     */
+    public function __get($property)
+    {
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        }
+        return null;
+    }
 }
 
 require_once('Trello/Action.php');
