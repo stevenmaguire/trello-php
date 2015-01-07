@@ -90,22 +90,22 @@ class Trello_Board extends Trello_Model
     /**
      * create a new board
      *
-     * @param  array $attribs Board attributes to set
+     * @param  array $attributes Board attributes to set
      *
      * @return Trello_Board  Newly minted trello board
      * @throws Trello_Exception_ValidationsFailed
      */
-    public static function create($name = null, $attribs = [])
+    public static function create($name = null, $attributes = [])
     {
-        if (empty($name) && !isset($attribs['name'])) {
+        if (empty($name) && !isset($attributes['name'])) {
             throw new Trello_Exception_ValidationsFailed(
                 'attempted to create board without name; it\'s gotta have a name'
             );
         }
         if (!empty($name)) {
-            $attribs['name'] = $name;
+            $attributes['name'] = $name;
         }
-        return self::_doCreate('/boards', $attribs);
+        return self::_doCreate('/boards', $attributes);
     }
 
     /**
@@ -363,6 +363,21 @@ class Trello_Board extends Trello_Model
     public function markAsViewed()
     {
         return Trello_Http::post('/boards/'.$this->id.'/markAsViewed');
+    }
+
+    /**
+     * Get cards on board
+     *
+     * @return Trello_Collection Cards
+     */
+    public function getCards()
+    {
+        $cards = [];
+        $result = Trello_Http::get('/boards/'.$this->id.'/cards');
+        foreach ($result as $card) {
+            $cards[] = Trello_Card::factory($card);
+        }
+        return new Trello_Collection($cards);
     }
 
     /**

@@ -48,4 +48,29 @@ class Trello_List extends Trello_Model
      * @property array $fields
      */
     protected $fields;
+
+    /**
+     * create a new card
+     *
+     * @param  array $attributes Card attributes to set
+     *
+     * @return Trello_Card  Newly minted trello card
+     */
+    public function createCard($attributes = [])
+    {
+        $attributes['idList'] = $this->id;
+        return Trello_Card::create($attributes);
+    }
+
+    /**
+     * add a card to the list
+     *
+     * @param  Trello_Card $card Card to add
+     *
+     * @return Trello_Card Updated card
+     */
+    public function addCard(Trello_Card $card)
+    {
+        return Trello_Card::updateList($this);
+    }
 }
