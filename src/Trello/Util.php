@@ -168,35 +168,22 @@ class Trello_Util extends Trello
     public static function throwStatusCodeException($status_code, $message = null)
     {
         $exceptions = [
-            'default' => function ($message) {
-                throw new Trello_Exception_Unexpected($message);
-            },
-            401 => function ($message) {
-                throw new Trello_Exception_Authentication($message);
-            },
-            403 => function ($message) {
-                throw new Trello_Exception_Authorization($message);
-            },
-            404 => function ($message) {
-                throw new Trello_Exception_NotFound($message);
-            },
-            426 => function ($message) {
-                throw new Trello_Exception_UpgradeRequired($message);
-            },
-            500 => function ($message) {
-                throw new Trello_Exception_ServerError($message);
-            },
-            503 => function ($message) {
-                throw new Trello_Exception_DownForMaintenance($message);
-            }
+            'default' => 'Trello_Exception_Unexpected',
+            401 => 'Trello_Exception_Authentication',
+            403 => 'Trello_Exception_Authorization',
+            404 => 'Trello_Exception_NotFound',
+            426 => 'Trello_Exception_UpgradeRequired',
+            500 => 'Trello_Exception_ServerError',
+            503 => 'Trello_Exception_DownForMaintenance'
         ];
 
         if (array_key_exists($status_code, $exceptions)) {
-            $exceptions[$status_code]($message);
+            $exception = $exceptions[$status_code];
         } else { // @codeCoverageIgnore
             $message = self::_defaultExceptionMessage($status_code, $message);
-            $exceptions['default']($message);
+            $exception = $exceptions['default'];
         }
+        throw new $exception($message);
     } // @codeCoverageIgnore
 
     /**
