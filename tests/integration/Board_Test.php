@@ -171,6 +171,30 @@ class Board_Test extends IntegrationTestCase
     }
 
     /**
+     * @depends test_It_Can_Get_A_Board
+     */
+    public function test_It_Can_Add_A_List_With_A_Name_And_Top_Position($board)
+    {
+        $attributes = ['name' => $this->list_name, 'position' => 'top'];
+        $result = $board->addList($attributes);
+
+        $this->assertInstanceOf('Trello_List', $result);
+        $this->assertEquals($this->list_name, $result->name);
+    }
+
+    /**
+     * @depends test_It_Can_Get_A_Board
+     */
+    public function test_It_Can_Add_A_List_With_A_Name_And_Bottom_Position($board)
+    {
+        $attributes = ['name' => $this->list_name, 'position' => 'bottom'];
+        $result = $board->addList($attributes);
+
+        $this->assertInstanceOf('Trello_List', $result);
+        $this->assertEquals($this->list_name, $result->name);
+    }
+
+    /**
      * @depends test_It_Can_Add_A_List_With_A_Name
      */
     public function test_It_Can_Get_All_Lists($board)

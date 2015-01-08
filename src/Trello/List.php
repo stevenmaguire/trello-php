@@ -139,13 +139,16 @@ class Trello_List extends Trello_Model
      */
     private static function parsePosition(&$attributes)
     {
-        if (isset($attributes['position'])
-            && (
-                preg_match('/[^0-9]+/', $attributes['position']) != 0
-                || $attributes['position'] != 'top'
-                || $attributes['position'] != 'bottom'
-            )) {
-            unset($attributes['position']);
+        if (isset($attributes['position'])) {
+            $positions = ['top','bottom','\d{'.strlen($attributes['position']).'}'];
+
+            $is_match = Trello_Util::matches(
+                $positions,
+                strtolower($attributes['position'])
+            );
+            if (!$is_match) {
+                unset($attributes['position']);
+            }
         }
     }
 
@@ -158,13 +161,7 @@ class Trello_List extends Trello_Model
      */
     public static function getListIds($lists = [])
     {
-        $ids = [];
-        if (is_array($lists)) {
-            foreach ($lists as $list) {
-                $ids[] = $list->id;
-            }
-        }
-        return $ids;
+        return Trello_Util::getItemProperties($lists, 'id');
     }
 
     /**

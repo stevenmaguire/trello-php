@@ -169,7 +169,7 @@ abstract class Trello_Model extends Trello
      * @param string $url
      * @param array $params
      *
-     * @return object
+     * @return array|stdClass|null
      * @throws Trello_Exception
      */
     protected static function _get($url, $params = [])

@@ -215,13 +215,7 @@ class Trello_Card extends Trello_Model
      */
     public static function getCardIds($cards = [])
     {
-        $ids = [];
-        if (is_array($cards)) {
-            foreach ($cards as $card) {
-                $ids[] = $card->id;
-            }
-        }
-        return $ids;
+        return Trello_Util::getItemProperties($cards, 'id');
     }
 
     /**

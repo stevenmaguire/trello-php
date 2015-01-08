@@ -36,6 +36,41 @@ class Trello_Util extends Trello
     }
 
     /**
+     * Get properties from list of items
+     *
+     * @param  array $items List of items
+     *
+     * @return array List of item properties
+     */
+    public static function getItemProperties($items = [], $property)
+    {
+        $properties = [];
+        if (is_array($items)) {
+            foreach ($items as $item) {
+                $properties[] = $item->$property;
+            }
+        }
+        return $properties;
+    }
+
+    /**
+     * Matches
+     *
+     * @return boolean
+     */
+    public static function matches($pattern, $subject)
+    {
+        if (is_array($pattern)) {
+            $pattern = implode($pattern, "|");
+        }
+
+        if (preg_match('/'.$pattern.'/', $subject) > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Find delimiter and convert to capital
      *
      * @access public
