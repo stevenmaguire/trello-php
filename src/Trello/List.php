@@ -155,7 +155,7 @@ class Trello_List extends Trello_Model
     /**
      * Get list ids from list of lists
      *
-     * @param  array $lists List of lists
+     * @param  stdClass|null $lists List of lists
      *
      * @return array List of list ids
      */

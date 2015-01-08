@@ -209,7 +209,7 @@ class Trello_Card extends Trello_Model
     /**
      * Get card ids from list of cards
      *
-     * @param  array $cards List of cards
+     * @param  stdClass|null $cards List of cards
      *
      * @return array List of card ids
      */
