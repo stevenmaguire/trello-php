@@ -148,12 +148,10 @@ abstract class Trello_Model extends Trello
     }
 
     /**
-     * [parseBatchResponse description]
+     * Parse a batch response into a given collection
      *
-     * @param  [type]  [description]
-     * @param  [type]  [description]
-     *
-     * @return [type]  [description]
+     * @param  array $response Batch response
+     * @param  Trello_Collection $collection  Collection
      */
     private static function parseBatchResponse($response, &$collection)
     {
