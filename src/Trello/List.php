@@ -85,20 +85,86 @@ class Trello_List extends Trello_Model
      */
     public static function create($attributes = [])
     {
+        self::parseAttributes($attributes);
+        return self::_doCreate(static::getBasePath(), $attributes);
+    }
+
+    /**
+     * Parse attributes
+     *
+     * @param  array $attributes
+     */
+    public static function parseAttributes(&$attributes)
+    {
         $defaults = ['name' => null, 'idBoard' => null];
         $attributes = array_merge($defaults, $attributes);
 
+        self::parseName($attributes);
+        self::parseBoardId($attributes);
+        self::parsePosition($attributes);
+    }
+
+    /**
+     * Parse attributes for name
+     *
+     * @param  array $attributes
+     */
+    private static function parseName(&$attributes)
+    {
         if (empty($attributes['name'])) {
             throw new Trello_Exception_ValidationsFailed(
-                'attempted to create list without name; it\'s gotta have a name'
+                'attempted to add list to board without list name; it\'s gotta have a name'
             );
         }
+    }
+
+    /**
+     * Parse attributes for board id
+     *
+     * @param  array $attributes
+     */
+    private static function parseBoardId(&$attributes)
+    {
         if (empty($attributes['idBoard'])) {
             throw new Trello_Exception_ValidationsFailed(
                 'attempted to create list without board; it\'s gotta have a board'
             );
         }
-        return self::_doCreate(static::getBasePath(), $attributes);
+    }
+
+    /**
+     * Parse attributes for position
+     *
+     * @param  array $attributes
+     */
+    private static function parsePosition(&$attributes)
+    {
+        if (isset($attributes['position'])
+            && (
+                preg_match('/[^0-9]+/', $attributes['position']) != 0
+                || $attributes['position'] != 'top'
+                || $attributes['position'] != 'bottom'
+            )) {
+            unset($attributes['position']);
+        }
+    }
+
+    /**
+     * Get list ids from list of lists
+     *
+     * @param  array $lists List of lists
+     *
+     * @return array List of list ids
+     */
+    public static function getListIds($lists = [])
+    {
+        $ids = [];
+        if (is_array($lists)) {
+            foreach ($lists as $list) {
+                $ids[] = $list->id;
+            }
+        }
+        return $ids;
     }
 
     /**

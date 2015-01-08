@@ -128,7 +128,8 @@ class Board_Test extends IntegrationTestCase
      */
     public function test_It_Can_Add_A_List_With_A_Name($board)
     {
-        $result = $board->addList($this->list_name);
+        $attributes = ['name' => $this->list_name];
+        $result = $board->addList($attributes);
 
         $this->assertInstanceOf('Trello_List', $result);
         $this->assertEquals($this->list_name, $result->name);
@@ -150,7 +151,20 @@ class Board_Test extends IntegrationTestCase
      */
     public function test_It_Can_Add_A_List_With_A_Name_And_Position($board)
     {
-        $result = $board->addList($this->list_name, 1);
+        $attributes = ['name' => $this->list_name, 'position' => 1];
+        $result = $board->addList($attributes);
+
+        $this->assertInstanceOf('Trello_List', $result);
+        $this->assertEquals($this->list_name, $result->name);
+    }
+
+    /**
+     * @depends test_It_Can_Get_A_Board
+     */
+    public function test_It_Can_Add_A_List_With_A_Name_And_Invalid_Position($board)
+    {
+        $attributes = ['name' => $this->list_name, 'position' => uniqid()];
+        $result = $board->addList($attributes);
 
         $this->assertInstanceOf('Trello_List', $result);
         $this->assertEquals($this->list_name, $result->name);

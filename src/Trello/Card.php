@@ -207,6 +207,24 @@ class Trello_Card extends Trello_Model
     }
 
     /**
+     * Get card ids from list of cards
+     *
+     * @param  array $cards List of cards
+     *
+     * @return array List of card ids
+     */
+    public static function getCardIds($cards = [])
+    {
+        $ids = [];
+        if (is_array($cards)) {
+            foreach ($cards as $card) {
+                $ids[] = $card->id;
+            }
+        }
+        return $ids;
+    }
+
+    /**
      * Update parent list
      *
      * @param  Trello_List $list Parent list

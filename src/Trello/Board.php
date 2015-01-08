@@ -203,27 +203,18 @@ class Trello_Board extends Trello_Model
     /**
      * add list to current board
      *
-     * @param  string $name Name of list
-     * @param  mixed $position Optional position of list in board
+     * @param  array $attributes List attributes
      *
      * @return Trello_List|Trello_Collection Newly minted List object
      * @throws Trello_Exception_ValidationsFailed
      * @throws Trello_Exception_NotFound
      */
-    public function addList($name = null, $position = null)
+    public function addList($attributes = [])
     {
-        $config = [];
-        if ($name) {
-            $config['name'] = $name;
-            if ($position && preg_match('/[0-9]+|top|bottom/', $position)) {
-                $config['position'] = $position;
-            }
-            $result = self::_post(static::getBasePath($this->id).'/lists', ['name' => $name]);
-            return Trello_List::fetch($result->id);
-        }
-        throw new Trello_Exception_ValidationsFailed(
-            'attempted to add list to board without list name; it\'s gotta have a name'
-        );
+        $attributes['idBoard'] = $this->id;
+        Trello_List::parseAttributes($attributes);
+        $result = self::_post(static::getBasePath($this->id).'/lists', $attributes);
+        return Trello_List::fetch($result->id);
     }
 
     /**
@@ -254,12 +245,25 @@ class Trello_Board extends Trello_Model
      */
     public function removePowerUp($powerup = null)
     {
-        if ($powerup && preg_match('/voting|cardAging|calendar|recap/', $powerup)) {
-            return self::_delete(static::getBasePath($this->id).'/powerUps/'.$powerup);
+        if (!self::isValidPowerUp($powerup)) {
+            throw new Trello_Exception_ValidationsFailed(
+                'attempted to remove invalid powerup from board; it\'s gotta be a valid powerup'
+            );
         }
-        throw new Trello_Exception_ValidationsFailed(
-            'attempted to remove invalid powerup from board; it\'s gotta be a valid powerup'
-        );
+        return self::_delete(static::getBasePath($this->id).'/powerUps/'.$powerup);
+    }
+
+    /**
+     * Checks if value is valid powerup
+     *
+     * @param  string $powerup
+     *
+     * @return boolean
+     */
+    public static function isValidPowerUp($powerup = null)
+    {
+        $powerups = ['voting','cardAging','calendar','recap'];
+        return in_array($powerup, $powerups);
     }
 
     /**
@@ -378,12 +382,7 @@ class Trello_Board extends Trello_Model
     public function getLists()
     {
         $lists = self::_get(static::getBasePath($this->id).'/lists');
-        $ids = [];
-        if (is_array($lists)) {
-            foreach ($lists as $list) {
-                $ids[] = $list->id;
-            }
-        }
+        $ids = Trello_List::getListIds($lists);
         return Trello_List::fetch($ids);
     }
 
@@ -404,13 +403,8 @@ class Trello_Board extends Trello_Model
      */
     public function getCards()
     {
-        $ids = [];
-        $result = self::_get(static::getBasePath($this->id).'/cards');
-        if (is_array($result)) {
-            foreach ($result as $card) {
-                $ids[] = $card->id;
-            }
-        }
+        $cards = self::_get(static::getBasePath($this->id).'/cards');
+        $ids = Trello_Card::getCardIds($cards);
         return Trello_Card::fetch($ids);
     }
 
