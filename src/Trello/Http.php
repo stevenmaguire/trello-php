@@ -16,7 +16,7 @@ class Trello_Http
      * @param  string $path Endpoint path
      * @param  array $params Optional params
      *
-     * @return boolean|null Operation successful
+     * @return boolean Operation successful
      * @throws Trello_Exception
      */
     public static function delete($path, $params = [])
@@ -167,8 +167,6 @@ class Trello_Http
      */
     private static function _doUrlRequest($verb, $url, $request_body = null)
     {
-        //print_r($url."\n");
-
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_TIMEOUT, 60);
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $verb);
@@ -185,9 +183,7 @@ class Trello_Http
         $http_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
 
-        $response_body = ['status' => $http_status, 'body' => $response];
-
-        return self::parseHttpResponse($response_body);
+        return self::parseHttpResponse($http_status, $response);
     }
 
     /**
@@ -198,14 +194,12 @@ class Trello_Http
      * @throws Trello_Exception
      * @return stdClass|null
      */
-    private static function parseHttpResponse($response_body)
+    private static function parseHttpResponse($status, $body)
     {
-        $responseCode = $response_body['status'];
-        if($responseCode === 200 || $responseCode === 201 || $responseCode === 422) {
-            return Trello_Json::buildObjectFromJson($response_body['body']);
+        if($status === 200 || $status === 201 || $status === 422) {
+            return Trello_Json::buildObjectFromJson($body);
         } else {
-            //print_r($response_body);
-            Trello_Util::throwStatusCodeException($responseCode);
+            Trello_Util::throwStatusCodeException($status);
         }
     } // @codeCoverageIgnore
 

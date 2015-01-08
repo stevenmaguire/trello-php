@@ -130,7 +130,7 @@ class Trello_Organization extends Trello_Model
     /**
      * Delete organization
      *
-     * @return boolean|null
+     * @return boolean
      */
     public function delete()
     {

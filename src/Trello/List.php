@@ -87,7 +87,6 @@ class Trello_List extends Trello_Model
     /**
      * create a new list
      *
-     * @param  string $name Name of new list
      * @param  array $attributes Board attributes to set
      *
      * @return Trello_Board  Newly minted trello board

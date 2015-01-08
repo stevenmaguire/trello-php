@@ -100,7 +100,6 @@ class Trello_Board extends Trello_Model
     /**
      * create a new board
      *
-     * @param  string $name Name of new board
      * @param  array $attributes Board attributes to set
      *
      * @return Trello_Board  Newly minted trello board
@@ -250,7 +249,7 @@ class Trello_Board extends Trello_Model
      *
      * @param string $powerup Powerup name
      *
-     * @return boolean|null List of existing powerups
+     * @return boolean List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function removePowerUp($powerup = null)
@@ -277,7 +276,7 @@ class Trello_Board extends Trello_Model
     /**
      * remove card aging powerup from current board
      *
-     * @return boolean|null List of existing powerups
+     * @return boolean List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function removePowerUpCardAging()
@@ -299,7 +298,7 @@ class Trello_Board extends Trello_Model
     /**
      * remove calendar powerup from current board
      *
-     * @return boolean|null List of existing powerups
+     * @return boolean List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function removePowerUpCalendar()
@@ -321,7 +320,7 @@ class Trello_Board extends Trello_Model
     /**
      * remove recap powerup from current board
      *
-     * @return boolean|null List of existing powerups
+     * @return boolean List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function removePowerUpRecap()
@@ -343,7 +342,7 @@ class Trello_Board extends Trello_Model
     /**
      * remove voting powerup from current board
      *
-     * @return boolean|null List of existing powerups
+     * @return boolean List of existing powerups
      * @throws Trello_Exception_ValidationsFailed
      */
     public function removePowerUpVoting()

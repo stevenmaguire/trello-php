@@ -238,4 +238,3 @@ class Trello_Card extends Trello_Model
         return Trello_Board::fetch($this->idBoard);
     }
 }
-

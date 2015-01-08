@@ -162,7 +162,7 @@ abstract class Trello_Model extends Trello
      * @param array $params
      *
      * @throws Trello_Exception
-     * @return stdClass
+     * @return boolean
      */
     protected static function _delete($url, $params = [])
     {
