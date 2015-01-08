@@ -32,7 +32,7 @@ class Trello_Http
      * @param  string $path Endpoint path
      * @param  array $params Optional params
      *
-     * @return stdClass Located object
+     * @return object Located object
      * @throws Trello_Exception
      */
     public static function get($path, $params = [])
