@@ -142,14 +142,27 @@ abstract class Trello_Model extends Trello
         $collection = new Trello_Collection;
         $response = Trello_Http::get('/batch', ['urls' => $urls]);
         if (is_array($response)) {
-            foreach ($response as $item) {
-                if (is_object($item) && property_exists($item, '200')) {
-                    $model = self::factory($item->{'200'});
-                    $collection->add($model);
-                }
-            }
+            self::parseBatchResponse($response, $collection);
         }
         return $collection;
+    }
+
+    /**
+     * [parseBatchResponse description]
+     *
+     * @param  [type]  [description]
+     * @param  [type]  [description]
+     *
+     * @return [type]  [description]
+     */
+    private static function parseBatchResponse($response, &$collection)
+    {
+        foreach ($response as $item) {
+            if (is_object($item) && property_exists($item, '200')) {
+                $model = self::factory($item->{'200'});
+                $collection->add($model);
+            }
+        }
     }
 
     /**
