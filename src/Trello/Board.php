@@ -134,7 +134,7 @@ class Trello_Board extends Trello_Model
     /**
      * fetch a board
      *
-     * @param  string|array $board_id Board id to fetch
+     * @param  string|array $board_id Board id(s) to fetch
      *
      * @return Trello_Collection|Trello_Board  Trello board matching id
      * @throws Trello_Exception_ValidationsFailed
