@@ -61,8 +61,9 @@ class Trello_List extends Trello_Model
      *
      * @param  string|array $list_id List id to fetch
      *
-     * @return Trello_List|Trello_Collection  Trello list matching id
+     * @return Trello_List|Trello_Collection  List model(s)
      * @throws Trello_Exception_ValidationsFailed
+     * @throws Trello_Exception_NotFound
      */
     public static function fetch($list_id = null)
     {
@@ -104,7 +105,7 @@ class Trello_List extends Trello_Model
     /**
      * Get card models for list
      *
-     * @return Trello_Collection Collection of card models
+     * @return Trello_Collection|Trello_Card Card model(s)
      */
     public function getCards()
     {

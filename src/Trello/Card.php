@@ -165,8 +165,9 @@ class Trello_Card extends Trello_Model
      *
      * @param  string|array $card_id Card id to fetch
      *
-     * @return Trello_List|Trello_Collection  Trello card matching id
+     * @return Trello_Card|Trello_Collection  Card model(s)
      * @throws Trello_Exception_ValidationsFailed
+     * @throws Trello_Exception_NotFound
      */
     public static function fetch($card_id = null)
     {

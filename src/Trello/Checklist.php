@@ -91,8 +91,9 @@ class Trello_Checklist extends Trello_Model
      *
      * @param  string|array $checklist_id Checklist id to fetch
      *
-     * @return Trello_Checklist|Trello_Collection  Trello checklist matching id
+     * @return Trello_Checklist|Trello_Collection  Checklist model(s)
      * @throws Trello_Exception_ValidationsFailed
+     * @throws Trello_Exception_NotFound
      */
     public static function fetch($checklist_id = null)
     {
