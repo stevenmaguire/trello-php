@@ -38,7 +38,7 @@ class Trello_Util extends Trello
     /**
      * Get properties from list of items
      *
-     * @param  array $items List of items
+     * @param  array|stdClass|null $items List of items
      * @param  string $property Property name
      *
      * @return array List of item properties
@@ -57,7 +57,7 @@ class Trello_Util extends Trello
     /**
      * Matches
      *
-     * @param string|array $pattern
+     * @param string[] $pattern
      * @param string $subject
      *
      * @return boolean
