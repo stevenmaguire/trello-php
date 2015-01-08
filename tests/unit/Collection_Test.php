@@ -91,6 +91,55 @@ class Collection_Test extends TestCase
         }
     }
 
+    public function test_It_Can_Get_First_Value_When_Collection_Not_Empty()
+    {
+        $items = ['value1','value2'];
+        $collection = $this->makeCollection($items);
+
+        $value = $collection->first();
+
+        $this->assertEquals($items[0], $value);
+    }
+
+    public function test_It_Can_Get_Last_Value_When_Collection_Not_Empty()
+    {
+        $items = ['value1','value2'];
+        $collection = $this->makeCollection($items);
+
+        $value = $collection->last();
+
+        $this->assertEquals($items[1], $value);
+    }
+
+    public function test_It_Can_Get_Same_Value_For_First_And_Last_Value_When_Collection_Contains_One_Item()
+    {
+        $items = ['value1'];
+        $collection = $this->makeCollection($items);
+
+        $first = $collection->first();
+        $last = $collection->last();
+
+        $this->assertEquals($first, $last);
+    }
+
+    public function test_It_Can_Get_Null_First_Value_When_Collection_Empty()
+    {
+        $collection = $this->makeCollection();
+
+        $value = $collection->first();
+
+        $this->assertNull($value);
+    }
+
+    public function test_It_Can_Get_Null_Last_Value_When_Collection_Empty()
+    {
+        $collection = $this->makeCollection();
+
+        $value = $collection->last();
+
+        $this->assertNull($value);
+    }
+
     /**
      * @expectedException OutOfRangeException
      */
