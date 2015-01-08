@@ -71,14 +71,11 @@ class Trello_Organization extends Trello_Model
     protected $powerUps;
 
     /**
-     * Get model base url
+     * Organizations base path
      *
-     * @return string Base url
+     * @var string
      */
-    protected static function getBaseUrl($organization_id = null)
-    {
-        return '/organizations'.($organization_id ? '/'.$organization_id : '');
-    }
+    protected static $base_path = 'organizations';
 
     /**
      * create a new organization
@@ -98,7 +95,7 @@ class Trello_Organization extends Trello_Model
                 'attempted to create organization without display name; it\'s gotta have a display name'
             );
         }
-        return self::_doCreate(self::getBaseUrl(), $attributes);
+        return self::_doCreate(static::getBasePath(), $attributes);
     }
 
     /**
@@ -120,7 +117,7 @@ class Trello_Organization extends Trello_Model
     public static function deleteOrganization($organization_id = null)
     {
         if ($organization_id) {
-            return self::_delete(self::getBaseUrl($organization_id));
+            return self::_delete(static::getBasePath($organization_id));
         }
         throw new Trello_Exception_ValidationsFailed(
             'attempted to delete organization without id; it\'s gotta have an id'

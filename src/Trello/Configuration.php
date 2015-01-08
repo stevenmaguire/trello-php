@@ -205,7 +205,7 @@ class Trello_Configuration extends Trello
      */
     public static function serviceUrl()
     {
-        return self::baseUrl() . self::versionPath();
+        return static::baseUrl() . self::versionPath();
     }
 
     /**

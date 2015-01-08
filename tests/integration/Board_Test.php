@@ -65,11 +65,12 @@ class Board_Test extends IntegrationTestCase
     }
 
     /**
-     * @expectedException Trello_Exception_Unexpected
+     * @expectedException Trello_Exception_NotFound
      */
     public function test_It_Can_Not_Get_A_Board_With_Invalid_Id()
     {
-        $result = Trello_Board::fetch(uniqid());
+        $id = uniqid();
+        $result = Trello_Board::fetch($id);
     }
 
     /**
@@ -391,6 +392,10 @@ class Board_Test extends IntegrationTestCase
 
         $result = $board->getCards();
 
-        $this->assertInstanceOf('Trello_Collection', $result);
+        if (count($result) == 1) {
+            $this->assertInstanceOf('Trello_Card', $result);
+        } else {
+            $this->assertInstanceOf('Trello_Collection', $result);
+        }
     }
 }

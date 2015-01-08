@@ -14,12 +14,14 @@ class List_Test extends IntegrationTestCase
 
     public function test_It_Can_Fetch_A_Collection_Of_Lists_When_Ids_Provided()
     {
-        $list = $this->createTestList();
+        $list1 = $this->createTestList();
+        $list2 = $this->createTestList(true);
 
-        $result = Trello_List::fetch([$list->id]);
+        $result = Trello_List::fetch([$list1->id, $list2->id]);
 
         $this->assertInstanceOf('Trello_Collection', $result);
-        $this->assertEquals($list->id, $result[0]->id);
+        $this->assertEquals($list1->id, $result[0]->id);
+        $this->assertEquals($list2->id, $result[1]->id);
     }
 
     /**

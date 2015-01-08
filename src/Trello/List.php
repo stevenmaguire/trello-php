@@ -50,14 +50,11 @@ class Trello_List extends Trello_Model
     protected $fields;
 
     /**
-     * Get model base url
+     * Lists base path
      *
-     * @return string Base url
+     * @var string
      */
-    protected static function getBaseUrl($list_id = null)
-    {
-        return '/lists'.($list_id ? '/'.$list_id : '');
-    }
+    protected static $base_path = 'lists';
 
     /**
      * fetch a list
@@ -69,19 +66,13 @@ class Trello_List extends Trello_Model
      */
     public static function fetch($list_id = null)
     {
-        if ($list_id) {
-            if (is_array($list_id)) {
-                $urls = [];
-                foreach ($list_id as $id) {
-                    $urls[] = '/list/'.$id;
-                }
-                return self::_doBatch($urls);
-            }
-            return self::_doFetch('/list/'.$list_id);
+        if (empty($list_id)) {
+            throw new Trello_Exception_ValidationsFailed(
+                'attempted to fetch list without id; it\'s gotta have an id'
+            );
         }
-        throw new Trello_Exception_ValidationsFailed(
-            'attempted to fetch list without id; it\'s gotta have an id'
-        );
+
+        return self::_doFetch($list_id);
     }
 
     /**
@@ -107,7 +98,7 @@ class Trello_List extends Trello_Model
                 'attempted to create list without board; it\'s gotta have a board'
             );
         }
-        return self::_doCreate(self::getBaseUrl(), $attributes);
+        return self::_doCreate(static::getBasePath(), $attributes);
     }
 
     /**

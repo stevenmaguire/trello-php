@@ -154,14 +154,11 @@ class Trello_Card extends Trello_Model
     protected $stickers;
 
     /**
-     * Get model base url
+     * Cards base path
      *
-     * @return string Base url
+     * @var string
      */
-    protected static function baseUrl($card_id = null)
-    {
-        return '/cards'.($card_id ? '/'.$card_id : '');
-    }
+    protected static $base_path = 'card';
 
     /**
      * fetch a card
@@ -173,19 +170,13 @@ class Trello_Card extends Trello_Model
      */
     public static function fetch($card_id = null)
     {
-        if ($card_id) {
-            if (is_array($card_id)) {
-                $urls = [];
-                foreach ($card_id as $id) {
-                    $urls[] = self::baseUrl($id);
-                }
-                return self::_doBatch($urls);
-            }
-            return self::_doFetch(self::baseUrl($card_id));
+        if (empty($card_id)) {
+            throw new Trello_Exception_ValidationsFailed(
+                'attempted to fetch card without id; it\'s gotta have an id'
+            );
         }
-        throw new Trello_Exception_ValidationsFailed(
-            'attempted to fetch list without id; it\'s gotta have an id'
-        );
+
+        return self::_doFetch($card_id);
     }
 
     /**
@@ -212,7 +203,7 @@ class Trello_Card extends Trello_Model
             );
         }
 
-        return self::_doCreate(self::baseUrl(), $attributes);
+        return self::_doCreate(static::getBasePath(), $attributes);
     }
 
     /**
@@ -224,7 +215,7 @@ class Trello_Card extends Trello_Model
      */
     public function updateList(Trello_List $list)
     {
-        return self::_doStore(self::baseUrl($this->id).'/idList', ['value' => $list->id]);
+        return self::_doStore(static::getBasePath($this->id).'/idList', ['value' => $list->id]);
     }
 
     /**

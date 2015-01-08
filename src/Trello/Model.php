@@ -9,7 +9,19 @@
  */
 abstract class Trello_Model extends Trello
 {
+    /**
+     * Raw payload from init
+     *
+     * @var stdClass
+     */
     protected $raw;
+
+    /**
+     * Default base path
+     *
+     * @var string|null
+     */
+    protected static $base_path = null;
 
     /**
      * sets instance properties from an object of values
@@ -39,6 +51,16 @@ abstract class Trello_Model extends Trello
     }
 
     /**
+     * Get model base url
+     *
+     * @return string|null Base url
+     */
+    protected static function getBasePath($id = null)
+    {
+        return '/'.ltrim(static::$base_path, '/').($id ? '/'.$id : '');
+    }
+
+    /**
      * sends the create request to the gateway
      *
      * @param string $url
@@ -55,15 +77,30 @@ abstract class Trello_Model extends Trello
     /**
      * sends the fetch request to the gateway
      *
-     * @param string $url
-     * @param array $params
+     * @param string|array $ids
      *
-     * @return Trello_Model
+     * @return Trello_Model|Trello_Collection
      */
-    protected static function _doFetch($url, $params = [])
+    protected static function _doFetch($ids)
     {
-        $response = Trello_Http::get($url, $params);
-        return self::factory($response);
+        $urls = [];
+        if (!is_array($ids)) {
+            $ids = [$ids];
+        }
+        foreach ($ids as $id) {
+            $urls[] = static::getBasePath($id);
+        }
+        $response = self::_doBatch($urls);
+
+        if (count($response) == 0) {
+            throw new Trello_Exception_NotFound(
+                'attempted to fetch entity without valid id; it\'s gotta have a valid id'
+            );
+        } elseif (count($response) == 1) {
+            return $response->get(0);
+        }
+
+        return $response;
     }
 
     /**
@@ -107,7 +144,7 @@ abstract class Trello_Model extends Trello
         $response = Trello_Http::get('/batch', ['urls' => $urls]);
         if (is_array($response)) {
             foreach ($response as $item) {
-                if ($item->{'200'}) {
+                if (is_object($item) && property_exists($item, '200')) {
                     $model = self::factory($item->{'200'});
                     $collection->add($model);
                 }

@@ -59,14 +59,11 @@ class Trello_Checklist extends Trello_Model
     protected $checkItems;
 
     /**
-     * Get model base url
+     * Checklists base path
      *
-     * @return string Base url
+     * @var string
      */
-    protected static function baseUrl($checklist_id = null)
-    {
-        return '/checklists'.($checklist_id ? '/'.$checklist_id : '');
-    }
+    protected static $base_path = 'checklists';
 
     /**
      * create a new checklist
@@ -86,7 +83,7 @@ class Trello_Checklist extends Trello_Model
             );
         }
 
-        return self::_doCreate(self::baseUrl(), $attributes);
+        return self::_doCreate(static::getBasePath(), $attributes);
     }
 
     /**
@@ -99,18 +96,12 @@ class Trello_Checklist extends Trello_Model
      */
     public static function fetch($checklist_id = null)
     {
-        if ($checklist_id) {
-            if (is_array($checklist_id)) {
-                $urls = [];
-                foreach ($checklist_id as $id) {
-                    $urls[] = '/checklists/'.$id;
-                }
-                return self::_doBatch($urls);
-            }
-            return self::_doFetch('/checklists/'.$checklist_id);
+        if (empty($checklist_id)) {
+            throw new Trello_Exception_ValidationsFailed(
+                'attempted to fetch checklist without id; it\'s gotta have an id'
+            );
         }
-        throw new Trello_Exception_ValidationsFailed(
-            'attempted to fetch checklist without id; it\'s gotta have an id'
-        );
+
+        return self::_doFetch($checklist_id);
     }
 }

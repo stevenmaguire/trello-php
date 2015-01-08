@@ -167,6 +167,8 @@ class Trello_Http
      */
     private static function _doUrlRequest($verb, $url, $request_body = null)
     {
+        //print_r($url."\n");
+
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_TIMEOUT, 60);
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $verb);
