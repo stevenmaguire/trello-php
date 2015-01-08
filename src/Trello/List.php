@@ -152,6 +152,6 @@ class Trello_List extends Trello_Model
      */
     public function addCard(Trello_Card $card)
     {
-        return Trello_Card::updateList($this);
+        return $card->updateList($this);
     }
 }

@@ -22,9 +22,9 @@ class Trello_Http
     public static function delete($path, $params = [])
     {
         $path = self::_buildPath($path, $params);
-        $response = self::_doRequest('DELETE', $path);
+        self::_doRequest('DELETE', $path);
         return true;
-    } // @codeCoverageIgnore
+    }
 
     /**
      * Send get request
@@ -39,7 +39,7 @@ class Trello_Http
     {
         $path = self::_buildPath($path, $params);
         return self::_doRequest('GET', $path);
-    } // @codeCoverageIgnore
+    }
 
     /**
      * Send post request
@@ -54,7 +54,7 @@ class Trello_Http
     {
         $request_body = self::_buildJson($params);
         return self::_doRequest('POST', $path, $request_body);
-    } // @codeCoverageIgnore
+    }
 
     /**
      * Send put request
@@ -69,8 +69,7 @@ class Trello_Http
     {
         $request_body = self::_buildJson($params);
         return self::_doRequest('PUT', $path, $request_body);
-        $responseCode = $response['status'];
-    } // @codeCoverageIgnore
+    }
 
     /**
      * Build JSON payload from array
