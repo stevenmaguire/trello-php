@@ -384,11 +384,11 @@ class Board_Test extends IntegrationTestCase
         $result = Trello_Board::closeBoard();
     }
 
-    /**
-     * @depends test_It_Can_Get_A_Board
-     */
-    public function test_It_Can_Get_Cards_For_A_Board($board)
+    public function test_It_Can_Get_Cards_For_A_Board()
     {
+        $card = $this->createTestCard();
+        $board = $card->getBoard();
+
         $result = $board->getCards();
 
         $this->assertInstanceOf('Trello_Collection', $result);

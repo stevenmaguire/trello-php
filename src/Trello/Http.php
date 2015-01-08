@@ -208,7 +208,7 @@ class Trello_Http
             //print_r($response_body);
             Trello_Util::throwStatusCodeException($responseCode);
         }
-    }
+    } // @codeCoverageIgnore
 
     /**
      * Build curl headers

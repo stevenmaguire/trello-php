@@ -216,7 +216,7 @@ class Trello_Board extends Trello_Model
             if ($position && preg_match('/[0-9]+|top|bottom/', $position)) {
                 $config['position'] = $position;
             }
-            $result = self::_post('/boards/'.$this->id.'/lists', ['name' => $name]);
+            $result = self::_post(self::getBaseUrl($this->id).'/lists', ['name' => $name]);
             return Trello_List::factory($result);
         }
         throw new Trello_Exception_ValidationsFailed(
@@ -235,7 +235,7 @@ class Trello_Board extends Trello_Model
     public function addPowerUp($powerup = null)
     {
         if (preg_match('/voting|cardAging|calendar|recap/', $powerup)) {
-            return self::_post('/boards/'.$this->id.'/powerUps', ['value' => $powerup]);
+            return self::_post(self::getBaseUrl($this->id).'/powerUps', ['value' => $powerup]);
         }
         throw new Trello_Exception_ValidationsFailed(
             'attempted to add invalid powerup to board; it\'s gotta be a valid powerup'
@@ -253,7 +253,7 @@ class Trello_Board extends Trello_Model
     public function removePowerUp($powerup = null)
     {
         if ($powerup && preg_match('/voting|cardAging|calendar|recap/', $powerup)) {
-            return self::_delete('/boards/'.$this->id.'/powerUps/'.$powerup);
+            return self::_delete(self::getBaseUrl($this->id).'/powerUps/'.$powerup);
         }
         throw new Trello_Exception_ValidationsFailed(
             'attempted to remove invalid powerup from board; it\'s gotta be a valid powerup'
@@ -355,7 +355,7 @@ class Trello_Board extends Trello_Model
      */
     public function generateCalendarKey()
     {
-        return self::_post('/boards/'.$this->id.'/calendarKey/generate');
+        return self::_post(self::getBaseUrl($this->id).'/calendarKey/generate');
     }
 
     /**
@@ -365,7 +365,7 @@ class Trello_Board extends Trello_Model
      */
     public function generateEmailKey()
     {
-        return self::_post('/boards/'.$this->id.'/emailKey/generate');
+        return self::_post(self::getBaseUrl($this->id).'/emailKey/generate');
     }
 
     /**
@@ -375,7 +375,7 @@ class Trello_Board extends Trello_Model
      */
     public function getLists()
     {
-        $lists = self::_get('/boards/'.$this->id.'/lists');
+        $lists = self::_get(self::getBaseUrl($this->id).'/lists');
         $ids = [];
         foreach ($lists as $list) {
             $ids[] = $list->id;
@@ -390,7 +390,7 @@ class Trello_Board extends Trello_Model
      */
     public function markAsViewed()
     {
-        return self::_post('/boards/'.$this->id.'/markAsViewed');
+        return self::_post(self::getBaseUrl($this->id).'/markAsViewed');
     }
 
     /**
@@ -401,7 +401,7 @@ class Trello_Board extends Trello_Model
     public function getCards()
     {
         $ids = [];
-        $result = self::_get('/boards/'.$this->id.'/cards');
+        $result = self::_get(self::getBaseUrl($this->id).'/cards');
         foreach ($result as $card) {
             $ids[] = $card->id;
         }
@@ -417,7 +417,7 @@ class Trello_Board extends Trello_Model
      */
     public function updateDescription($description = null)
     {
-        return self::_doStore('/boards/'.$this->id.'/desc', ['value' => $description]);
+        return self::_doStore(self::getBaseUrl($this->id).'/desc', ['value' => $description]);
     }
 
     /**
@@ -435,6 +435,6 @@ class Trello_Board extends Trello_Model
                 'attempted to update board name without new name; it\'s gotta have a name'
             );
         }
-        return self::_doStore('/boards/'.$this->id.'/name', ['value' => $name]);
+        return self::_doStore(self::getBaseUrl($this->id).'/name', ['value' => $name]);
     }
 }

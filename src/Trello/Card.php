@@ -229,8 +229,18 @@ class Trello_Card extends Trello_Model
      */
     public function updateList(Trello_List $list)
     {
-        print_r($this->id.' => '.$list->id."\n");
-        return self::_put(self::baseUrl($this->id).'/idList', ['value' => $list->id]);
+        return self::_doStore(self::baseUrl($this->id).'/idList', ['value' => $list->id]);
+    }
+
+    /**
+     * Get parent board
+     *
+     * @return Trello_Board Located board
+     * @throws Trello_Exception
+     */
+    public function getBoard()
+    {
+        return Trello_Board::fetch($this->idBoard);
     }
 }
 
