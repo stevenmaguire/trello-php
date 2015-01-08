@@ -84,6 +84,18 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
+     * Return first value
+     *
+     * @return string|object
+     *
+     * @throws OutOfRangeException
+     */
+    public function first()
+    {
+        return $this->get(0);
+    }
+
+    /**
      * Determine if index exists
      *
      * @param integer $index

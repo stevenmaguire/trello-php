@@ -93,7 +93,6 @@ class Trello_Checklist extends Trello_Model
      *
      * @return Trello_Checklist|Trello_Collection  Checklist model(s)
      * @throws Trello_Exception_ValidationsFailed
-     * @throws Trello_Exception_NotFound
      */
     public static function fetch($checklist_id = null)
     {

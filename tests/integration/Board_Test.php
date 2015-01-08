@@ -64,13 +64,12 @@ class Board_Test extends IntegrationTestCase
         $results = Trello_Board::fetch();
     }
 
-    /**
-     * @expectedException Trello_Exception_NotFound
-     */
     public function test_It_Can_Not_Get_A_Board_With_Invalid_Id()
     {
         $id = uniqid();
         $result = Trello_Board::fetch($id);
+
+        $this->assertCount(0, $result);
     }
 
     /**

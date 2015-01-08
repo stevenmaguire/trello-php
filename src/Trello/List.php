@@ -63,7 +63,6 @@ class Trello_List extends Trello_Model
      *
      * @return Trello_List|Trello_Collection  List model(s)
      * @throws Trello_Exception_ValidationsFailed
-     * @throws Trello_Exception_NotFound
      */
     public static function fetch($list_id = null)
     {

@@ -138,7 +138,6 @@ class Trello_Board extends Trello_Model
      *
      * @return Trello_Collection|Trello_Board  Trello board matching id
      * @throws Trello_Exception_ValidationsFailed
-     * @throws Trello_Exception_NotFound
      */
     public static function fetch($board_id = null)
     {
@@ -186,7 +185,7 @@ class Trello_Board extends Trello_Model
      *
      * @param  string $name Name of checklist
      *
-     * @return Trello_Checklist Newly minted checklist object
+     * @return Trello_Checklist|Trello_Collection Newly minted checklist
      * @throws Trello_Exception_ValidationsFailed
      * @throws Trello_Exception_NotFound
      */
@@ -207,7 +206,7 @@ class Trello_Board extends Trello_Model
      * @param  string $name Name of list
      * @param  mixed $position Optional position of list in board
      *
-     * @return Trello_List Newly minted List object
+     * @return Trello_List|Trello_Collection Newly minted List object
      * @throws Trello_Exception_ValidationsFailed
      * @throws Trello_Exception_NotFound
      */
@@ -374,7 +373,7 @@ class Trello_Board extends Trello_Model
     /**
      * Get lists attached to board
      *
-     * @return Trello_Collection Collection of Trello_List
+     * @return Trello_List|Trello_Collection Collection of list(s)
      */
     public function getLists()
     {
@@ -401,7 +400,7 @@ class Trello_Board extends Trello_Model
     /**
      * Get cards on board
      *
-     * @return Trello_Collection Cards
+     * @return Trello_Card|Trello_Collection Card(s)
      */
     public function getCards()
     {

@@ -80,25 +80,23 @@ abstract class Trello_Model extends Trello
      * @param string|array $ids
      *
      * @return Trello_Model|Trello_Collection
-     * @throws Trello_Exception_NotFound
      */
     protected static function _doFetch($ids)
     {
         $urls = [];
+
         if (!is_array($ids)) {
             $ids = [$ids];
         }
+
         foreach ($ids as $id) {
             $urls[] = static::getBasePath($id);
         }
+
         $response = self::_doBatch($urls);
 
-        if (count($response) == 0) {
-            throw new Trello_Exception_NotFound(
-                'attempted to fetch entity without valid id; it\'s gotta have a valid id'
-            );
-        } elseif (count($response) == 1) {
-            return $response->get(0);
+        if (count($response) == 1) {
+            return $response->first();
         }
 
         return $response;

@@ -167,7 +167,6 @@ class Trello_Card extends Trello_Model
      *
      * @return Trello_Card|Trello_Collection  Card model(s)
      * @throws Trello_Exception_ValidationsFailed
-     * @throws Trello_Exception_NotFound
      */
     public static function fetch($card_id = null)
     {
@@ -222,7 +221,7 @@ class Trello_Card extends Trello_Model
     /**
      * Get parent board
      *
-     * @return Trello_Board Located board
+     * @return Trello_Board|Trello_Collection Located board(s)
      * @throws Trello_Exception
      */
     public function getBoard()
@@ -233,7 +232,7 @@ class Trello_Card extends Trello_Model
     /**
      * Get parent list
      *
-     * @return Trello_List Located list
+     * @return Trello_List|Trello_Collection Located list(s)
      * @throws Trello_Exception
      */
     public function getList()
