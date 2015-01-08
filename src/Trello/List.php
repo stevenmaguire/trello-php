@@ -95,12 +95,15 @@ class Trello_List extends Trello_Model
      */
     public static function create($attributes = [])
     {
-        if (!isset($attributes['name']) || empty($attributes['name'])) {
+        $defaults = ['name' => null, 'idBoard' => null];
+        $attributes = array_merge($defaults, $attributes);
+
+        if (empty($attributes['name'])) {
             throw new Trello_Exception_ValidationsFailed(
                 'attempted to create list without name; it\'s gotta have a name'
             );
         }
-        if (!isset($attributes['idBoard']) || empty($attributes['idBoard'])) {
+        if (empty($attributes['idBoard'])) {
             throw new Trello_Exception_ValidationsFailed(
                 'attempted to create list without board; it\'s gotta have a board'
             );

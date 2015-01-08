@@ -108,7 +108,10 @@ class Trello_Board extends Trello_Model
      */
     public static function create($attributes = [])
     {
-        if (!isset($attributes['name']) || empty($attributes['name'])) {
+        $defaults = ['name' => null];
+        $attributes = array_merge($defaults, $attributes);
+
+        if (empty($attributes['name'])) {
             throw new Trello_Exception_ValidationsFailed(
                 'attempted to create board without name; it\'s gotta have a name'
             );

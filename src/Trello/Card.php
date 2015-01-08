@@ -197,24 +197,19 @@ class Trello_Card extends Trello_Model
      */
     public static function create($attributes = [])
     {
-        if (!isset($attributes['name']) || empty($attributes['name'])) {
+        $defaults = ['name' => null, 'idList' => null, 'due' => null, 'urlSource' => null];
+        $attributes = array_merge($defaults, $attributes);
+
+        if (empty($attributes['name'])) {
             throw new Trello_Exception_ValidationsFailed(
                 'attempted to create card without name; it\'s gotta have a name'
             );
         }
 
-        if (!isset($attributes['idList']) || empty($attributes['idList'])) {
+        if (empty($attributes['idList'])) {
             throw new Trello_Exception_ValidationsFailed(
                 'attempted to create card without list; it\'s gotta have a list'
             );
-        }
-
-        if (!isset($attributes['due'])) {
-            $attributes['due'] = null;
-        }
-
-        if (!isset($attributes['urlSource'])) {
-            $attributes['urlSource'] = null;
         }
 
         return self::_doCreate(self::baseUrl(), $attributes);

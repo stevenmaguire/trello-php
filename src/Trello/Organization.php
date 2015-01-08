@@ -90,7 +90,10 @@ class Trello_Organization extends Trello_Model
      */
     public static function create($attributes = [])
     {
-        if (!isset($attributes['displayName']) || empty($attributes['displayName'])) {
+        $defaults = ['displayName' => null];
+        $attributes = array_merge($defaults, $attributes);
+
+        if (empty($attributes['displayName'])) {
             throw new Trello_Exception_ValidationsFailed(
                 'attempted to create organization without display name; it\'s gotta have a display name'
             );
