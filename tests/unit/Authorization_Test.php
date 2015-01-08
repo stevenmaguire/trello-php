@@ -58,4 +58,18 @@ class Authorization_Test extends IntegrationTestCase
             $url
         );
     }
+
+    public function test_It_Can_Authortize_For_Read_And_Write_For_No_Duration()
+    {
+        $url = Trello_Authorization_Write::getLink();
+
+        $this->assertEquals(
+            'https://trello.com/1/authorize?'.
+            'key='.Trello_Configuration::key().'&'.
+            'name='.urlencode(Trello_Configuration::applicationName()).'&'.
+            'response_type=token&'.
+            'expiration=never',
+            $url
+        );
+    }
 }
