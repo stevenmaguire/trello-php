@@ -26,7 +26,8 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
 
     /**
      * Add a value into the collection
-     * @param string $value
+     *
+     * @param string|object $value
      */
     public function add($value)
     {
@@ -35,8 +36,10 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
 
     /**
      * Set index's value
+     *
      * @param integer $index
-     * @param mixed $value
+     * @param string|object $value
+     *
      * @throws OutOfRangeException
      */
     public function set($index, $value)
@@ -50,7 +53,9 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
 
     /**
      * Remove a value from the collection
+     *
      * @param integer $index index to remove
+     *
      * @throws OutOfRangeException if index is out of range
      */
     public function remove($index)
@@ -63,8 +68,11 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
 
     /**
      * Return value at index
+     *
      * @param integer $index
-     * @return mixed
+     *
+     * @return string|object
+     *
      * @throws OutOfRangeException
      */
     public function get($index)
@@ -77,7 +85,9 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
 
     /**
      * Determine if index exists
+     *
      * @param integer $index
+     *
      * @return boolean
      */
     public function exists($index)
@@ -101,6 +111,7 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
     /**
      * Return an iterator
      * Implements IteratorAggregate
+     *
      * @return ArrayIterator
      */
     public function getIterator()
@@ -112,6 +123,7 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
      * Set offset to value
      * Implements ArrayAccess
      * @see set
+     *
      * @param integer $offset
      * @param mixed $value
      */
@@ -124,6 +136,7 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
      * Unset offset
      * Implements ArrayAccess
      * @see remove
+     *
      * @param integer $offset
      */
     public function offsetUnset($offset)
@@ -135,8 +148,10 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
      * get an offset's value
      * Implements ArrayAccess
      * @see get
+     *
      * @param integer $offset
-     * @return mixed
+     *
+     * @return string|object
      */
     public function offsetGet($offset)
     {
@@ -147,7 +162,9 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
      * Determine if offset exists
      * Implements ArrayAccess
      * @see exists
+     *
      * @param integer $offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)

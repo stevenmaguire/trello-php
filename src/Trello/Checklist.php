@@ -57,4 +57,29 @@ class Trello_Checklist extends Trello_Model
      * @property array $checkItems
      */
     protected $checkItems;
+
+    /**
+     * fetch a checklist
+     *
+     * @param  string|array $checklist_id Checklist id to fetch
+     *
+     * @return Trello_Checklist|Trello_Collection  Trello checklist matching id
+     * @throws Trello_Exception_ValidationsFailed
+     */
+    public static function fetch($checklist_id = null)
+    {
+        if ($checklist_id) {
+            if (is_array($checklist_id)) {
+                $urls = [];
+                foreach ($checklist_id as $id) {
+                    $urls[] = '/checklists/'.$id;
+                }
+                return self::_doBatch($urls);
+            }
+            return self::_doFetch('/checklists/'.$checklist_id);
+        }
+        throw new Trello_Exception_ValidationsFailed(
+            'attempted to fetch checklist without id; it\'s gotta have an id'
+        );
+    }
 }

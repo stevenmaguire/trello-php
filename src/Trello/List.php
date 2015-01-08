@@ -64,7 +64,7 @@ class Trello_List extends Trello_Model
      *
      * @param  string|array $list_id List id to fetch
      *
-     * @return Trello_List  Trello list matching id
+     * @return Trello_List|Trello_Collection  Trello list matching id
      * @throws Trello_Exception_ValidationsFailed
      */
     public static function fetch($list_id = null)
@@ -121,13 +121,15 @@ class Trello_List extends Trello_Model
                 $ids[] = $card_id;
             }
         } else {
-            $cards = Trello_Http::get('/list/'.$this->id.'/cards');
+            $cards = self::_get('/list/'.$this->id.'/cards');
             $ids = [];
-            foreach ($cards as $card) {
-                $ids[] = $card->id;
+            if (is_array($cards)) {
+                foreach ($cards as $card) {
+                    $ids[] = $card->id;
+                }
             }
         }
-        //return Trello_Card::fetch($ids);
+        return Trello_Card::fetch($ids);
     }
 
     /**

@@ -192,7 +192,7 @@ class Trello_Board extends Trello_Model
     {
         if ($name) {
             $result = self::_post(self::getBaseUrl($this->id).'/checklists', ['name' => $name]);
-            return Trello_Checklist::factory($result);
+            return Trello_Checklist::fetch($result->id);
         }
         throw new Trello_Exception_ValidationsFailed(
             'attempted to add checklist to board without checklist name; it\'s gotta have a name'
@@ -217,7 +217,7 @@ class Trello_Board extends Trello_Model
                 $config['position'] = $position;
             }
             $result = self::_post(self::getBaseUrl($this->id).'/lists', ['name' => $name]);
-            return Trello_List::factory($result);
+            return Trello_List::fetch($result->id);
         }
         throw new Trello_Exception_ValidationsFailed(
             'attempted to add list to board without list name; it\'s gotta have a name'
@@ -377,8 +377,10 @@ class Trello_Board extends Trello_Model
     {
         $lists = self::_get(self::getBaseUrl($this->id).'/lists');
         $ids = [];
-        foreach ($lists as $list) {
-            $ids[] = $list->id;
+        if (is_array($lists)) {
+            foreach ($lists as $list) {
+                $ids[] = $list->id;
+            }
         }
         return Trello_List::fetch($ids);
     }
@@ -402,8 +404,10 @@ class Trello_Board extends Trello_Model
     {
         $ids = [];
         $result = self::_get(self::getBaseUrl($this->id).'/cards');
-        foreach ($result as $card) {
-            $ids[] = $card->id;
+        if (is_array($result)) {
+            foreach ($result as $card) {
+                $ids[] = $card->id;
+            }
         }
         return Trello_Card::fetch($ids);
     }

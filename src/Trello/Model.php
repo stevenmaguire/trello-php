@@ -102,10 +102,12 @@ abstract class Trello_Model extends Trello
     {
         $collection = new Trello_Collection;
         $response = Trello_Http::get('/batch', ['urls' => $urls]);
-        foreach ($response as $item) {
-            if ($item->{'200'}) {
-                $model = self::factory($item->{'200'});
-                $collection->add($model);
+        if (is_array($response)) {
+            foreach ($response as $item) {
+                if ($item->{'200'}) {
+                    $model = self::factory($item->{'200'});
+                    $collection->add($model);
+                }
             }
         }
         return $collection;
