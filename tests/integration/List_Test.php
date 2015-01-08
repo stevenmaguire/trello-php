@@ -7,7 +7,7 @@ class List_Test extends IntegrationTestCase
         $list_id = '54a72706bac33a0cecf01579';
         $list = Trello_List::fetch($list_id);
 
-        $this->assertEquals('Trello_List', get_class($list));
+        $this->assertInstanceOf('Trello_List', $list);
     }
 
     /**

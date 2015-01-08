@@ -2,9 +2,9 @@
 
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
-    public function setUp()
+    public static function setUpBeforeClass()
     {
-        parent::setUp();
+        parent::setUpBeforeClass();
         PHPUnit_Framework_Error_Warning::$enabled = false;
         Trello_Configuration::environment(getenv('TRELLO_API_ENVIRONMENT'));
         Trello_Configuration::key(getenv('TRELLO_API_KEY'));

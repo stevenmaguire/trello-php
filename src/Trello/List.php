@@ -50,9 +50,19 @@ class Trello_List extends Trello_Model
     protected $fields;
 
     /**
+     * Get model base url
+     *
+     * @return string Base url
+     */
+    protected static function getBaseUrl($list_id = null)
+    {
+        return '/lists'.($list_id ? '/'.$list_id : '');
+    }
+
+    /**
      * fetch a list
      *
-     * @param  string $list_id List id to fetch
+     * @param  string|array $list_id List id to fetch
      *
      * @return Trello_List  Trello list matching id
      * @throws Trello_Exception_ValidationsFailed
@@ -72,6 +82,30 @@ class Trello_List extends Trello_Model
         throw new Trello_Exception_ValidationsFailed(
             'attempted to fetch list without id; it\'s gotta have an id'
         );
+    }
+
+    /**
+     * create a new list
+     *
+     * @param  string $name Name of new list
+     * @param  array $attributes Board attributes to set
+     *
+     * @return Trello_Board  Newly minted trello board
+     * @throws Trello_Exception_ValidationsFailed
+     */
+    public static function create($attributes = [])
+    {
+        if (!isset($attributes['name']) || empty($attributes['name'])) {
+            throw new Trello_Exception_ValidationsFailed(
+                'attempted to create list without name; it\'s gotta have a name'
+            );
+        }
+        if (!isset($attributes['idBoard']) || empty($attributes['idBoard'])) {
+            throw new Trello_Exception_ValidationsFailed(
+                'attempted to create list without board; it\'s gotta have a board'
+            );
+        }
+        return self::_doCreate(self::getBaseUrl(), $attributes);
     }
 
     /**

@@ -112,7 +112,7 @@
 
 |Method|Endpoint|Status|
 |------|--------|------|
-|GET|/1/cards/[card id or shortlink]|![notstarted]|
+|GET|/1/cards/[card id or shortlink]|![wip]|
 |GET|/1/cards/[card id or shortlink]/[field]|![notstarted]|
 |GET|/1/cards/[card id or shortlink]/actions|![notstarted]|
 |GET|/1/cards/[card id or shortlink]/attachments|![notstarted]|
@@ -206,7 +206,7 @@
 
 |Method|Endpoint|Status|
 |------|--------|------|
-|GET|/1/lists/[idList]|![notstarted]|
+|GET|/1/lists/[idList]|![wip]|
 |GET|/1/lists/[idList]/[field]|![notstarted]|
 |GET|/1/lists/[idList]/actions|![notstarted]|
 |GET|/1/lists/[idList]/board|![notstarted]|
@@ -345,7 +345,7 @@
 |PUT|/1/organizations/[idOrg or name]/prefs/orgInviteRestrict|![notstarted]|
 |PUT|/1/organizations/[idOrg or name]/prefs/permissionLevel|![notstarted]|
 |PUT|/1/organizations/[idOrg or name]/website|![notstarted]|
-|POST|/1/organizations|![notstarted]|
+|POST|/1/organizations|![wip]|
 |POST|/1/organizations/[idOrg or name]/logo|![notstarted]|
 |DELETE|/1/organizations/[idOrg or name]|![notstarted]|
 |DELETE|/1/organizations/[idOrg or name]/logo|![notstarted]|

@@ -26,10 +26,9 @@ abstract class Trello_Model extends Trello
      *  factory method: returns an instance of Trello_Model
      *  to the requesting method, with populated properties
      *
-     * @codeCoverageIgnore
      * @return Trello_Model instance of Trello_Model
      */
-    public static function factory($response = null)
+    protected static function factory($response = null)
     {
         $instance = new static();
         $instance->_initialize($response);
@@ -39,7 +38,6 @@ abstract class Trello_Model extends Trello
     /**
      * sends the create request to the gateway
      *
-     * @codeCoverageIgnore
      * @param string $url
      * @param array $params
      *
@@ -52,24 +50,8 @@ abstract class Trello_Model extends Trello
     }
 
     /**
-     * sends the delete request to the gateway
-     *
-     * @codeCoverageIgnore
-     * @param string $url
-     * @param array $params
-     *
-     * @return Trello_Model
-     */
-    protected static function _doDelete($url, $params = [])
-    {
-        $response = Trello_Http::delete($url, $params);
-        return self::factory($response);
-    }
-
-    /**
      * sends the fetch request to the gateway
      *
-     * @codeCoverageIgnore
      * @param string $url
      * @param array $params
      *
@@ -84,7 +66,6 @@ abstract class Trello_Model extends Trello
     /**
      * sends the search request to the gateway
      *
-     * @codeCoverageIgnore
      * @param string $keyword
      * @param array $params
      *
@@ -99,7 +80,6 @@ abstract class Trello_Model extends Trello
     /**
      * sends the store request to the gateway
      *
-     * @codeCoverageIgnore
      * @param string $url
      * @param array $params
      *
@@ -111,7 +91,14 @@ abstract class Trello_Model extends Trello
         return self::factory($response);
     }
 
-    protected static function _doBatch($urls)
+    /**
+     * Batch a list of urls
+     *
+     * @param  array  List of urls
+     *
+     * @return Trello_Collection Collection of result objects
+     */
+    protected static function _doBatch($urls = [])
     {
         $collection = new Trello_Collection;
         $response = Trello_Http::get('/batch', ['urls' => $urls]);
@@ -122,6 +109,62 @@ abstract class Trello_Model extends Trello
             }
         }
         return $collection;
+    }
+
+    /**
+     * sends the get request to the gateway
+     *
+     * @param string $url
+     * @param array $params
+     *
+     * @return stdClass
+     * @throws Trello_Exception
+     */
+    protected static function _get($url, $params = [])
+    {
+        return Trello_Http::get($url, $params);
+    }
+
+    /**
+     * sends the post request to the gateway
+     *
+     * @param string $url
+     * @param array $params
+     *
+     * @return stdClass
+     * @throws Trello_Exception
+     */
+    protected static function _post($url, $params = [])
+    {
+        return Trello_Http::post($url, $params);
+    }
+
+    /**
+     * sends the put request to the gateway
+     *
+     * @param string $url
+     * @param array $params
+     *
+     * @return stdClass
+     * @throws Trello_Exception
+     */
+    protected static function _put($url, $params = [])
+    {
+        return Trello_Http::put($url, $params);
+    }
+
+    /**
+     * sends the delete request to the gateway
+     *
+     * @param string $url
+     * @param array $params
+     *
+     * @throws Trello_Exception
+     * @return stdClass
+     */
+    protected static function _delete($url, $params = [])
+    {
+        return Trello_Http::delete($url, $params);
     }
 
     /**

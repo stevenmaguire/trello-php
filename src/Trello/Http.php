@@ -23,11 +23,7 @@ class Trello_Http
     {
         $path = self::_buildPath($path, $params);
         $response = self::_doRequest('DELETE', $path);
-        if($response['status'] === 200) {
-            return true;
-        } else {
-            Trello_Util::throwStatusCodeException($response['status']); // @codeCoverageIgnore
-        }
+        return true;
     } // @codeCoverageIgnore
 
     /**
@@ -42,13 +38,7 @@ class Trello_Http
     public static function get($path, $params = [])
     {
         $path = self::_buildPath($path, $params);
-        $response = self::_doRequest('GET', $path);
-        if($response['status'] === 200) {
-            $object = Trello_Json::buildObjectFromJson($response['body']);
-            return $object;
-        } else {
-            Trello_Util::throwStatusCodeException($response['status']); // @codeCoverageIgnore
-        }
+        return self::_doRequest('GET', $path);
     } // @codeCoverageIgnore
 
     /**
@@ -63,14 +53,7 @@ class Trello_Http
     public static function post($path, $params = [])
     {
         $request_body = self::_buildJson($params);
-        $response = self::_doRequest('POST', $path, $request_body);
-        $responseCode = $response['status'];
-        if($responseCode === 200 || $responseCode === 201 || $responseCode === 422) {
-            $object = Trello_Json::buildObjectFromJson($response['body']);
-            return $object;
-        } else {
-            Trello_Util::throwStatusCodeException($responseCode); // @codeCoverageIgnore
-        }
+        return self::_doRequest('POST', $path, $request_body);
     } // @codeCoverageIgnore
 
     /**
@@ -85,14 +68,8 @@ class Trello_Http
     public static function put($path, $params = [])
     {
         $request_body = self::_buildJson($params);
-        $response = self::_doRequest('PUT', $path, $request_body);
+        return self::_doRequest('PUT', $path, $request_body);
         $responseCode = $response['status'];
-        if($responseCode === 200 || $responseCode === 201 || $responseCode === 422) {
-            $object = Trello_Json::buildObjectFromJson($response['body']);
-            return $object;
-        } else {
-            Trello_Util::throwStatusCodeException($responseCode); // @codeCoverageIgnore
-        }
     } // @codeCoverageIgnore
 
     /**
@@ -169,7 +146,8 @@ class Trello_Http
      * @param  string $path Path to service endpoint
      * @param  string  $request_body Additional payload
      *
-     * @return array Response object
+     * @return stdClass|null
+     * @throws Trello_Exception
      */
     private static function _doRequest($verb, $path, $request_body = null)
     {
@@ -185,10 +163,13 @@ class Trello_Http
      * @param  string $url  Service url
      * @param  string  $request_body Additional payload
      *
-     * @return array Response object
+     * @return stdClass|null
+     * @throws Trello_Exception
      */
     private static function _doUrlRequest($verb, $url, $request_body = null)
     {
+        //print_r($url."\n");
+
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_TIMEOUT, 60);
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $verb);
@@ -205,7 +186,28 @@ class Trello_Http
         $http_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
 
-        return ['status' => $http_status, 'body' => $response];
+        $response_body = ['status' => $http_status, 'body' => $response];
+
+        return self::parseHttpResponse($response_body);
+    }
+
+    /**
+     * Parse response body for problematic status codes
+     *
+     * @param  array $response_body
+     *
+     * @throws Trello_Exception
+     * @return stdClass|null
+     */
+    private static function parseHttpResponse($response_body)
+    {
+        $responseCode = $response_body['status'];
+        if($responseCode === 200 || $responseCode === 201 || $responseCode === 422) {
+            return Trello_Json::buildObjectFromJson($response_body['body']);
+        } else {
+            //print_r($response_body);
+            Trello_Util::throwStatusCodeException($responseCode);
+        }
     }
 
     /**

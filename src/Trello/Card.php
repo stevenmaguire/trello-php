@@ -154,6 +154,41 @@ class Trello_Card extends Trello_Model
     protected $stickers;
 
     /**
+     * Get model base url
+     *
+     * @return string Base url
+     */
+    protected static function baseUrl($card_id = null)
+    {
+        return '/cards'.($card_id ? '/'.$card_id : '');
+    }
+
+    /**
+     * fetch a card
+     *
+     * @param  string|array $card_id Card id to fetch
+     *
+     * @return Trello_List  Trello list matching id
+     * @throws Trello_Exception_ValidationsFailed
+     */
+    public static function fetch($card_id = null)
+    {
+        if ($card_id) {
+            if (is_array($card_id)) {
+                $urls = [];
+                foreach ($card_id as $id) {
+                    $urls[] = self::baseUrl($id);
+                }
+                return self::_doBatch($urls);
+            }
+            return self::_doFetch(self::baseUrl($card_id));
+        }
+        throw new Trello_Exception_ValidationsFailed(
+            'attempted to fetch list without id; it\'s gotta have an id'
+        );
+    }
+
+    /**
      * create a new card
      *
      * @param  array $attributes Card attributes to set
@@ -162,6 +197,18 @@ class Trello_Card extends Trello_Model
      */
     public static function create($attributes = [])
     {
+        if (!isset($attributes['name']) || empty($attributes['name'])) {
+            throw new Trello_Exception_ValidationsFailed(
+                'attempted to create card without name; it\'s gotta have a name'
+            );
+        }
+
+        if (!isset($attributes['idList']) || empty($attributes['idList'])) {
+            throw new Trello_Exception_ValidationsFailed(
+                'attempted to create card without list; it\'s gotta have a list'
+            );
+        }
+
         if (!isset($attributes['due'])) {
             $attributes['due'] = null;
         }
@@ -170,7 +217,7 @@ class Trello_Card extends Trello_Model
             $attributes['urlSource'] = null;
         }
 
-        return self::_doCreate('/cards', $attributes);
+        return self::_doCreate(self::baseUrl(), $attributes);
     }
 
     /**
@@ -180,9 +227,10 @@ class Trello_Card extends Trello_Model
      *
      * @return Trello_Card  Newly minted trello card?
      */
-    public static function updateList(Trello_List $list)
+    public function updateList(Trello_List $list)
     {
-        return Trello_Http::put('/cards/'.$this->id.'/idList', ['value' => $list->id]);
+        print_r($this->id.' => '.$list->id."\n");
+        return self::_put(self::baseUrl($this->id).'/idList', ['value' => $list->id]);
     }
 }
 

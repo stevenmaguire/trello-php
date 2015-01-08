@@ -9,6 +9,8 @@
  * @copyright  Steven Maguire
  */
 
+$original_include_path = get_include_path();
+
 set_include_path(
     get_include_path() .
     PATH_SEPARATOR .
@@ -35,9 +37,6 @@ abstract class Trello
     }
 }
 
-require_once('Trello/Action.php');
-require_once('Trello/Authorization.php');
-require_once('Trello/Board.php');
 require_once('Trello/Collection.php');
 require_once('Trello/Configuration.php');
 require_once('Trello/Exception.php');
@@ -46,6 +45,14 @@ require_once('Trello/Json.php');
 require_once('Trello/Model.php');
 require_once('Trello/Util.php');
 require_once('Trello/Version.php');
+
+require_once('Trello/Action.php');
+require_once('Trello/Authorization.php');
+require_once('Trello/Board.php');
+require_once('Trello/Card.php');
+require_once('Trello/Checklist.php');
+require_once('Trello/List.php');
+require_once('Trello/Organization.php');
 
 require_once('Trello/Exception/Authentication.php');
 require_once('Trello/Exception/Authorization.php');
@@ -65,13 +72,17 @@ if (version_compare(PHP_VERSION, '5.4.1', '<')) {
     throw new Trello_Exception('PHP version >= 5.4.1 required'); // @codeCoverageIgnore
 }
 
+// @codeCoverageIgnoreStart
 function requireDependencies() {
     $required_extensions = array('xmlwriter', 'SimpleXML', 'openssl', 'dom', 'hash', 'curl');
     foreach ($required_extensions AS $ext) {
         if (!extension_loaded($ext)) {
-            throw new Trello_Exception('The Trello library requires the ' . $ext . ' extension.'); // @codeCoverageIgnore
+            throw new Trello_Exception('The Trello library requires the ' . $ext . ' extension.');
         }
     }
 }
+// @codeCoverageIgnoreEnd
 
 requireDependencies();
+
+set_include_path($original_include_path);
