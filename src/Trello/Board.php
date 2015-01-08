@@ -136,8 +136,9 @@ class Trello_Board extends Trello_Model
      *
      * @param  string|array $board_id Board id to fetch
      *
-     * @return Trello_Board  Trello board matching id
+     * @return Trello_Collection|Trello_Board  Trello board matching id
      * @throws Trello_Exception_ValidationsFailed
+     * @throws Trello_Exception_NotFound
      */
     public static function fetch($board_id = null)
     {
@@ -185,8 +186,9 @@ class Trello_Board extends Trello_Model
      *
      * @param  string $name Name of checklist
      *
-     * @return Trello_Checklist Newly minted checlist object
+     * @return Trello_Checklist Newly minted checklist object
      * @throws Trello_Exception_ValidationsFailed
+     * @throws Trello_Exception_NotFound
      */
     public function addChecklist($name = null)
     {
@@ -207,6 +209,7 @@ class Trello_Board extends Trello_Model
      *
      * @return Trello_List Newly minted List object
      * @throws Trello_Exception_ValidationsFailed
+     * @throws Trello_Exception_NotFound
      */
     public function addList($name = null, $position = null)
     {

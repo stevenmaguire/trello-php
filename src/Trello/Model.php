@@ -53,7 +53,7 @@ abstract class Trello_Model extends Trello
     /**
      * Get model base url
      *
-     * @return string|null Base url
+     * @return string Base url
      */
     protected static function getBasePath($id = null)
     {
@@ -80,6 +80,7 @@ abstract class Trello_Model extends Trello
      * @param string|array $ids
      *
      * @return Trello_Model|Trello_Collection
+     * @throws Trello_Exception_NotFound
      */
     protected static function _doFetch($ids)
     {
