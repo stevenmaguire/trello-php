@@ -119,7 +119,6 @@ class Trello_List extends Trello_Model
     {
         $ids = [];
         $cards = self::_get('/list/'.$this->id.'/cards');
-        $ids = [];
         if (is_array($cards)) {
             foreach ($cards as $card) {
                 $ids[] = $card->id;
