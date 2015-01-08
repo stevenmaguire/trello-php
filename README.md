@@ -25,9 +25,9 @@ Make sure you have secured your Trello API keys before going further. There is [
 
 ``` php
 Trello_Configuration::environment('sandbox');
-Trello_Configuration::key('YOUR_ACCESS_KEY');
-Trello_Configuration::secret('YOUR_ACCESS_SECRET');
-Trello_Configuration::token('YOUR_ACCESS_TOKEN');
+Trello_Configuration::key('YOUR_APP_ACCESS_KEY');
+Trello_Configuration::secret('YOUR_APP_ACCESS_SECRET');
+Trello_Configuration::token('YOUR_USER_ACCESS_TOKEN');
 Trello_Configuration::applicationName('YOUR_APPLICATION_NAME'); // Optional
 ```
 
