@@ -118,17 +118,11 @@ class Trello_List extends Trello_Model
     public function getCards()
     {
         $ids = [];
-        if (is_array($this->cards)) {
-            foreach ($this->cards as $card_id) {
-                $ids[] = $card_id;
-            }
-        } else {
-            $cards = self::_get('/list/'.$this->id.'/cards');
-            $ids = [];
-            if (is_array($cards)) {
-                foreach ($cards as $card) {
-                    $ids[] = $card->id;
-                }
+        $cards = self::_get('/list/'.$this->id.'/cards');
+        $ids = [];
+        if (is_array($cards)) {
+            foreach ($cards as $card) {
+                $ids[] = $card->id;
             }
         }
         return Trello_Card::fetch($ids);

@@ -237,4 +237,15 @@ class Trello_Card extends Trello_Model
     {
         return Trello_Board::fetch($this->idBoard);
     }
+
+    /**
+     * Get parent list
+     *
+     * @return Trello_List Located list
+     * @throws Trello_Exception
+     */
+    public function getList()
+    {
+        return Trello_List::fetch($this->idList);
+    }
 }

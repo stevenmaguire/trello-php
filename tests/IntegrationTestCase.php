@@ -23,4 +23,9 @@ abstract class IntegrationTestCase extends TestCase
     {
         return IntegrationTestHelper::getInstance()->getCard();
     }
+
+    protected function createTestChecklist()
+    {
+        return IntegrationTestHelper::getInstance()->getChecklist();
+    }
 }

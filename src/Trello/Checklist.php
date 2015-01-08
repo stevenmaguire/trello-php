@@ -59,6 +59,37 @@ class Trello_Checklist extends Trello_Model
     protected $checkItems;
 
     /**
+     * Get model base url
+     *
+     * @return string Base url
+     */
+    protected static function baseUrl($checklist_id = null)
+    {
+        return '/checklists'.($checklist_id ? '/'.$checklist_id : '');
+    }
+
+    /**
+     * create a new checklist
+     *
+     * @param  array $attributes Checklist attributes to set
+     *
+     * @return Trello_Checklist  Newly minted trello checklist?
+     */
+    public static function create($attributes = [])
+    {
+        $defaults = ['idBoard' => null];
+        $attributes = array_merge($defaults, $attributes);
+
+        if (empty($attributes['idBoard'])) {
+            throw new Trello_Exception_ValidationsFailed(
+                'attempted to create checklist without board; it\'s gotta have a board'
+            );
+        }
+
+        return self::_doCreate(self::baseUrl(), $attributes);
+    }
+
+    /**
      * fetch a checklist
      *
      * @param  string|array $checklist_id Checklist id to fetch

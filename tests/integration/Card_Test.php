@@ -10,7 +10,7 @@ class Card_Test extends IntegrationTestCase
         $card = Trello_Card::fetch();
     }
 
-    public function test_It_Can_Not_Fetch_A_Card_When_Id_Provided()
+    public function test_It_Can_Fetch_A_Card_When_Id_Provided()
     {
         $card = $this->createTestCard();
 
@@ -20,7 +20,7 @@ class Card_Test extends IntegrationTestCase
         $this->assertEquals($card->id, $result->id);
     }
 
-    public function test_It_Can_Not_Fetch_Multiple_Card_When_Ids_Provided()
+    public function test_It_Can_Fetch_Multiple_Card_When_Ids_Provided()
     {
         $card1 = $this->createTestCard();
         $card2 = $this->createTestCard(true);
@@ -74,5 +74,14 @@ class Card_Test extends IntegrationTestCase
         $result = $card->updateList($list);
 
         $this->assertEquals($list->id, $result->idList);
+    }
+
+    public function test_It_Can_Fetch_Parent_List()
+    {
+        $card = $this->createTestCard();
+
+        $list = $card->getList();
+
+        $this->assertInstanceOf('Trello_List', $list);
     }
 }

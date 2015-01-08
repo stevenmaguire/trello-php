@@ -6,6 +6,7 @@ class IntegrationTestHelper
     private $test_board = null;
     private $test_list = null;
     private $test_card = null;
+    private $test_checklist = null;
 
     /**
      * Returns the *Singleton* instance of this class.
@@ -62,7 +63,7 @@ class IntegrationTestHelper
 
     public function getBoard($force = false)
     {
-        $org = $this->getOrganization();
+        $org = $this->getOrganization($force);
         if (is_null($this->test_board) || $force) {
             $this->test_board = Trello_Board::create(['name' => 'test', 'idOrganization' => $org->id]);
         }
@@ -71,7 +72,7 @@ class IntegrationTestHelper
 
     public function getList($force = false)
     {
-        $board = $this->getBoard();
+        $board = $this->getBoard($force);
         if (is_null($this->test_list) || $force) {
             $this->test_list = Trello_List::create(['name' => 'test', 'idBoard' => $board->id]);
         }
@@ -80,11 +81,21 @@ class IntegrationTestHelper
 
     public function getCard($force = false)
     {
-        $list = $this->getList();
+        $list = $this->getList($force);
         if (is_null($this->test_card) || $force) {
             $this->test_card = Trello_Card::create(['name' => 'test', 'idList' => $list->id]);
         }
         return $this->test_card;
+    }
+
+    public function getChecklist($force = false)
+    {
+        $board = $this->getBoard($force);
+        $card = $this->getCard($force);
+        if (is_null($this->test_checklist) || $force) {
+            $this->test_checklist = Trello_Checklist::create(['idBoard' => $board->id, 'idCard' => $card->id]);
+        }
+        return $this->test_checklist;
     }
 
     public static function emptyAccount()

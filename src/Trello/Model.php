@@ -9,6 +9,8 @@
  */
 abstract class Trello_Model extends Trello
 {
+    protected $raw;
+
     /**
      * sets instance properties from an object of values
      *
@@ -19,6 +21,7 @@ abstract class Trello_Model extends Trello
      */
     protected function _initialize($response)
     {
+        $this->raw = $response;
         return self::_mapAs($this, $response);
     }
 
