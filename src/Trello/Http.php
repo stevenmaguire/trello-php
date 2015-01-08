@@ -189,10 +189,11 @@ class Trello_Http
     /**
      * Parse response body for problematic status codes
      *
-     * @param  array $response_body
+     * @param  string $status
+     * @param  string $body
      *
-     * @throws Trello_Exception
      * @return stdClass|null
+     * @throws Trello_Exception
      */
     private static function parseHttpResponse($status, $body)
     {
