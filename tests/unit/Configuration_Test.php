@@ -61,4 +61,19 @@ class Configuration_Test extends TestCase
     {
         Trello_Configuration::reset();
     }
+
+    public function test_It_Get_Requests()
+    {
+        $requests = [
+            ['verb','path',null],
+            ['verb','path','body']
+        ];
+        foreach ($requests as $request) {
+            Trello_Configuration::logRequest($request[0], $request[1], $request[2]);
+        }
+
+        $results = Trello_Configuration::getRequests();
+
+        $this->assertInstanceOf('Trello_Collection', $results);
+    }
 }

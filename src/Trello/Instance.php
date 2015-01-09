@@ -47,6 +47,7 @@ class Trello_Instance
      * Private clone method to prevent cloning of the instance of the
      * *Singleton* instance.
      *
+     * @codeCoverageIgnore
      * @return void
      */
     private function __clone()
@@ -57,6 +58,7 @@ class Trello_Instance
      * Private unserialize method to prevent unserializing of the *Singleton*
      * instance.
      *
+     * @codeCoverageIgnore
      * @return void
      */
     private function __wakeup()
@@ -64,13 +66,13 @@ class Trello_Instance
     }
 
     /**
-     * [logRequest description]
+     * Log request
      *
-     * @param  [type]  [description]
-     * @param  [type]  [description]
-     * @param  [type]  [description]
+     * @param  string $verb
+     * @param  string $path
+     * @param  string $body
      *
-     * @return [type]  [description]
+     * @return Trello_Instance
      */
     public function logRequest($verb, $path, $body = null)
     {
@@ -80,9 +82,9 @@ class Trello_Instance
     }
 
     /**
-     * [getRequests description]
+     * Get requests collection
      *
-     * @return [type] [description]
+     * @return Trello_Collection
      */
     public function getRequests()
     {
@@ -90,11 +92,9 @@ class Trello_Instance
     }
 
     /**
-     * [writeLogLine description]
+     * Write line to log file
      *
-     * @param  [type]  [description]
-     *
-     * @return [type]  [description]
+     * @param  string $string
      */
     private function writeLogLine($string)
     {

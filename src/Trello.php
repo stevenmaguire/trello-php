@@ -37,13 +37,13 @@ abstract class Trello
     }
 
     /**
-     * [logRequest description]
+     * Log request
      *
-     * @param  [type]  [description]
-     * @param  [type]  [description]
-     * @param  [type]  [description]
+     * @param  string $verb
+     * @param  string $path
+     * @param  string $body
      *
-     * @return [type]  [description]
+     * @return Trello_Instance
      */
     public static function logRequest($verb, $path, $body = null)
     {
@@ -51,9 +51,9 @@ abstract class Trello
     }
 
     /**
-     * [getRequests description]
+     * Get requests collection
      *
-     * @return [type] [description]
+     * @return Trello_Collection
      */
     public static function getRequests()
     {
