@@ -46,22 +46,14 @@ abstract class Trello_Authorization extends Trello
      *
      * @return string|null
      */
-    protected static function parseExpiration($expiration = null)
+    protected static function parseExpiration($expiration)
     {
-        if (is_numeric($expiration) && $expiration > 0) {
-            $expiration = round($expiration, 0, PHP_ROUND_HALF_UP);
-            if ($expiration == 1) {
-                return $expiration.'day';
-            } else {
-                return $expiration.'days';
-            }
+        if (is_numeric($expiration)) {
+            $expiration = round(abs($expiration), 0, PHP_ROUND_HALF_UP);
+            return $expiration.'day'.($expiration == 1 ? '' : 's');
         }
 
-        if ($expiration == 'never') {
-            return $expiration;
-        }
-
-        return null;
+        return $expiration;
     }
 
     /**
