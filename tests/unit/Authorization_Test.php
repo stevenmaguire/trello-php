@@ -68,7 +68,7 @@ class Authorization_Test extends IntegrationTestCase
             'key='.Trello_Configuration::key().'&'.
             'name='.urlencode(Trello_Configuration::applicationName()).'&'.
             'response_type=token&'.
-            'expiration=never',
+            'scope=read%2Cwrite',
             $url
         );
     }
