@@ -8,7 +8,7 @@
  * @copyright  Steven Maguire
  *
  */
-class Trello_Http
+class Trello_Http extends Trello
 {
     /**
      * Send delete request
@@ -167,7 +167,7 @@ class Trello_Http
      */
     private static function _doUrlRequest($verb, $url, $request_body = null)
     {
-        //print_r($url."\n");
+        static::logRequest($verb, $url, $request_body);
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_TIMEOUT, 60);

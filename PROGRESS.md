@@ -8,7 +8,7 @@
 
 |Method|Endpoint|Status|
 |------|--------|------|
-|GET|/1/authorize|![notstarted]|
+|GET|/1/authorize|![tested]|
 
 ## action
 
@@ -37,7 +37,7 @@
 
 |Method|Endpoint|Status|
 |------|--------|------|
-|GET|/1/batch|![wip]|
+|GET|/1/batch|![tested]|
 
 ## board
 
@@ -47,14 +47,14 @@
 |GET|/1/boards/[board_id]/[field]|![notstarted]|
 |GET|/1/boards/[board_id]/actions|![notstarted]|
 |GET|/1/boards/[board_id]/boardStars|![notstarted]|
-|GET|/1/boards/[board_id]/cards|![notstarted]|
+|GET|/1/boards/[board_id]/cards|![tested]|
 |GET|/1/boards/[board_id]/cards/[filter]|![notstarted]|
 |GET|/1/boards/[board_id]/cards/[idCard]|![notstarted]|
 |GET|/1/boards/[board_id]/checklists|![notstarted]|
 |GET|/1/boards/[board_id]/deltas|![notstarted]|
 |GET|/1/boards/[board_id]/labels|![notstarted]|
 |GET|/1/boards/[board_id]/labels/[idLabel]|![notstarted]|
-|GET|/1/boards/[board_id]/lists|![notstarted]|
+|GET|/1/boards/[board_id]/lists|![tested]|
 |GET|/1/boards/[board_id]/lists/[filter]|![notstarted]|
 |GET|/1/boards/[board_id]/members|![notstarted]|
 |GET|/1/boards/[board_id]/members/[filter]|![notstarted]|
@@ -138,14 +138,14 @@
 |PUT|/1/cards/[card id or shortlink]/due|![notstarted]|
 |PUT|/1/cards/[card id or shortlink]/idAttachmentCover|![notstarted]|
 |PUT|/1/cards/[card id or shortlink]/idBoard|![notstarted]|
-|PUT|/1/cards/[card id or shortlink]/idList|![notstarted]|
+|PUT|/1/cards/[card id or shortlink]/idList|![tested]|
 |PUT|/1/cards/[card id or shortlink]/idMembers|![notstarted]|
 |PUT|/1/cards/[card id or shortlink]/labels|![notstarted]|
 |PUT|/1/cards/[card id or shortlink]/name|![notstarted]|
 |PUT|/1/cards/[card id or shortlink]/pos|![notstarted]|
 |PUT|/1/cards/[card id or shortlink]/stickers/[idSticker]|![notstarted]|
 |PUT|/1/cards/[card id or shortlink]/subscribed|![notstarted]|
-|POST|/1/cards|![notstarted]|
+|POST|/1/cards|![tested]|
 |POST|/1/cards/[card id or shortlink]/actions/comments|![notstarted]|
 |POST|/1/cards/[card id or shortlink]/attachments|![notstarted]|
 |POST|/1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem|![notstarted]|
@@ -184,7 +184,7 @@
 |PUT|/1/checklists/[idChecklist]/idCard|![notstarted]|
 |PUT|/1/checklists/[idChecklist]/name|![notstarted]|
 |PUT|/1/checklists/[idChecklist]/pos|![notstarted]|
-|POST|/1/checklists|![notstarted]|
+|POST|/1/checklists|![tested]|
 |POST|/1/checklists/[idChecklist]/checkItems|![notstarted]|
 |DELETE|/1/checklists/[idChecklist]|![notstarted]|
 |DELETE|/1/checklists/[idChecklist]/checkItems/[idCheckItem]|![notstarted]|
@@ -211,7 +211,7 @@
 |GET|/1/lists/[idList]/actions|![notstarted]|
 |GET|/1/lists/[idList]/board|![notstarted]|
 |GET|/1/lists/[idList]/board/[field]|![notstarted]|
-|GET|/1/lists/[idList]/cards|![notstarted]|
+|GET|/1/lists/[idList]/cards|![tested]|
 |GET|/1/lists/[idList]/cards/[filter]|![notstarted]|
 |PUT|/1/lists/[idList]|![notstarted]|
 |PUT|/1/lists/[idList]/closed|![notstarted]|
@@ -219,7 +219,7 @@
 |PUT|/1/lists/[idList]/name|![notstarted]|
 |PUT|/1/lists/[idList]/pos|![notstarted]|
 |PUT|/1/lists/[idList]/subscribed|![notstarted]|
-|POST|/1/lists|![notstarted]|
+|POST|/1/lists|![tested]|
 |POST|/1/lists/[idList]/archiveAllCards|![notstarted]|
 |POST|/1/lists/[idList]/cards|![notstarted]|
 |POST|/1/lists/[idList]/moveAllCards|![notstarted]|
@@ -228,7 +228,7 @@
 
 |Method|Endpoint|Status|
 |------|--------|------|
-|GET|/1/members/[idMember or username]|![notstarted]|
+|GET|/1/members/[idMember or username]|![tested]|
 |GET|/1/members/[idMember or username]/[field]|![notstarted]|
 |GET|/1/members/[idMember or username]/actions|![notstarted]|
 |GET|/1/members/[idMember or username]/boardBackgrounds|![notstarted]|
@@ -345,9 +345,9 @@
 |PUT|/1/organizations/[idOrg or name]/prefs/orgInviteRestrict|![notstarted]|
 |PUT|/1/organizations/[idOrg or name]/prefs/permissionLevel|![notstarted]|
 |PUT|/1/organizations/[idOrg or name]/website|![notstarted]|
-|POST|/1/organizations|![wip]|
+|POST|/1/organizations|![tested]|
 |POST|/1/organizations/[idOrg or name]/logo|![notstarted]|
-|DELETE|/1/organizations/[idOrg or name]|![notstarted]|
+|DELETE|/1/organizations/[idOrg or name]|![tested]|
 |DELETE|/1/organizations/[idOrg or name]/logo|![notstarted]|
 |DELETE|/1/organizations/[idOrg or name]/members/[idMember]|![notstarted]|
 |DELETE|/1/organizations/[idOrg or name]/members/[idMember]/all|![notstarted]|
@@ -359,7 +359,7 @@
 |Method|Endpoint|Status|
 |------|--------|------|
 |GET|/1/search|![tested]|
-|GET|/1/search/members|![notstarted]|
+|GET|/1/search/members|![tested]|
 
 ## session
 

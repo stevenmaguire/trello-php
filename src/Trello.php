@@ -35,6 +35,30 @@ abstract class Trello
         }
         return null;
     }
+
+    /**
+     * [logRequest description]
+     *
+     * @param  [type]  [description]
+     * @param  [type]  [description]
+     * @param  [type]  [description]
+     *
+     * @return [type]  [description]
+     */
+    public static function logRequest($verb, $path, $body = null)
+    {
+        return Trello_Instance::getInstance()->logRequest($verb, $path, $body);
+    }
+
+    /**
+     * [getRequests description]
+     *
+     * @return [type] [description]
+     */
+    public static function getRequests()
+    {
+        return Trello_Instance::getInstance()->getRequests();
+    }
 }
 
 require_once('Trello/Collection.php');
