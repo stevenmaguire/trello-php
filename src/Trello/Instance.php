@@ -3,25 +3,25 @@
 class Trello_Instance
 {
     /**
-     * [$errors description]
+     * Errors
      *
-     * @var [type]
+     * @var Trello_Collection
      */
     private $errors;
 
     /**
-     * [$requests description]
+     * Requests
      *
-     * @var [type]
+     * @var Trello_Collection
      */
     private $requests;
 
     /**
-     * Returns the *Singleton* instance of this class.
+     * Returns the Trello_Instance instance of this class.
      *
-     * @staticvar Singleton $instance The *Singleton* instances of this class.
+     * @staticvar Trello_Instance $instance The Trello_Instance instances of this class.
      *
-     * @return Singleton The *Singleton* instance.
+     * @return Trello_Instance|null The Trello_Instance instance.
      */
     public static function getInstance()
     {
@@ -35,7 +35,7 @@ class Trello_Instance
 
     /**
      * Protected constructor to prevent creating a new instance of the
-     * *Singleton* via the `new` operator from outside of this class.
+     * Trello_Instance via the `new` operator from outside of this class.
      */
     protected function __construct()
     {
@@ -45,7 +45,7 @@ class Trello_Instance
 
     /**
      * Private clone method to prevent cloning of the instance of the
-     * *Singleton* instance.
+     * Trello_Instance instance.
      *
      * @codeCoverageIgnore
      * @return void
@@ -55,7 +55,7 @@ class Trello_Instance
     }
 
     /**
-     * Private unserialize method to prevent unserializing of the *Singleton*
+     * Private unserialize method to prevent unserializing of the Trello_Instance
      * instance.
      *
      * @codeCoverageIgnore
@@ -76,8 +76,9 @@ class Trello_Instance
      */
     public function logRequest($verb, $path, $body = null)
     {
-        $this->requests->add(func_get_args());
-        $this->writeLogLine(implode(',', func_get_args()));
+        $request = [$verb, $path, $body];
+        $this->requests->add($request);
+        $this->writeLogLine(implode(',', $request));
         return $this;
     }
 
