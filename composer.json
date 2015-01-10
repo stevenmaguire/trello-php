@@ -19,7 +19,8 @@
         "ext-hash": "*",
         "ext-openssl": "*",
         "ext-simplexml": "*",
-        "ext-xmlwriter": "*"
+        "ext-xmlwriter": "*",
+        "league/oauth2-client": "0.7.*@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
