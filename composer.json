@@ -32,9 +32,6 @@
             "src/Trello",
             "tests"
         ],
-        "files": [
-            ".environment.php"
-        ],
         "psr-0": {
             "Trello\\": "src/",
             "Trello_": "src/"
