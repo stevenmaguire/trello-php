@@ -38,7 +38,7 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
      * Set index's value
      *
      * @param integer $index
-     * @param string|object $value
+     * @param string|array|object $value
      *
      * @throws OutOfRangeException
      */
