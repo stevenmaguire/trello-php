@@ -27,7 +27,7 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
     /**
      * Add a value into the collection
      *
-     * @param string|object $value
+     * @param string|array|object $value
      */
     public function add($value)
     {
@@ -157,7 +157,7 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
      * @see set
      *
      * @param integer $offset
-     * @param mixed $value
+     * @param string|array|object $value
      */
     public function offsetSet($offset, $value)
     {
