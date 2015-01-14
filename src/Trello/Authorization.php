@@ -1,4 +1,9 @@
 <?php
+
+use League\OAuth1\Client\Server\Server;
+use League\OAuth1\Client\Credentials\CredentialsInterface;
+use Stevenmaguire\OAuth1\Client\Server\Trello as TrelloServer;
+
 /**
  * Handles authorization tasks for trello
  *
@@ -16,18 +21,11 @@ abstract class Trello_Authorization extends Trello
     protected static $scope = null;
 
     /**
-     * [$base_path description]
-     *
-     * @var string
-     */
-    protected static $base_path = '/authorize';
-
-    /**
      * Get authorization link
      *
      * @return string
      */
-    public static function getLink($expiration = null)
+    public static function getAuthorizationUrl($expiration = null)
     {
         $config = [
             'key' => Trello_Configuration::key(),
@@ -47,13 +45,15 @@ abstract class Trello_Authorization extends Trello
      * credentials in the session. Second part of OAuth 1.0 authentication is
      * to redirect the resource owner to the login screen on the server.
      *
+     * @param  League\OAuth1\Client\Server\Server $server
+     *
      * Redirects to authorization url to fetch authorization
      */
-    public static function authorize($expiration = null)
+    public static function authorize(Server $server)
     {
-        $server = self::getOAuthServer($expiration);
+        $session_key = self::getCredentialSessionKey();
         $temporaryCredentials = $server->getTemporaryCredentials();
-        $_SESSION['temporary_credentials'] = serialize($temporaryCredentials);
+        $_SESSION[$session_key] = serialize($temporaryCredentials);
         session_write_close();
         $server->authorize($temporaryCredentials);
     }
@@ -67,19 +67,53 @@ abstract class Trello_Authorization extends Trello
      * the token credentials and discard the temporary ones - they're
      * irrelevant at this stage.
      *
-     * @return string
+     * @param  League\OAuth1\Client\Server\Server $server
+     * @param  string $oauth_token
+     * @param  string $oauth_verifier
+     *
+     * @return CredentialsInterface
      */
-    public static function getToken($oauth_token, $oauth_verifier)
+    public static function getToken(Server $server, $oauth_token, $oauth_verifier)
     {
-        $server = self::getOAuthServer($expiration);
-        $temporaryCredentials = unserialize($_SESSION['temporary_credentials']);
+        $session_key = self::getCredentialSessionKey();
+        $temporaryCredentials = unserialize($_SESSION[$session_key]);
         $tokenCredentials = $server->getTokenCredentials(
             $temporaryCredentials,
-            $oauth_token, $oauth_verifier
+            $oauth_token,
+            $oauth_verifier
         );
-        unset($_SESSION['temporary_credentials']);
+        unset($_SESSION[$session_key]);
         session_write_close();
         return serialize($tokenCredentials);
+    }
+
+    /**
+     * Get OAuth server implementation
+     *
+     * @param  string $expiration
+     *
+     * @return Stevenmaguire\OAuth1\Client\Server\Trello
+     */
+    public static function getOAuthServer($expiration = null)
+    {
+        return new TrelloServer(array(
+            'identifier' => Trello_Configuration::key(),
+            'secret' => Trello_Configuration::secret(),
+            'callback_uri' => 'http://your-callback-uri/',
+            'name' => Trello_Configuration::applicationName(),
+            'expiration' => self::parseExpiration($expiration),
+            'scope' => static::$scope
+        ));
+    }
+
+    /**
+     * [getCredentialSessionKey description]
+     *
+     * @return [type] [description]
+     */
+    public static function getCredentialSessionKey()
+    {
+        return get_class();
     }
 
     /**
@@ -106,26 +140,6 @@ abstract class Trello_Authorization extends Trello
      */
     protected static function getBasePath()
     {
-        return 'https://trello.com'.Trello_Configuration::versionPath().self::$base_path;
-    }
-
-    /**
-     * Get OAuth server implementation
-     *
-     * @param  string $expiration
-     *
-     * @return Stevenmaguire\OAuth2\Client\Server\Trello
-     */
-    protected static function getOAuthServer($expiration = null)
-    {
-        session_start();
-        return new \Stevenmaguire\OAuth2\Client\Server\Trello(array(
-            'identifier' => Trello_Configuration::key(),
-            'secret' => Trello_Configuration::secret(),
-            'callback_uri' => 'http://your-callback-uri/',
-            'name' => Trello_Configuration::applicationName(),
-            'expiration' => self::parseExpiration($expiration),
-            'scope' => static::$scope
-        ));
+        return 'https://trello.com'.Trello_Configuration::versionPath().'/authorize';
     }
 }
