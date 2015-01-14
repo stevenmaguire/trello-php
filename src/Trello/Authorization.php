@@ -99,7 +99,7 @@ abstract class Trello_Authorization extends Trello
         return new TrelloServer(array(
             'identifier' => Trello_Configuration::key(),
             'secret' => Trello_Configuration::secret(),
-            'callback_uri' => 'http://your-callback-uri/',
+            'callback_uri' => Trello_Configuration::oauthCallbackUrl(),
             'name' => Trello_Configuration::applicationName(),
             'expiration' => self::parseExpiration($expiration),
             'scope' => static::$scope

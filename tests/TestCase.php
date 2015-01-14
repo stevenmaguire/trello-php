@@ -11,6 +11,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         Trello_Configuration::secret(getenv('TRELLO_API_SECRET'));
         Trello_Configuration::token(getenv('TRELLO_API_TOKEN'));
         Trello_Configuration::applicationName(getenv('TRELLO_API_APPNAME'));
+        Trello_Configuration::oauthCallbackUrl(getenv('TRELLO_API_CALLBACK_URL'));
     }
 
     protected function isHhvm()

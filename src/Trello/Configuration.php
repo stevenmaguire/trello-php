@@ -27,7 +27,8 @@ class Trello_Configuration extends Trello
                     'key'    => '',
                     'secret'     => '',
                     'token'    => '',
-                    'applicationName' => self::LIBRARY_NAME
+                    'application_name' => self::LIBRARY_NAME,
+                    'oauth_callback_url' => ''
                    ];
     /**
      *
@@ -54,7 +55,8 @@ class Trello_Configuration extends Trello
             'key'  => '',
             'secret' => '',
             'token' => '',
-            'applicationName' => self::LIBRARY_NAME
+            'application_name' => self::LIBRARY_NAME,
+            'oauth_callback_url' => ''
         ];
     }
 
@@ -192,7 +194,21 @@ class Trello_Configuration extends Trello
      */
     public static function applicationName($value = null)
     {
-        return self::setOrGet(__FUNCTION__, $value);
+        return self::setOrGet('application_name', $value);
+    }
+
+    /**
+     * sets or returns the property after validation
+     *
+     * @access public
+     * @static
+     * @param string $value pass a string to set, empty to get
+     *
+     * @return string returns true on set
+     */
+    public static function oauthCallbackUrl($value = null)
+    {
+        return self::setOrGet('oauth_callback_url', $value);
     }
 
     /**
