@@ -10,6 +10,12 @@
 abstract class Trello_Model extends Trello
 {
     /**
+     * Model id
+     * @property string $id
+     */
+    protected $id;
+
+    /**
      * Raw payload from init
      *
      * @var stdClass
@@ -35,7 +41,7 @@ abstract class Trello_Model extends Trello
             $url = $this->getFieldUrl($field);
             try {
                 $response = self::get($url);
-                $this->field = $this->parseFieldResponse($response);
+                $this->$field = $this->parseFieldResponse($response);
                 return $this->$field;
             } catch (Trello_Exception $e) {
                 //
