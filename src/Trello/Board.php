@@ -112,7 +112,7 @@ class Trello_Board extends Trello_Model
                 'attempted to create board without name; it\'s gotta have a name'
             );
         }
-        return self::_doCreate(static::getBasePath(), $attributes);
+        return static::doCreate(static::getBasePath(), $attributes);
     }
 
     /**
@@ -127,7 +127,7 @@ class Trello_Board extends Trello_Model
     public static function search($keyword = null, $filters = [])
     {
         $filters['modelTypes'] = 'boards';
-        $results = self::_doSearch($keyword, $filters);
+        $results = static::doSearch($keyword, $filters);
         return new Trello_Collection($results->boards);
     }
 
@@ -147,7 +147,7 @@ class Trello_Board extends Trello_Model
             );
         }
 
-        return self::_doFetch($board_id);
+        return static::doFetch($board_id);
     }
 
     /**
@@ -161,7 +161,7 @@ class Trello_Board extends Trello_Model
     public static function closeBoard($board_id = null)
     {
         if ($board_id) {
-            $result = self::_put(static::getBasePath($board_id).'/closed', ['value' => true]);
+            $result = static::put(static::getBasePath($board_id).'/closed', ['value' => true]);
             return $result->closed;
         }
         throw new Trello_Exception_ValidationsFailed(
@@ -192,7 +192,7 @@ class Trello_Board extends Trello_Model
     public function addChecklist($name = null)
     {
         if ($name) {
-            $result = self::_post(static::getBasePath($this->id).'/checklists', ['name' => $name]);
+            $result = static::post(static::getBasePath($this->id).'/checklists', ['name' => $name]);
             return Trello_Checklist::fetch($result->id);
         }
         throw new Trello_Exception_ValidationsFailed(
@@ -213,7 +213,7 @@ class Trello_Board extends Trello_Model
     {
         $attributes['idBoard'] = $this->id;
         Trello_List::parseAttributes($attributes);
-        $result = self::_post(static::getBasePath($this->id).'/lists', $attributes);
+        $result = static::post(static::getBasePath($this->id).'/lists', $attributes);
         return Trello_List::fetch($result->id);
     }
 
@@ -228,7 +228,7 @@ class Trello_Board extends Trello_Model
     public function addPowerUp($powerup = null)
     {
         if (preg_match('/voting|cardAging|calendar|recap/', $powerup)) {
-            return self::_post(static::getBasePath($this->id).'/powerUps', ['value' => $powerup]);
+            return static::post(static::getBasePath($this->id).'/powerUps', ['value' => $powerup]);
         }
         throw new Trello_Exception_ValidationsFailed(
             'attempted to add invalid powerup to board; it\'s gotta be a valid powerup'
@@ -250,7 +250,7 @@ class Trello_Board extends Trello_Model
                 'attempted to remove invalid powerup from board; it\'s gotta be a valid powerup'
             );
         }
-        return self::_delete(static::getBasePath($this->id).'/powerUps/'.$powerup);
+        return static::delete(static::getBasePath($this->id).'/powerUps/'.$powerup);
     }
 
     /**
@@ -361,7 +361,7 @@ class Trello_Board extends Trello_Model
      */
     public function generateCalendarKey()
     {
-        return self::_post(static::getBasePath($this->id).'/calendarKey/generate');
+        return static::post(static::getBasePath($this->id).'/calendarKey/generate');
     }
 
     /**
@@ -371,7 +371,7 @@ class Trello_Board extends Trello_Model
      */
     public function generateEmailKey()
     {
-        return self::_post(static::getBasePath($this->id).'/emailKey/generate');
+        return static::post(static::getBasePath($this->id).'/emailKey/generate');
     }
 
     /**
@@ -381,7 +381,7 @@ class Trello_Board extends Trello_Model
      */
     public function getLists()
     {
-        $lists = self::_get(static::getBasePath($this->id).'/lists');
+        $lists = static::get(static::getBasePath($this->id).'/lists');
         $ids = Trello_List::getListIds($lists);
         return Trello_List::fetch($ids);
     }
@@ -393,7 +393,7 @@ class Trello_Board extends Trello_Model
      */
     public function markAsViewed()
     {
-        return self::_post(static::getBasePath($this->id).'/markAsViewed');
+        return static::post(static::getBasePath($this->id).'/markAsViewed');
     }
 
     /**
@@ -403,7 +403,7 @@ class Trello_Board extends Trello_Model
      */
     public function getCards()
     {
-        $cards = self::_get(static::getBasePath($this->id).'/cards');
+        $cards = static::get(static::getBasePath($this->id).'/cards');
         $ids = Trello_Card::getCardIds($cards);
         return Trello_Card::fetch($ids);
     }
@@ -417,7 +417,7 @@ class Trello_Board extends Trello_Model
      */
     public function updateDescription($description = null)
     {
-        return self::_doStore(static::getBasePath($this->id).'/desc', ['value' => $description]);
+        return static::doStore(static::getBasePath($this->id).'/desc', ['value' => $description]);
     }
 
     /**
@@ -435,6 +435,6 @@ class Trello_Board extends Trello_Model
                 'attempted to update board name without new name; it\'s gotta have a name'
             );
         }
-        return self::_doStore(static::getBasePath($this->id).'/name', ['value' => $name]);
+        return static::doStore(static::getBasePath($this->id).'/name', ['value' => $name]);
     }
 }

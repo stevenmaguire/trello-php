@@ -34,7 +34,7 @@ class Organization_Test extends IntegrationTestCase
     public function test_It_Can_Delete_Current_Organization()
     {
         $organization = $this->createTestOrganization();
-        $result = $organization->delete();
+        $result = $organization->remove();
     }
 
     /**
@@ -53,5 +53,24 @@ class Organization_Test extends IntegrationTestCase
     public function test_It_Can_Not_Delete_Specific_Organization_When_Id_Not_Provided()
     {
         $result = Trello_Organization::deleteOrganization();
+    }
+
+    public function test_It_Can_Get_Individual_Fields_When_Property_Does_Exist()
+    {
+        $organization = $this->createTestOrganization();
+        $ref_organization = new ReflectionClass($organization);
+        $fields = $ref_organization->getProperties();
+
+        foreach ($fields as $field) {
+            if (!$field->isStatic()) {
+                $response = $organization->getField($field->name, true);
+            }
+        }
+    }
+
+    public function test_It_Can_Get_Individual_Fields_When_Property_Does_Not_Exist()
+    {
+        $organization = $this->createTestOrganization();
+        $response = $organization->getField('foo', true);
     }
 }

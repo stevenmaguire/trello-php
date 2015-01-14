@@ -435,4 +435,25 @@ class Board_Test extends IntegrationTestCase
             $this->assertInstanceOf('Trello_Collection', $result);
         }
     }
+
+    public function test_It_Can_Get_Individual_Fields_When_Property_Does_Exist()
+    {
+        $card = $this->createTestCard();
+        $board = $card->getBoard();
+        $ref_board = new ReflectionClass($board);
+        $fields = $ref_board->getProperties();
+
+        foreach ($fields as $field) {
+            if (!$field->isStatic()) {
+                $response = $board->getField($field->name, true);
+            }
+        }
+    }
+
+    public function test_It_Can_Get_Individual_Fields_When_Property_Does_Not_Exist()
+    {
+        $card = $this->createTestCard();
+        $board = $card->getBoard();
+        $response = $board->getField('foo', true);
+    }
 }

@@ -83,7 +83,7 @@ class Trello_Checklist extends Trello_Model
             );
         }
 
-        return self::_doCreate(static::getBasePath(), $attributes);
+        return static::doCreate(static::getBasePath(), $attributes);
     }
 
     /**
@@ -102,6 +102,6 @@ class Trello_Checklist extends Trello_Model
             );
         }
 
-        return self::_doFetch($checklist_id);
+        return static::doFetch($checklist_id);
     }
 }

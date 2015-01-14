@@ -50,4 +50,23 @@ class Checklist_Test extends IntegrationTestCase
         $this->assertEquals($checklist1->id, $result[0]->id);
         $this->assertEquals($checklist2->id, $result[1]->id);
     }
+
+    public function test_It_Can_Get_Individual_Fields_When_Property_Does_Exist()
+    {
+        $checklist = $this->createTestChecklist();
+        $ref_checklist = new ReflectionClass($checklist);
+        $fields = $ref_checklist->getProperties();
+
+        foreach ($fields as $field) {
+            if (!$field->isStatic()) {
+                $response = $checklist->getField($field->name, true);
+            }
+        }
+    }
+
+    public function test_It_Can_Get_Individual_Fields_When_Property_Does_Not_Exist()
+    {
+        $checklist = $this->createTestChecklist();
+        $response = $checklist->getField('foo', true);
+    }
 }

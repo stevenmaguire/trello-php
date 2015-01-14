@@ -176,7 +176,7 @@ class Trello_Card extends Trello_Model
             );
         }
 
-        return self::_doFetch($card_id);
+        return static::doFetch($card_id);
     }
 
     /**
@@ -203,7 +203,7 @@ class Trello_Card extends Trello_Model
             );
         }
 
-        return self::_doCreate(static::getBasePath(), $attributes);
+        return static::doCreate(static::getBasePath(), $attributes);
     }
 
     /**
@@ -227,7 +227,7 @@ class Trello_Card extends Trello_Model
      */
     public function updateList(Trello_List $list)
     {
-        return self::_doStore(static::getBasePath($this->id).'/idList', ['value' => $list->id]);
+        return static::doStore(static::getBasePath($this->id).'/idList', ['value' => $list->id]);
     }
 
     /**

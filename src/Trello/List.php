@@ -72,7 +72,7 @@ class Trello_List extends Trello_Model
             );
         }
 
-        return self::_doFetch($list_id);
+        return static::doFetch($list_id);
     }
 
     /**
@@ -86,7 +86,7 @@ class Trello_List extends Trello_Model
     public static function create($attributes = [])
     {
         self::parseAttributes($attributes);
-        return self::_doCreate(static::getBasePath(), $attributes);
+        return static::doCreate(static::getBasePath(), $attributes);
     }
 
     /**
@@ -172,7 +172,7 @@ class Trello_List extends Trello_Model
     public function getCards()
     {
         $ids = [];
-        $cards = self::_get('/list/'.$this->id.'/cards');
+        $cards = static::get('/list/'.$this->id.'/cards');
         if (is_array($cards)) {
             foreach ($cards as $card) {
                 $ids[] = $card->id;

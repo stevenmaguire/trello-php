@@ -81,4 +81,23 @@ class List_Test extends IntegrationTestCase
 
         $this->assertInstanceOf('Trello_Card', $result);
     }
+
+    public function test_It_Can_Get_Individual_Fields_When_Property_Does_Exist()
+    {
+        $list = $this->createTestList();
+        $ref_list = new ReflectionClass($list);
+        $fields = $ref_list->getProperties();
+
+        foreach ($fields as $field) {
+            if (!$field->isStatic()) {
+                $response = $list->getField($field->name, true);
+            }
+        }
+    }
+
+    public function test_It_Can_Get_Individual_Fields_When_Property_Does_Not_Exist()
+    {
+        $list = $this->createTestList();
+        $response = $list->getField('foo', true);
+    }
 }

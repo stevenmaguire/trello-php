@@ -95,7 +95,7 @@ class Trello_Organization extends Trello_Model
                 'attempted to create organization without display name; it\'s gotta have a display name'
             );
         }
-        return self::_doCreate(static::getBasePath(), $attributes);
+        return static::doCreate(static::getBasePath(), $attributes);
     }
 
     /**
@@ -110,14 +110,14 @@ class Trello_Organization extends Trello_Model
     public static function search($keyword = null, $filters = [])
     {
         $filters['modelTypes'] = 'organizations';
-        $results = self::_doSearch($keyword, $filters);
+        $results = static::doSearch($keyword, $filters);
         return new Trello_Collection($results->organizations);
     }
 
     public static function deleteOrganization($organization_id = null)
     {
         if ($organization_id) {
-            return self::_delete(static::getBasePath($organization_id));
+            return static::delete(static::getBasePath($organization_id));
         }
         throw new Trello_Exception_ValidationsFailed(
             'attempted to delete organization without id; it\'s gotta have an id'
@@ -125,11 +125,11 @@ class Trello_Organization extends Trello_Model
     }
 
     /**
-     * Delete organization
+     * Remove organization
      *
      * @return boolean
      */
-    public function delete()
+    public function remove()
     {
         return self::deleteOrganization($this->id);
     }

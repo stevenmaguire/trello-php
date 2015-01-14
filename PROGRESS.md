@@ -1,6 +1,7 @@
 [notstarted]: https://img.shields.io/badge/status-not%20started-orange.svg?style=flat
 [tested]: https://img.shields.io/badge/status-tested-green.svg?style=flat
 [wip]: https://img.shields.io/badge/status-in%20progress-yellow.svg?style=flat
+[pass]: https://img.shields.io/badge/status-not%20pertinent-gray.svg?style=flat
 
 # Progress
 
@@ -17,18 +18,18 @@
 |GET|/1/actions/[idAction]|![notstarted]|
 |GET|/1/actions/[idAction]/[field]|![notstarted]|
 |GET|/1/actions/[idAction]/board|![notstarted]|
-|GET|/1/actions/[idAction]/board/[field]|![notstarted]|
+|GET|/1/actions/[idAction]/board/[field]|![pass]|
 |GET|/1/actions/[idAction]/card|![notstarted]|
-|GET|/1/actions/[idAction]/card/[field]|![notstarted]|
+|GET|/1/actions/[idAction]/card/[field]|![pass]|
 |GET|/1/actions/[idAction]/entities|![notstarted]|
 |GET|/1/actions/[idAction]/list|![notstarted]|
-|GET|/1/actions/[idAction]/list/[field]|![notstarted]|
+|GET|/1/actions/[idAction]/list/[field]|![pass]|
 |GET|/1/actions/[idAction]/member|![notstarted]|
-|GET|/1/actions/[idAction]/member/[field]|![notstarted]|
+|GET|/1/actions/[idAction]/member/[field]|![pass]|
 |GET|/1/actions/[idAction]/memberCreator|![notstarted]|
-|GET|/1/actions/[idAction]/memberCreator/[field]|![notstarted]|
+|GET|/1/actions/[idAction]/memberCreator/[field]|![pass]|
 |GET|/1/actions/[idAction]/organization|![notstarted]|
-|GET|/1/actions/[idAction]/organization/[field]|![notstarted]|
+|GET|/1/actions/[idAction]/organization/[field]|![pass]|
 |PUT|/1/actions/[idAction]|![notstarted]|
 |PUT|/1/actions/[idAction]/text|![notstarted]|
 |DELETE|/1/actions/[idAction]|![notstarted]|
@@ -44,7 +45,7 @@
 |Method|Endpoint|Status|
 |------|--------|------|
 |GET|/1/boards/[board_id]|![tested]|
-|GET|/1/boards/[board_id]/[field]|![notstarted]|
+|GET|/1/boards/[board_id]/[field]|![tested]|
 |GET|/1/boards/[board_id]/actions|![notstarted]|
 |GET|/1/boards/[board_id]/boardStars|![notstarted]|
 |GET|/1/boards/[board_id]/cards|![tested]|
@@ -60,12 +61,12 @@
 |GET|/1/boards/[board_id]/members/[filter]|![notstarted]|
 |GET|/1/boards/[board_id]/members/[idMember]/cards|![notstarted]|
 |GET|/1/boards/[board_id]/membersInvited|![notstarted]|
-|GET|/1/boards/[board_id]/membersInvited/[field]|![notstarted]|
+|GET|/1/boards/[board_id]/membersInvited/[field]|![pass]|
 |GET|/1/boards/[board_id]/memberships|![notstarted]|
 |GET|/1/boards/[board_id]/memberships/[idMembership]|![notstarted]|
 |GET|/1/boards/[board_id]/myPrefs|![notstarted]|
 |GET|/1/boards/[board_id]/organization|![notstarted]|
-|GET|/1/boards/[board_id]/organization/[field]|![notstarted]|
+|GET|/1/boards/[board_id]/organization/[field]|![pass]|
 |PUT|/1/boards/[board_id]|![notstarted]|
 |PUT|/1/boards/[board_id]/closed|![tested]|
 |PUT|/1/boards/[board_id]/desc|![tested]|
@@ -113,16 +114,16 @@
 |Method|Endpoint|Status|
 |------|--------|------|
 |GET|/1/cards/[card id or shortlink]|![wip]|
-|GET|/1/cards/[card id or shortlink]/[field]|![notstarted]|
+|GET|/1/cards/[card id or shortlink]/[field]|![tested]|
 |GET|/1/cards/[card id or shortlink]/actions|![notstarted]|
 |GET|/1/cards/[card id or shortlink]/attachments|![notstarted]|
 |GET|/1/cards/[card id or shortlink]/attachments/[idAttachment]|![notstarted]|
 |GET|/1/cards/[card id or shortlink]/board|![notstarted]|
-|GET|/1/cards/[card id or shortlink]/board/[field]|![notstarted]|
+|GET|/1/cards/[card id or shortlink]/board/[field]|![pass]|
 |GET|/1/cards/[card id or shortlink]/checkItemStates|![notstarted]|
 |GET|/1/cards/[card id or shortlink]/checklists|![notstarted]|
 |GET|/1/cards/[card id or shortlink]/list|![notstarted]|
-|GET|/1/cards/[card id or shortlink]/list/[field]|![notstarted]|
+|GET|/1/cards/[card id or shortlink]/list/[field]|![pass]|
 |GET|/1/cards/[card id or shortlink]/members|![notstarted]|
 |GET|/1/cards/[card id or shortlink]/membersVoted|![notstarted]|
 |GET|/1/cards/[card id or shortlink]/stickers|![notstarted]|
@@ -173,9 +174,9 @@
 |Method|Endpoint|Status|
 |------|--------|------|
 |GET|/1/checklists/[idChecklist]|![notstarted]|
-|GET|/1/checklists/[idChecklist]/[field]|![notstarted]|
+|GET|/1/checklists/[idChecklist]/[field]|![tested]|
 |GET|/1/checklists/[idChecklist]/board|![notstarted]|
-|GET|/1/checklists/[idChecklist]/board/[field]|![notstarted]|
+|GET|/1/checklists/[idChecklist]/board/[field]|![pass]|
 |GET|/1/checklists/[idChecklist]/cards|![notstarted]|
 |GET|/1/checklists/[idChecklist]/cards/[filter]|![notstarted]|
 |GET|/1/checklists/[idChecklist]/checkItems|![notstarted]|
@@ -195,7 +196,7 @@
 |------|--------|------|
 |GET|/1/labels/[idLabel]|![notstarted]|
 |GET|/1/labels/[idLabel]/board|![notstarted]|
-|GET|/1/labels/[idLabel]/board/[field]|![notstarted]|
+|GET|/1/labels/[idLabel]/board/[field]|![pass]|
 |PUT|/1/labels/[idLabel]|![notstarted]|
 |PUT|/1/labels/[idLabel]/color|![notstarted]|
 |PUT|/1/labels/[idLabel]/name|![notstarted]|
@@ -210,7 +211,7 @@
 |GET|/1/lists/[idList]/[field]|![notstarted]|
 |GET|/1/lists/[idList]/actions|![notstarted]|
 |GET|/1/lists/[idList]/board|![notstarted]|
-|GET|/1/lists/[idList]/board/[field]|![notstarted]|
+|GET|/1/lists/[idList]/board/[field]|![pass]|
 |GET|/1/lists/[idList]/cards|![tested]|
 |GET|/1/lists/[idList]/cards/[filter]|![notstarted]|
 |PUT|/1/lists/[idList]|![notstarted]|
@@ -295,18 +296,18 @@
 |GET|/1/notifications/[idNotification]|![notstarted]|
 |GET|/1/notifications/[idNotification]/[field]|![notstarted]|
 |GET|/1/notifications/[idNotification]/board|![notstarted]|
-|GET|/1/notifications/[idNotification]/board/[field]|![notstarted]|
+|GET|/1/notifications/[idNotification]/board/[field]|![pass]|
 |GET|/1/notifications/[idNotification]/card|![notstarted]|
-|GET|/1/notifications/[idNotification]/card/[field]|![notstarted]|
+|GET|/1/notifications/[idNotification]/card/[field]|![pass]|
 |GET|/1/notifications/[idNotification]/entities|![notstarted]|
 |GET|/1/notifications/[idNotification]/list|![notstarted]|
-|GET|/1/notifications/[idNotification]/list/[field]|![notstarted]|
+|GET|/1/notifications/[idNotification]/list/[field]|![pass]|
 |GET|/1/notifications/[idNotification]/member|![notstarted]|
-|GET|/1/notifications/[idNotification]/member/[field]|![notstarted]|
+|GET|/1/notifications/[idNotification]/member/[field]|![pass]|
 |GET|/1/notifications/[idNotification]/memberCreator|![notstarted]|
 |GET|/1/notifications/[idNotification]/memberCreator/[field]|![notstarted]|
 |GET|/1/notifications/[idNotification]/organization|![notstarted]|
-|GET|/1/notifications/[idNotification]/organization/[field]|![notstarted]|
+|GET|/1/notifications/[idNotification]/organization/[field]|![pass]|
 |PUT|/1/notifications/[idNotification]|![notstarted]|
 |PUT|/1/notifications/[idNotification]/unread|![notstarted]|
 |POST|/1/notifications/all/read|![notstarted]|
@@ -316,7 +317,7 @@
 |Method|Endpoint|Status|
 |------|--------|------|
 |GET|/1/organizations/[idOrg or name]|![notstarted]|
-|GET|/1/organizations/[idOrg or name]/[field]|![notstarted]|
+|GET|/1/organizations/[idOrg or name]/[field]|![tested]|
 |GET|/1/organizations/[idOrg or name]/actions|![notstarted]|
 |GET|/1/organizations/[idOrg or name]/boards|![notstarted]|
 |GET|/1/organizations/[idOrg or name]/boards/[filter]|![notstarted]|

@@ -24,6 +24,27 @@ abstract class Trello_Model extends Trello
     protected static $base_path = null;
 
     /**
+     * Get model attribute via field method
+     *
+     * @return string|stdClass
+     */
+    public function getField($field, $force = false)
+    {
+        $value = static::__get($field);
+        if (empty($value) || $force) {
+            $url = $this->getFieldUrl($field);
+            try {
+                $response = self::get($url);
+                $this->field = $this->parseFieldResponse($response);
+                return $this->$field;
+            } catch (Trello_Exception $e) {
+                //
+            }
+        }
+        return $value;
+    }
+
+    /**
      * sets instance properties from an object of values
      *
      * @access protected
@@ -31,22 +52,22 @@ abstract class Trello_Model extends Trello
      *
      * @return Trello_Model Initialized object
      */
-    protected function _initialize($response)
+    protected function initialize($response)
     {
         $this->raw = $response;
-        return self::_mapAs($this, $response);
+        return self::mapAs($this, $response);
     }
 
     /**
-     *  factory method: returns an instance of Trello_Model
-     *  to the requesting method, with populated properties
+     * factory method: returns an instance of Trello_Model
+     * to the requesting method, with populated properties
      *
      * @return Trello_Model instance of Trello_Model
      */
     protected static function factory($response = null)
     {
         $instance = new static();
-        $instance->_initialize($response);
+        $instance->initialize($response);
         return $instance;
     }
 
@@ -61,6 +82,18 @@ abstract class Trello_Model extends Trello
     }
 
     /**
+     * Get field url
+     *
+     * @param  string $field
+     *
+     * @return string
+     */
+    protected function getFieldUrl($field)
+    {
+        return self::getBasePath($this->id).'/'.$field;
+    }
+
+    /**
      * sends the create request to the gateway
      *
      * @param string $url
@@ -68,7 +101,7 @@ abstract class Trello_Model extends Trello
      *
      * @return Trello_Model
      */
-    protected static function _doCreate($url, $params)
+    protected static function doCreate($url, $params)
     {
         $response = Trello_Http::post($url, $params);
         return self::factory($response);
@@ -81,7 +114,7 @@ abstract class Trello_Model extends Trello
      *
      * @return Trello_Model|Trello_Collection
      */
-    protected static function _doFetch($ids)
+    protected static function doFetch($ids)
     {
         $urls = [];
 
@@ -93,7 +126,7 @@ abstract class Trello_Model extends Trello
             $urls[] = static::getBasePath($id);
         }
 
-        $response = self::_doBatch($urls);
+        $response = self::doBatch($urls);
 
         if (count($response) == 1) {
             return $response->first();
@@ -110,7 +143,7 @@ abstract class Trello_Model extends Trello
      *
      * @return stdClass|null
      */
-    protected static function _doSearch($keyword = null, $params = [])
+    protected static function doSearch($keyword = null, $params = [])
     {
         $params['query'] = $keyword;
         return Trello_Http::get('/search', $params);
@@ -124,7 +157,7 @@ abstract class Trello_Model extends Trello
      *
      * @return Trello_Model
      */
-    protected static function _doStore($url, $params)
+    protected static function doStore($url, $params)
     {
         $response = Trello_Http::put($url, $params);
         return self::factory($response);
@@ -137,7 +170,7 @@ abstract class Trello_Model extends Trello
      *
      * @return Trello_Collection Collection of result objects
      */
-    protected static function _doBatch($urls = [])
+    protected static function doBatch($urls = [])
     {
         $collection = new Trello_Collection;
         $response = Trello_Http::get('/batch', ['urls' => $urls]);
@@ -145,6 +178,90 @@ abstract class Trello_Model extends Trello
             self::parseBatchResponse($response, $collection);
         }
         return $collection;
+    }
+
+    /**
+     * sends the get request to the gateway
+     *
+     * @param string $url
+     * @param array $params
+     *
+     * @return stdClass|null
+     * @throws Trello_Exception
+     */
+    protected static function get($url, $params = [])
+    {
+        return Trello_Http::get($url, $params);
+    }
+
+    /**
+     * sends the post request to the gateway
+     *
+     * @param string $url
+     * @param array $params
+     *
+     * @return stdClass
+     * @throws Trello_Exception
+     */
+    protected static function post($url, $params = [])
+    {
+        return Trello_Http::post($url, $params);
+    }
+
+    /**
+     * sends the put request to the gateway
+     *
+     * @param string $url
+     * @param array $params
+     *
+     * @return stdClass
+     * @throws Trello_Exception
+     */
+    protected static function put($url, $params = [])
+    {
+        return Trello_Http::put($url, $params);
+    }
+
+    /**
+     * sends the delete request to the gateway
+     *
+     * @param string $url
+     * @param array $params
+     *
+     * @throws Trello_Exception
+     * @return boolean
+     */
+    protected static function delete($url, $params = [])
+    {
+        return Trello_Http::delete($url, $params);
+    }
+
+    /**
+     * Map an object as another given object
+     *
+     * @param  Trello_Model $destination Object to receive the mapping
+     * @param  object sourceObject Object from which to map data
+     *
+     * @return Trello_Model Mapped object
+     */
+    private static function mapAs($destination, $sourceObject)
+    {
+        $sourceReflection = new ReflectionObject($sourceObject);
+        $destinationReflection = new ReflectionObject($destination);
+        $sourceProperties = $sourceReflection->getProperties();
+        foreach ($sourceProperties as $sourceProperty) {
+            $sourceProperty->setAccessible(true);
+            $name = $sourceProperty->getName();
+            $value = $sourceProperty->getValue($sourceObject);
+            if ($destinationReflection->hasProperty($name)) {
+                $propDest = $destinationReflection->getProperty($name);
+                $propDest->setAccessible(true);
+                $propDest->setValue($destination, $value);
+            } else {
+                $destination->$name = $value;
+            }
+        }
+        return $destination;
     }
 
     /**
@@ -164,86 +281,18 @@ abstract class Trello_Model extends Trello
     }
 
     /**
-     * sends the get request to the gateway
+     * Parse response from getField
      *
-     * @param string $url
-     * @param array $params
+     * @param  stdClass|null $response
      *
-     * @return stdClass|null
-     * @throws Trello_Exception
+     * @return string|integer|stdClass|null
      */
-    protected static function _get($url, $params = [])
+    private function parseFieldResponse($response = null)
     {
-        return Trello_Http::get($url, $params);
-    }
-
-    /**
-     * sends the post request to the gateway
-     *
-     * @param string $url
-     * @param array $params
-     *
-     * @return stdClass
-     * @throws Trello_Exception
-     */
-    protected static function _post($url, $params = [])
-    {
-        return Trello_Http::post($url, $params);
-    }
-
-    /**
-     * sends the put request to the gateway
-     *
-     * @param string $url
-     * @param array $params
-     *
-     * @return stdClass
-     * @throws Trello_Exception
-     */
-    protected static function _put($url, $params = [])
-    {
-        return Trello_Http::put($url, $params);
-    }
-
-    /**
-     * sends the delete request to the gateway
-     *
-     * @param string $url
-     * @param array $params
-     *
-     * @throws Trello_Exception
-     * @return boolean
-     */
-    protected static function _delete($url, $params = [])
-    {
-        return Trello_Http::delete($url, $params);
-    }
-
-    /**
-     * Map an object as another given object
-     *
-     * @param  Trello_Model $destination Object to receive the mapping
-     * @param  object sourceObject Object from which to map data
-     *
-     * @return Trello_Model Mapped object
-     */
-    protected static function _mapAs($destination, $sourceObject)
-    {
-        $sourceReflection = new ReflectionObject($sourceObject);
-        $destinationReflection = new ReflectionObject($destination);
-        $sourceProperties = $sourceReflection->getProperties();
-        foreach ($sourceProperties as $sourceProperty) {
-            $sourceProperty->setAccessible(true);
-            $name = $sourceProperty->getName();
-            $value = $sourceProperty->getValue($sourceObject);
-            if ($destinationReflection->hasProperty($name)) {
-                $propDest = $destinationReflection->getProperty($name);
-                $propDest->setAccessible(true);
-                $propDest->setValue($destination, $value);
-            } else {
-                $destination->$name = $value;
-            }
+        if (is_object($response) && property_exists($response, '_value')) {
+            return $response->_value;
+        } else {
+            return $response;
         }
-        return $destination;
     }
 }
