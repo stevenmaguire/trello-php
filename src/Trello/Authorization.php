@@ -107,13 +107,13 @@ abstract class Trello_Authorization extends Trello
     }
 
     /**
-     * [getCredentialSessionKey description]
+     * Get the key for temporary credentials stored in session
      *
-     * @return [type] [description]
+     * @return string
      */
     public static function getCredentialSessionKey()
     {
-        return get_class();
+        return get_class().':temporary_credentials';
     }
 
     /**
