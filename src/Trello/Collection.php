@@ -35,35 +35,43 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
-     * Set index's value
-     *
-     * @param integer $index
-     * @param string|array|object $value
-     *
-     * @throws OutOfRangeException
+     * Return count of items in collection
+     * Implements countable
+     * @return integer
      */
-    public function set($index, $value)
+    public function count()
     {
-        if ($index >= $this->count()) {
-            throw new OutOfRangeException('Index out of range');
-        }
-
-        $this->_collection[$index] = $value;
+        return count($this->_collection);
     }
 
     /**
-     * Remove a value from the collection
+     * Determine if index exists
      *
-     * @param integer $index index to remove
+     * @param integer $index
      *
-     * @throws OutOfRangeException if index is out of range
+     * @return boolean
      */
-    public function remove($index)
+    public function exists($index)
     {
         if ($index >= $this->count()) {
-            throw new OutOfRangeException('Index out of range');
+            return false;
         }
-        array_splice($this->_collection, $index, 1);
+        return true;
+    }
+
+    /**
+     * Return first value
+     *
+     * @return string|object
+     *
+     * @throws OutOfRangeException
+     */
+    public function first()
+    {
+        if ($this->count() > 0) {
+            return $this->get(0);
+        }
+        return null;
     }
 
     /**
@@ -84,18 +92,14 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
-     * Return first value
+     * Return an iterator
+     * Implements IteratorAggregate
      *
-     * @return string|object
-     *
-     * @throws OutOfRangeException
+     * @return ArrayIterator
      */
-    public function first()
+    public function getIterator()
     {
-        if ($this->count() > 0) {
-            return $this->get(0);
-        }
-        return null;
+        return new ArrayIterator($this->_collection);
     }
 
     /**
@@ -116,39 +120,31 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
-     * Determine if index exists
+     * Determine if offset exists
+     * Implements ArrayAccess
+     * @see exists
      *
-     * @param integer $index
+     * @param integer $offset
      *
      * @return boolean
      */
-    public function exists($index)
+    public function offsetExists($offset)
     {
-        if ($index >= $this->count()) {
-            return false;
-        }
-        return true;
-    }
-    /**
-     * Return count of items in collection
-     * Implements countable
-     * @return integer
-     */
-    public function count()
-    {
-        return count($this->_collection);
+        return $this->exists($offset);
     }
 
-
     /**
-     * Return an iterator
-     * Implements IteratorAggregate
+     * get an offset's value
+     * Implements ArrayAccess
+     * @see get
      *
-     * @return ArrayIterator
+     * @param integer $offset
+     *
+     * @return string|object
      */
-    public function getIterator()
+    public function offsetGet($offset)
     {
-        return new ArrayIterator($this->_collection);
+        return $this->get($offset);
     }
 
     /**
@@ -177,31 +173,34 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
     }
 
     /**
-     * get an offset's value
-     * Implements ArrayAccess
-     * @see get
+     * Remove a value from the collection
      *
-     * @param integer $offset
+     * @param integer $index index to remove
      *
-     * @return string|object
+     * @throws OutOfRangeException if index is out of range
      */
-    public function offsetGet($offset)
+    public function remove($index)
     {
-        return $this->get($offset);
+        if ($index >= $this->count()) {
+            throw new OutOfRangeException('Index out of range');
+        }
+        array_splice($this->_collection, $index, 1);
     }
 
     /**
-     * Determine if offset exists
-     * Implements ArrayAccess
-     * @see exists
+     * Set index's value
      *
-     * @param integer $offset
+     * @param integer $index
+     * @param string|array|object $value
      *
-     * @return boolean
+     * @throws OutOfRangeException
      */
-    public function offsetExists($offset)
+    public function set($index, $value)
     {
-        return $this->exists($offset);
-    }
+        if ($index >= $this->count()) {
+            throw new OutOfRangeException('Index out of range');
+        }
 
+        $this->_collection[$index] = $value;
+    }
 }

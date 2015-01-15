@@ -20,22 +20,6 @@ abstract class Trello_Authorization extends Trello
      */
     protected static $scope = null;
 
-    /**
-     * Get authorization link
-     *
-     * @return string
-     */
-    public static function getAuthorizationUrl($expiration = null)
-    {
-        $config = [
-            'key' => Trello_Configuration::key(),
-            'name' => Trello_Configuration::applicationName(),
-            'response_type' => 'token',
-            'expiration' => self::parseExpiration($expiration),
-            'scope' => static::$scope
-        ];
-        return self::getBasePath().'?'.Trello_Util::buildQueryStringFromArray($config);
-    }
 
     /**
      * Authorize application
@@ -56,6 +40,62 @@ abstract class Trello_Authorization extends Trello
         $_SESSION[$session_key] = serialize($temporaryCredentials);
         session_write_close();
         $server->authorize($temporaryCredentials);
+    }
+
+    /**
+     * Get authorization link
+     *
+     * @return string
+     */
+    public static function getAuthorizationUrl($expiration = null)
+    {
+        $config = [
+            'key' => Trello_Configuration::key(),
+            'name' => Trello_Configuration::applicationName(),
+            'response_type' => 'token',
+            'expiration' => self::parseExpiration($expiration),
+            'scope' => static::$scope
+        ];
+        return self::getBasePath().'?'.Trello_Util::buildQueryStringFromArray($config);
+    }
+
+    /**
+     * Get authorization base url
+     *
+     * @return string Base url
+     */
+    protected static function getBasePath()
+    {
+        return 'https://trello.com'.Trello_Configuration::versionPath().'/authorize';
+    }
+
+    /**
+     * Get the key for temporary credentials stored in session
+     *
+     * @return string
+     */
+    public static function getCredentialSessionKey()
+    {
+        return get_class().':temporary_credentials';
+    }
+
+    /**
+     * Get OAuth server implementation
+     *
+     * @param  string $expiration
+     *
+     * @return Stevenmaguire\OAuth1\Client\Server\Trello
+     */
+    public static function getOAuthServer($expiration = null)
+    {
+        return new TrelloServer(array(
+            'identifier' => Trello_Configuration::key(),
+            'secret' => Trello_Configuration::secret(),
+            'callback_uri' => Trello_Configuration::oauthCallbackUrl(),
+            'name' => Trello_Configuration::applicationName(),
+            'expiration' => self::parseExpiration($expiration),
+            'scope' => static::$scope
+        ));
     }
 
     /**
@@ -88,35 +128,6 @@ abstract class Trello_Authorization extends Trello
     }
 
     /**
-     * Get OAuth server implementation
-     *
-     * @param  string $expiration
-     *
-     * @return Stevenmaguire\OAuth1\Client\Server\Trello
-     */
-    public static function getOAuthServer($expiration = null)
-    {
-        return new TrelloServer(array(
-            'identifier' => Trello_Configuration::key(),
-            'secret' => Trello_Configuration::secret(),
-            'callback_uri' => Trello_Configuration::oauthCallbackUrl(),
-            'name' => Trello_Configuration::applicationName(),
-            'expiration' => self::parseExpiration($expiration),
-            'scope' => static::$scope
-        ));
-    }
-
-    /**
-     * Get the key for temporary credentials stored in session
-     *
-     * @return string
-     */
-    public static function getCredentialSessionKey()
-    {
-        return get_class().':temporary_credentials';
-    }
-
-    /**
      * Parse expiration value for fixed Trello values
      *
      * @param  string $expiration
@@ -131,15 +142,5 @@ abstract class Trello_Authorization extends Trello
         }
 
         return $expiration;
-    }
-
-    /**
-     * Get authorization base url
-     *
-     * @return string Base url
-     */
-    protected static function getBasePath()
-    {
-        return 'https://trello.com'.Trello_Configuration::versionPath().'/authorize';
     }
 }

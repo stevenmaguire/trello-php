@@ -23,18 +23,31 @@
 
     </logging>
     <testsuites>
-        <testsuite name="Package Test Suite">
+        <testsuite name="all">
             <directory suffix=".php">./tests/</directory>
+        </testsuite>
+        <testsuite name="integration">
+            <directory suffix=".php">./tests/integration/</directory>
+        </testsuite>
+        <testsuite name="unit">
+            <directory suffix=".php">./tests/unit/</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
             <directory suffix=".php">./</directory>
             <exclude>
-                <file>./.environment.php</file>
                 <directory suffix=".php">./vendor</directory>
                 <directory suffix=".php">./tests</directory>
             </exclude>
         </whitelist>
     </filter>
+    <php>
+        <env name="TRELLO_API_ENVIRONMENT" value=""/>
+        <env name="TRELLO_API_KEY" value=""/>
+        <env name="TRELLO_API_SECRET" value=""/>
+        <env name="TRELLO_API_TOKEN" value=""/>
+        <env name="TRELLO_API_APPNAME" value="Test Suite"/>
+        <env name="TRELLO_API_CALLBACK_URL" value="http://your-callback-uri/"/>
+    </php>
 </phpunit>

@@ -161,25 +161,6 @@ class Trello_Card extends Trello_Model
     protected static $base_path = 'card';
 
     /**
-     * fetch a card
-     *
-     * @param  string|array $card_id Card id to fetch
-     *
-     * @return Trello_Card|Trello_Collection  Card model(s)
-     * @throws Trello_Exception_ValidationsFailed
-     */
-    public static function fetch($card_id = null)
-    {
-        if (empty($card_id)) {
-            throw new Trello_Exception_ValidationsFailed(
-                'attempted to fetch card without id; it\'s gotta have an id'
-            );
-        }
-
-        return static::doFetch($card_id);
-    }
-
-    /**
      * create a new card
      *
      * @param  array $attributes Card attributes to set
@@ -207,27 +188,22 @@ class Trello_Card extends Trello_Model
     }
 
     /**
-     * Get card ids from list of cards
+     * fetch a card
      *
-     * @param  stdClass|null $cards List of cards
+     * @param  string|array $card_id Card id to fetch
      *
-     * @return array List of card ids
+     * @return Trello_Card|Trello_Collection  Card model(s)
+     * @throws Trello_Exception_ValidationsFailed
      */
-    public static function getCardIds($cards = [])
+    public static function fetch($card_id = null)
     {
-        return Trello_Util::getItemProperties($cards, 'id');
-    }
+        if (empty($card_id)) {
+            throw new Trello_Exception_ValidationsFailed(
+                'attempted to fetch card without id; it\'s gotta have an id'
+            );
+        }
 
-    /**
-     * Update parent list
-     *
-     * @param  Trello_List $list Parent list
-     *
-     * @return Trello_Card  Newly minted trello card?
-     */
-    public function updateList(Trello_List $list)
-    {
-        return static::doStore(static::getBasePath($this->id).'/idList', ['value' => $list->id]);
+        return static::doFetch($card_id);
     }
 
     /**
@@ -242,6 +218,18 @@ class Trello_Card extends Trello_Model
     }
 
     /**
+     * Get card ids from list of cards
+     *
+     * @param  stdClass|null $cards List of cards
+     *
+     * @return array List of card ids
+     */
+    public static function getCardIds($cards = [])
+    {
+        return Trello_Util::getItemProperties($cards, 'id');
+    }
+
+    /**
      * Get parent list
      *
      * @return Trello_List|Trello_Collection Located list(s)
@@ -250,5 +238,17 @@ class Trello_Card extends Trello_Model
     public function getList()
     {
         return Trello_List::fetch($this->idList);
+    }
+
+    /**
+     * Update parent list
+     *
+     * @param  Trello_List $list Parent list
+     *
+     * @return Trello_Card  Newly minted trello card?
+     */
+    public function updateList(Trello_List $list)
+    {
+        return static::doStore(static::getBasePath($this->id).'/idList', ['value' => $list->id]);
     }
 }

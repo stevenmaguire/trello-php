@@ -47,7 +47,7 @@
 |GET|/1/boards/[board_id]|![tested]|
 |GET|/1/boards/[board_id]/[field]|![tested]|
 |GET|/1/boards/[board_id]/actions|![notstarted]|
-|GET|/1/boards/[board_id]/boardStars|![notstarted]|
+|GET|/1/boards/[board_id]/boardStars|![wip]|
 |GET|/1/boards/[board_id]/cards|![tested]|
 |GET|/1/boards/[board_id]/cards/[filter]|![notstarted]|
 |GET|/1/boards/[board_id]/cards/[idCard]|![notstarted]|
