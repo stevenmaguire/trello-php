@@ -1,13 +1,15 @@
-<?php
+<?php namespace Trello\Tests\Unit;
 
-class Util_Test extends TestCase
+use Trello\Util;
+
+class Util_Test extends UnitTestCase
 {
     public function test_It_Can_Clean_Class_Name()
     {
-        $class_name = 'Trello_Action';
+        $class_name = 'Action';
         $expected_clean_class = 'action';
 
-        $result = Trello_Util::cleanClassName($class_name);
+        $result = Util::cleanClassName($class_name);
 
         $this->assertEquals($expected_clean_class, $result);
     }
@@ -15,9 +17,9 @@ class Util_Test extends TestCase
     public function test_It_Can_Build_Class_Name()
     {
         $class = 'action';
-        $expected_class_name = 'Trello_Action';
+        $expected_class_name = 'Action';
 
-        $result = Trello_Util::buildClassName($class);
+        $result = Util::buildClassName($class);
 
         $this->assertEquals($expected_class_name, $result);
     }
@@ -32,9 +34,9 @@ class Util_Test extends TestCase
         $delimiter3 = '||';
         $expected_string3 = 'camelHumps';
 
-        $result1 = Trello_Util::delimiterToCamelCase($camel_case1);
-        $result2 = Trello_Util::delimiterToCamelCase($camel_case2);
-        $result3 = Trello_Util::delimiterToCamelCase($camel_case3, $delimiter3);
+        $result1 = Util::delimiterToCamelCase($camel_case1);
+        $result2 = Util::delimiterToCamelCase($camel_case2);
+        $result3 = Util::delimiterToCamelCase($camel_case3, $delimiter3);
 
         $this->assertEquals($expected_string1, $result1);
         $this->assertEquals($expected_string2, $result2);
@@ -49,8 +51,8 @@ class Util_Test extends TestCase
         $delimiter2 = '||';
         $expected_string2 = 'custom_attribute';
 
-        $result1 = Trello_Util::delimiterToUnderscore($string1);
-        $result2 = Trello_Util::delimiterToUnderscore($string2, $delimiter2);
+        $result1 = Util::delimiterToUnderscore($string1);
+        $result2 = Util::delimiterToUnderscore($string2, $delimiter2);
 
         $this->assertEquals($expected_string1, $result1);
         $this->assertEquals($expected_string2, $result2);
@@ -67,9 +69,9 @@ class Util_Test extends TestCase
         $expected_string3 = '-camel-humps';
 
 
-        $result1 = Trello_Util::camelCaseToDelimiter($camel_case1);
-        $result2 = Trello_Util::camelCaseToDelimiter($camel_case2, $delimiter2);
-        $result3 = Trello_Util::camelCaseToDelimiter($camel_case3);
+        $result1 = Util::camelCaseToDelimiter($camel_case1);
+        $result2 = Util::camelCaseToDelimiter($camel_case2, $delimiter2);
+        $result3 = Util::camelCaseToDelimiter($camel_case3);
 
         $this->assertEquals($expected_string1, $result1);
         $this->assertEquals($expected_string2, $result2);
@@ -78,14 +80,14 @@ class Util_Test extends TestCase
 
     public function test_It_Can_Convert_Array_of_Attributes_To_String()
     {
-        $now = new DateTime();
+        $now = new \DateTime();
         $now->setTimestamp(0);
-        $now->setTimezone(new DateTimeZone('UTC'));
+        $now->setTimezone(new \DateTimeZone('UTC'));
         $array = ['key1' => 'value1', 'key2' => ['value1','value2','value3'], 'key3' => $now];
         $expected_string = 'key1=value1, key2=0=value1, 1=value2, 2=value3, '.
             'key3=Thursday, 01-Jan-70 00:00:00 UTC';
 
-        $attribute_string = Trello_Util::attributesToString($array);
+        $attribute_string = Util::attributesToString($array);
 
         $this->assertEquals($expected_string, $attribute_string);
     }
@@ -95,64 +97,64 @@ class Util_Test extends TestCase
         $array = ['key1' => 'value1', 'key2' => ['value1','value2','value3']];
         $expected_string = 'key1=value1&key2%5B0%5D=value1&key2%5B1%5D=value2&key2%5B2%5D=value3';
 
-        $query_string = Trello_Util::buildQueryStringFromArray($array);
+        $query_string = Util::buildQueryStringFromArray($array);
 
         $this->assertEquals($expected_string, $query_string);
     }
 
     /**
-     * @expectedException Trello_Exception_Authentication
+     * @expectedException Authentication
      */
     public function test_It_Can_Throw_Authentication_Exception()
     {
-        Trello_Util::throwStatusCodeException(401);
+        Util::throwStatusCodeException(401);
     }
 
     /**
-     * @expectedException Trello_Exception_Authorization
+     * @expectedException Authorization
      */
     public function test_It_Can_Throw_Authorization_Exception()
     {
-        Trello_Util::throwStatusCodeException(403);
+        Util::throwStatusCodeException(403);
     }
 
     /**
-     * @expectedException Trello_Exception_NotFound
+     * @expectedException NotFound
      */
     public function test_It_Can_Throw_NotFound_Exception()
     {
-        Trello_Util::throwStatusCodeException(404);
+        Util::throwStatusCodeException(404);
     }
 
     /**
-     * @expectedException Trello_Exception_UpgradeRequired
+     * @expectedException UpgradeRequired
      */
     public function test_It_Can_Throw_UpgradeRequired_Exception()
     {
-        Trello_Util::throwStatusCodeException(426);
+        Util::throwStatusCodeException(426);
     }
 
     /**
-     * @expectedException Trello_Exception_ServerError
+     * @expectedException ServerError
      */
     public function test_It_Can_Throw_ServerError_Exception()
     {
-        Trello_Util::throwStatusCodeException(500);
+        Util::throwStatusCodeException(500);
     }
 
     /**
-     * @expectedException Trello_Exception_DownForMaintenance
+     * @expectedException DownForMaintenance
      */
     public function test_It_Can_Throw_DownForMaintenance_Exception()
     {
-        Trello_Util::throwStatusCodeException(503);
+        Util::throwStatusCodeException(503);
     }
 
     /**
-     * @expectedException Trello_Exception_Unexpected
+     * @expectedException Unexpected
      */
     public function test_It_Can_Throw_Unexpected_Exception()
     {
-        Trello_Util::throwStatusCodeException(rand(100,399));
+        Util::throwStatusCodeException(rand(100,399));
     }
 }

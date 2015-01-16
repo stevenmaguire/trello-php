@@ -1,4 +1,5 @@
-<?php
+<?php namespace Trello;
+
 /**
  * Trello Utility methods
  *
@@ -7,32 +8,32 @@
  * @copyright  Steven Maguire
  */
 
-class Trello_Util extends Trello
+class Util extends Trello
 {
     /**
-     * Removes the Trello_ header from classname
+     * Removes the  header from classname
      *
      * @access public
-     * @param string $name Trello_ClassName
+     * @param string $name ClassName
      *
-     * @return string camelCased classname minus Trello_ header
+     * @return string camelCased classname minus  header
      */
     public static function cleanClassName($name)
     {
-        return lcfirst(str_replace('Trello_', '', $name));
+        return lcfirst(str_replace('', '', $name));
     }
 
     /**
-     * Adds Trello_ header to classname
+     * Adds  header to classname
      *
      * @access public
      * @param string $name className
      *
-     * @return string Trello_ClassName
+     * @return string ClassName
      */
     public static function buildClassName($name)
     {
-        return 'Trello_' . ucfirst($name);
+        return '' . ucfirst($name);
     }
 
     /**
@@ -171,7 +172,7 @@ class Trello_Util extends Trello
         $printable_attributes = [];
         foreach ($attributes AS $key => $value) {
             if (is_array($value)) {
-                $attribute = Trello_Util::attributesToString($value);
+                $attribute = Util::attributesToString($value);
             } elseif ($value instanceof DateTime) {
                 $attribute = $value->format(DateTime::RFC850);
             } else {
@@ -179,7 +180,7 @@ class Trello_Util extends Trello
             }
             $printable_attributes[$key] = sprintf('%s', $attribute);
         }
-        return Trello_Util::implodeAssociativeArray($printable_attributes);
+        return Util::implodeAssociativeArray($printable_attributes);
     }
 
     /**
@@ -202,18 +203,18 @@ class Trello_Util extends Trello
      * @param string $status_code    HTTP status code to throw exception from
      * @param string $message       Optional message
      *
-     * @throws Trello_Exception     multiple types depending on the error
+     * @throws Exception     multiple types depending on the error
      */
     public static function throwStatusCodeException($status_code, $message = null)
     {
         $exceptions = [
-            'default' => 'Trello_Exception_Unexpected',
-            401 => 'Trello_Exception_Authentication',
-            403 => 'Trello_Exception_Authorization',
-            404 => 'Trello_Exception_NotFound',
-            426 => 'Trello_Exception_UpgradeRequired',
-            500 => 'Trello_Exception_ServerError',
-            503 => 'Trello_Exception_DownForMaintenance'
+            'default' => 'Unexpected',
+            401 => 'Authentication',
+            403 => 'Authorization',
+            404 => 'NotFound',
+            426 => 'UpgradeRequired',
+            500 => 'ServerError',
+            503 => 'DownForMaintenance'
         ];
 
         if (array_key_exists($status_code, $exceptions)) {
@@ -222,6 +223,7 @@ class Trello_Util extends Trello
             $message = self::_defaultExceptionMessage($status_code, $message);
             $exception = $exceptions['default'];
         }
+        $exception = 'Trello\Exception\\'.$exception;
         throw new $exception($message);
     } // @codeCoverageIgnore
 

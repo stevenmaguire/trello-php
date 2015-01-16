@@ -1,4 +1,7 @@
-<?php
+<?php namespace Trello\Exception;
+
+use Trello\Exception;
+
 /**
  * Raised when a record could not be found.
  *
@@ -6,7 +9,7 @@
  * @subpackage Exception
  * @copyright  2014 Steven Maguire
  */
-class Trello_Exception_NotFound extends Trello_Exception
+class NotFound extends Exception
 {
 
 }

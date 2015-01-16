@@ -1,4 +1,5 @@
-<?php
+<?php namespace Trello;
+
 /**
  * Trello organization
  * Reads and manages organizations
@@ -8,7 +9,7 @@
  * @copyright  2014 Steven Maguire
  *
  */
-class Trello_Organization extends Trello_Model
+class Organization extends Model
 {
     /**
      * Organization id
@@ -82,8 +83,8 @@ class Trello_Organization extends Trello_Model
      *
      * @param  array $attributes Organization attributes to set
      *
-     * @return Trello_Organization  Newly minted trello organization
-     * @throws Trello_Exception_ValidationsFailed
+     * @return Organization  Newly minted trello organization
+     * @throws Exception_ValidationsFailed
      */
     public static function create($attributes = [])
     {
@@ -91,7 +92,7 @@ class Trello_Organization extends Trello_Model
         $attributes = array_merge($defaults, $attributes);
 
         if (empty($attributes['displayName'])) {
-            throw new Trello_Exception_ValidationsFailed(
+            throw new Exception_ValidationsFailed(
                 'attempted to create organization without display name; it\'s gotta have a display name'
             );
         }
@@ -104,14 +105,14 @@ class Trello_Organization extends Trello_Model
      * @param  string $keyword Keyword to search
      * @param  array  $filters Optional filters
      *
-     * @return Trello_Collection          Collection of organizations with name, id, organization
-     * @throws Trello_Exception_DownForMaintenance If search request breaks!
+     * @return Collection          Collection of organizations with name, id, organization
+     * @throws Exception_DownForMaintenance If search request breaks!
      */
     public static function search($keyword = null, $filters = [])
     {
         $filters['modelTypes'] = 'organizations';
         $results = static::doSearch($keyword, $filters);
-        return new Trello_Collection($results->organizations);
+        return new Collection($results->organizations);
     }
 
     public static function deleteOrganization($organization_id = null)
@@ -119,7 +120,7 @@ class Trello_Organization extends Trello_Model
         if ($organization_id) {
             return static::delete(static::getBasePath($organization_id));
         }
-        throw new Trello_Exception_ValidationsFailed(
+        throw new Exception_ValidationsFailed(
             'attempted to delete organization without id; it\'s gotta have an id'
         );
     }

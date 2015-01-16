@@ -1,4 +1,7 @@
-<?php
+<?php namespace Trello\Exception;
+
+use Trello\Exception;
+
 /**
  * Raised from non-validating methods when gateway validations fail.
  *
@@ -6,7 +9,7 @@
  * @subpackage Exception
  * @copyright  2014 Steven Maguire
  */
-class Trello_Exception_ValidationsFailed extends Trello_Exception
+class ValidationsFailed extends Exception
 {
 
 }

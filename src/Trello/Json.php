@@ -1,4 +1,5 @@
-<?php
+<?php namespace Trello;
+
 /**
  * Trello Json parser and generator
  * superclass for Trello Json parsing and generation
@@ -7,7 +8,7 @@
  * @subpackage Utility
  * @copyright  Steven Maguire
  */
-final class Trello_Json
+final class Json
 {
     /**
      * @codeCoverageIgnore

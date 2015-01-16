@@ -1,4 +1,5 @@
-<?php
+<?php namespace Trello;
+
 /**
  * Trello Generic collection
  * Based on Generic Collection class from:
@@ -9,7 +10,7 @@
  * @copyright 2014 Steven Maguire
  */
 
-class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
+class Collection implements \Countable, \IteratorAggregate, \ArrayAccess
 {
     /**
      *
@@ -86,7 +87,7 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
     public function get($index)
     {
         if ($index >= $this->count()) {
-            throw new OutOfRangeException('Index out of range');
+            throw new \OutOfRangeException('Index out of range');
         }
         return $this->_collection[$index];
     }
@@ -99,7 +100,7 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
      */
     public function getIterator()
     {
-        return new ArrayIterator($this->_collection);
+        return new \ArrayIterator($this->_collection);
     }
 
     /**
@@ -182,7 +183,7 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
     public function remove($index)
     {
         if ($index >= $this->count()) {
-            throw new OutOfRangeException('Index out of range');
+            throw new \OutOfRangeException('Index out of range');
         }
         array_splice($this->_collection, $index, 1);
     }
@@ -198,7 +199,7 @@ class Trello_Collection implements Countable, IteratorAggregate, ArrayAccess
     public function set($index, $value)
     {
         if ($index >= $this->count()) {
-            throw new OutOfRangeException('Index out of range');
+            throw new \OutOfRangeException('Index out of range');
         }
 
         $this->_collection[$index] = $value;

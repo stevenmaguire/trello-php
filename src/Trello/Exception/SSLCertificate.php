@@ -1,4 +1,7 @@
-<?php
+<?php namespace Trello\Exception;
+
+use Trello\Exception;
+
 /**
  * Raised when the SSL certificate fails verification.
  *
@@ -6,7 +9,7 @@
  * @subpackage Exception
  * @copyright  2014 Steven Maguire
  */
-class Trello_Exception_SSLCertificate extends Trello_Exception
+class SSLCertificate extends Exception
 {
 
 }

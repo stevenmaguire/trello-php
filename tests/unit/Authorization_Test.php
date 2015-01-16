@@ -1,6 +1,13 @@
-<?php
+<?php namespace Trello\Tests\Unit;
 
-class Authorization_Test extends IntegrationTestCase
+use \Mockery;
+use League\OAuth1\Client\Credentials\TemporaryCredentials;
+use League\OAuth1\Client\Credentials\TokenCredentials;
+use Trello\Configuration;
+use Trello\Authorization\Read;
+use Trello\Authorization\Write;
+
+class Authorization_Test extends UnitTestCase
 {
     protected $oauth_server_class = 'League\OAuth1\Client\Server\Trello';
 
@@ -12,12 +19,12 @@ class Authorization_Test extends IntegrationTestCase
     public function test_It_Can_Create_Url_To_Authortize_For_Read_Only_For_1_Day()
     {
         $expected_url = 'https://trello.com/1/authorize?'.
-            'key='.Trello_Configuration::key().'&'.
-            'name='.urlencode(Trello_Configuration::applicationName()).'&'.
+            'key='.Configuration::key().'&'.
+            'name='.urlencode(Configuration::applicationName()).'&'.
             'response_type=token&'.
             'expiration=1day';
 
-        $url = Trello_Authorization_Read::getAuthorizationUrl(1);
+        $url = Read::getAuthorizationUrl(1);
 
         $this->assertEquals($expected_url ,$url);
     }
@@ -25,12 +32,12 @@ class Authorization_Test extends IntegrationTestCase
     public function test_It_Can_Create_Url_To_Authortize_For_Read_Only_For_30_Days()
     {
         $expected_url = 'https://trello.com/1/authorize?'.
-            'key='.Trello_Configuration::key().'&'.
-            'name='.urlencode(Trello_Configuration::applicationName()).'&'.
+            'key='.Configuration::key().'&'.
+            'name='.urlencode(Configuration::applicationName()).'&'.
             'response_type=token&'.
             'expiration=30days';
 
-        $url = Trello_Authorization_Read::getAuthorizationUrl(30);
+        $url = Read::getAuthorizationUrl(30);
 
         $this->assertEquals($expected_url ,$url);
 
@@ -39,12 +46,12 @@ class Authorization_Test extends IntegrationTestCase
     public function test_It_Can_Create_Url_To_Authortize_For_Read_Only_For_Eternity()
     {
         $expected_url = 'https://trello.com/1/authorize?'.
-            'key='.Trello_Configuration::key().'&'.
-            'name='.urlencode(Trello_Configuration::applicationName()).'&'.
+            'key='.Configuration::key().'&'.
+            'name='.urlencode(Configuration::applicationName()).'&'.
             'response_type=token&'.
             'expiration=never';
 
-        $url = Trello_Authorization_Read::getAuthorizationUrl('never');
+        $url = Read::getAuthorizationUrl('never');
 
         $this->assertEquals($expected_url ,$url);
     }
@@ -52,13 +59,13 @@ class Authorization_Test extends IntegrationTestCase
     public function test_It_Can_Create_Url_To_Authortize_For_Read_And_Write_For_Eternity()
     {
         $expected_url = 'https://trello.com/1/authorize?'.
-            'key='.Trello_Configuration::key().'&'.
-            'name='.urlencode(Trello_Configuration::applicationName()).'&'.
+            'key='.Configuration::key().'&'.
+            'name='.urlencode(Configuration::applicationName()).'&'.
             'response_type=token&'.
             'expiration=never&'.
             'scope=read%2Cwrite';
 
-        $url = Trello_Authorization_Write::getAuthorizationUrl('never');
+        $url = Write::getAuthorizationUrl('never');
 
         $this->assertEquals($expected_url ,$url);
     }
@@ -66,12 +73,12 @@ class Authorization_Test extends IntegrationTestCase
     public function test_It_Can_Create_Url_To_Authortize_For_Read_And_Write_For_No_Duration()
     {
         $expected_url = 'https://trello.com/1/authorize?'.
-            'key='.Trello_Configuration::key().'&'.
-            'name='.urlencode(Trello_Configuration::applicationName()).'&'.
+            'key='.Configuration::key().'&'.
+            'name='.urlencode(Configuration::applicationName()).'&'.
             'response_type=token&'.
             'scope=read%2Cwrite';
 
-        $url = Trello_Authorization_Write::getAuthorizationUrl();
+        $url = Write::getAuthorizationUrl();
 
         $this->assertEquals($expected_url ,$url);
     }
@@ -80,7 +87,7 @@ class Authorization_Test extends IntegrationTestCase
     {
         $expiration = '1day';
 
-        $server = Trello_Authorization_Write::getOAuthServer($expiration);
+        $server = Write::getOAuthServer($expiration);
 
         $this->assertInstanceOf($this->oauth_server_class, $server);
     }
@@ -88,14 +95,14 @@ class Authorization_Test extends IntegrationTestCase
     public function test_It_Can_Authorize_Application_With_OAuth_Server()
     {
         $expiration = '1day';
-        $session_key = Trello_Authorization_Write::getCredentialSessionKey();
+        $session_key = Write::getCredentialSessionKey();
 
-        $temporary_credentials = new League\OAuth1\Client\Credentials\TemporaryCredentials();
+        $temporary_credentials = new TemporaryCredentials();
         $server = $this->mockOAuthServer();
         $server->shouldReceive('getTemporaryCredentials')->once()->andReturn($temporary_credentials);
         $server->shouldReceive('authorize')->with($temporary_credentials)->once();
 
-        $authorize = Trello_Authorization_Write::authorize($server);
+        $authorize = Write::authorize($server);
 
         $this->assertEquals(serialize($temporary_credentials), $_SESSION[$session_key]);
     }
@@ -105,9 +112,9 @@ class Authorization_Test extends IntegrationTestCase
         $expiration = '1day';
         $oauth_token = 'foo';
         $oauth_verifier = 'bar';
-        $token_credentials = new League\OAuth1\Client\Credentials\TokenCredentials();
-        $temporary_credentials = new League\OAuth1\Client\Credentials\TemporaryCredentials();
-        $session_key = Trello_Authorization_Write::getCredentialSessionKey();
+        $token_credentials = new TokenCredentials();
+        $temporary_credentials = new TemporaryCredentials();
+        $session_key = Write::getCredentialSessionKey();
         $_SESSION[$session_key] = serialize($temporary_credentials);
 
         $server = $this->mockOAuthServer();
@@ -115,7 +122,7 @@ class Authorization_Test extends IntegrationTestCase
             ->once()
             ->andReturn($token_credentials);
 
-        $credentials = Trello_Authorization_Write::getToken($server, $oauth_token, $oauth_verifier);
+        $credentials = Write::getToken($server, $oauth_token, $oauth_verifier);
 
         //print_r($credentials);
         $this->assertFalse(isset($_SESSION[$session_key]));

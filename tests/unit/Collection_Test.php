@@ -1,10 +1,12 @@
-<?php
+<?php namespace Trello\Tests\Unit;
 
-class Collection_Test extends TestCase
+use Trello\Collection;
+
+class Collection_Test extends UnitTestCase
 {
     private function makeCollection($contents = [])
     {
-        return new Trello_Collection($contents);
+        return new Collection($contents);
     }
 
     public function test_It_Can_Get_A_Value_By_Index_When_Index_In_Range()

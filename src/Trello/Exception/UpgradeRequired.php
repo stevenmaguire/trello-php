@@ -1,4 +1,7 @@
-<?php
+<?php namespace Trello\Exception;
+
+use Trello\Exception;
+
 /**
  * Raised when a client library must be upgraded.
  *
@@ -6,7 +9,7 @@
  * @subpackage Exception
  * @copyright  2014 Steven Maguire
  */
-class Trello_Exception_UpgradeRequired extends Trello_Exception
+class UpgradeRequired extends Exception
 {
 
 }

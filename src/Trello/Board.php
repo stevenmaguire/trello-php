@@ -1,4 +1,5 @@
-<?php
+<?php namespace Trello;
+
 /**
  * Trello board
  * Reads and manages boards
@@ -19,7 +20,7 @@
  * @property-read stdClass $prefs
  * @property-read stdClass $labelNames
  */
-class Trello_Board extends Trello_Model
+class Board extends Model
 {
     /**
      * Board id
@@ -99,17 +100,17 @@ class Trello_Board extends Trello_Model
      *
      * @param  string $name Name of checklist
      *
-     * @return Trello_Checklist|Trello_Collection Newly minted checklist
-     * @throws Trello_Exception_ValidationsFailed
-     * @throws Trello_Exception_NotFound
+     * @return Checklist|Collection Newly minted checklist
+     * @throws Exception_ValidationsFailed
+     * @throws Exception_NotFound
      */
     public function addChecklist($name = null)
     {
         if ($name) {
             $result = static::post(static::getBasePath($this->id).'/checklists', ['name' => $name]);
-            return Trello_Checklist::fetch($result->id);
+            return Checklist::fetch($result->id);
         }
-        throw new Trello_Exception_ValidationsFailed(
+        throw new Exception_ValidationsFailed(
             'attempted to add checklist to board without checklist name; it\'s gotta have a name'
         );
     }
@@ -119,16 +120,16 @@ class Trello_Board extends Trello_Model
      *
      * @param  array $attributes List attributes
      *
-     * @return Trello_List|Trello_Collection Newly minted List object
-     * @throws Trello_Exception_ValidationsFailed
-     * @throws Trello_Exception_NotFound
+     * @return List|Collection Newly minted List object
+     * @throws Exception_ValidationsFailed
+     * @throws Exception_NotFound
      */
     public function addList($attributes = [])
     {
         $attributes['idBoard'] = $this->id;
-        Trello_List::parseAttributes($attributes);
+        CardList::parseAttributes($attributes);
         $result = static::post(static::getBasePath($this->id).'/lists', $attributes);
-        return Trello_List::fetch($result->id);
+        return CardList::fetch($result->id);
     }
 
     /**
@@ -137,14 +138,14 @@ class Trello_Board extends Trello_Model
      * @param string $powerup Powerup name
      *
      * @return stdClass|null List of existing powerups
-     * @throws Trello_Exception_ValidationsFailed
+     * @throws Exception_ValidationsFailed
      */
     public function addPowerUp($powerup = null)
     {
         if (preg_match('/voting|cardAging|calendar|recap/', $powerup)) {
             return static::post(static::getBasePath($this->id).'/powerUps', ['value' => $powerup]);
         }
-        throw new Trello_Exception_ValidationsFailed(
+        throw new Exception_ValidationsFailed(
             'attempted to add invalid powerup to board; it\'s gotta be a valid powerup'
         );
     }
@@ -153,7 +154,7 @@ class Trello_Board extends Trello_Model
      * add card aging powerup to current board
      *
      * @return stdClass|null List of existing powerups
-     * @throws Trello_Exception_ValidationsFailed
+     * @throws Exception_ValidationsFailed
      */
     public function addPowerUpCardAging()
     {
@@ -164,7 +165,7 @@ class Trello_Board extends Trello_Model
      * add calendar powerup to current board
      *
      * @return stdClass|null List of existing powerups
-     * @throws Trello_Exception_ValidationsFailed
+     * @throws Exception_ValidationsFailed
      */
     public function addPowerUpCalendar()
     {
@@ -175,7 +176,7 @@ class Trello_Board extends Trello_Model
      * add recap powerup to current board
      *
      * @return stdClass|null List of existing powerups
-     * @throws Trello_Exception_ValidationsFailed
+     * @throws Exception_ValidationsFailed
      */
     public function addPowerUpRecap()
     {
@@ -186,7 +187,7 @@ class Trello_Board extends Trello_Model
      * add voting powerup to current board
      *
      * @return stdClass|null List of existing powerups
-     * @throws Trello_Exception_ValidationsFailed
+     * @throws Exception_ValidationsFailed
      */
     public function addPowerUpVoting()
     {
@@ -197,7 +198,7 @@ class Trello_Board extends Trello_Model
      * close current board
      *
      * @return bool  Did the board close?
-     * @throws Trello_Exception_ValidationsFailed
+     * @throws Exception_ValidationsFailed
      */
     public function close()
     {
@@ -210,7 +211,7 @@ class Trello_Board extends Trello_Model
      * @param  string $board_id Board id to close
      *
      * @return bool  Did the board close?
-     * @throws Trello_Exception_ValidationsFailed
+     * @throws Exception_ValidationsFailed
      */
     public static function closeBoard($board_id = null)
     {
@@ -218,7 +219,7 @@ class Trello_Board extends Trello_Model
             $result = static::put(static::getBasePath($board_id).'/closed', ['value' => true]);
             return $result->closed;
         }
-        throw new Trello_Exception_ValidationsFailed(
+        throw new Exception_ValidationsFailed(
             'attempted to close board without id; it\'s gotta have an id'
         );
     }
@@ -228,8 +229,8 @@ class Trello_Board extends Trello_Model
      *
      * @param  array $attributes Board attributes to set
      *
-     * @return Trello_Board  Newly minted trello board
-     * @throws Trello_Exception_ValidationsFailed
+     * @return Board  Newly minted trello board
+     * @throws Exception_ValidationsFailed
      */
     public static function create($attributes = [])
     {
@@ -237,7 +238,7 @@ class Trello_Board extends Trello_Model
         $attributes = array_merge($defaults, $attributes);
 
         if (empty($attributes['name'])) {
-            throw new Trello_Exception_ValidationsFailed(
+            throw new Exception_ValidationsFailed(
                 'attempted to create board without name; it\'s gotta have a name'
             );
         }
@@ -249,13 +250,13 @@ class Trello_Board extends Trello_Model
      *
      * @param  string|array $board_id Board id(s) to fetch
      *
-     * @return Trello_Collection|Trello_Board  Trello board matching id
-     * @throws Trello_Exception_ValidationsFailed
+     * @return Collection|Board  Trello board matching id
+     * @throws Exception_ValidationsFailed
      */
     public static function fetch($board_id = null)
     {
         if (empty($board_id)) {
-            throw new Trello_Exception_ValidationsFailed(
+            throw new Exception_ValidationsFailed(
                 'attempted to fetch board without id; it\'s gotta have an id'
             );
         }
@@ -286,25 +287,25 @@ class Trello_Board extends Trello_Model
     /**
      * Get cards on board
      *
-     * @return Trello_Card|Trello_Collection Card(s)
+     * @return Card|Collection Card(s)
      */
     public function getCards()
     {
         $cards = static::get(static::getBasePath($this->id).'/cards');
-        $ids = Trello_Card::getCardIds($cards);
-        return Trello_Card::fetch($ids);
+        $ids = Card::getCardIds($cards);
+        return Card::fetch($ids);
     }
 
     /**
      * Get lists attached to board
      *
-     * @return Trello_List|Trello_Collection Collection of list(s)
+     * @return List|Collection Collection of list(s)
      */
     public function getLists()
     {
         $lists = static::get(static::getBasePath($this->id).'/lists');
-        $ids = Trello_List::getListIds($lists);
-        return Trello_List::fetch($ids);
+        $ids = CardList::getListIds($lists);
+        return CardList::fetch($ids);
     }
 
     /**
@@ -346,12 +347,12 @@ class Trello_Board extends Trello_Model
      * @param string $powerup Powerup name
      *
      * @return boolean List of existing powerups
-     * @throws Trello_Exception_ValidationsFailed
+     * @throws Exception_ValidationsFailed
      */
     public function removePowerUp($powerup = null)
     {
         if (!self::isValidPowerUp($powerup)) {
-            throw new Trello_Exception_ValidationsFailed(
+            throw new Exception_ValidationsFailed(
                 'attempted to remove invalid powerup from board; it\'s gotta be a valid powerup'
             );
         }
@@ -362,7 +363,7 @@ class Trello_Board extends Trello_Model
      * remove card aging powerup from current board
      *
      * @return boolean List of existing powerups
-     * @throws Trello_Exception_ValidationsFailed
+     * @throws Exception_ValidationsFailed
      */
     public function removePowerUpCardAging()
     {
@@ -373,7 +374,7 @@ class Trello_Board extends Trello_Model
      * remove calendar powerup from current board
      *
      * @return boolean List of existing powerups
-     * @throws Trello_Exception_ValidationsFailed
+     * @throws Exception_ValidationsFailed
      */
     public function removePowerUpCalendar()
     {
@@ -384,7 +385,7 @@ class Trello_Board extends Trello_Model
      * remove recap powerup from current board
      *
      * @return boolean List of existing powerups
-     * @throws Trello_Exception_ValidationsFailed
+     * @throws Exception_ValidationsFailed
      */
     public function removePowerUpRecap()
     {
@@ -395,7 +396,7 @@ class Trello_Board extends Trello_Model
      * remove voting powerup from current board
      *
      * @return boolean List of existing powerups
-     * @throws Trello_Exception_ValidationsFailed
+     * @throws Exception_ValidationsFailed
      */
     public function removePowerUpVoting()
     {
@@ -408,14 +409,14 @@ class Trello_Board extends Trello_Model
      * @param  string $keyword Keyword to search
      * @param  array  $filters Optional filters
      *
-     * @return Trello_Collection          Collection of boards with name, id, organization
-     * @throws Trello_Exception_DownForMaintenance If search request breaks!
+     * @return Collection          Collection of boards with name, id, organization
+     * @throws Exception_DownForMaintenance If search request breaks!
      */
     public static function search($keyword = null, $filters = [])
     {
         $filters['modelTypes'] = 'boards';
         $results = static::doSearch($keyword, $filters);
-        return new Trello_Collection($results->boards);
+        return new Collection($results->boards);
     }
 
     /**
@@ -423,7 +424,7 @@ class Trello_Board extends Trello_Model
      *
      * @param  string  $description
      *
-     * @return Trello_Board Updated board object
+     * @return Board Updated board object
      */
     public function updateDescription($description = null)
     {
@@ -435,13 +436,13 @@ class Trello_Board extends Trello_Model
      *
      * @param  string  $name
      *
-     * @return Trello_Board Updated board object
-     * @throws Trello_Exception_ValidationsFailed
+     * @return Board Updated board object
+     * @throws Exception_ValidationsFailed
      */
     public function updateName($name = null)
     {
         if (empty($name)) {
-            throw new Trello_Exception_ValidationsFailed(
+            throw new Exception_ValidationsFailed(
                 'attempted to update board name without new name; it\'s gotta have a name'
             );
         }

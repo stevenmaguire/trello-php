@@ -1,4 +1,4 @@
-<?php
+<?php namespace Trello;
 
 use League\OAuth1\Client\Server\Server;
 use League\OAuth1\Client\Credentials\CredentialsInterface;
@@ -11,7 +11,7 @@ use League\OAuth1\Client\Server\Trello as TrelloServer;
  * @subpackage Authorization
  * @copyright  2014 Steven Maguire
  */
-abstract class Trello_Authorization extends Trello
+abstract class Authorization extends Trello
 {
     /**
      * Permission scope for authorization
@@ -50,13 +50,13 @@ abstract class Trello_Authorization extends Trello
     public static function getAuthorizationUrl($expiration = null)
     {
         $config = [
-            'key' => Trello_Configuration::key(),
-            'name' => Trello_Configuration::applicationName(),
+            'key' => Configuration::key(),
+            'name' => Configuration::applicationName(),
             'response_type' => 'token',
             'expiration' => self::parseExpiration($expiration),
             'scope' => static::$scope
         ];
-        return self::getBasePath().'?'.Trello_Util::buildQueryStringFromArray($config);
+        return self::getBasePath().'?'.Util::buildQueryStringFromArray($config);
     }
 
     /**
@@ -66,7 +66,7 @@ abstract class Trello_Authorization extends Trello
      */
     protected static function getBasePath()
     {
-        return 'https://trello.com'.Trello_Configuration::versionPath().'/authorize';
+        return 'https://trello.com'.Configuration::versionPath().'/authorize';
     }
 
     /**
@@ -89,10 +89,10 @@ abstract class Trello_Authorization extends Trello
     public static function getOAuthServer($expiration = null)
     {
         return new TrelloServer(array(
-            'identifier' => Trello_Configuration::key(),
-            'secret' => Trello_Configuration::secret(),
-            'callback_uri' => Trello_Configuration::oauthCallbackUrl(),
-            'name' => Trello_Configuration::applicationName(),
+            'identifier' => Configuration::key(),
+            'secret' => Configuration::secret(),
+            'callback_uri' => Configuration::oauthCallbackUrl(),
+            'name' => Configuration::applicationName(),
             'expiration' => self::parseExpiration($expiration),
             'scope' => static::$scope
         ));

@@ -1,6 +1,6 @@
-<?php
+<?php namespace Trello\Tests\Integration;
 
-require_once realpath(dirname(__FILE__)) . "/../vendor/autoload.php";
+use Trello\Tests\TestCase;
 
 abstract class IntegrationTestCase extends TestCase
 {

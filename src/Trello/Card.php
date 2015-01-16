@@ -1,4 +1,5 @@
-<?php
+<?php namespace Trello;
+
 /**
  * Trello card
  * Reads and manages cards
@@ -8,7 +9,7 @@
  * @copyright  2014 Steven Maguire
  *
  */
-class Trello_Card extends Trello_Model
+class Card extends Model
 {
     /**
      * Card id
@@ -165,7 +166,7 @@ class Trello_Card extends Trello_Model
      *
      * @param  array $attributes Card attributes to set
      *
-     * @return Trello_Card  Newly minted trello card?
+     * @return Card  Newly minted trello card?
      */
     public static function create($attributes = [])
     {
@@ -173,13 +174,13 @@ class Trello_Card extends Trello_Model
         $attributes = array_merge($defaults, $attributes);
 
         if (empty($attributes['name'])) {
-            throw new Trello_Exception_ValidationsFailed(
+            throw new Exception_ValidationsFailed(
                 'attempted to create card without name; it\'s gotta have a name'
             );
         }
 
         if (empty($attributes['idList'])) {
-            throw new Trello_Exception_ValidationsFailed(
+            throw new Exception_ValidationsFailed(
                 'attempted to create card without list; it\'s gotta have a list'
             );
         }
@@ -192,13 +193,13 @@ class Trello_Card extends Trello_Model
      *
      * @param  string|array $card_id Card id to fetch
      *
-     * @return Trello_Card|Trello_Collection  Card model(s)
-     * @throws Trello_Exception_ValidationsFailed
+     * @return Card|Collection  Card model(s)
+     * @throws Exception_ValidationsFailed
      */
     public static function fetch($card_id = null)
     {
         if (empty($card_id)) {
-            throw new Trello_Exception_ValidationsFailed(
+            throw new Exception_ValidationsFailed(
                 'attempted to fetch card without id; it\'s gotta have an id'
             );
         }
@@ -209,12 +210,12 @@ class Trello_Card extends Trello_Model
     /**
      * Get parent board
      *
-     * @return Trello_Board|Trello_Collection Located board(s)
-     * @throws Trello_Exception
+     * @return Board|Collection Located board(s)
+     * @throws Exception
      */
     public function getBoard()
     {
-        return Trello_Board::fetch($this->idBoard);
+        return Board::fetch($this->idBoard);
     }
 
     /**
@@ -226,28 +227,28 @@ class Trello_Card extends Trello_Model
      */
     public static function getCardIds($cards = [])
     {
-        return Trello_Util::getItemProperties($cards, 'id');
+        return Util::getItemProperties($cards, 'id');
     }
 
     /**
      * Get parent list
      *
-     * @return Trello_List|Trello_Collection Located list(s)
-     * @throws Trello_Exception
+     * @return List|Collection Located list(s)
+     * @throws Exception
      */
     public function getList()
     {
-        return Trello_List::fetch($this->idList);
+        return CardList::fetch($this->idList);
     }
 
     /**
      * Update parent list
      *
-     * @param  Trello_List $list Parent list
+     * @param  List $list Parent list
      *
-     * @return Trello_Card  Newly minted trello card?
+     * @return Card  Newly minted trello card?
      */
-    public function updateList(Trello_List $list)
+    public function updateList(List $list)
     {
         return static::doStore(static::getBasePath($this->id).'/idList', ['value' => $list->id]);
     }

@@ -1,5 +1,8 @@
-<?php
-class Trello_Exception_InvalidSignature extends Trello_Exception
+<?php namespace Trello;
+
+use Trello\Exception;
+
+class InvalidSignature extends Exception
 {
 
 }

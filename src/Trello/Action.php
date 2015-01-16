@@ -1,4 +1,5 @@
-<?php
+<?php namespace Trello;
+
 /**
  * Trello action
  * Reads and manages actions
@@ -8,7 +9,7 @@
  * @copyright  2014 Steven Maguire
  *
  */
-class Trello_Action extends Trello_Model
+class Action extends Model
 {
 
 }

@@ -1,4 +1,5 @@
-<?php
+<?php namespace Trello;
+
 /**
  * Base class for models
  *
@@ -7,7 +8,7 @@
  * @copyright  2014 Steven Maguire
  * @abstract
  */
-abstract class Trello_Model extends Trello
+abstract class Model extends Trello
 {
     /**
      * Model id
@@ -43,7 +44,7 @@ abstract class Trello_Model extends Trello
                 $response = self::get($url);
                 $this->$field = $this->parseFieldResponse($response);
                 return $this->$field;
-            } catch (Trello_Exception $e) {
+            } catch (Exception $e) {
                 //
             }
         }
@@ -56,7 +57,7 @@ abstract class Trello_Model extends Trello
      * @access protected
      * @param mixed $response
      *
-     * @return Trello_Model Initialized object
+     * @return Model Initialized object
      */
     protected function initialize($response)
     {
@@ -65,10 +66,10 @@ abstract class Trello_Model extends Trello
     }
 
     /**
-     * factory method: returns an instance of Trello_Model
+     * factory method: returns an instance of Model
      * to the requesting method, with populated properties
      *
-     * @return Trello_Model instance of Trello_Model
+     * @return Model instance of Model
      */
     protected static function factory($response = null)
     {
@@ -105,11 +106,11 @@ abstract class Trello_Model extends Trello
      * @param string $url
      * @param array $params
      *
-     * @return Trello_Model
+     * @return Model
      */
     protected static function doCreate($url, $params)
     {
-        $response = Trello_Http::post($url, $params);
+        $response = Http::post($url, $params);
         return self::factory($response);
     }
 
@@ -118,7 +119,7 @@ abstract class Trello_Model extends Trello
      *
      * @param string|array $ids
      *
-     * @return Trello_Model|Trello_Collection
+     * @return Model|Collection
      */
     protected static function doFetch($ids)
     {
@@ -152,7 +153,7 @@ abstract class Trello_Model extends Trello
     protected static function doSearch($keyword = null, $params = [])
     {
         $params['query'] = $keyword;
-        return Trello_Http::get('/search', $params);
+        return Http::get('/search', $params);
     }
 
     /**
@@ -161,11 +162,11 @@ abstract class Trello_Model extends Trello
      * @param string $url
      * @param array $params
      *
-     * @return Trello_Model
+     * @return Model
      */
     protected static function doStore($url, $params)
     {
-        $response = Trello_Http::put($url, $params);
+        $response = Http::put($url, $params);
         return self::factory($response);
     }
 
@@ -174,12 +175,12 @@ abstract class Trello_Model extends Trello
      *
      * @param  array  List of urls
      *
-     * @return Trello_Collection Collection of result objects
+     * @return Collection Collection of result objects
      */
     protected static function doBatch($urls = [])
     {
-        $collection = new Trello_Collection;
-        $response = Trello_Http::get('/batch', ['urls' => $urls]);
+        $collection = new Collection;
+        $response = Http::get('/batch', ['urls' => $urls]);
         if (is_array($response)) {
             self::parseBatchResponse($response, $collection);
         }
@@ -193,11 +194,11 @@ abstract class Trello_Model extends Trello
      * @param array $params
      *
      * @return stdClass|null
-     * @throws Trello_Exception
+     * @throws Exception
      */
     protected static function get($url, $params = [])
     {
-        return Trello_Http::get($url, $params);
+        return Http::get($url, $params);
     }
 
     /**
@@ -207,11 +208,11 @@ abstract class Trello_Model extends Trello
      * @param array $params
      *
      * @return stdClass
-     * @throws Trello_Exception
+     * @throws Exception
      */
     protected static function post($url, $params = [])
     {
-        return Trello_Http::post($url, $params);
+        return Http::post($url, $params);
     }
 
     /**
@@ -221,11 +222,11 @@ abstract class Trello_Model extends Trello
      * @param array $params
      *
      * @return stdClass
-     * @throws Trello_Exception
+     * @throws Exception
      */
     protected static function put($url, $params = [])
     {
-        return Trello_Http::put($url, $params);
+        return Http::put($url, $params);
     }
 
     /**
@@ -234,21 +235,21 @@ abstract class Trello_Model extends Trello
      * @param string $url
      * @param array $params
      *
-     * @throws Trello_Exception
+     * @throws Exception
      * @return boolean
      */
     protected static function delete($url, $params = [])
     {
-        return Trello_Http::delete($url, $params);
+        return Http::delete($url, $params);
     }
 
     /**
      * Map an object as another given object
      *
-     * @param  Trello_Model $destination Object to receive the mapping
+     * @param  Model $destination Object to receive the mapping
      * @param  object sourceObject Object from which to map data
      *
-     * @return Trello_Model Mapped object
+     * @return Model Mapped object
      */
     private static function mapAs($destination, $sourceObject)
     {
@@ -274,7 +275,7 @@ abstract class Trello_Model extends Trello
      * Parse a batch response into a given collection
      *
      * @param  array $response Batch response
-     * @param  Trello_Collection $collection  Collection
+     * @param  Collection $collection  Collection
      */
     private static function parseBatchResponse($response, &$collection)
     {

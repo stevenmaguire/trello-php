@@ -1,4 +1,5 @@
-<?php
+<?php namespace Trello;
+
 /**
  * Trello PHP Library
  *
@@ -8,17 +9,6 @@
  * @package    Trello
  * @copyright  Steven Maguire
  */
-
-$original_include_path = get_include_path();
-
-set_include_path(
-    get_include_path() .
-    PATH_SEPARATOR .
-    realpath(
-        dirname(__FILE__)
-    )
-);
-
 abstract class Trello
 {
     /**
@@ -47,7 +37,7 @@ abstract class Trello
      */
     public static function logRequest($verb, $path, $body = null)
     {
-        return Trello_Instance::getInstance()->logRequest($verb, $path, $body);
+        return Instance::getInstance()->logRequest($verb, $path, $body);
     }
 
     /**
@@ -57,10 +47,10 @@ abstract class Trello
      */
     public static function getRequests()
     {
-        return Trello_Instance::getInstance()->getRequests();
+        return Instance::getInstance()->getRequests();
     }
 }
-
+/*
 require_once('Trello/Collection.php');
 require_once('Trello/Configuration.php');
 require_once('Trello/Exception.php');
@@ -78,6 +68,11 @@ require_once('Trello/Checklist.php');
 require_once('Trello/List.php');
 require_once('Trello/Organization.php');
 
+require_once('Trello/Authorization/Read.php');
+require_once('Trello/Authorization/Write.php');
+
+require_once('Trello/Contracts/HttpClient.php');
+
 require_once('Trello/Exception/Authentication.php');
 require_once('Trello/Exception/Authorization.php');
 require_once('Trello/Exception/Configuration.php');
@@ -91,7 +86,7 @@ require_once('Trello/Exception/SSLCaFileNotFound.php');
 require_once('Trello/Exception/Unexpected.php');
 require_once('Trello/Exception/UpgradeRequired.php');
 require_once('Trello/Exception/ValidationsFailed.php');
-
+*/
 if (version_compare(PHP_VERSION, '5.4.1', '<')) {
     throw new Trello_Exception('PHP version >= 5.4.1 required'); // @codeCoverageIgnore
 }
@@ -108,5 +103,3 @@ function requireDependencies() {
 // @codeCoverageIgnoreEnd
 
 requireDependencies();
-
-set_include_path($original_include_path);

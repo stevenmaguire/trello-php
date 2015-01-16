@@ -1,27 +1,36 @@
-<?php
+<?php namespace Trello;
 
-class Trello_Instance
+use Trello\Clients\HttpClient;
+
+class Instance
 {
+    /**
+     * [$client description]
+     *
+     * @var [type]
+     */
+    private $client;
+
     /**
      * Errors
      *
-     * @var Trello_Collection
+     * @var Collection
      */
     private $errors;
 
     /**
      * Requests
      *
-     * @var Trello_Collection
+     * @var Collection
      */
     private $requests;
 
     /**
-     * Returns the Trello_Instance instance of this class.
+     * Returns the Instance instance of this class.
      *
-     * @staticvar Trello_Instance $instance The Trello_Instance instances of this class.
+     * @staticvar Instance $instance The Instance instances of this class.
      *
-     * @return Trello_Instance|null The Trello_Instance instance.
+     * @return Instance|null The Instance instance.
      */
     public static function getInstance()
     {
@@ -35,17 +44,17 @@ class Trello_Instance
 
     /**
      * Protected constructor to prevent creating a new instance of the
-     * Trello_Instance via the `new` operator from outside of this class.
+     * Instance via the `new` operator from outside of this class.
      */
     protected function __construct()
     {
-        $this->errors = new Trello_Collection;
-        $this->requests = new Trello_Collection;
+        $this->errors = new Collection;
+        $this->requests = new Collection;
     }
 
     /**
      * Private clone method to prevent cloning of the instance of the
-     * Trello_Instance instance.
+     * Instance instance.
      *
      * @codeCoverageIgnore
      * @return void
@@ -55,7 +64,7 @@ class Trello_Instance
     }
 
     /**
-     * Private unserialize method to prevent unserializing of the Trello_Instance
+     * Private unserialize method to prevent unserializing of the Instance
      * instance.
      *
      * @codeCoverageIgnore
@@ -66,13 +75,37 @@ class Trello_Instance
     }
 
     /**
+     * [getHttpClient description]
+     *
+     * @return [type] [description]
+     */
+    public function getHttpClient()
+    {
+        if (empty($this->client)) {
+            $this->client = new HttpClient;
+        }
+        return $this->client;
+    }
+
+    /**
+     * [setHttpClient description]
+     *
+     * @return [type] [description]
+     */
+    public function setHttpClient(Contracts_HttpClient $client)
+    {
+        $this->client = $client;
+        return $this;
+    }
+
+    /**
      * Log request
      *
      * @param  string $verb
      * @param  string $path
      * @param  string $body
      *
-     * @return Trello_Instance
+     * @return Instance
      */
     public function logRequest($verb, $path, $body = null)
     {
@@ -85,7 +118,7 @@ class Trello_Instance
     /**
      * Get requests collection
      *
-     * @return Trello_Collection
+     * @return Collection
      */
     public function getRequests()
     {

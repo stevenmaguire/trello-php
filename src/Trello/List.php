@@ -1,4 +1,5 @@
-<?php
+<?php namespace Trello;
+
 /**
  * Trello list
  *
@@ -12,7 +13,7 @@
  * @property-read array $card_fields
  * @property-read array $fields
  */
-class Trello_List extends Trello_Model
+class CardList extends Model
 {
     /**
      * List id
@@ -61,13 +62,13 @@ class Trello_List extends Trello_Model
      *
      * @param  string|array $list_id List id to fetch
      *
-     * @return Trello_List|Trello_Collection  List model(s)
-     * @throws Trello_Exception_ValidationsFailed
+     * @return List|Collection  List model(s)
+     * @throws Exception_ValidationsFailed
      */
     public static function fetch($list_id = null)
     {
         if (empty($list_id)) {
-            throw new Trello_Exception_ValidationsFailed(
+            throw new Exception_ValidationsFailed(
                 'attempted to fetch list without id; it\'s gotta have an id'
             );
         }
@@ -80,8 +81,8 @@ class Trello_List extends Trello_Model
      *
      * @param  array $attributes Board attributes to set
      *
-     * @return Trello_Board  Newly minted trello board
-     * @throws Trello_Exception_ValidationsFailed
+     * @return Board  Newly minted trello board
+     * @throws Exception_ValidationsFailed
      */
     public static function create($attributes = [])
     {
@@ -112,7 +113,7 @@ class Trello_List extends Trello_Model
     private static function parseName(&$attributes)
     {
         if (empty($attributes['name'])) {
-            throw new Trello_Exception_ValidationsFailed(
+            throw new Exception_ValidationsFailed(
                 'attempted to add list to board without list name; it\'s gotta have a name'
             );
         }
@@ -126,7 +127,7 @@ class Trello_List extends Trello_Model
     private static function parseBoardId(&$attributes)
     {
         if (empty($attributes['idBoard'])) {
-            throw new Trello_Exception_ValidationsFailed(
+            throw new Exception_ValidationsFailed(
                 'attempted to create list without board; it\'s gotta have a board'
             );
         }
@@ -142,7 +143,7 @@ class Trello_List extends Trello_Model
         if (isset($attributes['position'])) {
             $positions = ['top','bottom','\d{'.strlen($attributes['position']).'}'];
 
-            $is_match = Trello_Util::matches(
+            $is_match = Util::matches(
                 $positions,
                 strtolower($attributes['position'])
             );
@@ -161,13 +162,13 @@ class Trello_List extends Trello_Model
      */
     public static function getListIds($lists = [])
     {
-        return Trello_Util::getItemProperties($lists, 'id');
+        return Util::getItemProperties($lists, 'id');
     }
 
     /**
      * Get card models for list
      *
-     * @return Trello_Collection|Trello_Card Card model(s)
+     * @return Collection|Card Card model(s)
      */
     public function getCards()
     {
@@ -178,7 +179,7 @@ class Trello_List extends Trello_Model
                 $ids[] = $card->id;
             }
         }
-        return Trello_Card::fetch($ids);
+        return Card::fetch($ids);
     }
 
     /**
@@ -186,22 +187,22 @@ class Trello_List extends Trello_Model
      *
      * @param  array $attributes Card attributes to set
      *
-     * @return Trello_Card  Newly minted trello card
+     * @return Card  Newly minted trello card
      */
     public function createCard($attributes = [])
     {
         $attributes['idList'] = $this->id;
-        return Trello_Card::create($attributes);
+        return Card::create($attributes);
     }
 
     /**
      * add a card to the list
      *
-     * @param  Trello_Card $card Card to add
+     * @param  Card $card Card to add
      *
-     * @return Trello_Card Updated card
+     * @return Card Updated card
      */
-    public function addCard(Trello_Card $card)
+    public function addCard(Card $card)
     {
         return $card->updateList($this);
     }

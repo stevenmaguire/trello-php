@@ -1,4 +1,5 @@
-<?php
+<?php namespace Trello;
+
 /**
  * Trello Library Version
  * stores version information about the Trello library
@@ -7,7 +8,7 @@
  * @subpackage Utility
  * @copyright  Steven Maguire
  */
-final class Trello_Version
+final class Version
 {
     /**
      * class constants

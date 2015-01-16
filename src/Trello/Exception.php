@@ -1,4 +1,5 @@
-<?php
+<?php namespace Trello;
+
 /**
  * super class for all Trello exceptions
  *
@@ -6,12 +7,12 @@
  * @subpackage Exception
  * @copyright  2014 Steven Maguire
  */
-class Trello_Exception extends Exception
+class Exception extends \Exception
 {
     public function __construct($message = "", $code = 0, $previous = null)
     {
         if (!empty($message)) {
-            Trello_Configuration::logMessage($message);
+            Configuration::logMessage($message);
         }
     }
 }

@@ -1,4 +1,7 @@
-<?php
+<?php namespace Trello\Exception;
+
+use Trello\Exception;
+
 /**
  * Raised when a suspected forged query string is present
  * Raised from methods that confirm transparent request requests
@@ -10,7 +13,7 @@
  * @subpackage Exception
  * @copyright  2014 Steven Maguire
  */
-class Trello_Exception_ForgedQueryString extends Trello_Exception
+class ForgedQueryString extends Exception
 {
 
 }

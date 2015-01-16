@@ -1,4 +1,5 @@
-<?php
+<?php namespace Trello;
+
 /**
  * Configuration registry
  *
@@ -7,7 +8,7 @@
  * @copyright  Steven Maguire
  */
 
-class Trello_Configuration extends Trello
+class Configuration extends Trello
 {
     /**
      * Trello API version to use
@@ -70,13 +71,13 @@ class Trello_Configuration extends Trello
      *
      * @return boolean
      * @throws InvalidArgumentException
-     * @throws Trello_Exception_Configuration
+     * @throws Exception_Configuration
      */
     private static function validate($key = null, $value = null)
     {
         if ($key === 'environment' &&
             !in_array($value, self::$_validEnvironments)) {
-                throw new Trello_Exception_Configuration('"' .
+                throw new Exception\Configuration('"' .
                     $value . '" is not a valid environment.');
         }
 
@@ -101,7 +102,7 @@ class Trello_Configuration extends Trello
      * @param  string $key Configuration key
      *
      * @return string|null
-     * @throws Trello_Exception
+     * @throws Exception
      */
     private static function get($key)
     {

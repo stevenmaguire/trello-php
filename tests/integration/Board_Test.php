@@ -1,4 +1,6 @@
-<?php
+<?php namespace Trello\Tests\Integration;
+
+use Trello\Board;
 
 class Board_Test extends IntegrationTestCase
 {
@@ -13,9 +15,9 @@ class Board_Test extends IntegrationTestCase
     {
         $attributes = ['name' => $this->board_name];
 
-        $result = Trello_Board::create($attributes);
+        $result = Board::create($attributes);
 
-        $this->assertInstanceOf('Trello_Board', $result);
+        $this->assertInstanceOf('Board', $result);
         $this->assertEquals($this->board_name, $result->name);
         $this->assertNull($result->cash_money);
 
@@ -23,11 +25,11 @@ class Board_Test extends IntegrationTestCase
     }
 
     /**
-     * @expectedException Trello_Exception_ValidationsFailed
+     * @expectedException Exception_ValidationsFailed
      */
     public function test_It_Can_Not_Create_A_Board_Without_Name()
     {
-        $results = Trello_Board::create();
+        $results = Board::create();
     }
 
     public function test_It_Can_Create_A_New_Board_With_A_Name_And_Description_Provided()
@@ -37,9 +39,9 @@ class Board_Test extends IntegrationTestCase
             'desc' => $this->board_description
         ];
 
-        $result = Trello_Board::create($attributes);
+        $result = Board::create($attributes);
 
-        $this->assertInstanceOf('Trello_Board', $result);
+        $this->assertInstanceOf('Board', $result);
         $this->assertEquals($this->board_name, $result->name);
         $this->assertEquals($this->board_description, $result->desc);
     }
@@ -49,25 +51,25 @@ class Board_Test extends IntegrationTestCase
      */
     public function test_It_Can_Get_A_Board($board_id)
     {
-        $result = Trello_Board::fetch($board_id);
+        $result = Board::fetch($board_id);
 
-        $this->assertInstanceOf('Trello_Board', $result);
+        $this->assertInstanceOf('Board', $result);
 
         return $result;
     }
 
     /**
-     * @expectedException Trello_Exception_ValidationsFailed
+     * @expectedException Exception_ValidationsFailed
      */
     public function test_It_Can_Not_Get_A_Board_Without_Id()
     {
-        $results = Trello_Board::fetch();
+        $results = Board::fetch();
     }
 
     public function test_It_Can_Not_Get_A_Board_With_Invalid_Id()
     {
         $id = uniqid();
-        $result = Trello_Board::fetch($id);
+        $result = Board::fetch($id);
 
         $this->assertCount(0, $result);
     }
@@ -79,13 +81,13 @@ class Board_Test extends IntegrationTestCase
     {
         $result = $board->updateName($this->new_board_name);
 
-        $this->assertInstanceOf('Trello_Board', $result);
+        $this->assertInstanceOf('Board', $result);
         $this->assertEquals($this->new_board_name, $result->name);
     }
 
     /**
      * @depends test_It_Can_Get_A_Board
-     * @expectedException Trello_Exception_ValidationsFailed
+     * @expectedException Exception_ValidationsFailed
      */
     public function test_It_Can_Not_Update_A_Board_Name_With_No_Name($board)
     {
@@ -99,7 +101,7 @@ class Board_Test extends IntegrationTestCase
     {
         $result = $board->updateDescription($this->new_board_description);
 
-        $this->assertInstanceOf('Trello_Board', $result);
+        $this->assertInstanceOf('Board', $result);
         $this->assertEquals($this->new_board_description, $result->desc);
     }
 
@@ -110,13 +112,13 @@ class Board_Test extends IntegrationTestCase
     {
         $result = $board->addChecklist($this->checklist_name);
 
-        $this->assertInstanceOf('Trello_Checklist', $result);
+        $this->assertInstanceOf('Checklist', $result);
         $this->assertEquals($this->checklist_name, $result->name);
     }
 
     /**
      * @depends test_It_Can_Get_A_Board
-     * @expectedException Trello_Exception_ValidationsFailed
+     * @expectedException Exception_ValidationsFailed
      */
     public function test_It_Can_Not_Add_A_Checklist_Without_A_Name($board)
     {
@@ -131,7 +133,7 @@ class Board_Test extends IntegrationTestCase
         $attributes = ['name' => $this->list_name];
         $result = $board->addList($attributes);
 
-        $this->assertInstanceOf('Trello_List', $result);
+        $this->assertInstanceOf('List', $result);
         $this->assertEquals($this->list_name, $result->name);
 
         return $board;
@@ -139,7 +141,7 @@ class Board_Test extends IntegrationTestCase
 
     /**
      * @depends test_It_Can_Get_A_Board
-     * @expectedException Trello_Exception_ValidationsFailed
+     * @expectedException Exception_ValidationsFailed
      */
     public function test_It_Can_Not_Add_A_List_Without_A_Name($board)
     {
@@ -154,7 +156,7 @@ class Board_Test extends IntegrationTestCase
         $attributes = ['name' => $this->list_name, 'position' => 1];
         $result = $board->addList($attributes);
 
-        $this->assertInstanceOf('Trello_List', $result);
+        $this->assertInstanceOf('List', $result);
         $this->assertEquals($this->list_name, $result->name);
     }
 
@@ -166,7 +168,7 @@ class Board_Test extends IntegrationTestCase
         $attributes = ['name' => $this->list_name, 'position' => uniqid()];
         $result = $board->addList($attributes);
 
-        $this->assertInstanceOf('Trello_List', $result);
+        $this->assertInstanceOf('List', $result);
         $this->assertEquals($this->list_name, $result->name);
     }
 
@@ -178,7 +180,7 @@ class Board_Test extends IntegrationTestCase
         $attributes = ['name' => $this->list_name, 'position' => 'top'];
         $result = $board->addList($attributes);
 
-        $this->assertInstanceOf('Trello_List', $result);
+        $this->assertInstanceOf('List', $result);
         $this->assertEquals($this->list_name, $result->name);
     }
 
@@ -190,7 +192,7 @@ class Board_Test extends IntegrationTestCase
         $attributes = ['name' => $this->list_name, 'position' => 'bottom'];
         $result = $board->addList($attributes);
 
-        $this->assertInstanceOf('Trello_List', $result);
+        $this->assertInstanceOf('List', $result);
         $this->assertEquals($this->list_name, $result->name);
     }
 
@@ -201,7 +203,7 @@ class Board_Test extends IntegrationTestCase
     {
         $result = $board->getLists();
 
-        $this->assertInstanceOf('Trello_Collection', $result);
+        $this->assertInstanceOf('Collection', $result);
     }
 
     /**
@@ -218,7 +220,7 @@ class Board_Test extends IntegrationTestCase
 
     /**
      * @depends test_It_Can_Get_A_Board
-     * @expectedException Trello_Exception_ValidationsFailed
+     * @expectedException Exception_ValidationsFailed
      */
     public function test_It_Can_Not_Add_Powerup_Without_Valid_Powerup_Name($board)
     {
@@ -238,7 +240,7 @@ class Board_Test extends IntegrationTestCase
 
     /**
      * @depends test_It_Can_Get_A_Board
-     * @expectedException Trello_Exception_ValidationsFailed
+     * @expectedException Exception_ValidationsFailed
      */
     public function test_It_Can_Not_Remove_Powerup_Without_Valid_Powerup_Name($board)
     {
@@ -371,9 +373,9 @@ class Board_Test extends IntegrationTestCase
     {
         $keyword = $this->board_name;
 
-        $results = Trello_Board::search($keyword);
+        $results = Board::search($keyword);
 
-        $this->assertInstanceOf('Trello_Collection', $results);
+        $this->assertInstanceOf('Collection', $results);
         return $results;
     }
 
@@ -381,17 +383,17 @@ class Board_Test extends IntegrationTestCase
     {
         $keyword = uniqid();
 
-        $results = Trello_Board::search($keyword);
+        $results = Board::search($keyword);
 
-        $this->assertInstanceOf('Trello_Collection', $results);
+        $this->assertInstanceOf('Collection', $results);
     }
 
     /**
-     * @expectedException Trello_Exception_Unexpected
+     * @expectedException Exception_Unexpected
      */
     public function test_It_Can_Not_Search_Boards_Without_Valid_Keyword()
     {
-        $results = Trello_Board::search();
+        $results = Board::search();
     }
 
     /**
@@ -409,17 +411,17 @@ class Board_Test extends IntegrationTestCase
     public function test_It_Can_Close_A_Specific_Board_When_Id_Provided($boards)
     {
         foreach ($boards as $board) {
-            $result = Trello_Board::closeBoard($board->id);
+            $result = Board::closeBoard($board->id);
             $this->assertTrue($result);
         }
     }
 
     /**
-     * @expectedException Trello_Exception_ValidationsFailed
+     * @expectedException Exception_ValidationsFailed
      */
     public function test_It_Can_Not_Close_A_Specific_Board_When_Id_Not_Provided()
     {
-        $result = Trello_Board::closeBoard();
+        $result = Board::closeBoard();
     }
 
     public function test_It_Can_Get_Cards_For_A_Board()
@@ -430,9 +432,9 @@ class Board_Test extends IntegrationTestCase
         $result = $board->getCards();
 
         if (count($result) == 1) {
-            $this->assertInstanceOf('Trello_Card', $result);
+            $this->assertInstanceOf('Card', $result);
         } else {
-            $this->assertInstanceOf('Trello_Collection', $result);
+            $this->assertInstanceOf('Collection', $result);
         }
     }
 

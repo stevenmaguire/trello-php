@@ -1,17 +1,29 @@
-<?php
+<?php namespace Trello\Tests;
+
+use Trello\Configuration;
 
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
-        PHPUnit_Framework_Error_Warning::$enabled = false;
-        Trello_Configuration::environment(getenv('TRELLO_API_ENVIRONMENT'));
-        Trello_Configuration::key(getenv('TRELLO_API_KEY'));
-        Trello_Configuration::secret(getenv('TRELLO_API_SECRET'));
-        Trello_Configuration::token(getenv('TRELLO_API_TOKEN'));
-        Trello_Configuration::applicationName(getenv('TRELLO_API_APPNAME'));
-        Trello_Configuration::oauthCallbackUrl(getenv('TRELLO_API_CALLBACK_URL'));
+        \PHPUnit_Framework_Error_Warning::$enabled = false;
+        Configuration::environment(getenv('API_ENVIRONMENT'));
+        Configuration::key(getenv('API_KEY'));
+        Configuration::secret(getenv('API_SECRET'));
+        Configuration::token(getenv('API_TOKEN'));
+        Configuration::applicationName(getenv('API_APPNAME'));
+        Configuration::oauthCallbackUrl(getenv('API_CALLBACK_URL'));
+    }
+
+    protected function mockHttpClientResponse($response)
+    {
+
+    }
+
+    protected function mockRequestMethod($client)
+    {
+
     }
 
     protected function isHhvm()

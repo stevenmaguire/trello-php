@@ -1,4 +1,7 @@
-<?php
+<?php namespace Trello\Authorization;
+
+use Trello\Authorization;
+
 /**
  * Handles write authorization tasks for trello
  *
@@ -6,7 +9,7 @@
  * @subpackage Authorization
  * @copyright  2014 Steven Maguire
  */
-class Trello_Authorization_Write extends Trello_Authorization
+class Write extends Authorization
 {
     /**
      * Permission scope for authorization

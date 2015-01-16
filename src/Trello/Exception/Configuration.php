@@ -1,12 +1,15 @@
-<?php
+<?php namespace Trello\Exception;
+
+use Trello\Exception;
+
 /**
  * Raised when the Trello library is not completely configured.
  *
  * @package    Trello
  * @subpackage Exception
- * @see        Trello_Configuration
+ * @see        Configuration
  */
-class Trello_Exception_Configuration extends Trello_Exception
+class Configuration extends Exception
 {
 
 }

@@ -1,4 +1,5 @@
-<?php
+<?php namespace Trello;
+
 /**
  * Trello HTTP Client
  * processes Http requests using curl
@@ -8,7 +9,7 @@
  * @copyright  Steven Maguire
  *
  */
-class Trello_Http extends Trello
+class Http extends Trello
 {
     /**
      * Send delete request
@@ -17,7 +18,7 @@ class Trello_Http extends Trello
      * @param  array $params Optional params
      *
      * @return boolean Operation successful
-     * @throws Trello_Exception
+     * @throws Exception
      */
     public static function delete($path, $params = [])
     {
@@ -33,7 +34,7 @@ class Trello_Http extends Trello
      * @param  array $params Optional params
      *
      * @return stdClass|null Located object
-     * @throws Trello_Exception
+     * @throws Exception
      */
     public static function get($path, $params = [])
     {
@@ -48,7 +49,7 @@ class Trello_Http extends Trello
      * @param  array $params Optional params
      *
      * @return stdClass Located object
-     * @throws Trello_Exception
+     * @throws Exception
      */
     public static function post($path, $params = [])
     {
@@ -63,12 +64,22 @@ class Trello_Http extends Trello
      * @param  array $params Optional params
      *
      * @return stdClass Located object
-     * @throws Trello_Exception
+     * @throws Exception
      */
     public static function put($path, $params = [])
     {
         $request_body = self::_buildJson($params);
         return self::_doRequest('PUT', $path, $request_body);
+    }
+
+    /**
+     * Get http client
+     *
+     * @return Trello\Contracts\HttpClient
+     */
+    public static function getClient()
+    {
+        return Instance::getInstance()->getHttpClient();
     }
 
     /**
@@ -80,7 +91,7 @@ class Trello_Http extends Trello
      */
     private static function _buildJson($params)
     {
-        $json = empty($params) ? null : Trello_Json::buildJsonFromArray($params);
+        $json = empty($params) ? null : Json::buildJsonFromArray($params);
         return $json;
     }
 
@@ -93,12 +104,12 @@ class Trello_Http extends Trello
      */
     private static function _includeKeyInUrl($url)
     {
-        $key = Trello_Configuration::key();
+        $key = Configuration::key();
         if (!empty($key)) {
             $url = self::_buildPath($url, ['key' => $key]);
         }
 
-        $token = Trello_Configuration::token();
+        $token = Configuration::token();
         if (!empty($token)) {
             $url = self::_buildPath($url, ['token' => $token]);
         }
@@ -114,7 +125,7 @@ class Trello_Http extends Trello
      */
     private static function _buildPath($path, $params = [])
     {
-        $query_string = Trello_Util::buildQueryStringFromArray($params);
+        $query_string = Util::buildQueryStringFromArray($params);
         if (strpos($path, '?') !== false) {
             if (substr($path, -1) != '?') {
                 $path .= '&';
@@ -134,7 +145,7 @@ class Trello_Http extends Trello
      */
     private static function _makeUrl($path)
     {
-        return Trello_Configuration::serviceUrl() .
+        return Configuration::serviceUrl() .
             self::_includeKeyInUrl($path);
     }
 
@@ -146,7 +157,7 @@ class Trello_Http extends Trello
      * @param  string  $request_body Additional payload
      *
      * @return stdClass|null
-     * @throws Trello_Exception
+     * @throws Exception
      */
     private static function _doRequest($verb, $path, $request_body = null)
     {
@@ -163,27 +174,19 @@ class Trello_Http extends Trello
      * @param  string  $request_body Additional payload
      *
      * @return stdClass|null
-     * @throws Trello_Exception
+     * @throws Exception
      */
     private static function _doUrlRequest($verb, $url, $request_body = null)
     {
         static::logRequest($verb, $url, $request_body);
 
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_TIMEOUT, 60);
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $verb);
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_ENCODING, 'gzip');
-        curl_setopt($curl, CURLOPT_HTTPHEADER, self::_curlHeaders());
+        $client = self::getClient();
+        $client->setHeaders(self::_curlHeaders())
+            ->sendRequest($verb, $url, $request_body);
 
-        if(!empty($request_body)) {
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $request_body);
-        }
+        $response = $client->getResponseBody();
 
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($curl);
-        $http_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        curl_close($curl);
+        $http_status = $client->getResponseStatus();
 
         return self::parseHttpResponse($http_status, $response);
     }
@@ -195,14 +198,14 @@ class Trello_Http extends Trello
      * @param  string $body
      *
      * @return stdClass|null
-     * @throws Trello_Exception
+     * @throws Exception
      */
     private static function parseHttpResponse($status, $body)
     {
         if($status === 200 || $status === 201 || $status === 422) {
-            return Trello_Json::buildObjectFromJson($body);
+            return Json::buildObjectFromJson($body);
         } else {
-            Trello_Util::throwStatusCodeException($status);
+            Util::throwStatusCodeException($status);
         }
     } // @codeCoverageIgnore
 
@@ -216,8 +219,8 @@ class Trello_Http extends Trello
         return [
             'Accept: application/json',
             'Content-Type: application/json',
-            'User-Agent: ' . Trello_Configuration::applicationName() . ' ' . Trello_Version::get(),
-            'X-ApiVersion: ' . Trello_Configuration::API_VERSION
+            'User-Agent: ' . Configuration::applicationName() . ' ' . Version::get(),
+            'X-ApiVersion: ' . Configuration::API_VERSION
         ];
     }
 }

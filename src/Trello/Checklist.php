@@ -1,4 +1,5 @@
-<?php
+<?php namespace Trello;
+
 /**
  * Trello checklist
  * Reads and manages checklists
@@ -14,7 +15,7 @@
  * @property-read string $pos
  * @property-read array $checkItems
  */
-class Trello_Checklist extends Trello_Model
+class Checklist extends Model
 {
     /**
      * Checklist id
@@ -70,7 +71,7 @@ class Trello_Checklist extends Trello_Model
      *
      * @param  array $attributes Checklist attributes to set
      *
-     * @return Trello_Checklist  Newly minted trello checklist?
+     * @return Checklist  Newly minted trello checklist?
      */
     public static function create($attributes = [])
     {
@@ -78,7 +79,7 @@ class Trello_Checklist extends Trello_Model
         $attributes = array_merge($defaults, $attributes);
 
         if (empty($attributes['idBoard'])) {
-            throw new Trello_Exception_ValidationsFailed(
+            throw new Exception_ValidationsFailed(
                 'attempted to create checklist without board; it\'s gotta have a board'
             );
         }
@@ -91,13 +92,13 @@ class Trello_Checklist extends Trello_Model
      *
      * @param  string|array $checklist_id Checklist id to fetch
      *
-     * @return Trello_Checklist|Trello_Collection  Checklist model(s)
-     * @throws Trello_Exception_ValidationsFailed
+     * @return Checklist|Collection  Checklist model(s)
+     * @throws Exception_ValidationsFailed
      */
     public static function fetch($checklist_id = null)
     {
         if (empty($checklist_id)) {
-            throw new Trello_Exception_ValidationsFailed(
+            throw new Exception_ValidationsFailed(
                 'attempted to fetch checklist without id; it\'s gotta have an id'
             );
         }
