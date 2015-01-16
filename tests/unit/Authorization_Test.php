@@ -2,7 +2,7 @@
 
 class Authorization_Test extends IntegrationTestCase
 {
-    protected $oauth_server_class = 'Stevenmaguire\OAuth1\Client\Server\Trello';
+    protected $oauth_server_class = 'League\OAuth1\Client\Server\Trello';
 
     protected function mockOAuthServer()
     {

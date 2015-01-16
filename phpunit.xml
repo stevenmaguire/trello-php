@@ -11,7 +11,6 @@
          syntaxCheck="false"
 >
     <logging>
-
         <log type="coverage-html"
                 target="./build/coverage/html"
                 charset="UTF-8"
@@ -20,7 +19,6 @@
                 highLowerBound="70"/>
           <log type="coverage-clover"
                 target="./build/coverage/log/coverage.xml"/>
-
     </logging>
     <testsuites>
         <testsuite name="all">
@@ -47,7 +45,7 @@
         <env name="TRELLO_API_KEY" value=""/>
         <env name="TRELLO_API_SECRET" value=""/>
         <env name="TRELLO_API_TOKEN" value=""/>
-        <env name="TRELLO_API_APPNAME" value="Test Suite"/>
-        <env name="TRELLO_API_CALLBACK_URL" value="http://your-callback-uri/"/>
+        <env name="TRELLO_API_APPNAME" value=""/>
+        <env name="TRELLO_API_CALLBACK_URL" value=""/>
     </php>
 </phpunit>

@@ -2,7 +2,7 @@
 
 use League\OAuth1\Client\Server\Server;
 use League\OAuth1\Client\Credentials\CredentialsInterface;
-use Stevenmaguire\OAuth1\Client\Server\Trello as TrelloServer;
+use League\OAuth1\Client\Server\Trello as TrelloServer;
 
 /**
  * Handles authorization tasks for trello
