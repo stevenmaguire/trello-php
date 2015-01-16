@@ -76,9 +76,9 @@ class Instance
     }
 
     /**
-     * [getHttpClient description]
+     * Get http client
      *
-     * @return [type] [description]
+     * @return HttpClient
      */
     public function getHttpClient()
     {
@@ -89,9 +89,11 @@ class Instance
     }
 
     /**
-     * [setHttpClient description]
+     * Set http client
      *
-     * @return [type] [description]
+     * @param HttpClientContract
+     *
+     * @return Instance
      */
     public function setHttpClient(HttpClientContract $client)
     {
