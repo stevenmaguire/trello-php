@@ -1,5 +1,8 @@
 <?php namespace Trello\Tests\Integration;
 
+use \ReflectionClass;
+use Trello\Organization;
+
 class Organization_Test extends IntegrationTestCase
 {
     private $name = 'Test';
@@ -9,13 +12,13 @@ class Organization_Test extends IntegrationTestCase
         $attr = ['displayName' => $this->name];
         $organization = Organization::create($attr);
 
-        $this->assertInstanceOf('Organization', $organization);
+        $this->assertInstanceOf('Trello\Organization', $organization);
 
         return $organization;
     }
 
     /**
-     * @expectedException Exception_ValidationsFailed
+     * @expectedException Trello\Exception\ValidationsFailed
      **/
     public function test_It_Can_Not_Create_A_New_Organization_When_Display_Name_Not_Provided()
     {
@@ -28,7 +31,7 @@ class Organization_Test extends IntegrationTestCase
         $keyword = $this->name;
         $results = Organization::search($keyword);
 
-        $this->assertInstanceOf('Collection', $results);
+        $this->assertInstanceOf('Trello\Collection', $results);
     }
 
     public function test_It_Can_Delete_Current_Organization()
@@ -48,7 +51,7 @@ class Organization_Test extends IntegrationTestCase
     }
 
     /**
-     * @expectedException Exception_ValidationsFailed
+     * @expectedException Trello\Exception\ValidationsFailed
      **/
     public function test_It_Can_Not_Delete_Specific_Organization_When_Id_Not_Provided()
     {

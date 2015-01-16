@@ -1,9 +1,12 @@
 <?php namespace Trello\Tests\Integration;
 
+use \ReflectionClass;
+use Trello\Card;
+
 class Card_Test extends IntegrationTestCase
 {
     /**
-     * @expectedException Exception_ValidationsFailed
+     * @expectedException Trello\Exception\ValidationsFailed
      **/
     public function test_It_Can_Not_Fetch_A_Card_When_Id_Not_Provided()
     {
@@ -16,7 +19,7 @@ class Card_Test extends IntegrationTestCase
 
         $result = Card::fetch($card->id);
 
-        $this->assertInstanceOf('Card', $result);
+        $this->assertInstanceOf('Trello\Card', $result);
         $this->assertEquals($card->id, $result->id);
     }
 
@@ -28,13 +31,13 @@ class Card_Test extends IntegrationTestCase
 
         $result = Card::fetch($card_ids);
 
-        $this->assertInstanceOf('Collection', $result);
+        $this->assertInstanceOf('Trello\Collection', $result);
         $this->assertEquals($card1->id, $result[0]->id);
         $this->assertEquals($card2->id, $result[1]->id);
     }
 
     /**
-     * @expectedException Exception_ValidationsFailed
+     * @expectedException Trello\Exception\ValidationsFailed
      **/
     public function test_It_Can_Not_Create_A_New_Card_When_No_Attributes_Provided()
     {
@@ -42,7 +45,7 @@ class Card_Test extends IntegrationTestCase
     }
 
     /**
-     * @expectedException Exception_ValidationsFailed
+     * @expectedException Trello\Exception\ValidationsFailed
      **/
     public function test_It_Can_Not_Create_A_New_Card_When_List_Id_Not_Provided()
     {
@@ -58,7 +61,7 @@ class Card_Test extends IntegrationTestCase
 
         $card = Card::create($attributes);
 
-        $this->assertInstanceOf('Card', $card);
+        $this->assertInstanceOf('Trello\Card', $card);
         $this->assertEquals($list->id, $card->idList);
 
         return $card;
@@ -82,7 +85,7 @@ class Card_Test extends IntegrationTestCase
 
         $list = $card->getList();
 
-        $this->assertInstanceOf('List', $list);
+        $this->assertInstanceOf('Trello\CardList', $list);
     }
 
     public function test_It_Can_Get_Individual_Fields_When_Property_Does_Exist()

@@ -110,7 +110,7 @@ class Board extends Model
             $result = static::post(static::getBasePath($this->id).'/checklists', ['name' => $name]);
             return Checklist::fetch($result->id);
         }
-        throw new Exception_ValidationsFailed(
+        throw new \Trello\Exception\ValidationsFailed(
             'attempted to add checklist to board without checklist name; it\'s gotta have a name'
         );
     }
@@ -145,7 +145,7 @@ class Board extends Model
         if (preg_match('/voting|cardAging|calendar|recap/', $powerup)) {
             return static::post(static::getBasePath($this->id).'/powerUps', ['value' => $powerup]);
         }
-        throw new Exception_ValidationsFailed(
+        throw new \Trello\Exception\ValidationsFailed(
             'attempted to add invalid powerup to board; it\'s gotta be a valid powerup'
         );
     }
@@ -219,7 +219,7 @@ class Board extends Model
             $result = static::put(static::getBasePath($board_id).'/closed', ['value' => true]);
             return $result->closed;
         }
-        throw new Exception_ValidationsFailed(
+        throw new \Trello\Exception\ValidationsFailed(
             'attempted to close board without id; it\'s gotta have an id'
         );
     }
@@ -238,7 +238,7 @@ class Board extends Model
         $attributes = array_merge($defaults, $attributes);
 
         if (empty($attributes['name'])) {
-            throw new Exception_ValidationsFailed(
+            throw new \Trello\Exception\ValidationsFailed(
                 'attempted to create board without name; it\'s gotta have a name'
             );
         }
@@ -256,7 +256,7 @@ class Board extends Model
     public static function fetch($board_id = null)
     {
         if (empty($board_id)) {
-            throw new Exception_ValidationsFailed(
+            throw new \Trello\Exception\ValidationsFailed(
                 'attempted to fetch board without id; it\'s gotta have an id'
             );
         }
@@ -352,7 +352,7 @@ class Board extends Model
     public function removePowerUp($powerup = null)
     {
         if (!self::isValidPowerUp($powerup)) {
-            throw new Exception_ValidationsFailed(
+            throw new \Trello\Exception\ValidationsFailed(
                 'attempted to remove invalid powerup from board; it\'s gotta be a valid powerup'
             );
         }
@@ -442,7 +442,7 @@ class Board extends Model
     public function updateName($name = null)
     {
         if (empty($name)) {
-            throw new Exception_ValidationsFailed(
+            throw new \Trello\Exception\ValidationsFailed(
                 'attempted to update board name without new name; it\'s gotta have a name'
             );
         }

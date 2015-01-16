@@ -5,30 +5,30 @@ use Trello\Contracts\HttpClient as HttpClientContract;
 class HttpClient implements HttpClientContract
 {
     /**
-     * [$body description]
+     * Response body
      *
-     * @var [type]
+     * @var string
      */
     protected $body;
 
     /**
-     * [$headers description]
+     * Request headers
      *
      * @var array
      */
     protected $headers = array();
 
     /**
-     * [$status description]
+     * Response status
      *
-     * @var [type]
+     * @var integer
      */
     protected $status;
 
     /**
-     * [getResponseBody description]
+     * Get response body
      *
-     * @return [type] [description]
+     * @return string
      */
     public function getResponseBody()
     {
@@ -36,9 +36,9 @@ class HttpClient implements HttpClientContract
     }
 
     /**
-     * [getResponseStatus description]
+     * Get response status
      *
-     * @return [type] [description]
+     * @return integer
      */
     public function getResponseStatus()
     {
@@ -46,44 +46,38 @@ class HttpClient implements HttpClientContract
     }
 
     /**
-     * [sendRequest description]
+     * Send request
      *
-     * @param  [type]  [description]
-     * @param  [type]  [description]
-     * @param  [type]  [description]
+     * @param  string $verb
+     * @param  string $url
+     * @param  string $request_body
      *
-     * @return [type]  [description]
+     * @return boolean
      */
     public function sendRequest($verb, $url, $request_body = null)
     {
-        try {
-            print_r(func_get_args());
-            $curl = curl_init();
-            curl_setopt($curl, CURLOPT_TIMEOUT, 60);
-            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $verb);
-            curl_setopt($curl, CURLOPT_URL, $url);
-            curl_setopt($curl, CURLOPT_ENCODING, 'gzip');
-            curl_setopt($curl, CURLOPT_HTTPHEADER, $this->headers);
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_TIMEOUT, 60);
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $verb);
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_ENCODING, 'gzip');
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $this->headers);
 
-            if(!empty($request_body)) {
-                curl_setopt($curl, CURLOPT_POSTFIELDS, $request_body);
-            }
-
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            $this->response = curl_exec($curl);
-            $this->http_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-            curl_close($curl);
-
-            return true;
-        } catch (\Exception $e) {
-            return false;
+        if(!empty($request_body)) {
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $request_body);
         }
+
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $this->body = curl_exec($curl);
+        $this->status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        return true;
     }
 
     /**
-     * [setHeaders description]
+     * Set request headers
      *
-     * @param array  [description]
+     * @param array $headers
      *
      * @return HttpClient
      */

@@ -1,6 +1,7 @@
 <?php namespace Trello;
 
 use Trello\Clients\HttpClient;
+use Trello\Contracts\HttpClient as HttpClientContract;
 
 class Instance
 {
@@ -92,7 +93,7 @@ class Instance
      *
      * @return [type] [description]
      */
-    public function setHttpClient(Contracts_HttpClient $client)
+    public function setHttpClient(HttpClientContract $client)
     {
         $this->client = $client;
         return $this;

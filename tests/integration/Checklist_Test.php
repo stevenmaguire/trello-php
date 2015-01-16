@@ -1,5 +1,8 @@
 <?php namespace Trello\Tests\Integration;
 
+use \ReflectionClass;
+use Trello\Checklist;
+
 class Checklist_Test extends IntegrationTestCase
 {
     public function test_It_Can_Create_A_Checklist_When_Board_Id_Not_Provided()
@@ -9,11 +12,11 @@ class Checklist_Test extends IntegrationTestCase
 
         $checklist = Checklist::create($attributes);
 
-        $this->assertInstanceOf('Checklist', $checklist);
+        $this->assertInstanceOf('Trello\Checklist', $checklist);
     }
 
     /**
-     * @expectedException Exception_ValidationsFailed
+     * @expectedException Trello\Exception\ValidationsFailed
      **/
     public function test_It_Can_Not_Create_A_Checklist_When_Board_Id_Not_Provided()
     {
@@ -21,7 +24,7 @@ class Checklist_Test extends IntegrationTestCase
     }
 
     /**
-     * @expectedException Exception_ValidationsFailed
+     * @expectedException Trello\Exception\ValidationsFailed
      **/
     public function test_It_Can_Not_Fetch_A_Checklist_When_Id_Not_Provided()
     {
@@ -34,7 +37,7 @@ class Checklist_Test extends IntegrationTestCase
 
         $result = Checklist::fetch($checklist->id);
 
-        $this->assertInstanceOf('Checklist', $result);
+        $this->assertInstanceOf('Trello\Checklist', $result);
         $this->assertEquals($checklist->id, $result->id);
     }
 
@@ -46,7 +49,7 @@ class Checklist_Test extends IntegrationTestCase
 
         $result = Checklist::fetch($checklist_ids);
 
-        $this->assertInstanceOf('Collection', $result);
+        $this->assertInstanceOf('Trello\Collection', $result);
         $this->assertEquals($checklist1->id, $result[0]->id);
         $this->assertEquals($checklist2->id, $result[1]->id);
     }

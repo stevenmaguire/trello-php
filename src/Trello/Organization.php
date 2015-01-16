@@ -92,7 +92,7 @@ class Organization extends Model
         $attributes = array_merge($defaults, $attributes);
 
         if (empty($attributes['displayName'])) {
-            throw new Exception_ValidationsFailed(
+            throw new \Trello\Exception\ValidationsFailed(
                 'attempted to create organization without display name; it\'s gotta have a display name'
             );
         }
@@ -120,7 +120,7 @@ class Organization extends Model
         if ($organization_id) {
             return static::delete(static::getBasePath($organization_id));
         }
-        throw new Exception_ValidationsFailed(
+        throw new \Trello\Exception\ValidationsFailed(
             'attempted to delete organization without id; it\'s gotta have an id'
         );
     }

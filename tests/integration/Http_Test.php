@@ -1,5 +1,7 @@
 <?php namespace Trello\Tests\Integration;
 
+use Trello\Http;
+
 class Http_Test extends IntegrationTestCase
 {
     protected $username = 'stevenmaguire';

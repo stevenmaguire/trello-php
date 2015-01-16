@@ -4,53 +4,55 @@ use Trello\Configuration;
 
 class Configuration_Test extends UnitTestCase
 {
+    private function getEnvironmentArray()
+    {
+        return array(
+            'environment' => getenv('TRELLO_API_ENVIRONMENT'),
+            'key' => getenv('TRELLO_API_KEY'),
+            'secret' => getenv('TRELLO_API_SECRET'),
+            'token' => getenv('TRELLO_API_TOKEN'),
+            'name' => getenv('TRELLO_API_APPNAME'),
+            'callback_url' => getenv('TRELLO_API_APPNAME')
+        );
+    }
+
     public function test_It_Can_Set_Configuration()
     {
-        $environment = getenv('API_ENVIRONMENT');
-        $key = getenv('API_KEY');
-        $secret = getenv('API_SECRET');
-        $token = getenv('API_TOKEN');
-        $name = getenv('API_APPNAME');
-        $callback_url = getenv('API_APPNAME');
+        $configuration = $this->getEnvironmentArray();
 
-        Configuration::environment($environment);
-        Configuration::key($key);
-        Configuration::secret($secret);
-        Configuration::token($token);
-        Configuration::applicationName($name);
-        Configuration::oauthCallbackUrl($callback_url);
+        Configuration::environment($configuration['environment']);
+        Configuration::key($configuration['key']);
+        Configuration::secret($configuration['secret']);
+        Configuration::token($configuration['token']);
+        Configuration::applicationName($configuration['name']);
+        Configuration::oauthCallbackUrl($configuration['callback_url']);
 
 
-        $this->assertEquals($environment,   Configuration::environment());
-        $this->assertEquals($key,           Configuration::key());
-        $this->assertEquals($secret,        Configuration::secret());
-        $this->assertEquals($token,         Configuration::token());
-        $this->assertEquals($name,          Configuration::applicationName());
-        $this->assertEquals($callback_url,  Configuration::oauthCallbackUrl());
+        $this->assertEquals($configuration['environment'],   Configuration::environment());
+        $this->assertEquals($configuration['key'],           Configuration::key());
+        $this->assertEquals($configuration['secret'],        Configuration::secret());
+        $this->assertEquals($configuration['token'],         Configuration::token());
+        $this->assertEquals($configuration['name'],          Configuration::applicationName());
+        $this->assertEquals($configuration['callback_url'],  Configuration::oauthCallbackUrl());
     }
 
     public function test_It_Can_Set_Configuration_With_Arrays()
     {
-        $environment = getenv('API_ENVIRONMENT');
-        $key = getenv('API_KEY');
-        $secret = getenv('API_SECRET');
-        $token = getenv('API_TOKEN');
-        $name = getenv('API_APPNAME');
-        $callback_url = getenv('API_APPNAME');
+        $configuration = $this->getEnvironmentArray();
 
-        Configuration::environment(array($environment));
-        Configuration::key(array($key));
-        Configuration::secret(array($secret));
-        Configuration::token(array($token));
-        Configuration::applicationName(array($name));
-        Configuration::oauthCallbackUrl(array($callback_url));
+        Configuration::environment(array($configuration['environment']));
+        Configuration::key(array($configuration['key']));
+        Configuration::secret(array($configuration['secret']));
+        Configuration::token(array($configuration['token']));
+        Configuration::applicationName(array($configuration['name']));
+        Configuration::oauthCallbackUrl(array($configuration['callback_url']));
 
-        $this->assertEquals($environment,   Configuration::environment());
-        $this->assertEquals($key,           Configuration::key());
-        $this->assertEquals($secret,        Configuration::secret());
-        $this->assertEquals($token,         Configuration::token());
-        $this->assertEquals($name,          Configuration::applicationName());
-        $this->assertEquals($callback_url,  Configuration::oauthCallbackUrl());
+        $this->assertEquals($configuration['environment'],   Configuration::environment());
+        $this->assertEquals($configuration['key'],           Configuration::key());
+        $this->assertEquals($configuration['secret'],        Configuration::secret());
+        $this->assertEquals($configuration['token'],         Configuration::token());
+        $this->assertEquals($configuration['name'],          Configuration::applicationName());
+        $this->assertEquals($configuration['callback_url'],  Configuration::oauthCallbackUrl());
     }
 
     /**

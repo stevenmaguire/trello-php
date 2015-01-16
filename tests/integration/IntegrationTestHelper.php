@@ -80,7 +80,7 @@ class IntegrationTestHelper
     {
         $board = $this->getBoard($force);
         if (is_null($this->test_list) || $force) {
-            $this->test_list = CardCardList::create(['name' => 'test', 'idBoard' => $board->id]);
+            $this->test_list = CardList::create(['name' => 'test', 'idBoard' => $board->id]);
         }
         return $this->test_list;
     }

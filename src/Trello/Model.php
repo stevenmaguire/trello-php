@@ -1,5 +1,7 @@
 <?php namespace Trello;
 
+use \ReflectionObject;
+
 /**
  * Base class for models
  *

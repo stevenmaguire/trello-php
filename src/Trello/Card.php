@@ -174,13 +174,13 @@ class Card extends Model
         $attributes = array_merge($defaults, $attributes);
 
         if (empty($attributes['name'])) {
-            throw new Exception_ValidationsFailed(
+            throw new \Trello\Exception\ValidationsFailed(
                 'attempted to create card without name; it\'s gotta have a name'
             );
         }
 
         if (empty($attributes['idList'])) {
-            throw new Exception_ValidationsFailed(
+            throw new \Trello\Exception\ValidationsFailed(
                 'attempted to create card without list; it\'s gotta have a list'
             );
         }
@@ -199,7 +199,7 @@ class Card extends Model
     public static function fetch($card_id = null)
     {
         if (empty($card_id)) {
-            throw new Exception_ValidationsFailed(
+            throw new \Trello\Exception\ValidationsFailed(
                 'attempted to fetch card without id; it\'s gotta have an id'
             );
         }
@@ -248,7 +248,7 @@ class Card extends Model
      *
      * @return Card  Newly minted trello card?
      */
-    public function updateList(List $list)
+    public function updateList(CardList $list)
     {
         return static::doStore(static::getBasePath($this->id).'/idList', ['value' => $list->id]);
     }

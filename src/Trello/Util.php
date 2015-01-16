@@ -1,5 +1,7 @@
 <?php namespace Trello;
 
+use \DateTime;
+
 /**
  * Trello Utility methods
  *

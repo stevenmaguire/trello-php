@@ -79,7 +79,7 @@ class Checklist extends Model
         $attributes = array_merge($defaults, $attributes);
 
         if (empty($attributes['idBoard'])) {
-            throw new Exception_ValidationsFailed(
+            throw new \Trello\Exception\ValidationsFailed(
                 'attempted to create checklist without board; it\'s gotta have a board'
             );
         }
@@ -98,7 +98,7 @@ class Checklist extends Model
     public static function fetch($checklist_id = null)
     {
         if (empty($checklist_id)) {
-            throw new Exception_ValidationsFailed(
+            throw new \Trello\Exception\ValidationsFailed(
                 'attempted to fetch checklist without id; it\'s gotta have an id'
             );
         }

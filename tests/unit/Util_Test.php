@@ -1,5 +1,7 @@
 <?php namespace Trello\Tests\Unit;
 
+use \DateTime;
+use \DateTimeZone;
 use Trello\Util;
 
 class Util_Test extends UnitTestCase
@@ -80,12 +82,13 @@ class Util_Test extends UnitTestCase
 
     public function test_It_Can_Convert_Array_of_Attributes_To_String()
     {
-        $now = new \DateTime();
+        $now = new DateTime();
         $now->setTimestamp(0);
-        $now->setTimezone(new \DateTimeZone('UTC'));
+        $now->setTimezone(new DateTimeZone('UTC'));
+        $now_string = $now->format(DateTime::RFC850);
         $array = ['key1' => 'value1', 'key2' => ['value1','value2','value3'], 'key3' => $now];
         $expected_string = 'key1=value1, key2=0=value1, 1=value2, 2=value3, '.
-            'key3=Thursday, 01-Jan-70 00:00:00 UTC';
+            'key3='.$now_string;
 
         $attribute_string = Util::attributesToString($array);
 
@@ -103,7 +106,7 @@ class Util_Test extends UnitTestCase
     }
 
     /**
-     * @expectedException Authentication
+     * @expectedException Trello\Exception\Authentication
      */
     public function test_It_Can_Throw_Authentication_Exception()
     {
@@ -111,7 +114,7 @@ class Util_Test extends UnitTestCase
     }
 
     /**
-     * @expectedException Authorization
+     * @expectedException Trello\Exception\Authorization
      */
     public function test_It_Can_Throw_Authorization_Exception()
     {
@@ -119,7 +122,7 @@ class Util_Test extends UnitTestCase
     }
 
     /**
-     * @expectedException NotFound
+     * @expectedException Trello\Exception\NotFound
      */
     public function test_It_Can_Throw_NotFound_Exception()
     {
@@ -127,7 +130,7 @@ class Util_Test extends UnitTestCase
     }
 
     /**
-     * @expectedException UpgradeRequired
+     * @expectedException Trello\Exception\UpgradeRequired
      */
     public function test_It_Can_Throw_UpgradeRequired_Exception()
     {
@@ -135,7 +138,7 @@ class Util_Test extends UnitTestCase
     }
 
     /**
-     * @expectedException ServerError
+     * @expectedException Trello\Exception\ServerError
      */
     public function test_It_Can_Throw_ServerError_Exception()
     {
@@ -143,7 +146,7 @@ class Util_Test extends UnitTestCase
     }
 
     /**
-     * @expectedException DownForMaintenance
+     * @expectedException Trello\Exception\DownForMaintenance
      */
     public function test_It_Can_Throw_DownForMaintenance_Exception()
     {
@@ -151,7 +154,7 @@ class Util_Test extends UnitTestCase
     }
 
     /**
-     * @expectedException Unexpected
+     * @expectedException Trello\Exception\Unexpected
      */
     public function test_It_Can_Throw_Unexpected_Exception()
     {
