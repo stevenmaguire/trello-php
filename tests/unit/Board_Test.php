@@ -9,9 +9,9 @@ class Board_Test extends UnitTestCase
 {
     public function test_It_Can_Create_A_New_Board_With_Only_A_Name_Provided()
     {
-        $board = Response::make(Board::class);
-
-        print_r($board);
+        $board = Response::make(Board::class)
+            ->set('name', $this->board_name)
+            ->get();
 
         $client = Mockery::mock('Trello\Contracts\HttpClient');
         $client->shouldReceive('sendRequest')->once();

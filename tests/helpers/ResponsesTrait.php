@@ -6,8 +6,8 @@ trait ResponsesTrait
     {
         return '{
             "id": "54adfc38f03da056c186909a",
-            "name": "Hank Hill",
-            "desc": "",
+            "name": "Board name",
+            "desc": "Board description",
             "descData": null,
             "closed": false,
             "idOrganization": "54adfc3807ce928cb64b661f",

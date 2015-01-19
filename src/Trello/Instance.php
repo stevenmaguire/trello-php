@@ -135,15 +135,43 @@ class Instance
      */
     public static function writeLogLine($string)
     {
-        $log_file = realpath(
-            dirname(
+        if (self::canLog()) {
+            $log_file = self::getLogDirectory().date('Y-m-d').".log"."\n";
+            $handle = fopen($log_file, "a");
+            fwrite($handle, $string."\n");
+            fclose($handle);
+        }
+    }
+
+    /**
+     * Create and return log directory path
+     *
+     * @return string
+     */
+    protected static function getLogDirectory()
+    {
+        $directory = realpath(
                 dirname(
-                    dirname(__FILE__)
+                    dirname(
+                        dirname(__FILE__)
+                    )
                 )
-            )
-        )."/build/".date('Y-m-d').".log"."\n";
-        $handle = fopen($log_file, "a");
-        fwrite($handle, $string."\n");
-        fclose($handle);
+            )."/build/";
+        if (!file_exists($directory)) {
+            mkdir($directory, 0777, true);
+        }
+        return $directory;
+    }
+
+    /**
+     * Application can log
+     *
+     * @return boolean
+     */
+    protected static function canLog()
+    {
+        return function_exists('fopen')
+            && function_exists('fwrite')
+            && function_exists('fclose');
     }
 }
