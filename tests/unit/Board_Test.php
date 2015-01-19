@@ -1,8 +1,6 @@
 <?php namespace Trello\Tests\Unit;
 
-use \Mockery;
 use Trello\Board;
-use Trello\Instance;
 use Trello\Tests\Helpers\Response;
 
 class Board_Test extends UnitTestCase
@@ -12,14 +10,7 @@ class Board_Test extends UnitTestCase
         $board = Response::make(Board::class)
             ->set('name', $this->board_name)
             ->get();
-
-        $client = Mockery::mock('Trello\Contracts\HttpClient');
-        $client->shouldReceive('sendRequest')->once();
-        $client->shouldReceive('setHeaders')->once()->andReturn($client);
-        $client->shouldReceive('getResponseBody')->once()->andReturn($board);
-        $client->shouldReceive('getResponseStatus')->once()->andReturn(200);
-
-        Instance::getInstance()->setHttpClient($client);
+        $this->successWith($board);
         $attributes = ['name' => $this->board_name];
 
         $result = Board::create($attributes);
