@@ -1,5 +1,6 @@
 <?php namespace Trello\Clients;
 
+use Trello\Instance;
 use Trello\Contracts\HttpClient as HttpClientContract;
 
 class HttpClient implements HttpClientContract
@@ -71,6 +72,9 @@ class HttpClient implements HttpClientContract
         $this->body = curl_exec($curl);
         $this->status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
+
+        Instance::getInstance()->writeLogLine($this->body);
+
         return true;
     }
 

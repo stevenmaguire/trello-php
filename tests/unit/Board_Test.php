@@ -3,12 +3,16 @@
 use \Mockery;
 use Trello\Board;
 use Trello\Instance;
+use Trello\Tests\Helpers\Response;
 
 class Board_Test extends UnitTestCase
 {
     public function test_It_Can_Create_A_New_Board_With_Only_A_Name_Provided()
     {
-        $board = $this->boardData();
+        $board = Response::make(Board::class);
+
+        print_r($board);
+
         $client = Mockery::mock('Trello\Contracts\HttpClient');
         $client->shouldReceive('sendRequest')->once();
         $client->shouldReceive('setHeaders')->once()->andReturn($client);

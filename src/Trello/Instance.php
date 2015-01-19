@@ -114,7 +114,7 @@ class Instance
     {
         $request = [$verb, $path, $body];
         $this->requests->add($request);
-        $this->writeLogLine(implode(',', $request));
+        self::writeLogLine(implode(',', $request));
         return $this;
     }
 
@@ -133,7 +133,7 @@ class Instance
      *
      * @param  string $string
      */
-    private function writeLogLine($string)
+    public static function writeLogLine($string)
     {
         $log_file = realpath(
             dirname(
