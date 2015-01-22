@@ -42,9 +42,9 @@
     </filter>
     <php>
         <env name="TRELLO_API_ENVIRONMENT" value="qa"/>
-        <env name="TRELLO_API_KEY" value="e178a807fac6528a24eac90471b32db8"/>
-        <env name="TRELLO_API_SECRET" value="884e82e0287455717ab20bce50e56959801db35b103fb2b84d9600f8ed948904"/>
-        <env name="TRELLO_API_TOKEN" value="93208745d001390a71715e0f87e0f9ebbdba24442391ac65069f45cd220577be"/>
+        <env name="TRELLO_API_KEY" value=""/>
+        <env name="TRELLO_API_SECRET" value=""/>
+        <env name="TRELLO_API_TOKEN" value=""/>
         <env name="TRELLO_API_APPNAME" value="Test Suite"/>
         <env name="TRELLO_API_CALLBACK_URL" value="http://your-callback-uri/"/>
     </php>
