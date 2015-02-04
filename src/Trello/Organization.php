@@ -100,6 +100,25 @@ class Organization extends Model
     }
 
     /**
+     * fetch an organization
+     *
+     * @param  string|array $organization_id Organization id(s) to fetch
+     *
+     * @return Collection|Organization  Trello board matching id
+     * @throws Exception\ValidationsFailed
+     */
+    public static function fetch($organization_id = null)
+    {
+        if (empty($organization_id)) {
+            throw new \Trello\Exception\ValidationsFailed(
+                'attempted to fetch organization without id; it\'s gotta have an id'
+            );
+        }
+
+        return static::doFetch($organization_id);
+    }
+
+    /**
      * Search for organizations by keyword and filters
      *
      * @param  string $keyword Keyword to search
