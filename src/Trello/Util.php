@@ -30,7 +30,7 @@ class Util extends Trello
      *
      * @return void
      */
-    protected static function startSession()
+    public static function startSession()
     {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
