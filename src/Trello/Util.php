@@ -26,6 +26,18 @@ class Util extends Trello
     }
 
     /**
+     * Start session, if not already started
+     *
+     * @return void
+     */
+    protected static function startSession()
+    {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+    }
+
+    /**
      * Adds  header to classname
      *
      * @access public

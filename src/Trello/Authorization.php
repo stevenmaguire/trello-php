@@ -20,7 +20,6 @@ abstract class Authorization extends Trello
      */
     protected static $scope = null;
 
-
     /**
      * Authorize application
      *
@@ -35,7 +34,7 @@ abstract class Authorization extends Trello
      */
     public static function authorize(Server $server)
     {
-        session_start();
+        Util::startSession();
         $session_key = self::getCredentialSessionKey();
         $temporaryCredentials = $server->getTemporaryCredentials();
         $_SESSION[$session_key] = serialize($temporaryCredentials);
@@ -116,7 +115,7 @@ abstract class Authorization extends Trello
      */
     public static function getToken(Server $server, $oauth_token, $oauth_verifier)
     {
-        session_start();
+        Util::startSession();
         $session_key = self::getCredentialSessionKey();
         if (isset($_SESSION[$session_key])) {
             $temporaryCredentials = unserialize($_SESSION[$session_key]);
