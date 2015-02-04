@@ -2,9 +2,9 @@
 
 use \Mockery;
 use Trello\Instance;
-use Trello\Tests\TestCase;
+use Trello\Tests\TestCase as BaseTestCase;
 
-abstract class UnitTestCase extends TestCase
+abstract class UnitTestCase extends BaseTestCase
 {
     protected function successWith($response)
     {

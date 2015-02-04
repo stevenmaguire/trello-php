@@ -27,13 +27,17 @@
         "mockery/mockery": "0.9.*@dev"
     },
     "autoload": {
-        "classmap": [
-            "src/Trello.php",
-            "src/Trello",
-            "tests"
-        ],
-        "psr-0": {
+        "psr-4": {
             "Trello\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Trello\\Tests\\": "tests/"
+        },
+        "classmap": [
+            "src/",
+            "tests/"
+        ]
     }
 }
