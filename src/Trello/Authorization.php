@@ -124,7 +124,7 @@ abstract class Authorization extends Trello
         );
         unset($_SESSION[$session_key]);
         session_write_close();
-        return serialize($tokenCredentials);
+        return $tokenCredentials;
     }
 
     /**
