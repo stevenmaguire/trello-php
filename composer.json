@@ -30,12 +30,10 @@
     "autoload": {
         "classmap": [
             "src/Trello.php",
-            "src/Trello",
-            "tests"
+            "src/Trello"
         ],
         "psr-0": {
-            "Trello\\": "src/",
-            "Trello\\Tests": "tests/"
+            "Trello\\": "src/"
         }
     }
 }
