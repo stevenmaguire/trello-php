@@ -10,4 +10,10 @@ class Member_Test extends IntegrationTestCase
         $result = Member::currentUser();
         //print_r($result);
     }
+
+    public function test_It_Can_Get_Current_Logged_In_Users_Organizations()
+    {
+        $result = Member::currentUserOrganizations();
+        //print_r($result);
+    }
 }
