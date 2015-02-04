@@ -52,12 +52,22 @@ class Member extends Model
     protected static $base_path = 'members';
 
     /**
-     * Gets current user
+     * Gets current user data
      *
-     * @return Card  Newly minted trello card?
+     * @return stdClass
      */
     public static function currentUser()
     {
         return static::get(static::getBasePath().'/me');
+    }
+
+    /**
+     * Gets current user organizations
+     *
+     * @return stdClass
+     */
+    public static function currentUserOrganizations()
+    {
+        return static::get(static::getBasePath().'/my/organizations');
     }
 }
