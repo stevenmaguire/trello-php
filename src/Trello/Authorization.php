@@ -111,20 +111,23 @@ abstract class Authorization extends Trello
      * @param  string $oauth_token
      * @param  string $oauth_verifier
      *
-     * @return CredentialsInterface
+     * @return CredentialsInterface|null
      */
     public static function getToken(Server $server, $oauth_token, $oauth_verifier)
     {
         $session_key = self::getCredentialSessionKey();
-        $temporaryCredentials = unserialize($_SESSION[$session_key]);
-        $tokenCredentials = $server->getTokenCredentials(
-            $temporaryCredentials,
-            $oauth_token,
-            $oauth_verifier
-        );
-        unset($_SESSION[$session_key]);
-        session_write_close();
-        return $tokenCredentials;
+        if (isset($_SESSION[$session_key])) {
+            $temporaryCredentials = unserialize($_SESSION[$session_key]);
+            $tokenCredentials = $server->getTokenCredentials(
+                $temporaryCredentials,
+                $oauth_token,
+                $oauth_verifier
+            );
+            unset($_SESSION[$session_key]);
+            session_write_close();
+            return $tokenCredentials;
+        }
+        return null;
     }
 
     /**
