@@ -18,6 +18,14 @@ class Response
         return $response;
     }
 
+    public function setAttributes($attributes = [])
+    {
+        foreach ($attributes as $key => $value) {
+            $this->set($key, $value);
+        }
+        return $this;
+    }
+
     public function set($attribute, $value = null)
     {
         $this->setPayloadAttribute($attribute, $value);

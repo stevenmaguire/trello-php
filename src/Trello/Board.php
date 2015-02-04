@@ -101,7 +101,7 @@ class Board extends Model
      * @param  string $name Name of checklist
      *
      * @return Checklist|Collection Newly minted checklist
-     * @throws Exception_ValidationsFailed
+     * @throws Exception\ValidationsFailed
      * @throws Exception_NotFound
      */
     public function addChecklist($name = null)
@@ -121,7 +121,7 @@ class Board extends Model
      * @param  array $attributes List attributes
      *
      * @return List|Collection Newly minted List object
-     * @throws Exception_ValidationsFailed
+     * @throws Exception\ValidationsFailed
      * @throws Exception_NotFound
      */
     public function addList($attributes = [])
@@ -138,7 +138,7 @@ class Board extends Model
      * @param string $powerup Powerup name
      *
      * @return stdClass|null List of existing powerups
-     * @throws Exception_ValidationsFailed
+     * @throws Exception\ValidationsFailed
      */
     public function addPowerUp($powerup = null)
     {
@@ -154,7 +154,7 @@ class Board extends Model
      * add card aging powerup to current board
      *
      * @return stdClass|null List of existing powerups
-     * @throws Exception_ValidationsFailed
+     * @throws Exception\ValidationsFailed
      */
     public function addPowerUpCardAging()
     {
@@ -165,7 +165,7 @@ class Board extends Model
      * add calendar powerup to current board
      *
      * @return stdClass|null List of existing powerups
-     * @throws Exception_ValidationsFailed
+     * @throws Exception\ValidationsFailed
      */
     public function addPowerUpCalendar()
     {
@@ -176,7 +176,7 @@ class Board extends Model
      * add recap powerup to current board
      *
      * @return stdClass|null List of existing powerups
-     * @throws Exception_ValidationsFailed
+     * @throws Exception\ValidationsFailed
      */
     public function addPowerUpRecap()
     {
@@ -187,7 +187,7 @@ class Board extends Model
      * add voting powerup to current board
      *
      * @return stdClass|null List of existing powerups
-     * @throws Exception_ValidationsFailed
+     * @throws Exception\ValidationsFailed
      */
     public function addPowerUpVoting()
     {
@@ -198,7 +198,7 @@ class Board extends Model
      * close current board
      *
      * @return bool  Did the board close?
-     * @throws Exception_ValidationsFailed
+     * @throws Exception\ValidationsFailed
      */
     public function close()
     {
@@ -211,7 +211,7 @@ class Board extends Model
      * @param  string $board_id Board id to close
      *
      * @return bool  Did the board close?
-     * @throws Exception_ValidationsFailed
+     * @throws Exception\ValidationsFailed
      */
     public static function closeBoard($board_id = null)
     {
@@ -230,7 +230,7 @@ class Board extends Model
      * @param  array $attributes Board attributes to set
      *
      * @return Board  Newly minted trello board
-     * @throws Exception_ValidationsFailed
+     * @throws Exception\ValidationsFailed
      */
     public static function create($attributes = [])
     {
@@ -251,7 +251,7 @@ class Board extends Model
      * @param  string|array $board_id Board id(s) to fetch
      *
      * @return Collection|Board  Trello board matching id
-     * @throws Exception_ValidationsFailed
+     * @throws Exception\ValidationsFailed
      */
     public static function fetch($board_id = null)
     {
@@ -347,7 +347,7 @@ class Board extends Model
      * @param string $powerup Powerup name
      *
      * @return boolean List of existing powerups
-     * @throws Exception_ValidationsFailed
+     * @throws Exception\ValidationsFailed
      */
     public function removePowerUp($powerup = null)
     {
@@ -363,7 +363,7 @@ class Board extends Model
      * remove card aging powerup from current board
      *
      * @return boolean List of existing powerups
-     * @throws Exception_ValidationsFailed
+     * @throws Exception\ValidationsFailed
      */
     public function removePowerUpCardAging()
     {
@@ -374,7 +374,7 @@ class Board extends Model
      * remove calendar powerup from current board
      *
      * @return boolean List of existing powerups
-     * @throws Exception_ValidationsFailed
+     * @throws Exception\ValidationsFailed
      */
     public function removePowerUpCalendar()
     {
@@ -385,7 +385,7 @@ class Board extends Model
      * remove recap powerup from current board
      *
      * @return boolean List of existing powerups
-     * @throws Exception_ValidationsFailed
+     * @throws Exception\ValidationsFailed
      */
     public function removePowerUpRecap()
     {
@@ -396,7 +396,7 @@ class Board extends Model
      * remove voting powerup from current board
      *
      * @return boolean List of existing powerups
-     * @throws Exception_ValidationsFailed
+     * @throws Exception\ValidationsFailed
      */
     public function removePowerUpVoting()
     {
@@ -437,7 +437,7 @@ class Board extends Model
      * @param  string  $name
      *
      * @return Board Updated board object
-     * @throws Exception_ValidationsFailed
+     * @throws Exception\ValidationsFailed
      */
     public function updateName($name = null)
     {
