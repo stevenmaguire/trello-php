@@ -171,7 +171,7 @@ class Organization extends Model
                 }
             }
             $boards = Board::fetch($ids);
-            if (!is_array($boards)) {
+            if (is_a($boards, 'Trello\Board')) {
                 $boards = [$boards];
             }
             return new Collection($boards);
@@ -201,7 +201,7 @@ class Organization extends Model
                 }
             }
             $members = Member::fetch($ids);
-            if (!is_array($members)) {
+            if (is_a($members, 'Trello\Member')) {
                 $members = [$members];
             }
             return new Collection($members);
