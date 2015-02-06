@@ -83,4 +83,11 @@ class Organization_Test extends IntegrationTestCase
         $response = Organization::members($organization->id);
         print_r($response);
     }
+
+    public function test_It_Can_Get_Boards_For_Given_Organization()
+    {
+        $board = $this->createTestBoard();
+        $response = Organization::boards($board->idOrganization, ['filter' => 'open']);
+        print_r($response);
+    }
 }

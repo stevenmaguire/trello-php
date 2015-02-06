@@ -152,6 +152,36 @@ class Organization extends Model
     }
 
     /**
+     * Get organization boards
+     *
+     * @param  string $organization_id
+     * @param  array  $filters Optional filters
+     *
+     * @return Collection          Collection of boards in organization
+     * @throws Exception_DownForMaintenance If search request breaks!
+     */
+    public static function boards($organization_id = null, $options = [])
+    {
+        if ($organization_id) {
+            $results = static::get(static::getBasePath($organization_id).'/boards', $options);
+            $ids = [];
+            foreach ($results as $result) {
+                if (property_exists($result, 'id')) {
+                    $ids[] = $result->id;
+                }
+            }
+            $boards = Board::fetch($ids);
+            if (!is_array($boards)) {
+                $boards = [$boards];
+            }
+            return new Collection($boards);
+        }
+        throw new \Trello\Exception\ValidationsFailed(
+            'attempted to get organization members without id; it\'s gotta have an id'
+        );
+    }
+
+    /**
      * Get organization members
      *
      * @param  string $organization_id
@@ -171,7 +201,10 @@ class Organization extends Model
                 }
             }
             $members = Member::fetch($ids);
-            return new Collection($results);
+            if (!is_array($members)) {
+                $members = [$members];
+            }
+            return new Collection($members);
         }
         throw new \Trello\Exception\ValidationsFailed(
             'attempted to get organization members without id; it\'s gotta have an id'
