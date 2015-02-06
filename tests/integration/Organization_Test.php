@@ -76,4 +76,11 @@ class Organization_Test extends IntegrationTestCase
         $organization = $this->createTestOrganization();
         $response = $organization->getField('foo', true);
     }
+
+    public function test_It_Can_Get_Members_For_Given_Organization()
+    {
+        $organization = $this->createTestOrganization();
+        $response = Organization::members($organization->id);
+        print_r($response);
+    }
 }

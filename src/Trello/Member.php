@@ -70,4 +70,23 @@ class Member extends Model
     {
         return static::get(static::getBasePath().'/my/organizations');
     }
+
+    /**
+     * fetch a member
+     *
+     * @param  string|array $member_id Member id(s) to fetch
+     *
+     * @return Collection|Member  Trello member matching id
+     * @throws Exception\ValidationsFailed
+     */
+    public static function fetch($member_id = null)
+    {
+        if (empty($member_id)) {
+            throw new \Trello\Exception\ValidationsFailed(
+                'attempted to fetch members without id; it\'s gotta have an id'
+            );
+        }
+
+        return static::doFetch($member_id);
+    }
 }

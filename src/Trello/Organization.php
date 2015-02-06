@@ -134,6 +134,13 @@ class Organization extends Model
         return new Collection($results->organizations);
     }
 
+    /**
+     * [deleteOrganization description]
+     *
+     * @param  [type]  [description]
+     *
+     * @return [type]  [description]
+     */
     public static function deleteOrganization($organization_id = null)
     {
         if ($organization_id) {
@@ -141,6 +148,33 @@ class Organization extends Model
         }
         throw new \Trello\Exception\ValidationsFailed(
             'attempted to delete organization without id; it\'s gotta have an id'
+        );
+    }
+
+    /**
+     * Get organization members
+     *
+     * @param  string $organization_id
+     * @param  array  $filters Optional filters
+     *
+     * @return Collection          Collection of members in organization
+     * @throws Exception_DownForMaintenance If search request breaks!
+     */
+    public static function members($organization_id = null, $options = [])
+    {
+        if ($organization_id) {
+            $results = static::get(static::getBasePath($organization_id).'/members');
+            $ids = [];
+            foreach ($results as $result) {
+                if (property_exists($result, 'id')) {
+                    $ids[] = $result->id;
+                }
+            }
+            $members = Member::fetch($ids);
+            return new Collection($results);
+        }
+        throw new \Trello\Exception\ValidationsFailed(
+            'attempted to get organization members without id; it\'s gotta have an id'
         );
     }
 
