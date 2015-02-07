@@ -193,7 +193,7 @@ class Organization extends Model
     public static function members($organization_id = null, $options = [])
     {
         if ($organization_id) {
-            $results = static::get(static::getBasePath($organization_id).'/members');
+            $results = static::get(static::getBasePath($organization_id).'/members', $options);
             $ids = [];
             foreach ($results as $result) {
                 if (property_exists($result, 'id')) {
