@@ -117,13 +117,35 @@ class Organization extends Model
     }
 
     /**
+     * Get organization actions
+     *
+     * @param  string $organization_id
+     * @param  array  $filters Optional filters
+     *
+     * @return Collection          Collection of actions in organization
+     * @throws Trello\Exception\ValidationsFailed
+     */
+    public static function actions($organization_id = null, $options = [])
+    {
+        if ($organization_id) {
+            $actions = static::get(static::getBasePath($organization_id).'/actions', $options);
+            $ids = Action::getIds($actions);
+
+            return Action::fetchMany($ids);
+        }
+        throw new \Trello\Exception\ValidationsFailed(
+            'attempted to get organization actions without id; it\'s gotta have an id'
+        );
+    }
+
+    /**
      * Get organization boards
      *
      * @param  string $organization_id
      * @param  array  $filters Optional filters
      *
      * @return Collection          Collection of boards in organization
-     * @throws Exception_DownForMaintenance If search request breaks!
+     * @throws Trello\Exception\ValidationsFailed
      */
     public static function boards($organization_id = null, $options = [])
     {
@@ -145,7 +167,7 @@ class Organization extends Model
      * @param  array  $filters Optional filters
      *
      * @return Collection          Collection of members in organization
-     * @throws Exception_DownForMaintenance If search request breaks!
+     * @throws Trello\Exception\ValidationsFailed
      */
     public static function members($organization_id = null, $options = [])
     {
