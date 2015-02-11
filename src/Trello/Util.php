@@ -10,7 +10,7 @@ use \DateTime;
  * @copyright  Steven Maguire
  */
 
-class Util extends Trello
+class Util
 {
     /**
      * Removes the  header from classname
@@ -22,17 +22,19 @@ class Util extends Trello
      */
     public static function cleanClassName($name)
     {
-        return lcfirst(str_replace('', '', $name));
+        return str_replace('Trello\\', '', $name);
     }
 
     /**
      * Start session, if not already started
      *
      * @return void
+     *
+     * @codeCoverageIgnore
      */
     public static function startSession()
     {
-        if (session_status() == PHP_SESSION_NONE) {
+        if (session_status() == PHP_SESSION_NONE && !headers_sent()) {
             session_start();
         }
     }
@@ -47,25 +49,24 @@ class Util extends Trello
      */
     public static function buildClassName($name)
     {
-        return '' . ucfirst($name);
+        return 'Trello\\' . ucfirst($name);
     }
 
     /**
      * Get properties from list of items
      *
-     * @param  array|stdClass|null $items List of items
+     * @param  array  $items List of items
      * @param  string $property Property name
      *
      * @return array List of item properties
      */
-    public static function getItemProperties($items = [], $property)
+    public static function getItemsProperties(array $items, $property)
     {
         $properties = [];
-        if (is_array($items)) {
-            foreach ($items as $item) {
-                $properties[] = $item->$property;
-            }
+        foreach ($items as $item) {
+            $properties[] = $item->$property;
         }
+
         return $properties;
     }
 
@@ -86,6 +87,7 @@ class Util extends Trello
         if (preg_match('/'.$pattern.'/', $subject) > 0) {
             return true;
         }
+
         return false;
     }
 
@@ -152,6 +154,7 @@ class Util extends Trello
         if (!isset($callbacks[$delimiter])) {
             $callbacks[$delimiter] = create_function('$matches', "return '$delimiter' . strtolower(\$matches[1]);");
         }
+
         return preg_replace_callback('/([A-Z])/', $callbacks[$delimiter], $string);
     }
 
@@ -168,9 +171,10 @@ class Util extends Trello
     public static function implodeAssociativeArray($array, $separator = '=', $glue = ', ')
     {
         $new_array = [];
-        foreach ($array AS $key => $value) {
+        foreach ($array as $key => $value) {
             $new_array[] = $key . $separator . $value;
         }
+
         return (is_array($new_array)) ? implode($glue, $new_array) : false;
     }
 
@@ -182,9 +186,10 @@ class Util extends Trello
      *
      * @return string Converted string
      */
-    public static function attributesToString($attributes) {
+    public static function attributesToString($attributes)
+    {
         $printable_attributes = [];
-        foreach ($attributes AS $key => $value) {
+        foreach ($attributes as $key => $value) {
             if (is_array($value)) {
                 $attribute = Util::attributesToString($value);
             } elseif ($value instanceof DateTime) {
@@ -194,6 +199,7 @@ class Util extends Trello
             }
             $printable_attributes[$key] = sprintf('%s', $attribute);
         }
+
         return Util::implodeAssociativeArray($printable_attributes);
     }
 
@@ -233,8 +239,8 @@ class Util extends Trello
 
         if (array_key_exists($status_code, $exceptions)) {
             $exception = $exceptions[$status_code];
-        } else { // @codeCoverageIgnore
-            $message = self::_defaultExceptionMessage($status_code, $message);
+        } else {
+            $message = self::defaultExceptionMessage($status_code, $message);
             $exception = $exceptions['default'];
         }
         $exception = 'Trello\Exception\\'.$exception;
@@ -250,7 +256,7 @@ class Util extends Trello
      *
      * @return string Exception message
      */
-    private static function _defaultExceptionMessage($status_code, $message = null)
+    private static function defaultExceptionMessage($status_code, $message = null)
     {
         return 'Unexpected HTTP_RESPONSE #' . $status_code . ($message ? ': ' . $message : '');
     }

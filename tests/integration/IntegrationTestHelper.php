@@ -99,7 +99,7 @@ class IntegrationTestHelper
         $board = $this->getBoard($force);
         $card = $this->getCard($force);
         if (is_null($this->test_checklist) || $force) {
-            $this->test_checklist = Checklist::create(['idBoard' => $board->id, 'idCard' => $card->id]);
+            $this->test_checklist = Checklist::create(['name' => uniqid(), 'idBoard' => $board->id, 'idCard' => $card->id]);
         }
         return $this->test_checklist;
     }

@@ -1,34 +1,40 @@
 <?php namespace Trello\Tests\Unit;
 
 use Trello\Board;
+use Trello\Checklist;
 use Trello\Tests\Helpers\Response;
 
 class Board_Test extends UnitTestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+        $this->board = new Board;
+    }
+
     public function test_It_Can_Create_A_New_Board_With_Only_A_Name_Provided()
     {
         $attributes = ['name' => $this->board_name];
-        $board = Response::make(Board::class)
-            ->setAttributes($attributes)
-            ->get();
-        $this->successWith($board);
+        $response = '{"name":"'.$attributes['name'].'"}';
+        $client = $this->successClientWith($response);
+        $this->useClient($client);
 
         $result = Board::create($attributes);
 
         $this->assertInstanceOf('Trello\Board', $result);
         $this->assertEquals($attributes['name'], $result->name);
         $this->assertNull($result->cash_money);
+        $this->assertNull($result->cash_money());
     }
 
     public function test_It_Can_Update_Board_Name_When_Name_Provided()
     {
         $attributes = ['name' => $this->board_name];
-        $board_data = Response::make(Board::class)
-            ->setAttributes($attributes)
-            ->get();
-        $this->successWith($board_data);
+        $response = '{"name":"'.$attributes['name'].'"}';
+        $client = $this->successClientWith($response);
+        $this->useClient($client);
 
-        $board = new Board;
+        $board = $this->board;
 
         $result = $board->updateName($attributes['name']);
 
@@ -49,9 +55,7 @@ class Board_Test extends UnitTestCase
      */
     public function test_It_Can_Not_Add_Checklist_To_Board_When_Name_Not_Provided()
     {
-        $board = new Board;
-
-        $board->addChecklist();
+        $this->board->addChecklist();
     }
 
     /**
@@ -59,9 +63,7 @@ class Board_Test extends UnitTestCase
      */
     public function test_It_Can_Not_Add_Powerup_To_Board_When_Powerup_Not_Provided()
     {
-        $board = new Board;
-
-        $board->addPowerUp();
+        $this->board->addPowerUp();
     }
 
     /**
@@ -85,18 +87,6 @@ class Board_Test extends UnitTestCase
      */
     public function test_It_Can_Not_Remove_Powerup_To_Board_When_Powerup_Not_Provided()
     {
-        $board = new Board;
-
-        $board->removePowerUp();
-    }
-
-    /**
-     * @expectedException Trello\Exception\ValidationsFailed
-     */
-    public function test_It_Can_Not_Update_Board_Name_When_Powerup_Not_Provided()
-    {
-        $board = new Board;
-
-        $board->updateName();
+        $this->board->removePowerUp();
     }
 }

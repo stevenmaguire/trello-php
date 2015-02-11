@@ -5,10 +5,10 @@ use Trello\Checklist;
 
 class Checklist_Test extends IntegrationTestCase
 {
-    public function test_It_Can_Create_A_Checklist_When_Board_Id_Not_Provided()
+    public function test_It_Can_Create_A_Checklist_When_Board_Id_Provided()
     {
         $board = $this->createTestBoard();
-        $attributes = ['idBoard' => $board->id];
+        $attributes = ['name' => uniqid(), 'idBoard' => $board->id];
 
         $checklist = Checklist::create($attributes);
 
@@ -47,7 +47,7 @@ class Checklist_Test extends IntegrationTestCase
         $checklist2 = $this->createTestChecklist(true);
         $checklist_ids = [$checklist1->id, $checklist2->id];
 
-        $result = Checklist::fetch($checklist_ids);
+        $result = Checklist::fetchMany($checklist_ids);
 
         $this->assertInstanceOf('Trello\Collection', $result);
         $this->assertEquals($checklist1->id, $result[0]->id);

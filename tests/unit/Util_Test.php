@@ -8,8 +8,8 @@ class Util_Test extends UnitTestCase
 {
     public function test_It_Can_Clean_Class_Name()
     {
-        $class_name = 'Action';
-        $expected_clean_class = 'action';
+        $class_name = 'Trello\Action';
+        $expected_clean_class = 'Action';
 
         $result = Util::cleanClassName($class_name);
 
@@ -19,7 +19,7 @@ class Util_Test extends UnitTestCase
     public function test_It_Can_Build_Class_Name()
     {
         $class = 'action';
-        $expected_class_name = 'Action';
+        $expected_class_name = 'Trello\Action';
 
         $result = Util::buildClassName($class);
 
@@ -103,6 +103,56 @@ class Util_Test extends UnitTestCase
         $query_string = Util::buildQueryStringFromArray($array);
 
         $this->assertEquals($expected_string, $query_string);
+    }
+
+    public function test_It_Can_Get_Array_Of_Values_From_Property_On_Array_Of_Objects()
+    {
+        $objects = [];
+        $property = 'prop'.$this->randomNumber();
+        $value = 'value'.$this->randomNumber();
+        $count = $this->randomNumber(3);
+        for ($i = 0; $i < $count; $i++) {
+            $object = new \stdClass;
+            $object->$property = $value;
+            $objects[] = $object;
+        }
+
+        $properties = Util::getItemsProperties($objects, $property);
+
+        $this->assertCount($count, $properties);
+        foreach ($properties as $prop_value) {
+            $this->assertEquals($value, $prop_value);
+        }
+    }
+
+    public function test_It_Can_Check_If_String_Matches_Single_Pattern()
+    {
+        $pattern = uniqid();
+        $string = uniqid().$pattern.uniqid();
+
+        $matches = Util::matches($pattern, $string);
+
+        $this->assertTrue($matches);
+    }
+
+    public function test_It_Can_Check_If_String_Matches_One_Of_Many_Pattern()
+    {
+        $string = uniqid();
+        $pattern = [uniqid(),$string,uniqid()];
+
+        $matches = Util::matches($pattern, $string);
+
+        $this->assertTrue($matches);
+    }
+
+    public function test_It_Can_Check_If_String_Does_Not_Match_Single_Pattern()
+    {
+        $pattern = uniqid();
+        $string = uniqid();
+
+        $matches = Util::matches($pattern, $string);
+
+        $this->assertFalse($matches);
     }
 
     /**

@@ -79,12 +79,15 @@ class Instance
      * Get http client
      *
      * @return HttpClient
+     *
+     * @codeCoverageIgnore
      */
     public function getHttpClient()
     {
         if (empty($this->client)) {
             $this->client = new HttpClient;
         }
+
         return $this->client;
     }
 
@@ -98,6 +101,7 @@ class Instance
     public function setHttpClient(HttpClientContract $client)
     {
         $this->client = $client;
+
         return $this;
     }
 
@@ -115,6 +119,7 @@ class Instance
         $request = [$verb, $path, $body];
         $this->requests->add($request);
         self::writeLogLine(implode(',', $request));
+
         return $this;
     }
 
@@ -133,10 +138,10 @@ class Instance
      *
      * @param  string $string
      */
-    public static function writeLogLine($string)
+    public function writeLogLine($string)
     {
-        if (self::canLog()) {
-            $log_file = self::getLogDirectory().date('Y-m-d').".log"."\n";
+        if ($this->canLog()) {
+            $log_file = $this->getLogDirectory().date('Y-m-d').".log"."\n";
             $handle = fopen($log_file, "a");
             fwrite($handle, $string."\n");
             fclose($handle);
@@ -148,18 +153,20 @@ class Instance
      *
      * @return string
      */
-    protected static function getLogDirectory()
+    public function getLogDirectory()
     {
         $directory = realpath(
+            dirname(
                 dirname(
-                    dirname(
-                        dirname(__FILE__)
-                    )
+                    dirname(__FILE__)
                 )
-            )."/build/";
+            )
+        )."/build/";
+
         if (!file_exists($directory)) {
             mkdir($directory, 0777, true);
         }
+
         return $directory;
     }
 
@@ -168,10 +175,8 @@ class Instance
      *
      * @return boolean
      */
-    protected static function canLog()
+    protected function canLog()
     {
-        return function_exists('fopen')
-            && function_exists('fwrite')
-            && function_exists('fclose');
+        return function_exists('fopen') && function_exists('fwrite') && function_exists('fclose');
     }
 }

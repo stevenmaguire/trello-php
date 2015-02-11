@@ -124,7 +124,22 @@ class Authorization_Test extends UnitTestCase
 
         $credentials = Write::getToken($server, $oauth_token, $oauth_verifier);
 
-        //print_r($credentials);
         $this->assertFalse(isset($_SESSION[$session_key]));
+    }
+
+    public function test_It_Can_Not_Get_Token_From_OAuth_Server_When_Token_And_Verifier_Not_Provided()
+    {
+        $oauth_token = 'foo';
+        $oauth_verifier = 'bar';
+        $token_credentials = new TokenCredentials();
+
+        $server = $this->mockOAuthServer();
+        $server->shouldReceive('getTokenCredentials')
+            ->once()
+            ->andReturn($token_credentials);
+
+        $credentials = Write::getToken($server, $oauth_token, $oauth_verifier);
+
+        $this->assertNull($credentials);
     }
 }

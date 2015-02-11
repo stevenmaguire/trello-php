@@ -9,7 +9,7 @@
  * @copyright  Steven Maguire
  *
  */
-class Http extends Trello
+class Http
 {
     /**
      * Send delete request
@@ -22,8 +22,9 @@ class Http extends Trello
      */
     public static function delete($path, $params = [])
     {
-        $path = self::_buildPath($path, $params);
-        self::_doRequest('DELETE', $path);
+        $path = self::buildPath($path, $params);
+        self::doRequest('DELETE', $path);
+
         return true;
     }
 
@@ -38,8 +39,9 @@ class Http extends Trello
      */
     public static function get($path, $params = [])
     {
-        $path = self::_buildPath($path, $params);
-        return self::_doRequest('GET', $path);
+        $path = self::buildPath($path, $params);
+
+        return self::doRequest('GET', $path);
     }
 
     /**
@@ -53,8 +55,9 @@ class Http extends Trello
      */
     public static function post($path, $params = [])
     {
-        $request_body = self::_buildJson($params);
-        return self::_doRequest('POST', $path, $request_body);
+        $request_body = self::buildJson($params);
+
+        return self::doRequest('POST', $path, $request_body);
     }
 
     /**
@@ -68,8 +71,9 @@ class Http extends Trello
      */
     public static function put($path, $params = [])
     {
-        $request_body = self::_buildJson($params);
-        return self::_doRequest('PUT', $path, $request_body);
+        $request_body = self::buildJson($params);
+
+        return self::doRequest('PUT', $path, $request_body);
     }
 
     /**
@@ -89,10 +93,9 @@ class Http extends Trello
      *
      * @return string  JSON payload
      */
-    private static function _buildJson($params)
+    private static function buildJson($params)
     {
-        $json = empty($params) ? null : Json::buildJsonFromArray($params);
-        return $json;
+        return empty($params) ? null : Json::buildJsonFromArray($params);
     }
 
     /**
@@ -102,17 +105,18 @@ class Http extends Trello
      *
      * @return string $url Modified url
      */
-    private static function _includeKeyInUrl($url)
+    private static function includeKeyInUrl($url)
     {
         $key = Configuration::key();
         if (!empty($key)) {
-            $url = self::_buildPath($url, ['key' => $key]);
+            $url = self::buildPath($url, ['key' => $key]);
         }
 
         $token = Configuration::token();
         if (!empty($token)) {
-            $url = self::_buildPath($url, ['token' => $token]);
+            $url = self::buildPath($url, ['token' => $token]);
         }
+
         return $url;
     }
 
@@ -123,7 +127,7 @@ class Http extends Trello
      *
      * @return string Modified url
      */
-    private static function _buildPath($path, $params = [])
+    private static function buildPath($path, $params = [])
     {
         $query_string = Util::buildQueryStringFromArray($params);
         if (strpos($path, '?') !== false) {
@@ -133,6 +137,7 @@ class Http extends Trello
         } else {
             $path .= '?';
         }
+
         return $path . $query_string;
     }
 
@@ -143,10 +148,12 @@ class Http extends Trello
      *
      * @return string Service url
      */
-    private static function _makeUrl($path)
+    private static function makeUrl($path)
     {
-        return Configuration::serviceUrl() .
-            self::_includeKeyInUrl($path);
+        $service_url = Configuration::serviceUrl();
+        $path = self::includeKeyInUrl($path);
+
+        return $service_url . (substr($path, 0, 1) !== '/' ? '/' : '') . $path;
     }
 
     /**
@@ -159,10 +166,11 @@ class Http extends Trello
      * @return stdClass|null
      * @throws Exception
      */
-    private static function _doRequest($verb, $path, $request_body = null)
+    private static function doRequest($verb, $path, $request_body = null)
     {
-        $url = self::_makeUrl($path);
-        $response = self::_doUrlRequest($verb, $url, $request_body);
+        $url = self::makeUrl($path);
+        $response = self::doUrlRequest($verb, $url, $request_body);
+
         return $response;
     }
 
@@ -176,19 +184,24 @@ class Http extends Trello
      * @return stdClass|null
      * @throws Exception
      */
-    private static function _doUrlRequest($verb, $url, $request_body = null)
+    private static function doUrlRequest($verb, $url, $request_body = null)
     {
-        static::logRequest($verb, $url, $request_body);
+        Trello::logRequest($verb, $url, $request_body);
 
         $client = self::getClient();
-        $client->setHeaders(self::_curlHeaders())
+        $client->setHeaders(self::curlHeaders())
             ->sendRequest($verb, $url, $request_body);
 
         $response = $client->getResponseBody();
 
         $http_status = $client->getResponseStatus();
 
-        return self::parseHttpResponse($http_status, $response);
+        try {
+            return self::parseHttpResponse($http_status, $response);
+        } catch (Exception $e) {
+            //print_r(func_get_args());
+            throw $e;
+        }
     }
 
     /**
@@ -202,7 +215,7 @@ class Http extends Trello
      */
     private static function parseHttpResponse($status, $body)
     {
-        if($status === 200 || $status === 201 || $status === 422) {
+        if (in_array($status, [200,201,422], true)) {
             return Json::buildObjectFromJson($body);
         } else {
             Util::throwStatusCodeException($status);
@@ -214,7 +227,7 @@ class Http extends Trello
      *
      * @return string[] Curl headers
      */
-    private static function _curlHeaders()
+    private static function curlHeaders()
     {
         return [
             'Accept: application/json',

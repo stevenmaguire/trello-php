@@ -13,9 +13,8 @@ final class Json
     /**
      * @codeCoverageIgnore
      */
-    protected function  __construct()
+    protected function __construct()
     {
-
     }
 
     /**

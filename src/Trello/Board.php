@@ -96,23 +96,39 @@ class Board extends Model
     protected static $base_path = 'boards';
 
     /**
+     * Search model
+     *
+     * @var string
+     */
+    protected static $search_model = 'boards';
+
+    /**
+     * Default attributes with values
+     *
+     * @var string[]
+     */
+    protected static $default_attributes = ['name' => null];
+
+    /**
+     * Required attribute keys
+     *
+     * @var string[]
+     */
+    protected static $required_attributes = ['name'];
+
+    /**
      * add checklist to current board
      *
-     * @param  string $name Name of checklist
+     * @param  array $attributes
      *
-     * @return Checklist|Collection Newly minted checklist
+     * @return Checklist  Newly minted trello checklist
      * @throws Exception\ValidationsFailed
-     * @throws Exception_NotFound
      */
-    public function addChecklist($name = null)
+    public function addChecklist($attributes = [])
     {
-        if ($name) {
-            $result = static::post(static::getBasePath($this->id).'/checklists', ['name' => $name]);
-            return Checklist::fetch($result->id);
-        }
-        throw new \Trello\Exception\ValidationsFailed(
-            'attempted to add checklist to board without checklist name; it\'s gotta have a name'
-        );
+        $attributes['idBoard'] = $this->id;
+
+        return Checklist::create($attributes);
     }
 
     /**
@@ -120,16 +136,14 @@ class Board extends Model
      *
      * @param  array $attributes List attributes
      *
-     * @return List|Collection Newly minted List object
+     * @return CardList  Newly minted trello list
      * @throws Exception\ValidationsFailed
-     * @throws Exception_NotFound
      */
     public function addList($attributes = [])
     {
         $attributes['idBoard'] = $this->id;
-        CardList::parseAttributes($attributes);
-        $result = static::post(static::getBasePath($this->id).'/lists', $attributes);
-        return CardList::fetch($result->id);
+
+        return CardList::create($attributes);
     }
 
     /**
@@ -225,46 +239,6 @@ class Board extends Model
     }
 
     /**
-     * create a new board
-     *
-     * @param  array $attributes Board attributes to set
-     *
-     * @return Board  Newly minted trello board
-     * @throws Exception\ValidationsFailed
-     */
-    public static function create($attributes = [])
-    {
-        $defaults = ['name' => null];
-        $attributes = array_merge($defaults, $attributes);
-
-        if (empty($attributes['name'])) {
-            throw new \Trello\Exception\ValidationsFailed(
-                'attempted to create board without name; it\'s gotta have a name'
-            );
-        }
-        return static::doCreate(static::getBasePath(), $attributes);
-    }
-
-    /**
-     * fetch a board
-     *
-     * @param  string|array $board_id Board id(s) to fetch
-     *
-     * @return Collection|Board  Trello board matching id
-     * @throws Exception\ValidationsFailed
-     */
-    public static function fetch($board_id = null)
-    {
-        if (empty($board_id)) {
-            throw new \Trello\Exception\ValidationsFailed(
-                'attempted to fetch board without id; it\'s gotta have an id'
-            );
-        }
-
-        return static::doFetch($board_id);
-    }
-
-    /**
      * generate calendar key for current board
      *
      * @return stdClass|null Calendar key object
@@ -287,25 +261,27 @@ class Board extends Model
     /**
      * Get cards on board
      *
-     * @return Card|Collection Card(s)
+     * @return Collection Card(s)
      */
     public function getCards()
     {
         $cards = static::get(static::getBasePath($this->id).'/cards');
-        $ids = Card::getCardIds($cards);
-        return Card::fetch($ids);
+        $ids = Card::getIds($cards);
+
+        return Card::fetchMany($ids);
     }
 
     /**
      * Get lists attached to board
      *
-     * @return List|Collection Collection of list(s)
+     * @return Collection Collection of list(s)
      */
     public function getLists()
     {
         $lists = static::get(static::getBasePath($this->id).'/lists');
-        $ids = CardList::getListIds($lists);
-        return CardList::fetch($ids);
+        $ids = CardList::getIds($lists);
+
+        return CardList::fetchMany($ids);
     }
 
     /**
@@ -328,6 +304,7 @@ class Board extends Model
     public static function isValidPowerUp($powerup = null)
     {
         $powerups = ['voting','cardAging','calendar','recap'];
+
         return in_array($powerup, $powerups);
     }
 
@@ -351,12 +328,12 @@ class Board extends Model
      */
     public function removePowerUp($powerup = null)
     {
-        if (!self::isValidPowerUp($powerup)) {
-            throw new \Trello\Exception\ValidationsFailed(
-                'attempted to remove invalid powerup from board; it\'s gotta be a valid powerup'
-            );
+        if (self::isValidPowerUp($powerup)) {
+            return static::delete(static::getBasePath($this->id).'/powerUps/'.$powerup);
         }
-        return static::delete(static::getBasePath($this->id).'/powerUps/'.$powerup);
+        throw new \Trello\Exception\ValidationsFailed(
+            'attempted to remove invalid powerup from board; it\'s gotta be a valid powerup'
+        );
     }
 
     /**
@@ -401,51 +378,5 @@ class Board extends Model
     public function removePowerUpVoting()
     {
         return $this->removePowerUp('voting');
-    }
-
-    /**
-     * Search for boards by keyword and filters
-     *
-     * @param  string $keyword Keyword to search
-     * @param  array  $filters Optional filters
-     *
-     * @return Collection          Collection of boards with name, id, organization
-     * @throws Exception_DownForMaintenance If search request breaks!
-     */
-    public static function search($keyword = null, $filters = [])
-    {
-        $filters['modelTypes'] = 'boards';
-        $results = static::doSearch($keyword, $filters);
-        return new Collection($results->boards);
-    }
-
-    /**
-     * Update board description
-     *
-     * @param  string  $description
-     *
-     * @return Board Updated board object
-     */
-    public function updateDescription($description = null)
-    {
-        return static::doStore(static::getBasePath($this->id).'/desc', ['value' => $description]);
-    }
-
-    /**
-     * Update board name
-     *
-     * @param  string  $name
-     *
-     * @return Board Updated board object
-     * @throws Exception\ValidationsFailed
-     */
-    public function updateName($name = null)
-    {
-        if (empty($name)) {
-            throw new \Trello\Exception\ValidationsFailed(
-                'attempted to update board name without new name; it\'s gotta have a name'
-            );
-        }
-        return static::doStore(static::getBasePath($this->id).'/name', ['value' => $name]);
     }
 }

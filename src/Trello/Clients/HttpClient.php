@@ -53,7 +53,9 @@ class HttpClient implements HttpClientContract
      * @param  string $url
      * @param  string $request_body
      *
-     * @return boolean
+     * @return HttpClient
+     *
+     * @codeCoverageIgnore
      */
     public function sendRequest($verb, $url, $request_body = null)
     {
@@ -64,7 +66,7 @@ class HttpClient implements HttpClientContract
         curl_setopt($curl, CURLOPT_ENCODING, 'gzip');
         curl_setopt($curl, CURLOPT_HTTPHEADER, $this->headers);
 
-        if(!empty($request_body)) {
+        if (!empty($request_body)) {
             curl_setopt($curl, CURLOPT_POSTFIELDS, $request_body);
         }
 
@@ -73,9 +75,20 @@ class HttpClient implements HttpClientContract
         $this->status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
 
+        // Temporary
         Instance::getInstance()->writeLogLine($this->body);
 
-        return true;
+        return $this;
+    }
+
+    /**
+     * Get request headers
+     *
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
     }
 
     /**

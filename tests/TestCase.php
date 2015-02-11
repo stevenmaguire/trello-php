@@ -72,6 +72,11 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         Configuration::oauthCallbackUrl(getenv('TRELLO_API_CALLBACK_URL'));
     }
 
+    protected function randomNumber($max = 10)
+    {
+        return rand(1, $max);
+    }
+
     protected function mockHttpClientResponse($response)
     {
 

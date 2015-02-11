@@ -34,6 +34,46 @@ class Organization_Test extends IntegrationTestCase
         $this->assertInstanceOf('Trello\Collection', $results);
     }
 
+    public function test_It_Can_Get_Individual_Fields_When_Property_Does_Not_Exist()
+    {
+        $organization = $this->createTestOrganization();
+        $response = $organization->getField('foo', true);
+    }
+
+    public function test_It_Can_Get_Members_For_Given_Organization_When_Organization_Id_Provided()
+    {
+        $organization = $this->createTestOrganization();
+
+        $response = Organization::members($organization->id, ['filter' => 'admins', 'fields' => 'fullName,username,memberType,idPremOrgsAdmin']);
+
+        $this->assertInstanceOf('Trello\Collection', $response);
+    }
+
+    /**
+     * @expectedException Trello\Exception\ValidationsFailed
+     **/
+    public function test_It_Can_Not_Get_Members_For_Given_Organization_When_Organization_Id_Not_Provided()
+    {
+        $response = Organization::members();
+    }
+
+    public function test_It_Can_Get_Boards_For_Given_Organization_When_Organization_Id_Provided()
+    {
+        $board = $this->createTestBoard();
+
+        $response = Organization::boards($board->idOrganization, ['filter' => 'open']);
+
+        $this->assertInstanceOf('Trello\Collection', $response);
+    }
+
+    /**
+     * @expectedException Trello\Exception\ValidationsFailed
+     **/
+    public function test_It_Can_Not_Get_Boards_For_Given_Organization_When_Organization_Id_Not_Provided()
+    {
+        $response = Organization::boards();
+    }
+
     public function test_It_Can_Delete_Current_Organization()
     {
         $organization = $this->createTestOrganization();
@@ -69,25 +109,5 @@ class Organization_Test extends IntegrationTestCase
                 $response = $organization->getField($field->name, true);
             }
         }
-    }
-
-    public function test_It_Can_Get_Individual_Fields_When_Property_Does_Not_Exist()
-    {
-        $organization = $this->createTestOrganization();
-        $response = $organization->getField('foo', true);
-    }
-
-    public function test_It_Can_Get_Members_For_Given_Organization()
-    {
-        $organization = $this->createTestOrganization();
-        $response = Organization::members($organization->id);
-        print_r($response);
-    }
-
-    public function test_It_Can_Get_Boards_For_Given_Organization()
-    {
-        $board = $this->createTestBoard();
-        $response = Organization::boards($board->idOrganization, ['filter' => 'open']);
-        print_r($response);
     }
 }

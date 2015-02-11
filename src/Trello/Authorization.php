@@ -11,7 +11,7 @@ use League\OAuth1\Client\Server\Trello as TrelloServer;
  * @subpackage Authorization
  * @copyright  2014 Steven Maguire
  */
-abstract class Authorization extends Trello
+abstract class Authorization
 {
     /**
      * Permission scope for authorization
@@ -56,6 +56,7 @@ abstract class Authorization extends Trello
             'expiration' => self::parseExpiration($expiration),
             'scope' => static::$scope
         ];
+
         return self::getBasePath().'?'.Util::buildQueryStringFromArray($config);
     }
 
@@ -128,6 +129,7 @@ abstract class Authorization extends Trello
             session_write_close();
             return $tokenCredentials;
         }
+
         return null;
     }
 

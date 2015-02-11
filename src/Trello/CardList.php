@@ -51,119 +51,46 @@ class CardList extends Model
     protected $fields;
 
     /**
+     * List parent board
+     *
+     * @property string $idBoard
+     */
+    protected $idBoard;
+
+    /**
+     * List is closed
+     *
+     * @property string $closed
+     */
+    protected $closed;
+
+    /**
+     * List position
+     *
+     * @property integer $pos
+     */
+    protected $pos;
+
+    /**
      * Lists base path
      *
      * @var string
      */
-    protected static $base_path = 'lists';
+    protected static $base_path = 'list';
 
     /**
-     * fetch a list
+     * Default attributes with values
      *
-     * @param  string|array $list_id List id to fetch
-     *
-     * @return List|Collection  List model(s)
-     * @throws Exception_ValidationsFailed
+     * @var string[]
      */
-    public static function fetch($list_id = null)
-    {
-        if (empty($list_id)) {
-            throw new \Trello\Exception\ValidationsFailed(
-                'attempted to fetch list without id; it\'s gotta have an id'
-            );
-        }
-
-        return static::doFetch($list_id);
-    }
+    protected static $default_attributes = ['name' => null, 'idBoard' => null];
 
     /**
-     * create a new list
+     * Required attribute keys
      *
-     * @param  array $attributes Board attributes to set
-     *
-     * @return Board  Newly minted trello board
-     * @throws Exception_ValidationsFailed
+     * @var string[]
      */
-    public static function create($attributes = [])
-    {
-        self::parseAttributes($attributes);
-        return static::doCreate(static::getBasePath(), $attributes);
-    }
-
-    /**
-     * Parse attributes
-     *
-     * @param  array $attributes
-     */
-    public static function parseAttributes(&$attributes)
-    {
-        $defaults = ['name' => null, 'idBoard' => null];
-        $attributes = array_merge($defaults, $attributes);
-
-        self::parseName($attributes);
-        self::parseBoardId($attributes);
-        self::parsePosition($attributes);
-    }
-
-    /**
-     * Parse attributes for name
-     *
-     * @param  array $attributes
-     */
-    private static function parseName(&$attributes)
-    {
-        if (empty($attributes['name'])) {
-            throw new \Trello\Exception\ValidationsFailed(
-                'attempted to add list to board without list name; it\'s gotta have a name'
-            );
-        }
-    }
-
-    /**
-     * Parse attributes for board id
-     *
-     * @param  array $attributes
-     */
-    private static function parseBoardId(&$attributes)
-    {
-        if (empty($attributes['idBoard'])) {
-            throw new \Trello\Exception\ValidationsFailed(
-                'attempted to create list without board; it\'s gotta have a board'
-            );
-        }
-    }
-
-    /**
-     * Parse attributes for position
-     *
-     * @param  array $attributes
-     */
-    private static function parsePosition(&$attributes)
-    {
-        if (isset($attributes['position'])) {
-            $positions = ['top','bottom','\d{'.strlen($attributes['position']).'}'];
-
-            $is_match = Util::matches(
-                $positions,
-                strtolower($attributes['position'])
-            );
-            if (!$is_match) {
-                unset($attributes['position']);
-            }
-        }
-    }
-
-    /**
-     * Get list ids from list of lists
-     *
-     * @param  stdClass|null $lists List of lists
-     *
-     * @return array List of list ids
-     */
-    public static function getListIds($lists = [])
-    {
-        return Util::getItemProperties($lists, 'id');
-    }
+    protected static $required_attributes = ['name', 'idBoard'];
 
     /**
      * Get card models for list
@@ -172,14 +99,10 @@ class CardList extends Model
      */
     public function getCards()
     {
-        $ids = [];
-        $cards = static::get('/list/'.$this->id.'/cards');
-        if (is_array($cards)) {
-            foreach ($cards as $card) {
-                $ids[] = $card->id;
-            }
-        }
-        return Card::fetch($ids);
+        $cards = static::get(static::getBasePath($this->id).'/cards');
+        $ids = Card::getIds($cards);
+
+        return Card::fetchMany($ids);
     }
 
     /**
@@ -192,6 +115,7 @@ class CardList extends Model
     public function createCard($attributes = [])
     {
         $attributes['idList'] = $this->id;
+
         return Card::create($attributes);
     }
 

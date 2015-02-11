@@ -79,60 +79,25 @@ class Organization extends Model
     protected static $base_path = 'organizations';
 
     /**
-     * create a new organization
+     * Search model
      *
-     * @param  array $attributes Organization attributes to set
-     *
-     * @return Organization  Newly minted trello organization
-     * @throws Exception_ValidationsFailed
+     * @var string
      */
-    public static function create($attributes = [])
-    {
-        $defaults = ['displayName' => null];
-        $attributes = array_merge($defaults, $attributes);
-
-        if (empty($attributes['displayName'])) {
-            throw new \Trello\Exception\ValidationsFailed(
-                'attempted to create organization without display name; it\'s gotta have a display name'
-            );
-        }
-        return static::doCreate(static::getBasePath(), $attributes);
-    }
+    protected static $search_model = 'organizations';
 
     /**
-     * fetch an organization
+     * Default attributes with values
      *
-     * @param  string|array $organization_id Organization id(s) to fetch
-     *
-     * @return Collection|Organization  Trello board matching id
-     * @throws Exception\ValidationsFailed
+     * @var string[]
      */
-    public static function fetch($organization_id = null)
-    {
-        if (empty($organization_id)) {
-            throw new \Trello\Exception\ValidationsFailed(
-                'attempted to fetch organization without id; it\'s gotta have an id'
-            );
-        }
-
-        return static::doFetch($organization_id);
-    }
+    protected static $default_attributes = ['displayName' => null];
 
     /**
-     * Search for organizations by keyword and filters
+     * Required attribute keys
      *
-     * @param  string $keyword Keyword to search
-     * @param  array  $filters Optional filters
-     *
-     * @return Collection          Collection of organizations with name, id, organization
-     * @throws Exception_DownForMaintenance If search request breaks!
+     * @var string[]
      */
-    public static function search($keyword = null, $filters = [])
-    {
-        $filters['modelTypes'] = 'organizations';
-        $results = static::doSearch($keyword, $filters);
-        return new Collection($results->organizations);
-    }
+    protected static $required_attributes = ['displayName'];
 
     /**
      * [deleteOrganization description]
@@ -163,18 +128,10 @@ class Organization extends Model
     public static function boards($organization_id = null, $options = [])
     {
         if ($organization_id) {
-            $results = static::get(static::getBasePath($organization_id).'/boards', $options);
-            $ids = [];
-            foreach ($results as $result) {
-                if (property_exists($result, 'id')) {
-                    $ids[] = $result->id;
-                }
-            }
-            $boards = Board::fetch($ids);
-            if (is_a($boards, 'Trello\Board')) {
-                $boards = [$boards];
-            }
-            return new Collection($boards);
+            $boards = static::get(static::getBasePath($organization_id).'/boards', $options);
+            $ids = Board::getIds($boards);
+
+            return Board::fetchMany($ids);
         }
         throw new \Trello\Exception\ValidationsFailed(
             'attempted to get organization members without id; it\'s gotta have an id'
@@ -193,18 +150,10 @@ class Organization extends Model
     public static function members($organization_id = null, $options = [])
     {
         if ($organization_id) {
-            $results = static::get(static::getBasePath($organization_id).'/members', $options);
-            $ids = [];
-            foreach ($results as $result) {
-                if (property_exists($result, 'id')) {
-                    $ids[] = $result->id;
-                }
-            }
-            $members = Member::fetch($ids);
-            if (is_a($members, 'Trello\Member')) {
-                $members = [$members];
-            }
-            return new Collection($members);
+            $members = static::get(static::getBasePath($organization_id).'/members', $options);
+            $ids = Member::getIds($members);
+
+            return Member::fetchMany($ids);
         }
         throw new \Trello\Exception\ValidationsFailed(
             'attempted to get organization members without id; it\'s gotta have an id'

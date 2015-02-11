@@ -20,7 +20,7 @@ class CardList_Test extends IntegrationTestCase
         $list1 = $this->createTestList();
         $list2 = $this->createTestList(true);
 
-        $result = CardList::fetch([$list1->id, $list2->id]);
+        $result = CardList::fetchMany([$list1->id, $list2->id]);
 
         $this->assertInstanceOf('Trello\Collection', $result);
         $this->assertEquals($list1->id, $result[0]->id);

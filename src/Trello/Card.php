@@ -162,50 +162,18 @@ class Card extends Model
     protected static $base_path = 'card';
 
     /**
-     * create a new card
+     * Default attributes with values
      *
-     * @param  array $attributes Card attributes to set
-     *
-     * @return Card  Newly minted trello card?
+     * @var string[]
      */
-    public static function create($attributes = [])
-    {
-        $defaults = ['name' => null, 'idList' => null, 'due' => null, 'urlSource' => null];
-        $attributes = array_merge($defaults, $attributes);
-
-        if (empty($attributes['name'])) {
-            throw new \Trello\Exception\ValidationsFailed(
-                'attempted to create card without name; it\'s gotta have a name'
-            );
-        }
-
-        if (empty($attributes['idList'])) {
-            throw new \Trello\Exception\ValidationsFailed(
-                'attempted to create card without list; it\'s gotta have a list'
-            );
-        }
-
-        return static::doCreate(static::getBasePath(), $attributes);
-    }
+    protected static $default_attributes = ['name' => null, 'idList' => null, 'due' => null, 'urlSource' => null];
 
     /**
-     * fetch a card
+     * Required attribute keys
      *
-     * @param  string|array $card_id Card id to fetch
-     *
-     * @return Card|Collection  Card model(s)
-     * @throws Exception_ValidationsFailed
+     * @var string[]
      */
-    public static function fetch($card_id = null)
-    {
-        if (empty($card_id)) {
-            throw new \Trello\Exception\ValidationsFailed(
-                'attempted to fetch card without id; it\'s gotta have an id'
-            );
-        }
-
-        return static::doFetch($card_id);
-    }
+    protected static $required_attributes = ['name', 'idList'];
 
     /**
      * Get parent board
@@ -216,18 +184,6 @@ class Card extends Model
     public function getBoard()
     {
         return Board::fetch($this->idBoard);
-    }
-
-    /**
-     * Get card ids from list of cards
-     *
-     * @param  stdClass|null $cards List of cards
-     *
-     * @return array List of card ids
-     */
-    public static function getCardIds($cards = [])
-    {
-        return Util::getItemProperties($cards, 'id');
     }
 
     /**

@@ -29,11 +29,19 @@ class Card_Test extends IntegrationTestCase
         $card2 = $this->createTestCard(true);
         $card_ids = [$card1->id, $card2->id];
 
-        $result = Card::fetch($card_ids);
+        $result = Card::fetchMany($card_ids);
 
         $this->assertInstanceOf('Trello\Collection', $result);
         $this->assertEquals($card1->id, $result[0]->id);
         $this->assertEquals($card2->id, $result[1]->id);
+    }
+
+    /**
+     * @expectedException Trello\Exception\ValidationsFailed
+     **/
+    public function test_It_Can_Not_Fetch_Multiple_Card_When_Ids_Not_Provided()
+    {
+        $result = Card::fetchMany();
     }
 
     /**

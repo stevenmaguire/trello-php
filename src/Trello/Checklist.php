@@ -67,42 +67,16 @@ class Checklist extends Model
     protected static $base_path = 'checklists';
 
     /**
-     * create a new checklist
+     * Default attributes with values
      *
-     * @param  array $attributes Checklist attributes to set
-     *
-     * @return Checklist  Newly minted trello checklist?
+     * @var string[]
      */
-    public static function create($attributes = [])
-    {
-        $defaults = ['idBoard' => null];
-        $attributes = array_merge($defaults, $attributes);
-
-        if (empty($attributes['idBoard'])) {
-            throw new \Trello\Exception\ValidationsFailed(
-                'attempted to create checklist without board; it\'s gotta have a board'
-            );
-        }
-
-        return static::doCreate(static::getBasePath(), $attributes);
-    }
+    protected static $default_attributes = ['name' => null, 'idBoard' => null, 'idCard' => null];
 
     /**
-     * fetch a checklist
+     * Required attribute keys
      *
-     * @param  string|array $checklist_id Checklist id to fetch
-     *
-     * @return Checklist|Collection  Checklist model(s)
-     * @throws Exception_ValidationsFailed
+     * @var string[]
      */
-    public static function fetch($checklist_id = null)
-    {
-        if (empty($checklist_id)) {
-            throw new \Trello\Exception\ValidationsFailed(
-                'attempted to fetch checklist without id; it\'s gotta have an id'
-            );
-        }
-
-        return static::doFetch($checklist_id);
-    }
+    protected static $required_attributes = ['name'];
 }

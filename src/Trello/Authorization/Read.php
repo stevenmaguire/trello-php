@@ -11,5 +11,4 @@ use Trello\Authorization;
  */
 class Read extends Authorization
 {
-
 }

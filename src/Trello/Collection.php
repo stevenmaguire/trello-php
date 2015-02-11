@@ -14,9 +14,9 @@ class Collection implements \Countable, \IteratorAggregate, \ArrayAccess
 {
     /**
      *
-     * @var array $_collection collection storage
+     * @var array $collection collection storage
      */
-    protected $_collection = [];
+    protected $collection = [];
 
     public function __construct($items = [])
     {
@@ -32,7 +32,7 @@ class Collection implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function add($value)
     {
-        $this->_collection[] = $value;
+        $this->collection[] = $value;
     }
 
     /**
@@ -42,7 +42,7 @@ class Collection implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function count()
     {
-        return count($this->_collection);
+        return count($this->collection);
     }
 
     /**
@@ -57,6 +57,7 @@ class Collection implements \Countable, \IteratorAggregate, \ArrayAccess
         if ($index >= $this->count()) {
             return false;
         }
+
         return true;
     }
 
@@ -72,6 +73,7 @@ class Collection implements \Countable, \IteratorAggregate, \ArrayAccess
         if ($this->count() > 0) {
             return $this->get(0);
         }
+
         return null;
     }
 
@@ -89,7 +91,8 @@ class Collection implements \Countable, \IteratorAggregate, \ArrayAccess
         if ($index >= $this->count()) {
             throw new \OutOfRangeException('Index out of range');
         }
-        return $this->_collection[$index];
+
+        return $this->collection[$index];
     }
 
     /**
@@ -100,7 +103,7 @@ class Collection implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function getIterator()
     {
-        return new \ArrayIterator($this->_collection);
+        return new \ArrayIterator($this->collection);
     }
 
     /**
@@ -117,6 +120,7 @@ class Collection implements \Countable, \IteratorAggregate, \ArrayAccess
             $index--;
             return $this->get($index);
         }
+
         return null;
     }
 
@@ -185,7 +189,8 @@ class Collection implements \Countable, \IteratorAggregate, \ArrayAccess
         if ($index >= $this->count()) {
             throw new \OutOfRangeException('Index out of range');
         }
-        array_splice($this->_collection, $index, 1);
+
+        array_splice($this->collection, $index, 1);
     }
 
     /**
@@ -202,6 +207,6 @@ class Collection implements \Countable, \IteratorAggregate, \ArrayAccess
             throw new \OutOfRangeException('Index out of range');
         }
 
-        $this->_collection[$index] = $value;
+        $this->collection[$index] = $value;
     }
 }

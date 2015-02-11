@@ -65,7 +65,7 @@ class Board_Test extends IntegrationTestCase
         $id = uniqid();
         $result = Board::fetch($id);
 
-        $this->assertCount(0, $result);
+        $this->assertEmpty($result);
     }
 
     /**
@@ -81,7 +81,7 @@ class Board_Test extends IntegrationTestCase
 
     /**
      * @depends test_It_Can_Get_A_Board
-     * @expectedException Trello\Exception\ValidationsFailed
+     * @expectedException Trello\Exception
      */
     public function test_It_Can_Not_Update_A_Board_Name_With_No_Name($board)
     {
@@ -93,7 +93,7 @@ class Board_Test extends IntegrationTestCase
      */
     public function test_It_Can_Update_A_Board_Description($board)
     {
-        $result = $board->updateDescription($this->new_board_description);
+        $result = $board->updateDesc($this->new_board_description);
 
         $this->assertInstanceOf('Trello\Board', $result);
         $this->assertEquals($this->new_board_description, $result->desc);
@@ -104,7 +104,7 @@ class Board_Test extends IntegrationTestCase
      */
     public function test_It_Can_Add_A_Checklist_With_A_Name($board)
     {
-        $result = $board->addChecklist($this->checklist_name);
+        $result = $board->addChecklist(['name' => $this->checklist_name]);
 
         $this->assertInstanceOf('Trello\Checklist', $result);
         $this->assertEquals($this->checklist_name, $result->name);
@@ -131,6 +131,14 @@ class Board_Test extends IntegrationTestCase
         $this->assertEquals($this->list_name, $result->name);
 
         return $board;
+    }
+
+    /**
+     * @depends test_It_Can_Get_A_Board
+     */
+    public function test_It_Can_Get_Board_Stars($board)
+    {
+        $board->getStars();
     }
 
     /**
@@ -425,11 +433,7 @@ class Board_Test extends IntegrationTestCase
 
         $result = $board->getCards();
 
-        if (count($result) == 1) {
-            $this->assertInstanceOf('Trello\Card', $result);
-        } else {
-            $this->assertInstanceOf('Trello\Collection', $result);
-        }
+        $this->assertInstanceOf('Trello\Collection', $result);
     }
 
     public function test_It_Can_Get_Individual_Fields_When_Property_Does_Exist()

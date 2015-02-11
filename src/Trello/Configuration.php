@@ -8,7 +8,7 @@
  * @copyright  Steven Maguire
  */
 
-class Configuration extends Trello
+class Configuration
 {
     /**
      * Trello API version to use
@@ -23,7 +23,7 @@ class Configuration extends Trello
      * @access protected
      * @static
      */
-    private static $_cache = [
+    private static $cache = [
                     'environment'   => '',
                     'key'    => '',
                     'secret'     => '',
@@ -37,7 +37,7 @@ class Configuration extends Trello
      * @static
      * @var array valid environments, used for validation
      */
-    private static $_validEnvironments = [
+    private static $validEnvironments = [
                     'development',
                     'sandbox',
                     'production',
@@ -51,7 +51,7 @@ class Configuration extends Trello
      */
     public static function reset()
     {
-        self::$_cache = [
+        self::$cache = [
             'environment' => '',
             'key'  => '',
             'secret' => '',
@@ -76,9 +76,11 @@ class Configuration extends Trello
     private static function validate($key = null, $value = null)
     {
         if ($key === 'environment' &&
-            !in_array($value, self::$_validEnvironments)) {
-                throw new Exception\Configuration('"' .
-                    $value . '" is not a valid environment.');
+            !in_array($value, self::$validEnvironments)) {
+            throw new Exception\Configuration(
+                '"' .
+                $value . '" is not a valid environment.'
+            );
         }
 
         return true;
@@ -93,7 +95,7 @@ class Configuration extends Trello
     private static function set($key, $value)
     {
         self::validate($key, $value);
-        self::$_cache[$key] = $value;
+        self::$cache[$key] = $value;
     }
 
     /**
@@ -106,7 +108,7 @@ class Configuration extends Trello
      */
     private static function get($key)
     {
-        return self::$_cache[$key];
+        return self::$cache[$key];
     }
 
     /**
@@ -125,6 +127,7 @@ class Configuration extends Trello
         } else {
             return self::get($name);
         }
+
         return true;
     }
 

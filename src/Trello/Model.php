@@ -28,9 +28,176 @@ abstract class Model extends Trello
     /**
      * Default base path
      *
-     * @var string|null
+     * @var string
      */
-    protected static $base_path = null;
+    protected static $base_path;
+
+    /**
+     * Search model
+     *
+     * @var string
+     */
+    protected static $search_model;
+
+    /**
+     * Default attributes with values
+     *
+     * @var string[]
+     */
+    protected static $default_attributes = [];
+
+    /**
+     * Required attribute keys
+     *
+     * @var string[]
+     */
+    protected static $required_attributes = [];
+
+    /**
+     * Primary id for model
+     *
+     * @var string
+     */
+    protected static $primary_key = 'id';
+
+    /**
+     * create a new model
+     *
+     * @param  array $attributes Model attributes to set
+     *
+     * @return Model  Newly minted trello model
+     * @throws Exception\ValidationsFailed
+     */
+    public static function create($attributes = [])
+    {
+        self::validateAttributes(static::$default_attributes, $attributes);
+
+        return static::doCreate(static::getBasePath(), $attributes);
+    }
+
+    /**
+     * Search for models by keyword and filters
+     *
+     * @param  string $keyword Keyword to search
+     * @param  array  $filters Optional filters
+     *
+     * @return Collection          Collection of models with name, id, organization
+     * @throws Exception_DownForMaintenance If search request breaks!
+     */
+    public static function search($keyword = null, $filters = [])
+    {
+        $model = static::$search_model;
+        $filters['modelTypes'] = $model;
+        $results = static::doSearch($keyword, $filters);
+
+        return new Collection($results->$model);
+    }
+
+    /**
+     * fetch a model
+     *
+     * @param  string $id Model id to fetch
+     *
+     * @return Model
+     * @throws Exception_ValidationsFailed
+     */
+    public static function fetch($id = null)
+    {
+        if (empty($id)) {
+            throw new \Trello\Exception\ValidationsFailed(
+                'attempted to fetch '.lcfirst(self::getClassName()).' without id; it\'s gotta have an id'
+            );
+        }
+
+        $result = self::doFetch($id);
+
+        return $result->first();
+    }
+
+    /**
+     * fetch many models
+     *
+     * @param  array $ids Model ids to fetch
+     *
+     * @return Collection
+     * @throws Exception_ValidationsFailed
+     */
+    public static function fetchMany($ids = [])
+    {
+        if (empty($ids)) {
+            throw new \Trello\Exception\ValidationsFailed(
+                'attempted to fetch '.lcfirst(self::getClassName()).' without id; it\'s gotta have an id'
+            );
+        }
+
+        return self::doFetch($ids);
+    }
+
+    /**
+     * Get model ids from list of models
+     *
+     * @param  stdClass|null $models List of models
+     *
+     * @return array List of model ids
+     */
+    public static function getIds($models = [])
+    {
+        return Util::getItemsProperties($models, static::$primary_key);
+    }
+
+    /**
+     * Validate model attributes
+     *
+     * @param  array $attributes
+     *
+     * @return void
+     * @throws Trello\Exception\ValidationsFailed
+     */
+    private static function validateAttributes($rules = [], $attributes = [])
+    {
+        $attributes = array_merge($rules, $attributes);
+
+        foreach (static::$required_attributes as $attribute) {
+            if (empty($attributes[$attribute])) {
+                throw new \Trello\Exception\ValidationsFailed(
+                    'attempted to create '.lcfirst(self::getClassName())
+                    .' without '.$attribute.'; it\'s gotta have a '.$attribute
+                );
+            }
+        }
+    }
+
+    /**
+     * Get attribute
+     *
+     * @param  string  Attribute name
+     *
+     * @return mixed  Attribute value
+     */
+    public function __get($property)
+    {
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        }
+        return null;
+    }
+
+    /**
+     * Overload method to attempt catch attribute methods
+     *
+     * @param  string $method
+     * @param  array  $parameters
+     *
+     * @return Model Updated board object
+     */
+    public function __call($method, $parameters)
+    {
+        if ($this->isUpdateMethod($method)) {
+            $attribute = $this->getAttributeFromUpdateMethod($method);
+            array_unshift($parameters, $attribute);
+            return call_user_func_array([$this, 'updateAttribute'], $parameters);
+        }
+    }
 
     /**
      * Get model attribute via field method
@@ -50,7 +217,21 @@ abstract class Model extends Trello
                 //
             }
         }
+
         return $value;
+    }
+
+    /**
+     * Update model attribute
+     *
+     * @param  string  $key
+     * @param  string  $value
+     *
+     * @return Model Updated board object
+     */
+    public function updateAttribute($key = null, $value = null)
+    {
+        return static::doStore(static::getBasePath($this->id).'/'.$key, ['value' => $value]);
     }
 
     /**
@@ -64,6 +245,7 @@ abstract class Model extends Trello
     protected function initialize($response)
     {
         $this->raw = $response;
+
         return self::mapAs($this, $response);
     }
 
@@ -77,6 +259,7 @@ abstract class Model extends Trello
     {
         $instance = new static();
         $instance->initialize($response);
+
         return $instance;
     }
 
@@ -113,6 +296,7 @@ abstract class Model extends Trello
     protected static function doCreate($url, $params)
     {
         $response = Http::post($url, $params);
+
         return self::factory($response);
     }
 
@@ -135,13 +319,7 @@ abstract class Model extends Trello
             $urls[] = static::getBasePath($id);
         }
 
-        $response = self::doBatch($urls);
-
-        if (count($response) == 1) {
-            return $response->first();
-        }
-
-        return $response;
+        return self::doBatch($urls);
     }
 
     /**
@@ -155,6 +333,7 @@ abstract class Model extends Trello
     protected static function doSearch($keyword = null, $params = [])
     {
         $params['query'] = $keyword;
+
         return Http::get('/search', $params);
     }
 
@@ -169,6 +348,7 @@ abstract class Model extends Trello
     protected static function doStore($url, $params)
     {
         $response = Http::put($url, $params);
+
         return self::factory($response);
     }
 
@@ -186,6 +366,7 @@ abstract class Model extends Trello
         if (is_array($response)) {
             self::parseBatchResponse($response, $collection);
         }
+
         return $collection;
     }
 
@@ -252,6 +433,8 @@ abstract class Model extends Trello
      * @param  object sourceObject Object from which to map data
      *
      * @return Model Mapped object
+     *
+     * @codeCoverageIgnore
      */
     private static function mapAs($destination, $sourceObject)
     {
@@ -270,6 +453,7 @@ abstract class Model extends Trello
                 $destination->$name = $value;
             }
         }
+
         return $destination;
     }
 
@@ -303,5 +487,41 @@ abstract class Model extends Trello
         } else {
             return $response;
         }
+    }
+
+    /**
+     * Get short class name of calling class
+     *
+     * @return string
+     */
+    private static function getClassName()
+    {
+        return Util::cleanClassName(get_called_class());
+    }
+
+    /**
+     * Check if method name is update atribute method
+     *
+     * @param  string $method
+     *
+     * @return boolean
+     */
+    private function isUpdateMethod($method)
+    {
+        return strrpos($method, 'update') === 0;
+    }
+
+    /**
+     * Get attribute from update method name
+     *
+     * @param  string $method
+     *
+     * @return string
+     */
+    private function getAttributeFromUpdateMethod($method)
+    {
+        $attribute = preg_replace('/update(.*)/', '$1', $method);
+
+        return lcfirst($attribute);
     }
 }

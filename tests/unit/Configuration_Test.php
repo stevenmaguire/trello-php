@@ -1,5 +1,6 @@
 <?php namespace Trello\Tests\Unit;
 
+use Trello\Trello;
 use Trello\Configuration;
 
 class Configuration_Test extends UnitTestCase
@@ -60,7 +61,7 @@ class Configuration_Test extends UnitTestCase
      */
     public function test_It_Cannot_Set_Invalid_Environment()
     {
-        $environment = rand(1000,9999);
+        $environment = $this->randomNumber();
 
         Configuration::environment($environment);
     }
@@ -80,10 +81,10 @@ class Configuration_Test extends UnitTestCase
             ['verb','path','body']
         ];
         foreach ($requests as $request) {
-            Configuration::logRequest($request[0], $request[1], $request[2]);
+            Trello::logRequest($request[0], $request[1], $request[2]);
         }
 
-        $results = Configuration::getRequests();
+        $results = Trello::getRequests();
 
         $this->assertInstanceOf('Trello\Collection', $results);
     }

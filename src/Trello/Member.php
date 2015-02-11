@@ -11,39 +11,175 @@
  */
 class Member extends Model
 {
-    /*
-    [id] => 545df696e29c0dddaed31967
-    [avatarHash] =>
-    [bio] =>
-    [bioData] =>
-    [confirmed] => 1
-    [fullName] => Matilda Wormwood
-    [idPremOrgsAdmin] => Array
-    [initials] => MW
-    [memberType] => normal
-    [products] => Array
-    [status] => disconnected
-    [url] => https://trello.com/matildawormwood12
-    [username] => matildawormwood12
-    [avatarSource] => none
-    [email] =>
-    [gravatarHash] => 39aaaada0224f26f0bb8f1965326dcb7
-    [idBoards] => Array
-    [idOrganizations] => Array
-    [loginTypes] =>
-    [oneTimeMessagesDismissed] => Array
-    [prefs] => stdClass Object
-        (
-            [colorBlind] =>
-            [minutesBeforeDeadlineToNotify] => 1440
-            [minutesBetweenSummaries] => 1
-            [sendSummaries] => 1
-        )
-    [trophies] => Array
-    [uploadedAvatarHash] =>
-    [premiumFeatures] => Array
-    [idBoardsPinned] =>
-    */
+    /**
+     * Id
+     *
+     * @var string $id
+     */
+    protected $id;
+
+    /**
+     * Avatar hash
+     *
+     * @var string $avatarHash
+     */
+    protected $avatarHash;
+
+    /**
+     * Bio
+     *
+     * @var string $bio
+     */
+    protected $bio;
+
+    /**
+     * Bio data
+     *
+     * @var string $bioData
+     */
+    protected $bioData;
+
+    /**
+     * Is confirmed
+     *
+     * @var boolean $confirmed
+     */
+    protected $confirmed;
+
+    /**
+     * Full name
+     *
+     * @var string $fullName
+     */
+    protected $fullName;
+
+    /**
+     * Admins for premium organizations
+     *
+     * @var array $idPremOrgsAdmin
+     */
+    protected $idPremOrgsAdmin;
+
+    /**
+     * Initials
+     *
+     * @var string $initials
+     */
+    protected $initials;
+
+    /**
+     * Member type
+     *
+     * @var string $memberType
+     */
+    protected $memberType;
+
+    /**
+     * Products
+     *
+     * @var array $products
+     */
+    protected $products;
+
+    /**
+     * Connectivity status
+     *
+     * @var string $status
+     */
+    protected $status;
+
+    /**
+     * User url
+     *
+     * @var string $url
+     */
+    protected $url;
+
+    /**
+     * Username
+     *
+     * @var string $username
+     */
+    protected $username;
+
+    /**
+     * Avatar source
+     *
+     * @var string $avatarSource
+     */
+    protected $avatarSource;
+
+    /**
+     * Gravatar hash
+     *
+     * @var string $gravatarHash
+     */
+    protected $gravatarHash;
+
+    /**
+     * Board ids
+     *
+     * @var array $idBoards
+     */
+    protected $idBoards;
+
+    /**
+     * Organization ids
+     *
+     * @var array $idOrganizations
+     */
+    protected $idOrganizations;
+
+    /**
+     * Login types
+     *
+     * @var string $loginTypes
+     */
+    protected $loginTypes;
+
+    /**
+     * One time messages dismissed
+     *
+     * @var array $oneTimeMessagesDismissed
+     */
+    protected $oneTimeMessagesDismissed;
+
+    /**
+     * Preferences
+     *
+     * @var stdClass $prefs
+     */
+    protected $prefs;
+
+    /**
+     * Trophies
+     *
+     * @var array $trophies
+     */
+    protected $trophies;
+
+    /**
+     * Uploaded avatar hash
+     *
+     * @var string $uploadedAvatarHash
+     */
+    protected $uploadedAvatarHash;
+
+    /**
+     * Premium features
+     *
+     * @var array $premiumFeatures
+     */
+    protected $premiumFeatures;
+
+    /**
+     * Pinned board ids
+     *
+     * @var string $idBoardsPinned
+     */
+    protected $idBoardsPinned;
+
+
     /**
      * Members base path
      *
@@ -58,35 +194,21 @@ class Member extends Model
      */
     public static function currentUser()
     {
-        return static::get(static::getBasePath().'/me');
+        $response = static::get(static::getBasePath().'/me');
+
+        return static::factory($response);
     }
 
     /**
      * Gets current user organizations
      *
-     * @return stdClass
+     * @return Collection
      */
     public static function currentUserOrganizations()
     {
-        return static::get(static::getBasePath().'/my/organizations');
-    }
+        $organizations = static::get(static::getBasePath().'/my/organizations');
+        $ids = Organization::getIds($organizations);
 
-    /**
-     * fetch a member
-     *
-     * @param  string|array $member_id Member id(s) to fetch
-     *
-     * @return Collection|Member  Trello member matching id
-     * @throws Exception\ValidationsFailed
-     */
-    public static function fetch($member_id = null)
-    {
-        if (empty($member_id)) {
-            throw new \Trello\Exception\ValidationsFailed(
-                'attempted to fetch members without id; it\'s gotta have an id'
-            );
-        }
-
-        return static::doFetch($member_id);
+        return Organization::fetchMany($ids);
     }
 }
