@@ -1,5 +1,7 @@
 <?php namespace Trello;
 
+use Trello\Exception\ValidationsFailed;
+
 /**
  * Trello list
  *
@@ -15,6 +17,8 @@
  */
 class CardList extends Model
 {
+    use Traits\ActionTrait;
+
     /**
      * List id
      *

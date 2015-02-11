@@ -1,5 +1,7 @@
 <?php namespace Trello;
 
+use Trello\Exception\ValidationsFailed;
+
 /**
  * Trello member
  * Reads and manages members
@@ -11,6 +13,8 @@
  */
 class Member extends Model
 {
+    use Traits\ActionTrait;
+
     /**
      * Id
      *

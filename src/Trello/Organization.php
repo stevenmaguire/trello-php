@@ -1,5 +1,7 @@
 <?php namespace Trello;
 
+use Trello\Exception\ValidationsFailed;
+
 /**
  * Trello organization
  * Reads and manages organizations
@@ -11,6 +13,8 @@
  */
 class Organization extends Model
 {
+    use Traits\ActionTrait;
+
     /**
      * Organization id
      * @property string $id
@@ -111,30 +115,8 @@ class Organization extends Model
         if ($organization_id) {
             return static::delete(static::getBasePath($organization_id));
         }
-        throw new \Trello\Exception\ValidationsFailed(
+        throw new ValidationsFailed(
             'attempted to delete organization without id; it\'s gotta have an id'
-        );
-    }
-
-    /**
-     * Get organization actions
-     *
-     * @param  string $organization_id
-     * @param  array  $options Optional filters
-     *
-     * @return Collection          Collection of actions in organization
-     * @throws Trello\Exception\ValidationsFailed
-     */
-    public static function actions($organization_id = null, $options = [])
-    {
-        if ($organization_id) {
-            $actions = static::get(static::getBasePath($organization_id).'/actions', $options);
-            $ids = Action::getIds($actions);
-
-            return Action::fetchMany($ids);
-        }
-        throw new \Trello\Exception\ValidationsFailed(
-            'attempted to get organization actions without id; it\'s gotta have an id'
         );
     }
 
@@ -155,7 +137,7 @@ class Organization extends Model
 
             return Board::fetchMany($ids);
         }
-        throw new \Trello\Exception\ValidationsFailed(
+        throw new ValidationsFailed(
             'attempted to get organization members without id; it\'s gotta have an id'
         );
     }
@@ -177,7 +159,7 @@ class Organization extends Model
 
             return Member::fetchMany($ids);
         }
-        throw new \Trello\Exception\ValidationsFailed(
+        throw new ValidationsFailed(
             'attempted to get organization members without id; it\'s gotta have an id'
         );
     }

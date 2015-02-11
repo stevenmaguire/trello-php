@@ -1,6 +1,7 @@
 <?php namespace Trello;
 
 use \ReflectionObject;
+use Trello\Exception\ValidationsFailed;
 
 /**
  * Base class for models
@@ -104,7 +105,7 @@ abstract class Model extends Trello
     public static function fetch($id = null)
     {
         if (empty($id)) {
-            throw new \Trello\Exception\ValidationsFailed(
+            throw new ValidationsFailed(
                 'attempted to fetch '.lcfirst(self::getClassName()).' without id; it\'s gotta have an id'
             );
         }
@@ -125,7 +126,7 @@ abstract class Model extends Trello
     public static function fetchMany($ids = [])
     {
         if (empty($ids)) {
-            throw new \Trello\Exception\ValidationsFailed(
+            throw new ValidationsFailed(
                 'attempted to fetch '.lcfirst(self::getClassName()).' without id; it\'s gotta have an id'
             );
         }
@@ -163,7 +164,7 @@ abstract class Model extends Trello
 
         foreach (static::$required_attributes as $attribute) {
             if (empty($attributes[$attribute])) {
-                throw new \Trello\Exception\ValidationsFailed(
+                throw new ValidationsFailed(
                     'attempted to create '.lcfirst(self::getClassName())
                     .' without '.$attribute.'; it\'s gotta have a '.$attribute
                 );

@@ -1,5 +1,7 @@
 <?php namespace Trello;
 
+use Trello\Exception\ValidationsFailed;
+
 /**
  * Trello card
  * Reads and manages cards
@@ -11,6 +13,8 @@
  */
 class Card extends Model
 {
+    use Traits\ActionTrait;
+
     /**
      * Card id
      *

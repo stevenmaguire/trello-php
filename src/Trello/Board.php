@@ -1,5 +1,7 @@
 <?php namespace Trello;
 
+use Trello\Exception\ValidationsFailed;
+
 /**
  * Trello board
  * Reads and manages boards
@@ -22,6 +24,8 @@
  */
 class Board extends Model
 {
+    use Traits\ActionTrait;
+
     /**
      * Board id
      * @property string $id
@@ -159,7 +163,7 @@ class Board extends Model
         if (preg_match('/voting|cardAging|calendar|recap/', $powerup)) {
             return static::post(static::getBasePath($this->id).'/powerUps', ['value' => $powerup]);
         }
-        throw new \Trello\Exception\ValidationsFailed(
+        throw new ValidationsFailed(
             'attempted to add invalid powerup to board; it\'s gotta be a valid powerup'
         );
     }
@@ -233,7 +237,7 @@ class Board extends Model
             $result = static::put(static::getBasePath($board_id).'/closed', ['value' => true]);
             return $result->closed;
         }
-        throw new \Trello\Exception\ValidationsFailed(
+        throw new ValidationsFailed(
             'attempted to close board without id; it\'s gotta have an id'
         );
     }
@@ -331,7 +335,7 @@ class Board extends Model
         if (self::isValidPowerUp($powerup)) {
             return static::delete(static::getBasePath($this->id).'/powerUps/'.$powerup);
         }
-        throw new \Trello\Exception\ValidationsFailed(
+        throw new ValidationsFailed(
             'attempted to remove invalid powerup from board; it\'s gotta be a valid powerup'
         );
     }
