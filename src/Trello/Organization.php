@@ -100,11 +100,11 @@ class Organization extends Model
     protected static $required_attributes = ['displayName'];
 
     /**
-     * [deleteOrganization description]
+     * Delete organization
      *
-     * @param  [type]  [description]
+     * @param  string $organization_id
      *
-     * @return [type]  [description]
+     * @return boolean
      */
     public static function deleteOrganization($organization_id = null)
     {
@@ -120,7 +120,7 @@ class Organization extends Model
      * Get organization actions
      *
      * @param  string $organization_id
-     * @param  array  $filters Optional filters
+     * @param  array  $options Optional filters
      *
      * @return Collection          Collection of actions in organization
      * @throws Trello\Exception\ValidationsFailed
@@ -142,7 +142,7 @@ class Organization extends Model
      * Get organization boards
      *
      * @param  string $organization_id
-     * @param  array  $filters Optional filters
+     * @param  array  $options Optional filters
      *
      * @return Collection          Collection of boards in organization
      * @throws Trello\Exception\ValidationsFailed
@@ -164,7 +164,7 @@ class Organization extends Model
      * Get organization members
      *
      * @param  string $organization_id
-     * @param  array  $filters Optional filters
+     * @param  array  $options Optional filters
      *
      * @return Collection          Collection of members in organization
      * @throws Trello\Exception\ValidationsFailed

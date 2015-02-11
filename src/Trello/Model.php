@@ -136,11 +136,11 @@ abstract class Model extends Trello
     /**
      * Get model ids from list of models
      *
-     * @param  stdClass|null $models List of models
+     * @param  array $models List of models
      *
      * @return array List of model ids
      */
-    public static function getIds($models = [])
+    public static function getIds(array $models)
     {
         return Util::getItemsProperties($models, static::$primary_key);
     }
@@ -305,7 +305,7 @@ abstract class Model extends Trello
      *
      * @param string|array $ids
      *
-     * @return Model|Collection
+     * @return Collection
      */
     protected static function doFetch($ids)
     {
