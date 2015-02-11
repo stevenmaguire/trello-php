@@ -321,7 +321,7 @@ abstract class Model extends Trello
         }
 
         foreach ($ids as $id) {
-            $urls[] = static::getBasePath($id);
+            $urls[] = self::getBasePath($id);
         }
 
         return self::doBatch($urls);

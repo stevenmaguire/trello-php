@@ -54,4 +54,11 @@ class Action extends Model
      * @var stdClass $memberCreator
      */
     protected $memberCreator;
+
+    /**
+     * Action base path
+     *
+     * @var string
+     */
+    protected static $base_path = 'actions';
 }
