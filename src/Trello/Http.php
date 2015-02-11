@@ -34,7 +34,7 @@ class Http
      * @param  string $path Endpoint path
      * @param  array $params Optional params
      *
-     * @return stdClass|null Located object
+     * @return stdClass Located object
      * @throws Exception
      */
     public static function get($path, $params = [])
@@ -163,7 +163,7 @@ class Http
      * @param  string $path Path to service endpoint
      * @param  string  $request_body Additional payload
      *
-     * @return stdClass|null
+     * @return stdClass
      * @throws Exception
      */
     private static function doRequest($verb, $path, $request_body = null)
@@ -181,7 +181,7 @@ class Http
      * @param  string $url  Service url
      * @param  string  $request_body Additional payload
      *
-     * @return stdClass|null
+     * @return stdClass
      * @throws Exception
      */
     private static function doUrlRequest($verb, $url, $request_body = null)

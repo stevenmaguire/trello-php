@@ -98,7 +98,7 @@ abstract class Model extends Trello
      *
      * @param  string $id Model id to fetch
      *
-     * @return Model
+     * @return string|object
      * @throws Exception_ValidationsFailed
      */
     public static function fetch($id = null)
@@ -376,7 +376,7 @@ abstract class Model extends Trello
      * @param string $url
      * @param array $params
      *
-     * @return stdClass|null
+     * @return stdClass
      * @throws Exception
      */
     protected static function get($url, $params = [])
