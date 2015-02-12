@@ -62,6 +62,26 @@ abstract class Model extends Trello
     protected static $primary_key = 'id';
 
     /**
+     * Foreign id for model
+     *
+     * @var string
+     */
+    protected static $foreign_key;
+
+    /**
+     * Close model
+     *
+     * @return bool  Did the model close?
+     * @throws Exception\ValidationsFailed
+     */
+    public function close()
+    {
+        $url = self::getBasePath($this->getId());
+
+        return self::delete($url);
+    }
+
+    /**
      * create a new model
      *
      * @param  array $attributes Model attributes to set
@@ -77,217 +97,39 @@ abstract class Model extends Trello
     }
 
     /**
-     * Search for models by keyword and filters
+     * Delete model
      *
-     * @param  string $keyword Keyword to search
-     * @param  array  $filters Optional filters
-     *
-     * @return Collection          Collection of models with name, id, organization
-     * @throws Exception_DownForMaintenance If search request breaks!
+     * @return bool  Did the model close?
+     * @throws Exception\ValidationsFailed
      */
-    public static function search($keyword = null, $filters = [])
+    public static function closeWithId($model_id = null)
     {
-        $model = static::$search_model;
-        $filters['modelTypes'] = $model;
-        $results = static::doSearch($keyword, $filters);
+        if ($model_id) {
+            $url = self::getBasePath($model_id);
 
-        return new Collection($results->$model);
+            return self::delete($url);
+        }
+        throw new ValidationsFailed(
+            'attempting to close model without id; it\'s gotta have an id.'
+        );
     }
 
     /**
-     * fetch a model
+     * Batch a list of urls
      *
-     * @param  string $id Model id to fetch
+     * @param  array  List of urls
      *
-     * @return string|object
-     * @throws Exception_ValidationsFailed
+     * @return Collection Collection of result objects
      */
-    public static function fetch($id = null)
+    protected static function doBatch($urls = [])
     {
-        if (empty($id)) {
-            throw new ValidationsFailed(
-                'attempted to fetch '.lcfirst(self::getClassName()).' without id; it\'s gotta have an id'
-            );
+        $collection = new Collection;
+        $response = Http::get('/batch', ['urls' => $urls]);
+        if (is_array($response)) {
+            self::parseBatchResponse($response, $collection);
         }
 
-        $result = self::doFetch($id);
-
-        return $result->first();
-    }
-
-    /**
-     * fetch many models
-     *
-     * @param  array $ids Model ids to fetch
-     *
-     * @return Collection
-     * @throws Exception_ValidationsFailed
-     */
-    public static function fetchMany($ids = [])
-    {
-        if (empty($ids)) {
-            throw new ValidationsFailed(
-                'attempted to fetch '.lcfirst(self::getClassName()).' without id; it\'s gotta have an id'
-            );
-        }
-
-        return self::doFetch($ids);
-    }
-
-    /**
-     * Get model ids from list of models
-     *
-     * @param  array|null $models List of models
-     *
-     * @return array List of model ids
-     */
-    public static function getIds($models = null)
-    {
-        if ($models) {
-            return Util::getItemsProperties($models, static::$primary_key);
-        }
-
-        return array();
-    }
-
-    /**
-     * Validate model attributes
-     *
-     * @param  array $attributes
-     *
-     * @return void
-     * @throws Trello\Exception\ValidationsFailed
-     */
-    private static function validateAttributes($rules = [], $attributes = [])
-    {
-        $attributes = array_merge($rules, $attributes);
-
-        foreach (static::$required_attributes as $attribute) {
-            if (empty($attributes[$attribute])) {
-                throw new ValidationsFailed(
-                    'attempted to create '.lcfirst(self::getClassName())
-                    .' without '.$attribute.'; it\'s gotta have a '.$attribute
-                );
-            }
-        }
-    }
-
-    /**
-     * Get attribute
-     *
-     * @param  string  Attribute name
-     *
-     * @return mixed  Attribute value
-     */
-    public function __get($property)
-    {
-        if (property_exists($this, $property)) {
-            return $this->$property;
-        }
-        return null;
-    }
-
-    /**
-     * Overload method to attempt catch attribute methods
-     *
-     * @param  string $method
-     * @param  array  $parameters
-     *
-     * @return Model Updated board object
-     */
-    public function __call($method, $parameters)
-    {
-        if ($this->isUpdateMethod($method)) {
-            $attribute = $this->getAttributeFromUpdateMethod($method);
-            array_unshift($parameters, $attribute);
-            return call_user_func_array([$this, 'updateAttribute'], $parameters);
-        }
-    }
-
-    /**
-     * Get model attribute via field method
-     *
-     * @return string|stdClass
-     */
-    public function getField($field, $force = false)
-    {
-        $value = static::__get($field);
-        if (empty($value) || $force) {
-            $url = $this->getFieldUrl($field);
-            try {
-                $response = self::get($url);
-                $this->$field = $this->parseFieldResponse($response);
-                return $this->$field;
-            } catch (Exception $e) {
-                //
-            }
-        }
-
-        return $value;
-    }
-
-    /**
-     * Update model attribute
-     *
-     * @param  string  $key
-     * @param  string  $value
-     *
-     * @return Model Updated board object
-     */
-    public function updateAttribute($key = null, $value = null)
-    {
-        return static::doStore(static::getBasePath($this->id).'/'.$key, ['value' => $value]);
-    }
-
-    /**
-     * sets instance properties from an object of values
-     *
-     * @access protected
-     * @param mixed $response
-     *
-     * @return Model Initialized object
-     */
-    protected function initialize($response)
-    {
-        $this->raw = $response;
-
-        return self::mapAs($this, $response);
-    }
-
-    /**
-     * factory method: returns an instance of Model
-     * to the requesting method, with populated properties
-     *
-     * @return Model instance of Model
-     */
-    protected static function factory($response = null)
-    {
-        $instance = new static();
-        $instance->initialize($response);
-
-        return $instance;
-    }
-
-    /**
-     * Get model base url
-     *
-     * @return string Base url
-     */
-    protected static function getBasePath($id = null)
-    {
-        return '/'.ltrim(static::$base_path, '/').($id ? '/'.$id : '');
-    }
-
-    /**
-     * Get field url
-     *
-     * @param  string $field
-     *
-     * @return string
-     */
-    protected function getFieldUrl($field)
-    {
-        return self::getBasePath($this->id).'/'.$field;
+        return $collection;
     }
 
     /**
@@ -358,98 +200,226 @@ abstract class Model extends Trello
     }
 
     /**
-     * Batch a list of urls
+     * factory method: returns an instance of Model
+     * to the requesting method, with populated properties
      *
-     * @param  array  List of urls
-     *
-     * @return Collection Collection of result objects
+     * @return Model instance of Model
      */
-    protected static function doBatch($urls = [])
+    protected static function factory($response = null)
     {
-        $collection = new Collection;
-        $response = Http::get('/batch', ['urls' => $urls]);
-        if (is_array($response)) {
-            self::parseBatchResponse($response, $collection);
+        $instance = new static();
+        $instance->initialize($response);
+
+        return $instance;
+    }
+
+    /**
+     * fetch a model
+     *
+     * @param  string $id Model id to fetch
+     *
+     * @return string|object
+     * @throws Exception_ValidationsFailed
+     */
+    public static function fetch($id = null)
+    {
+        if (empty($id)) {
+            throw new ValidationsFailed(
+                'attempted to fetch '.lcfirst(self::getClassName()).' without id; it\'s gotta have an id'
+            );
         }
 
-        return $collection;
+        $result = self::doFetch($id);
+
+        return $result->first();
     }
 
     /**
-     * sends the get request to the gateway
+     * fetch many models
      *
-     * @param string $url
-     * @param array $params
+     * @param  array $ids Model ids to fetch
      *
-     * @return stdClass
-     * @throws Exception
+     * @return Collection
+     * @throws Exception_ValidationsFailed
      */
-    protected static function get($url, $params = [])
+    public static function fetchMany($ids = [])
     {
-        return Http::get($url, $params);
+        if (empty($ids)) {
+            throw new ValidationsFailed(
+                'attempted to fetch '.lcfirst(self::getClassName()).' without id; it\'s gotta have an id'
+            );
+        }
+
+        return self::doFetch($ids);
     }
 
     /**
-     * sends the post request to the gateway
+     * Get attribute from update method name
      *
-     * @param string $url
-     * @param array $params
+     * @param  string $method
      *
-     * @return stdClass
-     * @throws Exception
+     * @return string
      */
-    protected static function post($url, $params = [])
+    private function getAttributeFromUpdateMethod($method)
     {
-        return Http::post($url, $params);
+        $attribute = preg_replace('/update(.*)/', '$1', $method);
+
+        return lcfirst($attribute);
     }
 
     /**
-     * sends the put request to the gateway
+     * Get model base url
      *
-     * @param string $url
-     * @param array $params
-     *
-     * @return stdClass
-     * @throws Exception
+     * @return string Base url
      */
-    protected static function put($url, $params = [])
+    protected static function getBasePath($id = null)
     {
-        return Http::put($url, $params);
+        return '/'.ltrim(static::$base_path, '/').($id ? '/'.$id : '');
     }
 
     /**
-     * sends the delete request to the gateway
+     * Get short class name of calling class
      *
-     * @param string $url
-     * @param array $params
+     * @return string
+     */
+    private static function getClassName()
+    {
+        return Util::cleanClassName(get_called_class());
+    }
+
+    /**
+     * Get model attribute via field method
      *
-     * @throws Exception
+     * @return string|stdClass
+     */
+    public function getField($field, $force = false)
+    {
+        $value = static::__get($field);
+        if (empty($value) || $force) {
+            $url = $this->getFieldUrl($field);
+            try {
+                $response = self::get($url);
+                $this->$field = $this->parseFieldResponse($response);
+                return $this->$field;
+            } catch (Exception $e) {
+                //
+            }
+        }
+
+        return $value;
+    }
+
+    /**
+     * Get field url
+     *
+     * @param  string $field
+     *
+     * @return string
+     */
+    protected function getFieldUrl($field)
+    {
+        return self::getBasePath($this->id).'/'.$field;
+    }
+
+    /**
+     * Get model foreign key
+     *
+     * @return string
+     */
+    public function getForeignKey()
+    {
+        $key = static::$foreign_key;
+        if (empty($key)) {
+            $key = $this->getPrimaryKey().$this->getClassName();
+        }
+
+        return $key;
+    }
+
+    /**
+     * Get model primary key
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        $key = static::$primary_key;
+        return $this->$key;
+    }
+
+    /**
+     * Get model ids from list of models
+     *
+     * @param  array|null $models List of models
+     *
+     * @return array List of model ids
+     */
+    public static function getIds($models = null)
+    {
+        if ($models) {
+            return Util::getItemsProperties($models, static::$primary_key);
+        }
+
+        return array();
+    }
+
+    /**
+     * Get model primary key
+     *
+     * @return string
+     */
+    public function getPrimaryKey()
+    {
+        return static::$primary_key;
+    }
+
+    /**
+     * sets instance properties from an object of values
+     *
+     * @access protected
+     * @param mixed $response
+     *
+     * @return Model Initialized object
+     */
+    protected function initialize($response)
+    {
+        $this->raw = $response;
+
+        return self::mapAs($this, $response);
+    }
+
+    /**
+     * Check if method name is update atribute method
+     *
+     * @param  string $method
+     *
      * @return boolean
      */
-    protected static function delete($url, $params = [])
+    private function isUpdateMethod($method)
     {
-        return Http::delete($url, $params);
+        return strrpos($method, 'update') === 0;
     }
+
 
     /**
      * Map an object as another given object
      *
      * @param  Model $destination Object to receive the mapping
-     * @param  object sourceObject Object from which to map data
+     * @param  object source Object from which to map data
      *
      * @return Model Mapped object
      *
      * @codeCoverageIgnore
      */
-    private static function mapAs($destination, $sourceObject)
+    private static function mapAs($destination, $source)
     {
-        $sourceReflection = new ReflectionObject($sourceObject);
+        $sourceReflection = new ReflectionObject($source);
         $destinationReflection = new ReflectionObject($destination);
         $sourceProperties = $sourceReflection->getProperties();
         foreach ($sourceProperties as $sourceProperty) {
             $sourceProperty->setAccessible(true);
             $name = $sourceProperty->getName();
-            $value = $sourceProperty->getValue($sourceObject);
+            $value = $sourceProperty->getValue($source);
             if ($destinationReflection->hasProperty($name)) {
                 $propDest = $destinationReflection->getProperty($name);
                 $propDest->setAccessible(true);
@@ -495,38 +465,172 @@ abstract class Model extends Trello
     }
 
     /**
-     * Get short class name of calling class
+     * If model id empty, attempt to set same as getId()
      *
-     * @return string
+     * @param  string $model_id
+     *
+     * @return void
      */
-    private static function getClassName()
+    protected function parseModelId(&$model_id)
     {
-        return Util::cleanClassName(get_called_class());
+        if (empty($model_id)) {
+            $model_id = $this->getId();
+        }
     }
 
     /**
-     * Check if method name is update atribute method
+     * Search for models by keyword and filters
      *
-     * @param  string $method
+     * @param  string $keyword Keyword to search
+     * @param  array  $filters Optional filters
      *
+     * @return Collection          Collection of models with name, id, organization
+     * @throws Exception_DownForMaintenance If search request breaks!
+     */
+    public static function search($keyword = null, $filters = [])
+    {
+        $model = static::$search_model;
+        $filters['modelTypes'] = $model;
+        $results = static::doSearch($keyword, $filters);
+
+        return new Collection($results->$model);
+    }
+
+    /**
+     * Update model attribute
+     *
+     * @param  string  $key
+     * @param  string  $value
+     *
+     * @return Model Updated board object
+     */
+    public function updateAttribute($key = null, $value = null)
+    {
+        return static::doStore(static::getBasePath($this->id).'/'.$key, ['value' => $value]);
+    }
+
+    /**
+     * Validate model attributes
+     *
+     * @param  array $attributes
+     *
+     * @return void
+     * @throws Trello\Exception\ValidationsFailed
+     */
+    private static function validateAttributes($rules = [], $attributes = [])
+    {
+        $attributes = array_merge($rules, $attributes);
+
+        foreach (static::$required_attributes as $attribute) {
+            if (empty($attributes[$attribute])) {
+                throw new ValidationsFailed(
+                    'attempted to create '.lcfirst(self::getClassName())
+                    .' without '.$attribute.'; it\'s gotta have a '.$attribute
+                );
+            }
+        }
+    }
+
+    /**
+     * sends the delete request to the gateway
+     *
+     * @param string $url
+     * @param array $params
+     *
+     * @throws Exception
      * @return boolean
      */
-    private function isUpdateMethod($method)
+    protected static function delete($url, $params = [])
     {
-        return strrpos($method, 'update') === 0;
+        return Http::delete($url, $params);
     }
 
     /**
-     * Get attribute from update method name
+     * sends the get request to the gateway
+     *
+     * @param string $url
+     * @param array $params
+     *
+     * @return stdClass
+     * @throws Exception
+     */
+    protected static function get($url, $params = [])
+    {
+        return Http::get($url, $params);
+    }
+
+    /**
+     * sends the post request to the gateway
+     *
+     * @param string $url
+     * @param array $params
+     *
+     * @return stdClass
+     * @throws Exception
+     */
+    protected static function post($url, $params = [])
+    {
+        return Http::post($url, $params);
+    }
+
+    /**
+     * sends the put request to the gateway
+     *
+     * @param string $url
+     * @param array $params
+     *
+     * @return stdClass
+     * @throws Exception
+     */
+    protected static function put($url, $params = [])
+    {
+        return Http::put($url, $params);
+    }
+
+    /**
+     * Overload method to attempt catch attribute methods
      *
      * @param  string $method
+     * @param  array  $parameters
      *
-     * @return string
+     * @return Model Updated board object
      */
-    private function getAttributeFromUpdateMethod($method)
+    public function __call($method, $parameters)
     {
-        $attribute = preg_replace('/update(.*)/', '$1', $method);
+        if ($this->isUpdateMethod($method)) {
+            $attribute = $this->getAttributeFromUpdateMethod($method);
+            array_unshift($parameters, $attribute);
 
-        return lcfirst($attribute);
+            return call_user_func_array([$this, 'updateAttribute'], $parameters);
+        }
+    }
+
+    /**
+     * Handle dynamic static method calls into the method.
+     *
+     * @param  string  $method
+     * @param  array   $parameters
+     *
+     * @return mixed
+     */
+    public static function __callStatic($method, $parameters)
+    {
+        $instance = new static;
+        return call_user_func_array(array($instance, $method), $parameters);
+    }
+
+    /**
+     * Get attribute
+     *
+     * @param  string $property
+     *
+     * @return mixed|null
+     */
+    public function __get($property)
+    {
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        }
+        return null;
     }
 }

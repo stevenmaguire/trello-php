@@ -18,6 +18,11 @@ class Collection implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     protected $collection = [];
 
+    /**
+     * Create new instance
+     *
+     * @param array $items
+     */
     public function __construct($items = [])
     {
         foreach ($items as $item) {

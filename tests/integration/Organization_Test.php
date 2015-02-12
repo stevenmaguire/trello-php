@@ -44,7 +44,7 @@ class Organization_Test extends IntegrationTestCase
     {
         $organization = $this->createTestOrganization();
 
-        $response = Organization::members($organization->id, ['filter' => 'admins', 'fields' => 'fullName,username,memberType,idPremOrgsAdmin']);
+        $response = Organization::getMembers($organization->id, ['filter' => 'admins', 'fields' => 'fullName,username,memberType,idPremOrgsAdmin']);
 
         $this->assertInstanceOf('Trello\Collection', $response);
     }
@@ -54,14 +54,14 @@ class Organization_Test extends IntegrationTestCase
      **/
     public function test_It_Can_Not_Get_Members_For_Given_Organization_When_Organization_Id_Not_Provided()
     {
-        $response = Organization::members();
+        $response = Organization::getMembers();
     }
 
     public function test_It_Can_Get_Boards_For_Given_Organization_When_Organization_Id_Provided()
     {
         $board = $this->createTestBoard();
 
-        $response = Organization::boards($board->idOrganization, ['filter' => 'open']);
+        $response = Organization::getBoards($board->idOrganization, ['filter' => 'open']);
 
         $this->assertInstanceOf('Trello\Collection', $response);
     }
@@ -71,7 +71,7 @@ class Organization_Test extends IntegrationTestCase
      **/
     public function test_It_Can_Not_Get_Boards_For_Given_Organization_When_Organization_Id_Not_Provided()
     {
-        $response = Organization::boards();
+        $response = Organization::getBoards();
     }
 
     public function test_It_Can_Delete_Current_Organization()
@@ -85,7 +85,7 @@ class Organization_Test extends IntegrationTestCase
      */
     public function test_It_Can_Delete_Specific_Organization_When_Id_Provided($organization)
     {
-        $result = Organization::deleteOrganization($organization->id);
+        $result = Organization::closeWithId($organization->id);
 
         $this->assertTrue($result);
     }
@@ -95,7 +95,7 @@ class Organization_Test extends IntegrationTestCase
      **/
     public function test_It_Can_Not_Delete_Specific_Organization_When_Id_Not_Provided()
     {
-        $result = Organization::deleteOrganization();
+        $result = Organization::closeWithId();
     }
 
     public function test_It_Can_Get_Individual_Fields_When_Property_Does_Exist()

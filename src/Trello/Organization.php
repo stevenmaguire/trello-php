@@ -1,7 +1,5 @@
 <?php namespace Trello;
 
-use Trello\Exception\ValidationsFailed;
-
 /**
  * Trello organization
  * Reads and manages organizations
@@ -13,7 +11,9 @@ use Trello\Exception\ValidationsFailed;
  */
 class Organization extends Model
 {
-    use Traits\ActionTrait;
+    use Relationships\Actions,
+        Relationships\Boards,
+        Relationships\Members;
 
     /**
      * Organization id
@@ -102,75 +102,4 @@ class Organization extends Model
      * @var string[]
      */
     protected static $required_attributes = ['displayName'];
-
-    /**
-     * Delete organization
-     *
-     * @param  string $organization_id
-     *
-     * @return boolean
-     */
-    public static function deleteOrganization($organization_id = null)
-    {
-        if ($organization_id) {
-            return static::delete(static::getBasePath($organization_id));
-        }
-        throw new ValidationsFailed(
-            'attempted to delete organization without id; it\'s gotta have an id'
-        );
-    }
-
-    /**
-     * Get organization boards
-     *
-     * @param  string $organization_id
-     * @param  array  $options Optional filters
-     *
-     * @return Collection          Collection of boards in organization
-     * @throws Trello\Exception\ValidationsFailed
-     */
-    public static function boards($organization_id = null, $options = [])
-    {
-        if ($organization_id) {
-            $boards = static::get(static::getBasePath($organization_id).'/boards', $options);
-            $ids = Board::getIds($boards);
-
-            return Board::fetchMany($ids);
-        }
-        throw new ValidationsFailed(
-            'attempted to get organization members without id; it\'s gotta have an id'
-        );
-    }
-
-    /**
-     * Get organization members
-     *
-     * @param  string $organization_id
-     * @param  array  $options Optional filters
-     *
-     * @return Collection          Collection of members in organization
-     * @throws Trello\Exception\ValidationsFailed
-     */
-    public static function members($organization_id = null, $options = [])
-    {
-        if ($organization_id) {
-            $members = static::get(static::getBasePath($organization_id).'/members', $options);
-            $ids = Member::getIds($members);
-
-            return Member::fetchMany($ids);
-        }
-        throw new ValidationsFailed(
-            'attempted to get organization members without id; it\'s gotta have an id'
-        );
-    }
-
-    /**
-     * Remove organization
-     *
-     * @return boolean
-     */
-    public function remove()
-    {
-        return self::deleteOrganization($this->id);
-    }
 }

@@ -51,7 +51,7 @@ class Board_Test extends UnitTestCase
     }
 
     /**
-     * @expectedException Trello\Exception\ValidationsFailed
+     * @expectedException Exception
      */
     public function test_It_Can_Not_Add_Checklist_To_Board_When_Name_Not_Provided()
     {
@@ -71,7 +71,7 @@ class Board_Test extends UnitTestCase
      */
     public function test_It_Can_Not_Close_Board_When_No_Board_Id_Provided()
     {
-        Board::closeBoard();
+        Board::closeWithId();
     }
 
     /**

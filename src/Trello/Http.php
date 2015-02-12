@@ -199,7 +199,6 @@ class Http
         try {
             return self::parseHttpResponse($http_status, $response);
         } catch (Exception $e) {
-            //print_r(func_get_args());
             throw $e;
         }
     }

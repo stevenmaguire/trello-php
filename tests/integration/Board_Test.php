@@ -104,7 +104,7 @@ class Board_Test extends IntegrationTestCase
      */
     public function test_It_Can_Add_A_Checklist_With_A_Name($board)
     {
-        $result = $board->addChecklist(['name' => $this->checklist_name]);
+        $result = $board->createChecklist(['name' => $this->checklist_name]);
 
         $this->assertInstanceOf('Trello\Checklist', $result);
         $this->assertEquals($this->checklist_name, $result->name);
@@ -112,7 +112,7 @@ class Board_Test extends IntegrationTestCase
 
     /**
      * @depends test_It_Can_Get_A_Board
-     * @expectedException Trello\Exception\ValidationsFailed
+     * @expectedException Exception
      */
     public function test_It_Can_Not_Add_A_Checklist_Without_A_Name($board)
     {
@@ -125,7 +125,7 @@ class Board_Test extends IntegrationTestCase
     public function test_It_Can_Add_A_List_With_A_Name($board)
     {
         $attributes = ['name' => $this->list_name];
-        $result = $board->addList($attributes);
+        $result = $board->createList($attributes);
 
         $this->assertInstanceOf('Trello\CardList', $result);
         $this->assertEquals($this->list_name, $result->name);
@@ -143,7 +143,7 @@ class Board_Test extends IntegrationTestCase
 
     /**
      * @depends test_It_Can_Get_A_Board
-     * @expectedException Trello\Exception\ValidationsFailed
+     * @expectedException Exception
      */
     public function test_It_Can_Not_Add_A_List_Without_A_Name($board)
     {
@@ -156,7 +156,7 @@ class Board_Test extends IntegrationTestCase
     public function test_It_Can_Add_A_List_With_A_Name_And_Position($board)
     {
         $attributes = ['name' => $this->list_name, 'position' => 1];
-        $result = $board->addList($attributes);
+        $result = $board->createList($attributes);
 
         $this->assertInstanceOf('Trello\CardList', $result);
         $this->assertEquals($this->list_name, $result->name);
@@ -168,7 +168,7 @@ class Board_Test extends IntegrationTestCase
     public function test_It_Can_Add_A_List_With_A_Name_And_Invalid_Position($board)
     {
         $attributes = ['name' => $this->list_name, 'position' => uniqid()];
-        $result = $board->addList($attributes);
+        $result = $board->createList($attributes);
 
         $this->assertInstanceOf('Trello\CardList', $result);
         $this->assertEquals($this->list_name, $result->name);
@@ -180,7 +180,7 @@ class Board_Test extends IntegrationTestCase
     public function test_It_Can_Add_A_List_With_A_Name_And_Top_Position($board)
     {
         $attributes = ['name' => $this->list_name, 'position' => 'top'];
-        $result = $board->addList($attributes);
+        $result = $board->createList($attributes);
 
         $this->assertInstanceOf('Trello\CardList', $result);
         $this->assertEquals($this->list_name, $result->name);
@@ -192,7 +192,7 @@ class Board_Test extends IntegrationTestCase
     public function test_It_Can_Add_A_List_With_A_Name_And_Bottom_Position($board)
     {
         $attributes = ['name' => $this->list_name, 'position' => 'bottom'];
-        $result = $board->addList($attributes);
+        $result = $board->createList($attributes);
 
         $this->assertInstanceOf('Trello\CardList', $result);
         $this->assertEquals($this->list_name, $result->name);
@@ -204,6 +204,16 @@ class Board_Test extends IntegrationTestCase
     public function test_It_Can_Get_All_Lists($board)
     {
         $result = $board->getLists();
+
+        $this->assertInstanceOf('Trello\Collection', $result);
+    }
+
+    /**
+     * @depends test_It_Can_Add_A_List_With_A_Name
+     */
+    public function test_It_Can_Get_All_Lists_Statically($board)
+    {
+        $result = Board::getLists($board->id);
 
         $this->assertInstanceOf('Trello\Collection', $result);
     }
@@ -404,7 +414,7 @@ class Board_Test extends IntegrationTestCase
     public function test_It_Can_Close_A_Current_Board($board)
     {
         $result = $board->close();
-        $this->assertTrue($result);
+        $this->assertTrue($result->closed);
     }
 
     /**
@@ -413,8 +423,8 @@ class Board_Test extends IntegrationTestCase
     public function test_It_Can_Close_A_Specific_Board_When_Id_Provided($boards)
     {
         foreach ($boards as $board) {
-            $result = Board::closeBoard($board->id);
-            $this->assertTrue($result);
+            $result = Board::closeWithId($board->id);
+            $this->assertTrue($result->closed);
         }
     }
 
@@ -423,7 +433,7 @@ class Board_Test extends IntegrationTestCase
      */
     public function test_It_Can_Not_Close_A_Specific_Board_When_Id_Not_Provided()
     {
-        $result = Board::closeBoard();
+        $result = Board::closeWithId();
     }
 
     public function test_It_Can_Get_Cards_For_A_Board()

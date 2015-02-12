@@ -1,9 +1,9 @@
-<?php namespace Trello\Traits;
+<?php namespace Trello\Relationships;
 
 use Trello\Action;
 use Trello\Exception\ValidationsFailed;
 
-trait ActionTrait
+trait Actions
 {
     /**
      * Get model actions
@@ -14,8 +14,9 @@ trait ActionTrait
      * @return Collection          Collection of actions in model
      * @throws ValidationsFailed
      */
-    public static function actions($model_id = null, $options = [])
+    public function getActions($model_id = null, $options = [])
     {
+        $this->parseModelId($model_id);
         if ($model_id) {
             $actions = static::get(static::getBasePath($model_id).'/actions', $options);
             $ids = Action::getIds($actions);

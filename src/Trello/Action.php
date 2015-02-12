@@ -1,7 +1,5 @@
 <?php namespace Trello;
 
-use Trello\Exception\ValidationsFailed;
-
 /**
  * Trello action
  * Reads and manages actions

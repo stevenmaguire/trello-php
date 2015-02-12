@@ -229,6 +229,7 @@ class Util
     {
         $exceptions = [
             'default' => 'Unexpected',
+            400 => 'BadRequest',
             401 => 'Authentication',
             403 => 'Authorization',
             404 => 'NotFound',

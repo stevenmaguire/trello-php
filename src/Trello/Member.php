@@ -1,7 +1,5 @@
 <?php namespace Trello;
 
-use Trello\Exception\ValidationsFailed;
-
 /**
  * Trello member
  * Reads and manages members
@@ -13,7 +11,7 @@ use Trello\Exception\ValidationsFailed;
  */
 class Member extends Model
 {
-    use Traits\ActionTrait;
+    use Relationships\Actions;
 
     /**
      * Id
@@ -213,6 +211,10 @@ class Member extends Model
         $organizations = static::get(static::getBasePath().'/my/organizations');
         $ids = Organization::getIds($organizations);
 
-        return Organization::fetchMany($ids);
+        try {
+            return Organization::fetchMany($ids);
+        } catch (Exception $e) {
+            return $organizations;
+        }
     }
 }

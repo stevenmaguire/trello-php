@@ -17,7 +17,8 @@ use Trello\Exception\ValidationsFailed;
  */
 class CardList extends Model
 {
-    use Traits\ActionTrait;
+    use Relationships\Actions,
+        Relationships\Cards;
 
     /**
      * List id
@@ -97,41 +98,9 @@ class CardList extends Model
     protected static $required_attributes = ['name', 'idBoard'];
 
     /**
-     * Get card models for list
+     * Foreign id for model
      *
-     * @return Collection|Card Card model(s)
+     * @var string
      */
-    public function getCards()
-    {
-        $cards = static::get(static::getBasePath($this->id).'/cards');
-        $ids = Card::getIds($cards);
-
-        return Card::fetchMany($ids);
-    }
-
-    /**
-     * create a new card
-     *
-     * @param  array $attributes Card attributes to set
-     *
-     * @return Card  Newly minted trello card
-     */
-    public function createCard($attributes = [])
-    {
-        $attributes['idList'] = $this->id;
-
-        return Card::create($attributes);
-    }
-
-    /**
-     * add a card to the list
-     *
-     * @param  Card $card Card to add
-     *
-     * @return Card Updated card
-     */
-    public function addCard(Card $card)
-    {
-        return $card->updateList($this);
-    }
+    protected static $foreign_key = 'idList';
 }
