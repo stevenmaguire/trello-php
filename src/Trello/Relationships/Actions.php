@@ -14,7 +14,7 @@ trait Actions
      * @return Collection          Collection of actions in model
      * @throws ValidationsFailed
      */
-    public function getActions($model_id = null, $options = [])
+    protected function getActions($model_id = null, $options = [])
     {
         $this->parseModelId($model_id);
         if ($model_id) {

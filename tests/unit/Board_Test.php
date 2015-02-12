@@ -27,6 +27,14 @@ class Board_Test extends UnitTestCase
         $this->assertNull($result->cash_money());
     }
 
+    public function test_It_Can_Get_No_Ids_If_No_Models_Provided()
+    {
+        $result = Board::getIds();
+
+        $this->assertTrue(is_array($result));
+        $this->assertEmpty($result);
+    }
+
     public function test_It_Can_Update_Board_Name_When_Name_Provided()
     {
         $attributes = ['name' => $this->board_name];
@@ -36,7 +44,7 @@ class Board_Test extends UnitTestCase
 
         $board = $this->board;
 
-        $result = $board->updateName($attributes['name']);
+        $result = $board->updateNameAttribute($attributes['name']);
 
         $this->assertInstanceOf('Trello\Board', $result);
         $this->assertEquals($attributes['name'], $result->name);

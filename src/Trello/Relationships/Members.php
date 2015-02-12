@@ -14,7 +14,7 @@ trait Members
      * @return Collection          Collection of members in organization
      * @throws Trello\Exception\ValidationsFailed
      */
-    public function getMembers($model_id = null, $options = [])
+    protected function getMembers($model_id = null, $options = [])
     {
         $this->parseModelId($model_id);
         if ($model_id) {

@@ -12,7 +12,7 @@ trait Cards
      *
      * @return Card Updated card
      */
-    public function addCard(Card $card)
+    protected function addCard(Card $card)
     {
         $foreign_key = $this->getForeignKey();
         $id = $this->getId();
@@ -29,7 +29,7 @@ trait Cards
      * @return Collection          Collection of cards in model
      * @throws ValidationsFailed
      */
-    public function getCards($model_id = null, $options = [])
+    protected function getCards($model_id = null, $options = [])
     {
         $this->parseModelId($model_id);
         if ($model_id) {
@@ -38,6 +38,7 @@ trait Cards
 
             return Card::fetchMany($ids, $options);
         }
+        print_r(func_get_args());
         throw new ValidationsFailed(
             'attempted to get cards without id; it\'s gotta have an id'
         );
@@ -50,7 +51,7 @@ trait Cards
      *
      * @return Card  Newly minted trello card
      */
-    public function createCard($attributes = [])
+    protected function createCard($attributes = [])
     {
         $attributes['idList'] = $this->id;
 
@@ -65,7 +66,7 @@ trait Cards
      * @return Card  Newly minted trello list
      * @throws Exception\ValidationsFailed
      */
-    public function removeCard(Card $card)
+    protected function removeCard(Card $card)
     {
         return $card->close();
     }

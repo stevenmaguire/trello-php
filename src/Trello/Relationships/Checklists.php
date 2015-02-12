@@ -12,7 +12,7 @@ trait Checklists
      *
      * @return Checklist Updated checklist
      */
-    public function addChecklist(Checklist $checklist)
+    protected function addChecklist(Checklist $checklist)
     {
         $foreign_key = $this->getForeignKey();
         $id = $this->getId();
@@ -29,7 +29,7 @@ trait Checklists
      * @return Collection          Collection of checklists in model
      * @throws ValidationsFailed
      */
-    public function getChecklists($model_id = null, $options = [])
+    protected function getChecklists($model_id = null, $options = [])
     {
         $this->parseModelId($model_id);
         if ($model_id) {
@@ -51,7 +51,7 @@ trait Checklists
      * @return Checklist  Newly minted trello checklist
      * @throws Exception\ValidationsFailed
      */
-    public function createChecklist($attributes = [])
+    protected function createChecklist($attributes = [])
     {
         $foreign_key = $this->getForeignKey();
         $attributes[$foreign_key] = $this->getId();
@@ -67,7 +67,7 @@ trait Checklists
      * @return Checklist  Newly minted trello list
      * @throws Exception\ValidationsFailed
      */
-    public function removeChecklist(Checklist $checklist)
+    protected function removeChecklist(Checklist $checklist)
     {
         return $checklist->close();
     }

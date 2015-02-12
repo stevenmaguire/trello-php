@@ -114,4 +114,14 @@ class Card_Test extends IntegrationTestCase
         $card = $this->createTestCard();
         $response = $card->getField('foo', true);
     }
+
+    /**
+     * @depends test_It_Can_Create_A_New_Card_When_Name_List_Id_Provided
+     **/
+    public function test_It_Can_Close_A_Card($card)
+    {
+        $result = $card->close();
+
+        $this->assertTrue($result);
+    }
 }

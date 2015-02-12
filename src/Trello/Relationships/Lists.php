@@ -13,7 +13,7 @@ trait Lists
      * @return CardList  Newly minted trello list
      * @throws Exception\ValidationsFailed
      */
-    public function addList(CardList $list)
+    protected function addList(CardList $list)
     {
         $foreign_key = $this->getForeignKey();
         $id = $this->getId();
@@ -29,7 +29,7 @@ trait Lists
      * @return CardList  Newly minted trello list
      * @throws Exception\ValidationsFailed
      */
-    public function createList($attributes = [])
+    protected function createList($attributes = [])
     {
         $foreign_key = $this->getForeignKey();
         $attributes[$foreign_key] = $this->getId();
@@ -46,7 +46,7 @@ trait Lists
      * @return Collection          Collection of lists in model
      * @throws ValidationsFailed
      */
-    public function getLists($model_id = null, $options = [])
+    protected function getLists($model_id = null, $options = [])
     {
         $this->parseModelId($model_id);
         if ($model_id) {
@@ -69,7 +69,7 @@ trait Lists
      * @return CardList  Newly minted trello list
      * @throws Exception\ValidationsFailed
      */
-    public function removeList(CardList $list)
+    protected function removeList(CardList $list)
     {
         return $list->close();
     }
@@ -80,7 +80,7 @@ trait Lists
      * @return List Parent list
      * @throws Exception
      */
-    public function getList()
+    protected function getList()
     {
         return CardList::fetch($this->idList);
     }
@@ -92,7 +92,7 @@ trait Lists
      *
      * @return Model
      */
-    public function updateList(CardList $list)
+    protected function updateList(CardList $list)
     {
         return $this->updateAttribute('idList', $list->getId());
     }

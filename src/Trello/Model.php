@@ -262,7 +262,7 @@ abstract class Model extends Trello
      */
     private function getAttributeFromUpdateMethod($method)
     {
-        $attribute = preg_replace('/update(.*)/', '$1', $method);
+        $attribute = preg_replace('/update(.*)Attribute/', '$1', $method);
 
         return lcfirst($attribute);
     }
@@ -397,7 +397,7 @@ abstract class Model extends Trello
      */
     private function isUpdateMethod($method)
     {
-        return strrpos($method, 'update') === 0;
+        return strrpos($method, 'update') === 0 && substr($method, -9) == 'Attribute';
     }
 
 
@@ -601,7 +601,11 @@ abstract class Model extends Trello
             $attribute = $this->getAttributeFromUpdateMethod($method);
             array_unshift($parameters, $attribute);
 
-            return call_user_func_array([$this, 'updateAttribute'], $parameters);
+            return call_user_func_array(array($this, 'updateAttribute'), $parameters);
+        }
+
+        if (method_exists($this, $method)) {
+            return call_user_func_array(array($this, $method), $parameters);
         }
     }
 

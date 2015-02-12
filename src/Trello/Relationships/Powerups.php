@@ -12,7 +12,7 @@ trait Powerups
      * @return stdClass|null List of existing powerups
      * @throws Exception\ValidationsFailed
      */
-    public function addPowerUp($powerup = null)
+    protected function addPowerUp($powerup = null)
     {
         if (preg_match('/voting|cardAging|calendar|recap/', $powerup)) {
             return static::post(static::getBasePath($this->id).'/powerUps', ['value' => $powerup]);
@@ -28,7 +28,7 @@ trait Powerups
      * @return stdClass|null List of existing powerups
      * @throws Exception\ValidationsFailed
      */
-    public function addPowerUpCardAging()
+    protected function addPowerUpCardAging()
     {
         return $this->addPowerUp('cardAging');
     }
@@ -39,7 +39,7 @@ trait Powerups
      * @return stdClass|null List of existing powerups
      * @throws Exception\ValidationsFailed
      */
-    public function addPowerUpCalendar()
+    protected function addPowerUpCalendar()
     {
         return $this->addPowerUp('calendar');
     }
@@ -50,7 +50,7 @@ trait Powerups
      * @return stdClass|null List of existing powerups
      * @throws Exception\ValidationsFailed
      */
-    public function addPowerUpRecap()
+    protected function addPowerUpRecap()
     {
         return $this->addPowerUp('recap');
     }
@@ -61,7 +61,7 @@ trait Powerups
      * @return stdClass|null List of existing powerups
      * @throws Exception\ValidationsFailed
      */
-    public function addPowerUpVoting()
+    protected function addPowerUpVoting()
     {
         return $this->addPowerUp('voting');
     }
@@ -73,7 +73,7 @@ trait Powerups
      *
      * @return boolean
      */
-    public static function isValidPowerUp($powerup = null)
+    protected static function isValidPowerUp($powerup = null)
     {
         $powerups = ['voting','cardAging','calendar','recap'];
 
@@ -88,7 +88,7 @@ trait Powerups
      * @return boolean List of existing powerups
      * @throws Exception\ValidationsFailed
      */
-    public function removePowerUp($powerup = null)
+    protected function removePowerUp($powerup = null)
     {
         if (self::isValidPowerUp($powerup)) {
             return static::delete(static::getBasePath($this->id).'/powerUps/'.$powerup);
@@ -104,7 +104,7 @@ trait Powerups
      * @return boolean List of existing powerups
      * @throws Exception\ValidationsFailed
      */
-    public function removePowerUpCardAging()
+    protected function removePowerUpCardAging()
     {
         return $this->removePowerUp('cardAging');
     }
@@ -115,7 +115,7 @@ trait Powerups
      * @return boolean List of existing powerups
      * @throws Exception\ValidationsFailed
      */
-    public function removePowerUpCalendar()
+    protected function removePowerUpCalendar()
     {
         return $this->removePowerUp('calendar');
     }
@@ -126,7 +126,7 @@ trait Powerups
      * @return boolean List of existing powerups
      * @throws Exception\ValidationsFailed
      */
-    public function removePowerUpRecap()
+    protected function removePowerUpRecap()
     {
         return $this->removePowerUp('recap');
     }
@@ -137,7 +137,7 @@ trait Powerups
      * @return boolean List of existing powerups
      * @throws Exception\ValidationsFailed
      */
-    public function removePowerUpVoting()
+    protected function removePowerUpVoting()
     {
         return $this->removePowerUp('voting');
     }

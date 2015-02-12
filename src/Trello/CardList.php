@@ -81,7 +81,7 @@ class CardList extends Model
      *
      * @var string
      */
-    protected static $base_path = 'list';
+    protected static $base_path = 'lists';
 
     /**
      * Default attributes with values
@@ -103,4 +103,17 @@ class CardList extends Model
      * @var string
      */
     protected static $foreign_key = 'idList';
+
+    /**
+     * Close list
+     *
+     * @return CardList
+     * @throws Exception\ValidationsFailed
+     */
+    public function close()
+    {
+        $url = self::getBasePath($this->getId()).'/closed';
+
+        return self::doStore($url, ['value' => true]);
+    }
 }

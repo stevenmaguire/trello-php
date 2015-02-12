@@ -14,7 +14,7 @@ trait Boards
      * @return Collection          Collection of boards in organization
      * @throws Trello\Exception\ValidationsFailed
      */
-    public function getBoards($model_id = null, $options = [])
+    protected function getBoards($model_id = null, $options = [])
     {
         $this->parseModelId($model_id);
         if ($model_id) {
@@ -34,7 +34,7 @@ trait Boards
      * @return Board Parent board
      * @throws Exception
      */
-    public function getBoard()
+    protected function getBoard()
     {
         return Board::fetch($this->idBoard);
     }
