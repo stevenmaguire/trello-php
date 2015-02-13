@@ -214,7 +214,11 @@ class Member extends Model
         try {
             return Organization::fetchMany($ids);
         } catch (Exception $e) {
-            return new Collection($organizations);
+            if (is_array($organizations)) {
+                return new Collection($organizations);
+            }
+
+            return new Collection;
         }
     }
 }

@@ -29,7 +29,7 @@ trait Cards
      */
     protected function createCard($attributes = [])
     {
-        $attributes['idList'] = $this->id;
+        $attributes['idList'] = $this->getId();
 
         return Card::create($attributes);
     }

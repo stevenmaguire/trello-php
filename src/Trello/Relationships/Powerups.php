@@ -15,7 +15,7 @@ trait Powerups
     protected function addPowerUp($powerup = null)
     {
         if (preg_match('/voting|cardAging|calendar|recap/', $powerup)) {
-            return static::post(static::getBasePath($this->id).'/powerUps', ['value' => $powerup]);
+            return static::post(static::getBasePath($this->getId()).'/powerUps', ['value' => $powerup]);
         }
         throw new ValidationsFailed(
             'attempted to add invalid powerup to model; it\'s gotta be a valid powerup'
@@ -67,6 +67,13 @@ trait Powerups
     }
 
     /**
+     * Get model primary key
+     *
+     * @return string
+     */
+    abstract public function getId();
+
+    /**
      * Checks if value is valid powerup
      *
      * @param  string $powerup
@@ -91,7 +98,7 @@ trait Powerups
     protected function removePowerUp($powerup = null)
     {
         if (self::isValidPowerUp($powerup)) {
-            return static::delete(static::getBasePath($this->id).'/powerUps/'.$powerup);
+            return static::delete(static::getBasePath($this->getId()).'/powerUps/'.$powerup);
         }
         throw new ValidationsFailed(
             'attempted to remove invalid powerup from board; it\'s gotta be a valid powerup'

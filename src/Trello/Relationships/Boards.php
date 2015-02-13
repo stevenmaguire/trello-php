@@ -29,6 +29,15 @@ trait Boards
     }
 
     /**
+     * Get attribute
+     *
+     * @param  string $attribute
+     *
+     * @return mixed|null
+     */
+    abstract protected function getAttribute($attribute);
+
+    /**
      * Get parent board
      *
      * @return Board Parent board
@@ -36,7 +45,7 @@ trait Boards
      */
     protected function getBoard()
     {
-        return Board::fetch($this->idBoard);
+        return Board::fetch($this->getAttribute('idBoard'));
     }
 
     /**

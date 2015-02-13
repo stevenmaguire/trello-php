@@ -154,9 +154,16 @@ abstract class Model extends Trello
      * @param string|array $ids
      *
      * @return Collection
+     * @throws ValidationsFailed
      */
     protected static function doFetch($ids, $options = [])
     {
+        if (empty($ids)) {
+            throw new ValidationsFailed(
+                'attempted to fetch '.lcfirst(self::getClassName()).' without id; it\'s gotta have an id'
+            );
+        }
+
         $urls = [];
 
         if (!is_array($ids)) {
@@ -218,19 +225,14 @@ abstract class Model extends Trello
      * fetch a model
      *
      * @param  string $id Model id to fetch
+     * @param  array $options
      *
      * @return Model
      * @throws ValidationsFailed
      */
-    public static function fetch($id = null)
+    public static function fetch($id = null, $options= [])
     {
-        if (empty($id)) {
-            throw new ValidationsFailed(
-                'attempted to fetch '.lcfirst(self::getClassName()).' without id; it\'s gotta have an id'
-            );
-        }
-
-        $result = self::doFetch($id);
+        $result = self::doFetch($id, $options);
 
         return $result->first();
     }
@@ -239,19 +241,26 @@ abstract class Model extends Trello
      * fetch many models
      *
      * @param  array $ids Model ids to fetch
+     * @param  array $options
      *
      * @return Collection
      * @throws ValidationsFailed
      */
     public static function fetchMany($ids = [], $options = [])
     {
-        if (empty($ids)) {
-            throw new ValidationsFailed(
-                'attempted to fetch '.lcfirst(self::getClassName()).' without id; it\'s gotta have an id'
-            );
-        }
-
         return self::doFetch($ids, $options);
+    }
+
+    /**
+     * Get attribute
+     *
+     * @param  string $attribute
+     *
+     * @return mixed|null
+     */
+    protected function getAttribute($attribute)
+    {
+        return $this->__get($attribute);
     }
 
     /**

@@ -38,6 +38,15 @@ trait Lists
     }
 
     /**
+     * Get attribute
+     *
+     * @param  string $attribute
+     *
+     * @return mixed|null
+     */
+    abstract protected function getAttribute($attribute);
+
+    /**
      * Get model foreign key
      *
      * @return string
@@ -59,7 +68,7 @@ trait Lists
      */
     protected function getList()
     {
-        return CardList::fetch($this->idList);
+        return CardList::fetch($this->getAttribute('idList'));
     }
 
     /**
