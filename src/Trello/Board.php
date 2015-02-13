@@ -28,6 +28,7 @@ class Board extends Model
         Relationships\Cards,
         Relationships\Checklists,
         Relationships\Lists,
+        Relationships\Members,
         Relationships\Powerups;
 
     /**
