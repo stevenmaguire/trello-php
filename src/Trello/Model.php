@@ -164,16 +164,12 @@ abstract class Model extends Trello
             );
         }
 
-        $urls = [];
-
         if (!is_array($ids)) {
             $ids = [$ids];
         }
 
-        $query_string = http_build_query($options);
-
         foreach ($ids as $id) {
-            $urls[] = self::getBasePath($id).'?'.$query_string;
+            $urls[] = self::getBasePath($id, $options);
         }
 
         return self::doBatch($urls);
@@ -285,11 +281,18 @@ abstract class Model extends Trello
     /**
      * Get model base url
      *
+     * @param  string $id
+     * @param  array $options
+     *
      * @return string Base url
      */
-    protected static function getBasePath($id = null)
+    protected static function getBasePath($id = null, $options = array())
     {
-        return '/'.ltrim(static::$base_path, '/').($id ? '/'.$id : '');
+        $base = ltrim(static::$base_path, '/');
+        $object = $id ? '/'.$id : '';
+        $query = http_build_query($options);
+
+        return '/'.$base.$object.(!empty($query) ? '?'.$query : '');
     }
 
     /**
