@@ -14,8 +14,6 @@ use Trello\Exception\ValidationsFailed;
  */
 abstract class Model extends Http
 {
-    use Attributes;
-
     /**
      * Model id
      * @property string $id
@@ -44,20 +42,6 @@ abstract class Model extends Http
     protected static $search_model;
 
     /**
-     * Default attributes with values
-     *
-     * @var string[]
-     */
-    protected static $default_attributes = [];
-
-    /**
-     * Required attribute keys
-     *
-     * @var string[]
-     */
-    protected static $required_attributes = [];
-
-    /**
      * Primary id for model
      *
      * @var string
@@ -81,7 +65,7 @@ abstract class Model extends Http
     {
         $url = self::getBasePath($this->getId());
 
-        return self::delete($url);
+        return Http::delete($url);
     }
 
     /**
@@ -110,7 +94,7 @@ abstract class Model extends Http
         if ($model_id) {
             $url = self::getBasePath($model_id);
 
-            return self::delete($url);
+            return Http::delete($url);
         }
         throw new ValidationsFailed(
             'attempting to close model without id; it\'s gotta have an id.'
@@ -127,7 +111,7 @@ abstract class Model extends Http
     protected static function doBatch($urls = [])
     {
         $collection = new Collection;
-        $response = static::get('/batch', ['urls' => $urls]);
+        $response = Http::get('/batch', ['urls' => $urls]);
         if (is_array($response)) {
             self::parseBatchResponse($response, $collection);
         }
@@ -145,7 +129,7 @@ abstract class Model extends Http
      */
     protected static function doCreate($url, $params)
     {
-        $response = static::post($url, $params);
+        $response = Http::post($url, $params);
 
         return self::factory($response);
     }
@@ -192,7 +176,7 @@ abstract class Model extends Http
     {
         $params['query'] = $keyword;
 
-        return static::get('/search', $params);
+        return Http::get('/search', $params);
     }
 
     /**
@@ -205,7 +189,7 @@ abstract class Model extends Http
      */
     protected static function doStore($url, $params)
     {
-        $response = static::put($url, $params);
+        $response = Http::put($url, $params);
 
         return self::factory($response);
     }
@@ -282,40 +266,6 @@ abstract class Model extends Http
     private static function getClassName()
     {
         return Util::cleanClassName(get_called_class());
-    }
-
-    /**
-     * Get model attribute via field method
-     *
-     * @return string|stdClass
-     */
-    public function getField($field, $force = false)
-    {
-        $value = static::__get($field);
-        if (empty($value) || $force) {
-            $url = $this->getFieldUrl($field);
-            try {
-                $response = self::get($url);
-                $this->$field = $this->parseFieldResponse($response);
-                return $this->$field;
-            } catch (Exception $e) {
-                //
-            }
-        }
-
-        return $value;
-    }
-
-    /**
-     * Get field url
-     *
-     * @param  string $field
-     *
-     * @return string
-     */
-    protected function getFieldUrl($field)
-    {
-        return self::getBasePath($this->id).'/'.$field;
     }
 
     /**
@@ -434,22 +384,6 @@ abstract class Model extends Http
     }
 
     /**
-     * Parse response from getField
-     *
-     * @param  stdClass|null $response
-     *
-     * @return string|integer|stdClass|null
-     */
-    private function parseFieldResponse($response = null)
-    {
-        if (is_object($response) && property_exists($response, '_value')) {
-            return $response->_value;
-        } else {
-            return $response;
-        }
-    }
-
-    /**
      * If model id empty, attempt to set same as getId()
      *
      * @param  string $model_id
@@ -479,19 +413,6 @@ abstract class Model extends Http
         $results = static::doSearch($keyword, $filters);
 
         return new Collection($results->$model);
-    }
-
-    /**
-     * Update model attribute
-     *
-     * @param  string  $key
-     * @param  string  $value
-     *
-     * @return Model Updated board object
-     */
-    public function updateAttribute($key = null, $value = null)
-    {
-        return static::doStore(static::getBasePath($this->id).'/'.$key, ['value' => $value]);
     }
 
     /**
@@ -528,5 +449,161 @@ abstract class Model extends Http
     {
         $instance = new static;
         return call_user_func_array(array($instance, $method), $parameters);
+    }
+
+    ////// Attributes
+
+    /**
+     * Default attributes with values
+     *
+     * @var string[]
+     */
+    protected static $default_attributes = [];
+
+    /**
+     * Required attribute keys
+     *
+     * @var string[]
+     */
+    protected static $required_attributes = [];
+
+    /**
+     * Get attribute
+     *
+     * @param  string $property
+     *
+     * @return mixed|null
+     */
+    public function __get($property)
+    {
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        }
+        return null;
+    }
+
+    /**
+     * Check if method name is update atribute method
+     *
+     * @param  string $method
+     *
+     * @return boolean
+     */
+    private function isUpdateMethod($method)
+    {
+        return strrpos($method, 'update') === 0 && substr($method, -9) == 'Attribute';
+    }
+
+    /**
+     * Get attribute
+     *
+     * @param  string $attribute
+     *
+     * @return mixed|null
+     */
+    protected function getAttribute($attribute)
+    {
+        return $this->__get($attribute);
+    }
+
+    /**
+     * Get attribute from update method name
+     *
+     * @param  string $method
+     *
+     * @return string
+     */
+    private function getAttributeFromUpdateMethod($method)
+    {
+        $attribute = preg_replace('/update(.*)Attribute/', '$1', $method);
+
+        return lcfirst($attribute);
+    }
+
+    /**
+     * Validate model attributes
+     *
+     * @param  array $attributes
+     *
+     * @return void
+     * @throws Trello\Exception\ValidationsFailed
+     */
+    private static function validateAttributes($rules = [], $attributes = [])
+    {
+        $attributes = array_merge($rules, $attributes);
+
+        foreach (static::$required_attributes as $attribute) {
+            if (empty($attributes[$attribute])) {
+                throw new ValidationsFailed(
+                    'attempted to create '.lcfirst(self::getClassName())
+                    .' without '.$attribute.'; it\'s gotta have a '.$attribute
+                );
+            }
+        }
+    }
+
+    /**
+     * Update model attribute
+     *
+     * @param  string  $key
+     * @param  string  $value
+     *
+     * @return Model Updated board object
+     */
+    public function updateAttribute($key = null, $value = null)
+    {
+        return static::doStore(static::getBasePath($this->id).'/'.$key, ['value' => $value]);
+    }
+
+    ////// FIELDS
+
+    /**
+     * Get model attribute via field method
+     *
+     * @return string|stdClass
+     */
+    public function getField($field, $force = false)
+    {
+        $value = static::__get($field);
+        if (empty($value) || $force) {
+            $url = $this->getFieldUrl($field);
+            try {
+                $response = static::get($url);
+                $this->$field = $this->parseFieldResponse($response);
+                return $this->$field;
+            } catch (Exception $e) {
+                //
+            }
+        }
+
+        return $value;
+    }
+
+    /**
+     * Get field url
+     *
+     * @param  string $field
+     *
+     * @return string
+     */
+    protected function getFieldUrl($field)
+    {
+        return self::getBasePath($this->id).'/'.$field;
+    }
+
+    /**
+     * Parse response from getField
+     *
+     * @param  stdClass|null $response
+     *
+     * @return string|integer|stdClass|null
+     */
+    private function parseFieldResponse($response = null)
+    {
+        if (is_object($response) && property_exists($response, '_value')) {
+            return $response->_value;
+        } else {
+            return $response;
+        }
     }
 }
