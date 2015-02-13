@@ -12,8 +12,10 @@ use Trello\Exception\ValidationsFailed;
  * @copyright  2014 Steven Maguire
  * @abstract
  */
-abstract class Model extends Trello
+abstract class Model extends Http
 {
+    use Attributes;
+
     /**
      * Model id
      * @property string $id
@@ -125,7 +127,7 @@ abstract class Model extends Trello
     protected static function doBatch($urls = [])
     {
         $collection = new Collection;
-        $response = Http::get('/batch', ['urls' => $urls]);
+        $response = static::get('/batch', ['urls' => $urls]);
         if (is_array($response)) {
             self::parseBatchResponse($response, $collection);
         }
@@ -143,7 +145,7 @@ abstract class Model extends Trello
      */
     protected static function doCreate($url, $params)
     {
-        $response = Http::post($url, $params);
+        $response = static::post($url, $params);
 
         return self::factory($response);
     }
@@ -190,7 +192,7 @@ abstract class Model extends Trello
     {
         $params['query'] = $keyword;
 
-        return Http::get('/search', $params);
+        return static::get('/search', $params);
     }
 
     /**
@@ -203,7 +205,7 @@ abstract class Model extends Trello
      */
     protected static function doStore($url, $params)
     {
-        $response = Http::put($url, $params);
+        $response = static::put($url, $params);
 
         return self::factory($response);
     }
@@ -253,32 +255,6 @@ abstract class Model extends Trello
     public static function fetchMany($ids = [], $options = [])
     {
         return self::doFetch($ids, $options);
-    }
-
-    /**
-     * Get attribute
-     *
-     * @param  string $attribute
-     *
-     * @return mixed|null
-     */
-    protected function getAttribute($attribute)
-    {
-        return $this->__get($attribute);
-    }
-
-    /**
-     * Get attribute from update method name
-     *
-     * @param  string $method
-     *
-     * @return string
-     */
-    private function getAttributeFromUpdateMethod($method)
-    {
-        $attribute = preg_replace('/update(.*)Attribute/', '$1', $method);
-
-        return lcfirst($attribute);
     }
 
     /**
@@ -409,18 +385,6 @@ abstract class Model extends Trello
         return self::mapAs($this, $response);
     }
 
-    /**
-     * Check if method name is update atribute method
-     *
-     * @param  string $method
-     *
-     * @return boolean
-     */
-    private function isUpdateMethod($method)
-    {
-        return strrpos($method, 'update') === 0 && substr($method, -9) == 'Attribute';
-    }
-
 
     /**
      * Map an object as another given object
@@ -531,84 +495,6 @@ abstract class Model extends Trello
     }
 
     /**
-     * Validate model attributes
-     *
-     * @param  array $attributes
-     *
-     * @return void
-     * @throws Trello\Exception\ValidationsFailed
-     */
-    private static function validateAttributes($rules = [], $attributes = [])
-    {
-        $attributes = array_merge($rules, $attributes);
-
-        foreach (static::$required_attributes as $attribute) {
-            if (empty($attributes[$attribute])) {
-                throw new ValidationsFailed(
-                    'attempted to create '.lcfirst(self::getClassName())
-                    .' without '.$attribute.'; it\'s gotta have a '.$attribute
-                );
-            }
-        }
-    }
-
-    /**
-     * sends the delete request to the gateway
-     *
-     * @param string $url
-     * @param array $params
-     *
-     * @throws Exception
-     * @return boolean
-     */
-    protected static function delete($url, $params = [])
-    {
-        return Http::delete($url, $params);
-    }
-
-    /**
-     * sends the get request to the gateway
-     *
-     * @param string $url
-     * @param array $params
-     *
-     * @return stdClass|array
-     * @throws Exception
-     */
-    protected static function get($url, $params = [])
-    {
-        return Http::get($url, $params);
-    }
-
-    /**
-     * sends the post request to the gateway
-     *
-     * @param string $url
-     * @param array $params
-     *
-     * @return stdClass
-     * @throws Exception
-     */
-    protected static function post($url, $params = [])
-    {
-        return Http::post($url, $params);
-    }
-
-    /**
-     * sends the put request to the gateway
-     *
-     * @param string $url
-     * @param array $params
-     *
-     * @return stdClass
-     * @throws Exception
-     */
-    protected static function put($url, $params = [])
-    {
-        return Http::put($url, $params);
-    }
-
-    /**
      * Overload method to attempt catch attribute methods
      *
      * @param  string $method
@@ -642,20 +528,5 @@ abstract class Model extends Trello
     {
         $instance = new static;
         return call_user_func_array(array($instance, $method), $parameters);
-    }
-
-    /**
-     * Get attribute
-     *
-     * @param  string $property
-     *
-     * @return mixed|null
-     */
-    public function __get($property)
-    {
-        if (property_exists($this, $property)) {
-            return $this->$property;
-        }
-        return null;
     }
 }
