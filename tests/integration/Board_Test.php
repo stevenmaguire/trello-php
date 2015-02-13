@@ -177,7 +177,7 @@ class Board_Test extends IntegrationTestCase
 
         $result = $board->removeList($list);
 
-        $this->assertTrue($result->closed);
+        $this->assertTrue($result);
     }
 
     /**
@@ -444,7 +444,7 @@ class Board_Test extends IntegrationTestCase
     public function test_It_Can_Close_A_Current_Board($board)
     {
         $result = $board->close();
-        $this->assertTrue($result->closed);
+        $this->assertTrue($result);
     }
 
     /**
@@ -454,7 +454,7 @@ class Board_Test extends IntegrationTestCase
     {
         foreach ($boards as $board) {
             $result = Board::closeWithId($board->id);
-            $this->assertTrue($result->closed);
+            $this->assertTrue($result);
         }
     }
 

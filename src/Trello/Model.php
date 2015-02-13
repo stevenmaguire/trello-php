@@ -1,5 +1,6 @@
 <?php namespace Trello;
 
+use \stdClass;
 use \ReflectionObject;
 use Trello\Exception\ValidationsFailed;
 
@@ -154,7 +155,7 @@ abstract class Model extends Trello
      *
      * @return Collection
      */
-    protected static function doFetch($ids)
+    protected static function doFetch($ids, $options = [])
     {
         $urls = [];
 
@@ -218,8 +219,8 @@ abstract class Model extends Trello
      *
      * @param  string $id Model id to fetch
      *
-     * @return string|object
-     * @throws Exception_ValidationsFailed
+     * @return Model
+     * @throws ValidationsFailed
      */
     public static function fetch($id = null)
     {
@@ -240,9 +241,9 @@ abstract class Model extends Trello
      * @param  array $ids Model ids to fetch
      *
      * @return Collection
-     * @throws Exception_ValidationsFailed
+     * @throws ValidationsFailed
      */
-    public static function fetchMany($ids = [])
+    public static function fetchMany($ids = [], $options = [])
     {
         if (empty($ids)) {
             throw new ValidationsFailed(
@@ -250,7 +251,7 @@ abstract class Model extends Trello
             );
         }
 
-        return self::doFetch($ids);
+        return self::doFetch($ids, $options);
     }
 
     /**
@@ -551,7 +552,7 @@ abstract class Model extends Trello
      * @param string $url
      * @param array $params
      *
-     * @return stdClass
+     * @return stdClass|array
      * @throws Exception
      */
     protected static function get($url, $params = [])

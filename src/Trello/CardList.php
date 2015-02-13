@@ -107,13 +107,14 @@ class CardList extends Model
     /**
      * Close list
      *
-     * @return CardList
+     * @return boolean
      * @throws Exception\ValidationsFailed
      */
     public function close()
     {
         $url = self::getBasePath($this->getId()).'/closed';
+        $list = self::put($url, ['value' => true]);
 
-        return self::doStore($url, ['value' => true]);
+        return true;
     }
 }

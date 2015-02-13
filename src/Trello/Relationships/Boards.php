@@ -38,4 +38,13 @@ trait Boards
     {
         return Board::fetch($this->idBoard);
     }
+
+    /**
+     * If model id empty, attempt to set same as getId()
+     *
+     * @param  string $model_id
+     *
+     * @return void
+     */
+    abstract protected function parseModelId(&$model_id);
 }

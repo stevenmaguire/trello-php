@@ -127,14 +127,15 @@ class Board extends Model
     /**
      * Close board
      *
-     * @return Board
+     * @return boolean
      * @throws Exception\ValidationsFailed
      */
     public function close()
     {
         $url = self::getBasePath($this->getId()).'/closed';
+        $board = self::put($url, ['value' => true]);
 
-        return self::put($url, ['value' => true]);
+        return true;
     }
 
     /**
@@ -149,8 +150,9 @@ class Board extends Model
     {
         if ($board_id) {
             $url = self::getBasePath($board_id).'/closed';
+            $board = self::put($url, ['value' => true]);
 
-            return self::put($url, ['value' => true]);
+            return true;
         }
 
         throw new ValidationsFailed(

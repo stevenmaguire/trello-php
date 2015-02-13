@@ -21,6 +21,20 @@ trait Cards
     }
 
     /**
+     * Create and add a new card to model
+     *
+     * @param  array $attributes Card attributes to set
+     *
+     * @return Card  Newly minted trello card
+     */
+    protected function createCard($attributes = [])
+    {
+        $attributes['idList'] = $this->id;
+
+        return Card::create($attributes);
+    }
+
+    /**
      * Get model cards
      *
      * @param  string $model_id
@@ -45,18 +59,27 @@ trait Cards
     }
 
     /**
-     * Create and add a new card to model
+     * Get model foreign key
      *
-     * @param  array $attributes Card attributes to set
-     *
-     * @return Card  Newly minted trello card
+     * @return string
      */
-    protected function createCard($attributes = [])
-    {
-        $attributes['idList'] = $this->id;
+    abstract public function getForeignKey();
 
-        return Card::create($attributes);
-    }
+    /**
+     * Get model primary key
+     *
+     * @return string
+     */
+    abstract public function getId();
+
+    /**
+     * If model id empty, attempt to set same as getId()
+     *
+     * @param  string $model_id
+     *
+     * @return void
+     */
+    abstract protected function parseModelId(&$model_id);
 
     /**
      * Remove card from current model

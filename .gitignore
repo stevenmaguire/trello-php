@@ -1,6 +1,7 @@
 .DS_Store
-build
+/build
 composer.lock
 docs
-vendor
+/logs
+/vendor
 .environment.php

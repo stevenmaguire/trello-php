@@ -21,6 +21,22 @@ trait Checklists
     }
 
     /**
+     * add checklist to current board
+     *
+     * @param  array $attributes
+     *
+     * @return Checklist  Newly minted trello checklist
+     * @throws Exception\ValidationsFailed
+     */
+    protected function createChecklist($attributes = [])
+    {
+        $foreign_key = $this->getForeignKey();
+        $attributes[$foreign_key] = $this->getId();
+
+        return Checklist::create($attributes);
+    }
+
+    /**
      * Get model checklists
      *
      * @param  string $model_id
@@ -44,20 +60,27 @@ trait Checklists
     }
 
     /**
-     * add checklist to current board
+     * Get model foreign key
      *
-     * @param  array $attributes
-     *
-     * @return Checklist  Newly minted trello checklist
-     * @throws Exception\ValidationsFailed
+     * @return string
      */
-    protected function createChecklist($attributes = [])
-    {
-        $foreign_key = $this->getForeignKey();
-        $attributes[$foreign_key] = $this->getId();
+    abstract public function getForeignKey();
 
-        return Checklist::create($attributes);
-    }
+    /**
+     * Get model primary key
+     *
+     * @return string
+     */
+    abstract public function getId();
+
+    /**
+     * If model id empty, attempt to set same as getId()
+     *
+     * @param  string $model_id
+     *
+     * @return void
+     */
+    abstract protected function parseModelId(&$model_id);
 
     /**
      * Remove checklist from current model

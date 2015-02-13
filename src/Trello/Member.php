@@ -214,7 +214,7 @@ class Member extends Model
         try {
             return Organization::fetchMany($ids);
         } catch (Exception $e) {
-            return $organizations;
+            return new Collection($organizations);
         }
     }
 }

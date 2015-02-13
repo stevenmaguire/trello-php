@@ -17,7 +17,7 @@ class Http
      * @param  string $path Endpoint path
      * @param  array $params Optional params
      *
-     * @return boolean Operation successful
+     * @return boolean
      * @throws Exception
      */
     public static function delete($path, $params = [])
@@ -34,7 +34,7 @@ class Http
      * @param  string $path Endpoint path
      * @param  array $params Optional params
      *
-     * @return stdClass Located object
+     * @return stdClass
      * @throws Exception
      */
     public static function get($path, $params = [])
@@ -50,7 +50,7 @@ class Http
      * @param  string $path Endpoint path
      * @param  array $params Optional params
      *
-     * @return stdClass Located object
+     * @return stdClass
      * @throws Exception
      */
     public static function post($path, $params = [])
@@ -66,7 +66,7 @@ class Http
      * @param  string $path Endpoint path
      * @param  array $params Optional params
      *
-     * @return stdClass Located object
+     * @return stdClass
      * @throws Exception
      */
     public static function put($path, $params = [])
@@ -103,7 +103,7 @@ class Http
      *
      * @param  string $url Url
      *
-     * @return string $url Modified url
+     * @return string Modified url
      */
     private static function includeKeyInUrl($url)
     {
@@ -209,7 +209,7 @@ class Http
      * @param  string $status
      * @param  string $body
      *
-     * @return stdClass|null
+     * @return stdClass
      * @throws Exception
      */
     private static function parseHttpResponse($status, $body)
@@ -224,15 +224,15 @@ class Http
     /**
      * Build curl headers
      *
-     * @return string[] Curl headers
+     * @return array Curl headers
      */
     private static function curlHeaders()
     {
-        return [
+        return array(
             'Accept: application/json',
             'Content-Type: application/json',
             'User-Agent: ' . Configuration::applicationName() . ' ' . Version::get(),
             'X-ApiVersion: ' . Configuration::API_VERSION
-        ];
+        );
     }
 }

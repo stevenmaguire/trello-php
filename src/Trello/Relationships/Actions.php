@@ -27,4 +27,13 @@ trait Actions
             'attempted to get actions without id; it\'s gotta have an id'
         );
     }
+
+    /**
+     * If model id empty, attempt to set same as getId()
+     *
+     * @param  string $model_id
+     *
+     * @return void
+     */
+    abstract protected function parseModelId(&$model_id);
 }

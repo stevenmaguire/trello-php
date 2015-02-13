@@ -8,7 +8,7 @@ trait Lists
     /**
      * Create and add list to current model
      *
-     * @param  array $attributes List attributes
+     * @param  CardList $list
      *
      * @return CardList  Newly minted trello list
      * @throws Exception\ValidationsFailed
@@ -38,6 +38,31 @@ trait Lists
     }
 
     /**
+     * Get model foreign key
+     *
+     * @return string
+     */
+    abstract public function getForeignKey();
+
+    /**
+     * Get model primary key
+     *
+     * @return string
+     */
+    abstract public function getId();
+
+    /**
+     * Get parent list
+     *
+     * @return List Parent list
+     * @throws Exception
+     */
+    protected function getList()
+    {
+        return CardList::fetch($this->idList);
+    }
+
+    /**
      * Get model lists
      *
      * @param  string $model_id
@@ -62,6 +87,15 @@ trait Lists
     }
 
     /**
+     * If model id empty, attempt to set same as getId()
+     *
+     * @param  string $model_id
+     *
+     * @return void
+     */
+    abstract protected function parseModelId(&$model_id);
+
+    /**
      * Remove list from current model
      *
      * @param  CardList $list List to remove from model
@@ -75,15 +109,14 @@ trait Lists
     }
 
     /**
-     * Get parent list
+     * Update model attribute
      *
-     * @return List Parent list
-     * @throws Exception
+     * @param  string  $key
+     * @param  string  $value
+     *
+     * @return Model Updated board object
      */
-    protected function getList()
-    {
-        return CardList::fetch($this->idList);
-    }
+    abstract public function updateAttribute($key = null, $value = null);
 
     /**
      * Update parent list
