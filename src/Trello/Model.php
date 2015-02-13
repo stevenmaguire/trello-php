@@ -152,11 +152,12 @@ abstract class Model extends Trello
      * sends the fetch request to the gateway
      *
      * @param string|array $ids
+     * @param array $options
      *
      * @return Collection
      * @throws ValidationsFailed
      */
-    protected static function doFetch($ids, $options = [])
+    protected static function doFetch($ids, $options = array())
     {
         if (empty($ids)) {
             throw new ValidationsFailed(
@@ -167,6 +168,8 @@ abstract class Model extends Trello
         if (!is_array($ids)) {
             $ids = [$ids];
         }
+
+        $urls = array();
 
         foreach ($ids as $id) {
             $urls[] = self::getBasePath($id, $options);
