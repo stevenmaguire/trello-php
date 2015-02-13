@@ -170,8 +170,10 @@ abstract class Model extends Trello
             $ids = [$ids];
         }
 
+        $query_string = http_build_query($options);
+
         foreach ($ids as $id) {
-            $urls[] = self::getBasePath($id);
+            $urls[] = self::getBasePath($id).'?'.$query_string;
         }
 
         return self::doBatch($urls);
@@ -227,14 +229,17 @@ abstract class Model extends Trello
      * @param  string $id Model id to fetch
      * @param  array $options
      *
-     * @return Model
+     * @return Model|null
      * @throws ValidationsFailed
      */
     public static function fetch($id = null, $options= [])
     {
-        $result = self::doFetch($id, $options);
+        $result = self::doFetch($id, $options)->first();
+        if ($result) {
+            return self::factory($result);
+        }
 
-        return $result->first();
+        return null;
     }
 
     /**

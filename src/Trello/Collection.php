@@ -69,7 +69,7 @@ class Collection implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Return first value
      *
-     * @return string|object
+     * @return string|array|object
      *
      * @throws OutOfRangeException
      */
@@ -87,7 +87,7 @@ class Collection implements \Countable, \IteratorAggregate, \ArrayAccess
      *
      * @param integer $index
      *
-     * @return string|object
+     * @return string|array|object
      *
      * @throws OutOfRangeException
      */
@@ -114,7 +114,7 @@ class Collection implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Return last value
      *
-     * @return string|object
+     * @return string|array|object
      *
      * @throws OutOfRangeException
      */
