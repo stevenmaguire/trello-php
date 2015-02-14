@@ -1,6 +1,7 @@
 <?php namespace Trello;
 
 use \DateTime;
+use \ReflectionObject;
 
 /**
  * Trello Utility methods
@@ -214,6 +215,40 @@ class Util
     public static function buildQueryStringFromArray($array = [])
     {
         return http_build_query($array);
+    }
+
+
+    /**
+     * Map an object as another given object
+     *
+     * @param  Model $destination Object to receive the mapping
+     * @param  object source Object from which to map data
+     *
+     * @return Model Mapped object
+     *
+     * @codeCoverageIgnore
+     */
+    public static function mapAs($destination, $source)
+    {
+        if ($source) {
+            $sourceReflection = new ReflectionObject($source);
+            $destinationReflection = new ReflectionObject($destination);
+            $sourceProperties = $sourceReflection->getProperties();
+            foreach ($sourceProperties as $sourceProperty) {
+                $sourceProperty->setAccessible(true);
+                $name = $sourceProperty->getName();
+                $value = $sourceProperty->getValue($source);
+                if ($destinationReflection->hasProperty($name)) {
+                    $propDest = $destinationReflection->getProperty($name);
+                    $propDest->setAccessible(true);
+                    $propDest->setValue($destination, $value);
+                } else {
+                    $destination->$name = $value;
+                }
+            }
+        }
+
+        return $destination;
     }
 
     /**
