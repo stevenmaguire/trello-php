@@ -21,7 +21,7 @@ trait Actions
             $actions = static::get(static::getBasePath($model_id).'/actions', $options);
             $ids = Action::getIds($actions);
 
-            return Action::fetchMany($ids);
+            return Action::fetchMany($ids, $options);
         }
         throw new ValidationsFailed(
             'attempted to get actions without id; it\'s gotta have an id'
