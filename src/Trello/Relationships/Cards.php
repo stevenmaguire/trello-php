@@ -49,11 +49,10 @@ trait Cards
         $this->parseModelId($model_id);
         if ($model_id) {
             $cards = Http::get(static::getBasePath($model_id).'/cards', $options);
-            $ids = Card::getIds($cards);
 
-            return Card::fetchMany($ids, $options);
+            return static::parseCollectionAs($cards, Card::class);
         }
-        print_r(func_get_args());
+
         throw new ValidationsFailed(
             'attempted to get cards without id; it\'s gotta have an id'
         );
