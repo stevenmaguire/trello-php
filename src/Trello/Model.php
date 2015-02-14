@@ -348,7 +348,7 @@ abstract class Model
     /**
      * Parse collection as model
      *
-     * @param  array $collection
+     * @param  array|null $collection
      * @param  string $model
      *
      * @return Collection
