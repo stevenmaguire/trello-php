@@ -82,12 +82,11 @@ class Board_Test extends UnitTestCase
         Board::closeWithId();
     }
 
-    /**
-     * @expectedException Trello\Exception\ValidationsFailed
-     */
     public function test_It_Can_Not_Fetch_Board_When_No_Board_Id_Provided()
     {
-        Board::fetch();
+        $board = Board::fetch();
+
+        $this->assertNull($board);
     }
 
     /**

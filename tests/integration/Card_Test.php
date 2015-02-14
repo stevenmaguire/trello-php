@@ -5,12 +5,11 @@ use Trello\Card;
 
 class Card_Test extends IntegrationTestCase
 {
-    /**
-     * @expectedException Trello\Exception\ValidationsFailed
-     **/
     public function test_It_Can_Not_Fetch_A_Card_When_Id_Not_Provided()
     {
         $card = Card::fetch();
+
+        $this->assertNull($card);
     }
 
     public function test_It_Can_Fetch_A_Card_When_Id_Provided()
@@ -36,12 +35,11 @@ class Card_Test extends IntegrationTestCase
         $this->assertEquals($card2->id, $result[1]->id);
     }
 
-    /**
-     * @expectedException Trello\Exception\ValidationsFailed
-     **/
     public function test_It_Can_Not_Fetch_Multiple_Card_When_Ids_Not_Provided()
     {
         $result = Card::fetchMany();
+
+        $this->assertInstanceOf('Trello\Collection', $result);
     }
 
     /**

@@ -52,12 +52,11 @@ class Board_Test extends IntegrationTestCase
         return $result;
     }
 
-    /**
-     * @expectedException Trello\Exception\ValidationsFailed
-     */
     public function test_It_Can_Not_Get_A_Board_Without_Id()
     {
         $results = Board::fetch();
+
+        $this->assertNull($results);
     }
 
     public function test_It_Can_Not_Get_A_Board_With_Invalid_Id()
@@ -495,5 +494,14 @@ class Board_Test extends IntegrationTestCase
         $card = $this->createTestCard();
         $board = $card->getBoard();
         $response = $board->getField('foo', true);
+    }
+
+    public function test_It_Can_Get_Members_For_Given_Board_When_Board_Id_Provided()
+    {
+        $board = $this->createTestBoard();
+
+        $response = Board::getMembers($board->getId(), ['filter' => 'admins', 'fields' => 'fullName,username,memberType,idPremOrgsAdmin']);
+
+        $this->assertInstanceOf('Trello\Collection', $response);
     }
 }

@@ -27,12 +27,11 @@ class CardList_Test extends IntegrationTestCase
         $this->assertEquals($list2->id, $result[1]->id);
     }
 
-    /**
-     * @expectedException Trello\Exception\ValidationsFailed
-     */
     public function test_It_Can_Not_Fetch_A_List_When_Id_Not_Provided()
     {
         $list = CardList::fetch();
+
+        $this->assertNull($list);
     }
 
     public function test_It_Can_Create_A_List_When_Name_And_Board_Id_Provided()

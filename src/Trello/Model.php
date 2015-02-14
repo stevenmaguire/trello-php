@@ -141,14 +141,11 @@ abstract class Model extends Http
      * @param array $options
      *
      * @return Collection
-     * @throws ValidationsFailed
      */
     protected static function doFetch($ids, $options = array())
     {
         if (empty($ids)) {
-            throw new ValidationsFailed(
-                'attempted to fetch '.lcfirst(self::getClassName()).' without id; it\'s gotta have an id'
-            );
+            return new Collection;
         }
 
         if (!is_array($ids)) {
@@ -215,7 +212,6 @@ abstract class Model extends Http
      * @param  array $options
      *
      * @return Model|null
-     * @throws ValidationsFailed
      */
     public static function fetch($id = null, $options= [])
     {
@@ -234,7 +230,6 @@ abstract class Model extends Http
      * @param  array $options
      *
      * @return Collection
-     * @throws ValidationsFailed
      */
     public static function fetchMany($ids = [], $options = [])
     {

@@ -23,12 +23,11 @@ class Checklist_Test extends IntegrationTestCase
         $checklist = Checklist::create();
     }
 
-    /**
-     * @expectedException Trello\Exception\ValidationsFailed
-     **/
     public function test_It_Can_Not_Fetch_A_Checklist_When_Id_Not_Provided()
     {
         $checklist = Checklist::fetch();
+
+        $this->assertNull($checklist);
     }
 
     public function test_It_Can_Fetch_A_Checklist_When_Id_Provided()
