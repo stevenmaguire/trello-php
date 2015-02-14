@@ -64,6 +64,7 @@ class IntegrationTestHelper
         if (is_null($this->test_org) || $force) {
             $this->test_org = Organization::create(['displayName' => 'test']);
         }
+
         return $this->test_org;
     }
 
@@ -73,6 +74,7 @@ class IntegrationTestHelper
         if (is_null($this->test_board) || $force) {
             $this->test_board = Board::create(['name' => 'test', 'idOrganization' => $org->id]);
         }
+
         return $this->test_board;
     }
 
@@ -82,6 +84,7 @@ class IntegrationTestHelper
         if (is_null($this->test_list) || $force) {
             $this->test_list = CardList::create(['name' => 'test', 'idBoard' => $board->id]);
         }
+
         return $this->test_list;
     }
 
@@ -91,6 +94,7 @@ class IntegrationTestHelper
         if (is_null($this->test_card) || $force) {
             $this->test_card = Card::create(['name' => 'test', 'idList' => $list->id]);
         }
+
         return $this->test_card;
     }
 
@@ -101,6 +105,7 @@ class IntegrationTestHelper
         if (is_null($this->test_checklist) || $force) {
             $this->test_checklist = Checklist::create(['name' => uniqid(), 'idBoard' => $board->id, 'idCard' => $card->id]);
         }
+
         return $this->test_checklist;
     }
 

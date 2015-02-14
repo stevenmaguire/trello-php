@@ -2,6 +2,7 @@
 
 use \ReflectionClass;
 use Trello\Card;
+use Trello\CardList;
 
 class Card_Test extends IntegrationTestCase
 {
@@ -62,8 +63,8 @@ class Card_Test extends IntegrationTestCase
 
     public function test_It_Can_Create_A_New_Card_When_Name_List_Id_Provided()
     {
-        $list = $this->createTestList();
-        $attributes = ['name' => 'test card', 'idList' => $list->id];
+        $list = $this->createTestList(true);
+        $attributes = ['name' => 'test card', 'idList' => $list->getId()];
 
         $card = Card::create($attributes);
 
@@ -78,7 +79,7 @@ class Card_Test extends IntegrationTestCase
      **/
     public function test_It_Can_Update_Parent_List_When_List_Model_Provided($card)
     {
-        $list = $this->createTestList();
+        $list = $this->createTestList(true);
 
         $result = $card->updateList($list);
 

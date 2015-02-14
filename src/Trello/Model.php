@@ -12,7 +12,7 @@ use Trello\Exception\ValidationsFailed;
  * @copyright  2014 Steven Maguire
  * @abstract
  */
-abstract class Model extends Http
+abstract class Model
 {
     /**
      * Model id
@@ -343,19 +343,21 @@ abstract class Model extends Http
      */
     private static function mapAs($destination, $source)
     {
-        $sourceReflection = new ReflectionObject($source);
-        $destinationReflection = new ReflectionObject($destination);
-        $sourceProperties = $sourceReflection->getProperties();
-        foreach ($sourceProperties as $sourceProperty) {
-            $sourceProperty->setAccessible(true);
-            $name = $sourceProperty->getName();
-            $value = $sourceProperty->getValue($source);
-            if ($destinationReflection->hasProperty($name)) {
-                $propDest = $destinationReflection->getProperty($name);
-                $propDest->setAccessible(true);
-                $propDest->setValue($destination, $value);
-            } else {
-                $destination->$name = $value;
+        if ($source) {
+            $sourceReflection = new ReflectionObject($source);
+            $destinationReflection = new ReflectionObject($destination);
+            $sourceProperties = $sourceReflection->getProperties();
+            foreach ($sourceProperties as $sourceProperty) {
+                $sourceProperty->setAccessible(true);
+                $name = $sourceProperty->getName();
+                $value = $sourceProperty->getValue($source);
+                if ($destinationReflection->hasProperty($name)) {
+                    $propDest = $destinationReflection->getProperty($name);
+                    $propDest->setAccessible(true);
+                    $propDest->setValue($destination, $value);
+                } else {
+                    $destination->$name = $value;
+                }
             }
         }
 

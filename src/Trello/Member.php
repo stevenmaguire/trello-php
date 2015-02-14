@@ -192,11 +192,11 @@ class Member extends Model
     /**
      * Gets current user data
      *
-     * @return stdClass
+     * @return Model
      */
     public static function currentUser()
     {
-        $response = static::get(static::getBasePath().'/me');
+        $response = Http::get(static::getBasePath().'/me');
 
         return static::factory($response);
     }
@@ -208,7 +208,7 @@ class Member extends Model
      */
     public static function currentUserOrganizations()
     {
-        $organizations = static::get(static::getBasePath().'/my/organizations');
+        $organizations = Http::get(static::getBasePath().'/my/organizations');
         $ids = Organization::getIds($organizations);
 
         try {

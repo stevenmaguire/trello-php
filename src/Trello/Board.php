@@ -134,7 +134,7 @@ class Board extends Model
     public function close()
     {
         $url = self::getBasePath($this->getId()).'/closed';
-        self::put($url, ['value' => true]);
+        Http::put($url, ['value' => true]);
 
         return true;
     }
@@ -151,7 +151,7 @@ class Board extends Model
     {
         if ($board_id) {
             $url = self::getBasePath($board_id).'/closed';
-            self::put($url, ['value' => true]);
+            Http::put($url, ['value' => true]);
 
             return true;
         }
@@ -168,7 +168,7 @@ class Board extends Model
      */
     public function generateCalendarKey()
     {
-        return static::post(static::getBasePath($this->id).'/calendarKey/generate');
+        return Http::post(static::getBasePath($this->id).'/calendarKey/generate');
     }
 
     /**
@@ -178,7 +178,7 @@ class Board extends Model
      */
     public function generateEmailKey()
     {
-        return static::post(static::getBasePath($this->id).'/emailKey/generate');
+        return Http::post(static::getBasePath($this->id).'/emailKey/generate');
     }
 
     /**
@@ -188,7 +188,7 @@ class Board extends Model
      */
     public function getStars()
     {
-        return static::get(static::getBasePath($this->id).'/boardStars');
+        return Http::get(static::getBasePath($this->id).'/boardStars');
     }
 
     /**
@@ -198,6 +198,6 @@ class Board extends Model
      */
     public function markAsViewed()
     {
-        return static::post(static::getBasePath($this->id).'/markAsViewed');
+        return Http::post(static::getBasePath($this->id).'/markAsViewed');
     }
 }

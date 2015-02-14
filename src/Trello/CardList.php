@@ -113,7 +113,7 @@ class CardList extends Model
     public function close()
     {
         $url = self::getBasePath($this->getId()).'/closed';
-        self::put($url, ['value' => true]);
+        Http::put($url, ['value' => true]);
 
         return true;
     }

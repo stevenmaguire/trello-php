@@ -4,28 +4,28 @@ use Trello\Tests\TestCase;
 
 abstract class IntegrationTestCase extends TestCase
 {
-    protected function createTestOrganization()
+    protected function createTestOrganization($force = false)
     {
-        return IntegrationTestHelper::getInstance()->getOrganization();
+        return IntegrationTestHelper::getInstance()->getOrganization($force);
     }
 
-    protected function createTestBoard()
+    protected function createTestBoard($force = false)
     {
-        return IntegrationTestHelper::getInstance()->getBoard();
+        return IntegrationTestHelper::getInstance()->getBoard($force);
     }
 
-    protected function createTestList()
+    protected function createTestList($force = false)
     {
-        return IntegrationTestHelper::getInstance()->getList();
+        return IntegrationTestHelper::getInstance()->getList($force);
     }
 
-    protected function createTestCard()
+    protected function createTestCard($force = false)
     {
-        return IntegrationTestHelper::getInstance()->getCard();
+        return IntegrationTestHelper::getInstance()->getCard($force);
     }
 
-    protected function createTestChecklist()
+    protected function createTestChecklist($force = false)
     {
-        return IntegrationTestHelper::getInstance()->getChecklist();
+        return IntegrationTestHelper::getInstance()->getChecklist($force);
     }
 }

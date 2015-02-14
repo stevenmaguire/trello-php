@@ -1,6 +1,7 @@
 <?php namespace Trello\Relationships;
 
 use Trello\Exception\ValidationsFailed;
+use Trello\Http;
 
 trait Powerups
 {
@@ -15,7 +16,7 @@ trait Powerups
     protected function addPowerUp($powerup = null)
     {
         if (preg_match('/voting|cardAging|calendar|recap/', $powerup)) {
-            return static::post(static::getBasePath($this->getId()).'/powerUps', ['value' => $powerup]);
+            return Http::post(static::getBasePath($this->getId()).'/powerUps', ['value' => $powerup]);
         }
         throw new ValidationsFailed(
             'attempted to add invalid powerup to model; it\'s gotta be a valid powerup'
@@ -98,7 +99,7 @@ trait Powerups
     protected function removePowerUp($powerup = null)
     {
         if (self::isValidPowerUp($powerup)) {
-            return static::delete(static::getBasePath($this->getId()).'/powerUps/'.$powerup);
+            return Http::delete(static::getBasePath($this->getId()).'/powerUps/'.$powerup);
         }
         throw new ValidationsFailed(
             'attempted to remove invalid powerup from board; it\'s gotta be a valid powerup'
