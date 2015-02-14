@@ -2,6 +2,7 @@
 
 use Trello\Member;
 use Trello\Exception\ValidationsFailed;
+use Trello\Http;
 
 trait Members
 {
@@ -18,7 +19,7 @@ trait Members
     {
         $this->parseModelId($model_id);
         if ($model_id) {
-            $members = static::get(static::getBasePath($model_id).'/members', $options);
+            $members = Http::get(static::getBasePath($model_id).'/members', $options);
             $ids = Member::getIds($members);
 
             return Member::fetchMany($ids, $options);

@@ -504,4 +504,13 @@ class Board_Test extends IntegrationTestCase
 
         $this->assertInstanceOf('Trello\Collection', $response);
     }
+
+    public function test_It_Can_Get_Actions_For_Given_Board_When_Board_Id_Provided()
+    {
+        $board = $this->createTestBoard();
+
+        $response = Board::getActions($board->getId(), ['entities' => 'true', 'filter' => 'createCard,deleteCard,moveCardFromBoard,moveCardToBoard,updateCard:closed,updateCard:idList']);
+
+        $this->assertInstanceOf('Trello\Collection', $response);
+    }
 }

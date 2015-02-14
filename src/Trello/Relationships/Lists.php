@@ -2,6 +2,7 @@
 
 use Trello\CardList;
 use Trello\Exception\ValidationsFailed;
+use Trello\Http;
 
 trait Lists
 {
@@ -85,7 +86,7 @@ trait Lists
         $this->parseModelId($model_id);
         if ($model_id) {
             $path = static::getBasePath($model_id).'/lists';
-            $lists = static::get($path, $options);
+            $lists = Http::get($path, $options);
             $ids = CardList::getIds($lists);
 
             return CardList::fetchMany($ids, $options);

@@ -2,6 +2,7 @@
 
 use Trello\Action;
 use Trello\Exception\ValidationsFailed;
+use Trello\Http;
 
 trait Actions
 {
@@ -18,15 +19,24 @@ trait Actions
     {
         $this->parseModelId($model_id);
         if ($model_id) {
-            $actions = static::get(static::getBasePath($model_id).'/actions', $options);
-            $ids = Action::getIds($actions);
+            $actions = Http::get(static::getBasePath($model_id).'/actions', $options);
 
-            return Action::fetchMany($ids, $options);
+            return static::parseCollectionAs($actions, Action::class);
         }
         throw new ValidationsFailed(
             'attempted to get actions without id; it\'s gotta have an id'
         );
     }
+
+    /**
+     * Parse collection as model
+     *
+     * @param  array $collection
+     * @param  string $model
+     *
+     * @return Collection
+     */
+    abstract protected function parseCollectionAs(array $collection, $model);
 
     /**
      * If model id empty, attempt to set same as getId()

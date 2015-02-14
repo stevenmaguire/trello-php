@@ -2,6 +2,7 @@
 
 use \DateTime;
 use \ReflectionObject;
+use \ReflectionProperty;
 
 /**
  * Trello Utility methods
@@ -247,7 +248,6 @@ class Util
                 }
             }
         }
-
         return $destination;
     }
 

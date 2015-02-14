@@ -2,6 +2,7 @@
 
 use Trello\Checklist;
 use Trello\Exception\ValidationsFailed;
+use Trello\Http;
 
 trait Checklists
 {
@@ -49,7 +50,7 @@ trait Checklists
     {
         $this->parseModelId($model_id);
         if ($model_id) {
-            $checklists = static::get(static::getBasePath($model_id).'/checklists', $options);
+            $checklists = Http::get(static::getBasePath($model_id).'/checklists', $options);
             $ids = Checklist::getIds($checklists);
 
             return Checklist::fetchMany($ids, $options);

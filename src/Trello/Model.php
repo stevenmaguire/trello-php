@@ -196,7 +196,7 @@ abstract class Model
      *
      * @return Model instance of Model
      */
-    protected static function factory($response = null)
+    public static function factory($response = null)
     {
         $instance = new static();
         $instance->initialize($response);
@@ -343,6 +343,23 @@ abstract class Model
                 $collection->add($model);
             }
         }
+    }
+
+    /**
+     * Parse collection as model
+     *
+     * @param  array $collection
+     * @param  string $model
+     *
+     * @return Collection
+     */
+    protected function parseCollectionAs(array $collection = array(), $model)
+    {
+        foreach ($collection as $key => $item) {
+            $collection[$key] = $model::factory($item);
+        }
+
+        return new Collection($collection);
     }
 
     /**
