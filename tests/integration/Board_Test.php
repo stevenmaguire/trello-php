@@ -416,6 +416,8 @@ class Board_Test extends IntegrationTestCase
 
         $results = Board::search($keyword);
 
+        print_r($results);
+
         $this->assertInstanceOf('Trello\Collection', $results);
         return $results;
     }

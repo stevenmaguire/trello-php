@@ -70,6 +70,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         Configuration::token(getenv('TRELLO_API_TOKEN'));
         Configuration::applicationName(getenv('TRELLO_API_APPNAME'));
         Configuration::oauthCallbackUrl(getenv('TRELLO_API_CALLBACK_URL'));
+        Configuration::includeRawResults(true);
     }
 
     protected function randomNumber($max = 10)

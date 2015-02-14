@@ -29,7 +29,8 @@ class Configuration
                     'secret'     => '',
                     'token'    => '',
                     'application_name' => self::LIBRARY_NAME,
-                    'oauth_callback_url' => ''
+                    'oauth_callback_url' => '',
+                    'include_raw_results' => false
                    ];
     /**
      *
@@ -57,7 +58,8 @@ class Configuration
             'secret' => '',
             'token' => '',
             'application_name' => self::LIBRARY_NAME,
-            'oauth_callback_url' => ''
+            'oauth_callback_url' => '',
+            'include_raw_results' => false
         ];
     }
 
@@ -213,6 +215,20 @@ class Configuration
     public static function oauthCallbackUrl($value = null)
     {
         return self::setOrGet('oauth_callback_url', $value);
+    }
+
+    /**
+     * sets or returns the property after validation
+     *
+     * @access public
+     * @static
+     * @param string $value pass a string to set, empty to get
+     *
+     * @return string returns true on set
+     */
+    public static function includeRawResults($value = null)
+    {
+        return self::setOrGet('include_raw_results', $value);
     }
 
     /**

@@ -324,7 +324,9 @@ abstract class Model
      */
     protected function initialize($response)
     {
-        $this->raw = $response;
+        if (Configuration::includeRawResults()) {
+            $this->raw = $response;
+        }
 
         return Util::mapAs($this, $response);
     }
@@ -353,7 +355,7 @@ abstract class Model
      *
      * @return Collection
      */
-    protected function parseCollectionAs(array $collection = array(), $model)
+    protected static function parseCollectionAs(array $collection = array(), $model)
     {
         foreach ($collection as $key => $item) {
             $collection[$key] = $model::factory($item);
@@ -391,7 +393,7 @@ abstract class Model
         $filters['modelTypes'] = $model;
         $results = static::doSearch($keyword, $filters);
 
-        return new Collection($results->$model);
+        return self::parseCollectionAs($results->$model, get_called_class());
     }
 
     /**

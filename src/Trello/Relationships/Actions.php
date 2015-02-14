@@ -29,16 +29,6 @@ trait Actions
     }
 
     /**
-     * Parse collection as model
-     *
-     * @param  array $collection
-     * @param  string $model
-     *
-     * @return Collection
-     */
-    abstract protected function parseCollectionAs(array $collection, $model);
-
-    /**
      * If model id empty, attempt to set same as getId()
      *
      * @param  string $model_id
