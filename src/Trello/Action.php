@@ -54,6 +54,13 @@ class Action extends Model
     protected $memberCreator;
 
     /**
+     * Entities
+     *
+     * @var array $entities
+     */
+    protected $entities = array();
+
+    /**
      * Action base path
      *
      * @var string
