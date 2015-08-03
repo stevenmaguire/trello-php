@@ -19,23 +19,42 @@ $ composer require stevenmaguire/trello-php
 
 ## Usage
 
-Make sure you have secured your Trello API keys before going further. There is [a handy guide](https://trello.com/docs/gettingstarted/index.html) for that.
+### Create client
 
-### Configuration
+```php
+$client = new Stevenmaguire\Services\Trello\Client(array(
+    'domain' => 'https://trello.com', // optional, default 'https://trello.com'
+    'key' => 'YOUR_APP_ACCESS_KEY',
+    'token'  => 'YOUR_USER_ACCESS_TOKEN',
+    'version'      => '1', // optional, default '1'
+));
+```
+*Make sure you have secured your Trello API keys before going further. There is [a handy guide](https://trello.com/docs/gettingstarted/index.html) for that.*
 
-``` php
-Trello_Configuration::environment('sandbox');
-Trello_Configuration::key('YOUR_APP_ACCESS_KEY');
-Trello_Configuration::secret('YOUR_APP_ACCESS_SECRET');
-Trello_Configuration::token('YOUR_USER_ACCESS_TOKEN');
-Trello_Configuration::applicationName('YOUR_APPLICATION_NAME'); // Optional
-Trello_Configuration::oauthCallbackUrl('http://your-callback-uri/'); // Required when using assisted OAuth authorization
+### Access the API
+
+Full client documentation is available in the [API Guide](API-GUIDE.md).
+
+### Handling exceptions
+
+When handling exceptions that result during requests to Trello using the client, a `Stevenmaguire\Services\Trello\Exceptions\Exception` will be thrown. This exception will include information from the underlying Http request/response issues, including the response body from Trello.
+
+```php
+try {
+    $board = $client->getBoard($boardId);
+} catch (Stevenmaguire\Services\Trello\Exceptions\Exception $e) {
+    $code = $e->getCode(); // Http status code from response
+    $reason = $e->getMessage(); // Http status reason phrase
+    $error = $e->getPrevious(); // GuzzleHttp\Exception\RequestException from http client
+    $body = $e->getResponseBody(); // stdClass response body from http client
+}
+
 ```
 
 ## Testing
 
 ``` bash
-$ phpunit
+$ ./vendor/bin/phpunit
 ```
 
 ## Contributing
