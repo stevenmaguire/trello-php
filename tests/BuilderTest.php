@@ -69,32 +69,59 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
         if ($this->build) {
             $ref = new \ReflectionClass(Client::class);
 
-            $testCase = '';
+            $dontWrite = ['__construct','setHttpClient','getHttp','parseDefaultOptions','makeQuery','addBatchUrl','getBatchUrls','parseBatchAttributes'];
 
-            $dontWrite = ['__construct','setHttpClient','getHttp','parseDefaultOptions'];
+            $details = '['."\n";
 
             foreach ($ref->getMethods() as $method) {
                 if (!in_array($method->getName(), $dontWrite)) {
-                    $methodSignature = $method->getName().'(';
-                    $args = [];
-                    foreach ($method->getParameters() as $parameter) {
-                        $args[] = '$'.$parameter->getName();
+                    $contents = [];
+                    $contents['name'] = $method->getName();
+                    $filename = $method->getFileName();
+                    $start_line = $method->getStartLine() - 1; // it's actually - 1, otherwise you wont get the function() block
+                    $end_line = $method->getEndLine();
+                    $length = $end_line - $start_line;
+
+                    $source = file($filename);
+                    $body = implode("", array_slice($source, $start_line, $length));
+
+                    preg_match_all('/getHttp\(\)->([a-z]+)\(/', $body, $matches);
+                    if (isset($matches[1][0])) {
+                        $contents['method'] = $matches[1][0];
                     }
-                    $methodSignature .= implode(', ', $args).');';
 
-                    $testCase .= '##### '.$this->getTitleFrom($method->getName())."\n\n";
-                    $testCase .= '```php'."\n";
-                    $testCase .= '$result = $client->'.$method->getName().'(';
-                    $testCase .= implode(', ', $args);
-                    $testCase .= ');'."\n";
+                    preg_match_all('/\([\'|"]([^\'|"]+)[\'|"]/', $body, $matches);
+                    if (isset($matches[1][0])) {
+                        $contents['pattern'] = $matches[1][0];
+                    }
 
-                    $testCase .= '```'."\n";
+                    $details .= "\t"."'".$method->getName()."' => ["."\n";
+                    if (isset($contents['method'])) {
+                        //$details .= "\t\t"."'method' => '".$contents['method']."',"."\n";
+                    } else {
+                        print_r($details);
+                        exit;
+                    }
+                    $details .= "\t\t"."'method' => '".$contents['method']."',"."\n";
+
+                    if (isset($contents['pattern'])) {
+                        //$details .= "\t\t"."'pattern' => '".$contents['pattern']."'"."\n";
+                    } else {
+                        print_r($details);
+                        exit;
+                    }
+                    $details .= "\t\t"."'pattern' => '".$contents['pattern']."'"."\n";
+
+                    $details .= "\t"."],"."\n";
+                    //print_r($contents);
                 }
             }
 
-            $testCase .= "\n";
+            $details .= '];';
 
-            file_put_contents(__DIR__."/useage.md", $testCase);
+            print_r($details);
+
+            //file_put_contents(__DIR__."/useage.md", $testCase);
         }
     }
 }

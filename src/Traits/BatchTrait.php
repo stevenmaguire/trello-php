@@ -56,6 +56,7 @@ trait BatchTrait
     }
 
     /**
+     * Retrieves batch urls currently queued for request.
      *
      * @return array
      */
@@ -65,7 +66,7 @@ trait BatchTrait
     }
 
     /**
-     * Attempt to parse attributes to pull valid urls.
+     * Attempts to parse attributes to pull valid urls.
      *
      * @param  array   $attributes
      *
@@ -73,16 +74,24 @@ trait BatchTrait
      */
     protected function parseBatchAttributes($attributes = [])
     {
-        try {
-            if (isset($attributes['urls'])) {
-                if (is_array($attributes['urls'])) {
-                    array_map([$this, 'addBatchUrl'], $attributes['urls']);
-                } elseif (is_string($attributes['urls'])) {
-                    $this->addBatchUrl($attributes['urls']);
-                }
+        if (isset($attributes['urls'])) {
+            if (is_array($attributes['urls'])) {
+                $this->addBatchUrls($attributes['urls']);
+            } elseif (is_string($attributes['urls'])) {
+                $this->addBatchUrl($attributes['urls']);
             }
-        } catch (\Exception $e) {
-            // Something blew up, we won't worry about it right now.
         }
+    }
+
+    /**
+     * Adds multiple urls to batch collection.
+     *
+     * @param array  $urls
+     *
+     * @return void
+     */
+    public function addBatchUrls(array $urls)
+    {
+        array_map([$this, 'addBatchUrl'], $urls);
     }
 }

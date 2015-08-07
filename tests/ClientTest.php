@@ -136,4 +136,14 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $result = $this->client->getHttp()->get($path);
     }
+
+    /**
+     * @expectedException BadMethodCallException
+     */
+    public function testBadMethodCallThrowsException()
+    {
+        $method = uniqid();
+
+        $result = $this->client->$method();
+    }
 }

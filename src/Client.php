@@ -4,22 +4,10 @@ use GuzzleHttp\ClientInterface as HttpClient;
 
 class Client
 {
-    use Traits\ActionTrait,
+    use Traits\ApiMethodsTrait,
         Traits\AuthorizationTrait,
         Traits\BatchTrait,
-        Traits\BoardTrait,
-        Traits\CardTrait,
-        Traits\ChecklistTrait,
-        Traits\LabelTrait,
-        Traits\ListTrait,
-        Traits\MemberTrait,
-        Traits\NotificationTrait,
-        Traits\OrganizationTrait,
-        Traits\SearchTrait,
-        Traits\SessionTrait,
-        Traits\TokenTrait,
-        Traits\TypeTrait,
-        Traits\WebhookTrait;
+        Traits\SearchTrait;
 
     /**
      * Default client options
