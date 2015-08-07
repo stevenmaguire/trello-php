@@ -340,6 +340,8 @@ trait ApiMethodsTrait
     ];
 
     /**
+     * Retrieves currently configured http broker.
+     *
      * @return Stevenmaguire\Services\Trello\Http
      */
     abstract public function getHttp();

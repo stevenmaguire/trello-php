@@ -3,11 +3,15 @@
 trait AuthorizationTrait
 {
     /**
+     * Retrieves currently configured http broker.
+     *
      * @return Stevenmaguire\Services\Trello\Http
      */
     abstract public function getHttp();
 
     /**
+     * Creates a properly formatted query string from given parameters.
+     *
      * @param  array  $parameters
      *
      * @return string
@@ -15,6 +19,8 @@ trait AuthorizationTrait
     abstract protected function makeQuery($parameters = []);
 
     /**
+     * Retrieves http response from Trello api for authorization.
+     *
      * @param  array $attributes
      *
      * @return object

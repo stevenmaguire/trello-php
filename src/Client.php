@@ -36,7 +36,7 @@ class Client
     protected $http;
 
     /**
-     * Create new trello client.
+     * Creates new trello client.
      *
      * @param array $options
      */
@@ -48,9 +48,9 @@ class Client
     }
 
     /**
-     * Get trello client http broker.
+     * Retrieves currently configured http broker.
      *
-     * @return Http
+     * @return Stevenmaguire\Services\Trello\Http
      */
     public function getHttp()
     {
@@ -58,6 +58,8 @@ class Client
     }
 
     /**
+     * Creates a properly formatted query string from given parameters.
+     *
      * @param  array  $parameters
      *
      * @return string
@@ -68,7 +70,7 @@ class Client
     }
 
     /**
-     * Parse give options against default options.
+     * Parses give options against default options.
      *
      * @param  array   $options
      *
@@ -86,7 +88,7 @@ class Client
     }
 
     /**
-     * Set http client used by http broker.
+     * Updates the http client used by http broker.
      *
      * @param HttpClient  $httpClient
      *

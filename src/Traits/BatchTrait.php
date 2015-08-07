@@ -12,11 +12,15 @@ trait BatchTrait
     private $batchUrls = [];
 
     /**
+     * Retrieves currently configured http broker.
+     *
      * @return Stevenmaguire\Services\Trello\Http
      */
     abstract public function getHttp();
 
     /**
+     * Creates a properly formatted query string from given parameters.
+     *
      * @param  array  $parameters
      *
      * @return string
@@ -24,6 +28,8 @@ trait BatchTrait
     abstract protected function makeQuery($parameters = []);
 
     /**
+     * Adds single url to batch collection.
+     *
      * @param string $url
      *
      * @return $this
@@ -35,7 +41,22 @@ trait BatchTrait
         return $this;
     }
 
+
     /**
+     * Adds multiple urls to batch collection.
+     *
+     * @param array  $urls
+     *
+     * @return void
+     */
+    public function addBatchUrls(array $urls)
+    {
+        array_map([$this, 'addBatchUrl'], $urls);
+    }
+
+    /**
+     * Retrieves http response from Trello api for batch collection.
+     *
      * @param  array  $attributes
      *
      * @return object
@@ -81,17 +102,5 @@ trait BatchTrait
                 $this->addBatchUrl($attributes['urls']);
             }
         }
-    }
-
-    /**
-     * Adds multiple urls to batch collection.
-     *
-     * @param array  $urls
-     *
-     * @return void
-     */
-    public function addBatchUrls(array $urls)
-    {
-        array_map([$this, 'addBatchUrl'], $urls);
     }
 }

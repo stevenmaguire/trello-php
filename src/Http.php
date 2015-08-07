@@ -44,7 +44,7 @@ class Http
     protected $token;
 
     /**
-     * Create http broker.
+     * Creates a new http broker.
      *
      * @param array  $options
      */
@@ -56,7 +56,7 @@ class Http
     }
 
     /**
-     * Add authentication credentials to given request.
+     * Adds authentication credentials to given request.
      *
      * @param  RequestInterface  $request
      *
@@ -76,7 +76,7 @@ class Http
     }
 
     /**
-     * Create request.
+     * Creates a request.
      *
      * @param  string $verb
      * @param  string $path
@@ -95,7 +95,7 @@ class Http
     }
 
     /**
-     * Perform delete http request.
+     * Retrieves http response for a request with the delete method.
      *
      * @param  string $path
      *
@@ -109,7 +109,7 @@ class Http
     }
 
     /**
-     * Perform get http request.
+     * Retrieves http response for a request with the get method.
      *
      * @param  string $path
      *
@@ -123,7 +123,7 @@ class Http
     }
 
     /**
-     * Get a request.
+     * Creates and returns a request.
      *
      * @param  string $method
      * @param  string $path
@@ -143,7 +143,7 @@ class Http
     }
 
     /**
-     * Get default headers.
+     * Retrieves default headers.
      *
      * @return array
      */
@@ -153,7 +153,7 @@ class Http
     }
 
     /**
-     * Get fully qualified domain with path.
+     * Creates fully qualified domain from given path.
      *
      * @param  string  $path
      *
@@ -165,7 +165,7 @@ class Http
     }
 
     /**
-     * Perform post http request.
+     * Retrieves http response for a request with the post method.
      *
      * @param  string $path
      * @param  array  $parameters
@@ -180,7 +180,7 @@ class Http
     }
 
     /**
-     * Perform put http request.
+     * Retrieves http response for a request with the put method.
      *
      * @param  string $path
      * @param  array  $parameters
@@ -195,7 +195,7 @@ class Http
     }
 
     /**
-     * Send request.
+     * Retrieves http response for a given request.
      *
      * @param  RequestInterface $request
      *
@@ -224,7 +224,7 @@ class Http
     }
 
     /**
-     * Set http client.
+     * Updates the http client.
      *
      * @param HttpClientInterface  $httpClient
      *
@@ -238,7 +238,7 @@ class Http
     }
 
     /**
-     * Set http broker option.
+     * Updates an individual property of http broker.
      *
      * @param string  $value
      * @param string  $name
