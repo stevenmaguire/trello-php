@@ -1,6 +1,23 @@
 #Changelog
 All Notable changes to `trello-php` will be documented in this file
 
+## 0.2.1 - 2015-08-06
+
+### Added
+- Dynamic method implementation (faster execution)
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Superflous traits (extra code)
+
+### Security
+- Nothing
+
 ## 0.2.0 - 2015-08-04
 
 ### Added
