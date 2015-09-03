@@ -1,6 +1,26 @@
 #Changelog
 All Notable changes to `trello-php` will be documented in this file
 
+## 0.3.0 - 2015-09-03
+
+### Added
+- Central configuration object
+- Authorization support to assist with OAuth1 auth flow
+- Example code for OAuth1 auth flow
+- Improved documentation for getting started
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## 0.2.1 - 2015-08-06
 
 ### Added
