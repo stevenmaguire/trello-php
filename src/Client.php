@@ -22,13 +22,6 @@ class Client
     ];
 
     /**
-     * Config
-     *
-     * @var array
-     */
-    protected $config;
-
-    /**
      * Http broker
      *
      * @var Http
@@ -42,9 +35,19 @@ class Client
      */
     public function __construct($options = [])
     {
-        $this->config = static::parseDefaultOptions($options);
+        Configuration::setMany($options, static::$defaultOptions);
 
-        $this->http = new Http($this->config);
+        $this->http = new Http;
+    }
+
+    /**
+     * Retrieves currently configured authorization broker.
+     *
+     * @return Stevenmaguire\Services\Trello\Authorization
+     */
+    public function getAuthorization()
+    {
+        return new Authorization;
     }
 
     /**
@@ -67,24 +70,6 @@ class Client
     protected function makeQuery($parameters = [])
     {
         return !empty($parameters) ? '?' . http_build_query($parameters) : '';
-    }
-
-    /**
-     * Parses give options against default options.
-     *
-     * @param  array   $options
-     *
-     * @return array
-     */
-    public static function parseDefaultOptions($options = [])
-    {
-        array_walk(static::$defaultOptions, function ($value, $key) use (&$options) {
-            if (!isset($options[$key])) {
-                $options[$key] = $value;
-            }
-        });
-
-        return $options;
     }
 
     /**

@@ -9,13 +9,6 @@ use Psr\Http\Message\RequestInterface;
 class Http
 {
     /**
-     * Domain
-     *
-     * @var string
-     */
-    protected $domain;
-
-    /**
      * Http client
      *
      * @var HttpClientInterface
@@ -23,35 +16,10 @@ class Http
     protected $httpClient;
 
     /**
-     * Key
-     *
-     * @var string
-     */
-    protected $key;
-
-    /**
-     * Version
-     *
-     * @var string
-     */
-    protected $version;
-
-    /**
-     * Token
-     *
-     * @var string
-     */
-    protected $token;
-
-    /**
      * Creates a new http broker.
-     *
-     * @param array  $options
      */
-    public function __construct($options = [])
+    public function __construct()
     {
-        array_walk($options, [$this, 'setOption']);
-
         $this->httpClient = new HttpClient;
     }
 
@@ -67,8 +35,8 @@ class Http
         $uri = $request->getUri();
         parse_str($uri->getQuery(), $query);
 
-        $query['key'] = $this->key;
-        $query['token'] = $this->token;
+        $query['key'] = Configuration::get('key');
+        $query['token'] = Configuration::get('token');
 
         $uri = $uri->withQuery(http_build_query($query));
 
@@ -161,7 +129,7 @@ class Http
      */
     protected function getUrlFromPath($path = '/')
     {
-        return $this->domain.'/'.$this->version.'/'.ltrim($path, '/');
+        return Configuration::get('domain').'/'.Configuration::get('version').'/'.ltrim($path, '/');
     }
 
     /**
@@ -233,23 +201,6 @@ class Http
     public function setClient(HttpClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
-
-        return $this;
-    }
-
-    /**
-     * Updates an individual property of http broker.
-     *
-     * @param string  $value
-     * @param string  $name
-     *
-     * @return Http
-     */
-    protected function setOption($value, $name)
-    {
-        if (property_exists($this, $name)) {
-            $this->$name = $value;
-        }
 
         return $this;
     }

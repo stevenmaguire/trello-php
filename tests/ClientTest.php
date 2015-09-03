@@ -6,6 +6,7 @@ use GuzzleHttp\Exception\BadResponseException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use Stevenmaguire\Services\Trello\Authorization;
 use Stevenmaguire\Services\Trello\Client;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
@@ -110,6 +111,13 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->client->setHttpClient($client);
+    }
+
+    public function testGetAuthorization()
+    {
+        $auth = $this->client->getAuthorization();
+
+        $this->assertInstanceOf(Authorization::class, $auth);
     }
 
     public function testGetAuthenticatedRequest()
