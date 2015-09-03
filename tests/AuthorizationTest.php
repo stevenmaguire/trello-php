@@ -17,7 +17,7 @@ class AuthorizationTest extends \PHPUnit_Framework_TestCase
 
         $settings = [
             'key' => uniqid(),
-            'token' => uniqid(),
+            'secret' => uniqid(),
         ];
 
         Configuration::setMany($settings);

@@ -103,6 +103,21 @@ $result = $client->updateActionText($actionId, $attributes);
 $result = $client->getAuthorize($attributes);
 ```
 
+#### Get authorization url
+
+```php
+$result = $client->getAuthorizationUrl();
+```
+
+#### Get access token
+
+```php
+$token = 'oauth-authorization-token';
+$verifier = 'oauth-authorization-verifier';
+
+$result = $client->getToken($token, $verifier);
+```
+
 ### Batches
 
 #### Add url to batch

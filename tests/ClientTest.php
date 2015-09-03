@@ -22,6 +22,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             'domain' => 'https://'.uniqid(),
             'key' => uniqid(),
             'token' => uniqid(),
+            'secret' => uniqid(),
             'version' => 'v'.uniqid(),
         ];
 

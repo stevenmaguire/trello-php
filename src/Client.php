@@ -7,6 +7,7 @@ class Client
     use Traits\ApiMethodsTrait,
         Traits\AuthorizationTrait,
         Traits\BatchTrait,
+        Traits\ConfigurationTrait,
         Traits\SearchTrait;
 
     /**
@@ -18,7 +19,7 @@ class Client
         'domain' => 'https://trello.com',
         'key' => null,
         'version' => '1',
-        'token' => null,
+        'secret' => null,
     ];
 
     /**
@@ -41,7 +42,7 @@ class Client
     }
 
     /**
-     * Retrieves currently configured authorization broker.
+     * Retrieves a new authorization broker.
      *
      * @return Stevenmaguire\Services\Trello\Authorization
      */

@@ -10,6 +10,11 @@ trait ApiMethodsTrait
      * @var array
      */
     protected $methods = [
+        'getCurrentUser' => ['get', 'members/me'],
+        'getCurrentUserBoards' => ['get', 'members/my/boards'],
+        'getCurrentUserPinnedBoards' => ['get', 'members/my/boards/pinned'],
+        'getCurrentUserCards' => ['get', 'members/my/cards'],
+        'getCurrentUserOrganizations' => ['get', 'members/my/organizations'],
         'deleteAction' => ['delete', 'actions/%s'],
         'getAction' => ['get', 'actions/%s'],
         'updateAction' => ['put', 'actions/%s'],

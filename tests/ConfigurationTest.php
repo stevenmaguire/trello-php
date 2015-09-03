@@ -1,5 +1,6 @@
 <?php namespace Stevenmaguire\Services\Trello\Tests;
 
+use Stevenmaguire\Services\Trello\Client;
 use Stevenmaguire\Services\Trello\Configuration;
 
 class ConfigurationTest extends \PHPUnit_Framework_TestCase
@@ -7,6 +8,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         parent::setUp();
+        $this->client = new Client;
         $config = new \ReflectionClass(Configuration::class);
         $settings = $config->getProperty('settings');
         $settings->setAccessible(true);
@@ -18,10 +20,10 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $key = uniqid();
         $value = uniqid();
 
-        Configuration::set($key, $value);
+        $this->client->addConfig($key, $value);
 
-        $this->assertTrue(Configuration::has($key));
-        $this->assertEquals($value, Configuration::get($key));
+        $this->assertTrue($this->client->hasConfig($key));
+        $this->assertEquals($value, $this->client->getConfig($key));
     }
 
     public function testSetMany()
@@ -31,11 +33,11 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             uniqid() => uniqid(),
         ];
 
-        Configuration::setMany($settings);
+        $this->client->addConfig($settings);
 
         array_walk($settings, function ($value, $key) {
-            $this->assertTrue(Configuration::has($key));
-            $this->assertEquals($value, Configuration::get($key));
+            $this->assertTrue($this->client->hasConfig($key));
+            $this->assertEquals($value, $this->client->getConfig($key));
         });
     }
 
@@ -51,12 +53,12 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             uniqid() => uniqid(),
         ];
 
-        Configuration::setMany($settings, $defaults);
+        $this->client->addConfig($settings, $defaults);
         $configuration = array_merge($settings, $defaults);
 
         array_walk($configuration, function ($value, $key) {
-            $this->assertTrue(Configuration::has($key));
-            $this->assertEquals($value, Configuration::get($key));
+            $this->assertTrue($this->client->hasConfig($key));
+            $this->assertEquals($value, $this->client->getConfig($key));
         });
     }
 
@@ -67,8 +69,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             uniqid() => uniqid(),
         ];
 
-        Configuration::setMany($settings);
-        $configuration = Configuration::get();
+        $this->client->addConfig($settings);
+        $configuration = $this->client->getConfig();
 
         $this->assertTrue(is_array($configuration));
         $this->assertEquals($settings, $configuration);
@@ -79,7 +81,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $key = uniqid();
         $default = uniqid();
 
-        $setting = Configuration::get($key, $default);
+        $setting = $this->client->getConfig($key, $default);
 
         $this->assertEquals($default, $setting);
     }

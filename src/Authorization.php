@@ -8,7 +8,7 @@ class Authorization
     /**
      * OAuth client
      *
-     * @var League\OAuth1\Client\Server\Trello
+     * @var \League\OAuth1\Client\Server\Trello
      */
     protected $client;
 
@@ -17,16 +17,26 @@ class Authorization
      */
     public function __construct()
     {
-        $options = [
+        $this->createClient();
+    }
+
+    /**
+     * Creates a new OAuth server client and attaches to authorization broker.
+     *
+     * @return Authorization
+     */
+    protected function createClient()
+    {
+        $this->client = new OAuthServer([
             'identifier' => Configuration::get('key'),
-            'secret' => Configuration::get('token'),
+            'secret' => Configuration::get('secret'),
             'callback_uri' => Configuration::get('callbackUrl'),
             'name' => Configuration::get('name'),
             'expiration' => Configuration::get('expiration'),
             'scope' => Configuration::get('scope'),
-        ];
+        ]);
 
-        $this->client = new OAuthServer($options);
+        return $this;
     }
 
     /**
@@ -70,7 +80,7 @@ class Authorization
      * @param  string $oauthToken
      * @param  string $oauthVerifier
      *
-     * @return CredentialsInterface
+     * @return \League\OAuth1\Client\Credentials\CredentialsInterface
      */
     public function getToken($oauthToken, $oauthVerifier)
     {
@@ -90,7 +100,7 @@ class Authorization
     /**
      * Updates the OAuth client.
      *
-     * @param League\OAuth1\Client\Server\Trello  $client
+     * @param \League\OAuth1\Client\Server\Trello  $client
      *
      * @return Authorization
      */

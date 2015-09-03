@@ -30,6 +30,7 @@
         <whitelist>
             <directory suffix=".php">./</directory>
             <exclude>
+                <directory suffix=".php">./example</directory>
                 <directory suffix=".php">./vendor</directory>
                 <directory suffix=".php">./tests</directory>
             </exclude>

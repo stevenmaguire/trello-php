@@ -4,6 +4,56 @@ use Stevenmaguire\Services\Trello\Exceptions\Exception;
 
 trait ApiTestTrait
 {
+    public function testGetCurrentUser()
+    {
+        $payload = $this->getSuccessPayload();
+        $this->prepareFor("GET", "/members/me", "", $payload);
+
+        $result = $this->client->getCurrentUser();
+
+        $this->assertExpectedEqualsResult($payload, $result);
+    }
+
+    public function testGetCurrentUserBoards()
+    {
+        $payload = $this->getSuccessPayload();
+        $this->prepareFor("GET", "/members/my/boards", "", $payload);
+
+        $result = $this->client->getCurrentUserBoards();
+
+        $this->assertExpectedEqualsResult($payload, $result);
+    }
+
+    public function testGetCurrentUserPinnedBoards()
+    {
+        $payload = $this->getSuccessPayload();
+        $this->prepareFor("GET", "/members/my/boards/pinned", "", $payload);
+
+        $result = $this->client->getCurrentUserPinnedBoards();
+
+        $this->assertExpectedEqualsResult($payload, $result);
+    }
+
+    public function testGetCurrentUserCards()
+    {
+        $payload = $this->getSuccessPayload();
+        $this->prepareFor("GET", "/members/my/cards", "", $payload);
+
+        $result = $this->client->getCurrentUserCards();
+
+        $this->assertExpectedEqualsResult($payload, $result);
+    }
+
+    public function testGetCurrentUserOrganizations()
+    {
+        $payload = $this->getSuccessPayload();
+        $this->prepareFor("GET", "/members/my/organizations", "", $payload);
+
+        $result = $this->client->getCurrentUserOrganizations();
+
+        $this->assertExpectedEqualsResult($payload, $result);
+    }
+
     public function testDeleteAction()
     {
         $actionId = $this->getTestString();
