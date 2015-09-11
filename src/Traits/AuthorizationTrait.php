@@ -42,23 +42,36 @@ trait AuthorizationTrait
     /**
      * Retrieves complete authorization url.
      *
+     * @param  League\OAuth1\Client\Credentials\CredentialsInterface   $temporaryCredentials
+     *
      * @return string
      */
-    public function getAuthorizationUrl()
+    public function getAuthorizationUrl(CredentialsInterface $temporaryCredentials = null)
     {
-        return $this->getAuthorization()->getAuthorizationUrl();
+        return $this->getAuthorization()->getAuthorizationUrl($temporaryCredentials);
     }
 
     /**
      * Retrives access token credentials with token and verifier.
      *
-     * @param  string  $token
-     * @param  string  $verifier
+     * @param  string                                                  $token
+     * @param  string                                                  $verifier
+     * @param  League\OAuth1\Client\Credentials\CredentialsInterface   $temporaryCredentials
      *
      * @return League\OAuth1\Client\Credentials\CredentialsInterface
      */
-    public function getAccessToken($token, $verifier)
+    public function getAccessToken($token, $verifier, CredentialsInterface $temporaryCredentials = null)
     {
-        return $this->getAuthorization()->getToken($token, $verifier);
+        return $this->getAuthorization()->getToken($token, $verifier, $temporaryCredentials);
+    }
+
+    /**
+     * Creates and returns new temporary credentials instance.
+     *
+     * @return League\OAuth1\Client\Credentials\CredentialsInterface
+     */
+    public function getTemporaryCredentials()
+    {
+        return $this->getAuthorization()->getTemporaryCredentials();
     }
 }

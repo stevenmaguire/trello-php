@@ -41,6 +41,27 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         });
     }
 
+    public function testSetManyWithExisting()
+    {
+        $first = [
+            uniqid() => uniqid(),
+            uniqid() => uniqid(),
+        ];
+
+        $second = [
+            uniqid() => uniqid(),
+            uniqid() => uniqid(),
+        ];
+
+        $this->client->addConfig($first)->addConfig($second);
+        $configuration = array_merge($first, $second);
+
+        array_walk($configuration, function ($value, $key) {
+            $this->assertTrue($this->client->hasConfig($key));
+            $this->assertEquals($value, $this->client->getConfig($key));
+        });
+    }
+
     public function testSetManyWithDefaults()
     {
         $defaults = [

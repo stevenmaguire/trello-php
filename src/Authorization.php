@@ -46,14 +46,18 @@ class Authorization
      * credentials. These identify you as a client to the server. Store the
      * credentials in the session. Return authorization url.
      *
+     * @param  CredentialsInterface $temporaryCredentials
+     *
      * @return string Authorization url
      */
-    public function getAuthorizationUrl()
+    public function getAuthorizationUrl(CredentialsInterface $temporaryCredentials = null)
     {
-        $sessionKey = self::getCredentialSessionKey();
-        $temporaryCredentials = $this->client->getTemporaryCredentials();
-        $_SESSION[$sessionKey] = serialize($temporaryCredentials);
-        session_write_close();
+        if (is_null($temporaryCredentials)) {
+            $sessionKey = self::getCredentialSessionKey();
+            $temporaryCredentials = $this->getTemporaryCredentials();
+            $_SESSION[$sessionKey] = serialize($temporaryCredentials);
+            session_write_close();
+        }
 
         return $this->client->getAuthorizationUrl($temporaryCredentials);
     }
@@ -69,6 +73,16 @@ class Authorization
     }
 
     /**
+     * Creates and returns new temporary credentials instance.
+     *
+     * @return CredentialsInterface
+     */
+    public function getTemporaryCredentials()
+    {
+        return $this->client->getTemporaryCredentials();
+    }
+
+    /**
      * Verify and fetch token
      *
      * Retrieve the temporary credentials from step 2. Third and final part to
@@ -77,24 +91,26 @@ class Authorization
      * the token credentials and discard the temporary ones - they're
      * irrelevant at this stage.
      *
-     * @param  string $oauthToken
-     * @param  string $oauthVerifier
+     * @param  string               $oauthToken
+     * @param  string               $oauthVerifier
+     * @param  CredentialsInterface $temporaryCredentials
      *
      * @return \League\OAuth1\Client\Credentials\CredentialsInterface
      */
-    public function getToken($oauthToken, $oauthVerifier)
+    public function getToken($oauthToken, $oauthVerifier, CredentialsInterface $temporaryCredentials = null)
     {
-        $sessionKey = self::getCredentialSessionKey();
-        $temporaryCredentials = unserialize($_SESSION[$sessionKey]);
-        $tokenCredentials = $this->client->getTokenCredentials(
+        if (is_null($temporaryCredentials)) {
+            $sessionKey = self::getCredentialSessionKey();
+            $temporaryCredentials = unserialize($_SESSION[$sessionKey]);
+            unset($_SESSION[$sessionKey]);
+            session_write_close();
+        }
+
+        return $this->client->getTokenCredentials(
             $temporaryCredentials,
             $oauthToken,
             $oauthVerifier
         );
-        unset($_SESSION[$sessionKey]);
-        session_write_close();
-
-        return $tokenCredentials;
     }
 
     /**
