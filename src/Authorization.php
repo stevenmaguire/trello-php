@@ -1,6 +1,7 @@
 <?php namespace Stevenmaguire\Services\Trello;
 
 use League\OAuth1\Client\Credentials\CredentialsInterface;
+use League\OAuth1\Client\Credentials\TemporaryCredentials;
 use League\OAuth1\Client\Server\Trello as OAuthServer;
 
 class Authorization
@@ -46,11 +47,11 @@ class Authorization
      * credentials. These identify you as a client to the server. Store the
      * credentials in the session. Return authorization url.
      *
-     * @param  CredentialsInterface $temporaryCredentials
+     * @param  TemporaryCredentials $temporaryCredentials
      *
      * @return string Authorization url
      */
-    public function getAuthorizationUrl(CredentialsInterface $temporaryCredentials = null)
+    public function getAuthorizationUrl(TemporaryCredentials $temporaryCredentials = null)
     {
         if (is_null($temporaryCredentials)) {
             $sessionKey = self::getCredentialSessionKey();
@@ -75,7 +76,7 @@ class Authorization
     /**
      * Creates and returns new temporary credentials instance.
      *
-     * @return CredentialsInterface
+     * @return TemporaryCredentials
      */
     public function getTemporaryCredentials()
     {
@@ -93,11 +94,11 @@ class Authorization
      *
      * @param  string               $oauthToken
      * @param  string               $oauthVerifier
-     * @param  CredentialsInterface $temporaryCredentials
+     * @param  TemporaryCredentials $temporaryCredentials
      *
      * @return \League\OAuth1\Client\Credentials\CredentialsInterface
      */
-    public function getToken($oauthToken, $oauthVerifier, CredentialsInterface $temporaryCredentials = null)
+    public function getToken($oauthToken, $oauthVerifier, TemporaryCredentials $temporaryCredentials = null)
     {
         if (is_null($temporaryCredentials)) {
             $sessionKey = self::getCredentialSessionKey();

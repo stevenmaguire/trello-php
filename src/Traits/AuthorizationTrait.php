@@ -1,6 +1,6 @@
 <?php namespace Stevenmaguire\Services\Trello\Traits;
 
-use League\OAuth1\Client\Credentials\CredentialsInterface;
+use League\OAuth1\Client\Credentials\TemporaryCredentials;
 
 trait AuthorizationTrait
 {
@@ -42,11 +42,11 @@ trait AuthorizationTrait
     /**
      * Retrieves complete authorization url.
      *
-     * @param  League\OAuth1\Client\Credentials\CredentialsInterface   $temporaryCredentials
+     * @param  League\OAuth1\Client\Credentials\TemporaryCredentials   $temporaryCredentials
      *
      * @return string
      */
-    public function getAuthorizationUrl(CredentialsInterface $temporaryCredentials = null)
+    public function getAuthorizationUrl(TemporaryCredentials $temporaryCredentials = null)
     {
         return $this->getAuthorization()->getAuthorizationUrl($temporaryCredentials);
     }
@@ -56,11 +56,11 @@ trait AuthorizationTrait
      *
      * @param  string                                                  $token
      * @param  string                                                  $verifier
-     * @param  League\OAuth1\Client\Credentials\CredentialsInterface   $temporaryCredentials
+     * @param  League\OAuth1\Client\Credentials\TemporaryCredentials   $temporaryCredentials
      *
      * @return League\OAuth1\Client\Credentials\CredentialsInterface
      */
-    public function getAccessToken($token, $verifier, CredentialsInterface $temporaryCredentials = null)
+    public function getAccessToken($token, $verifier, TemporaryCredentials $temporaryCredentials = null)
     {
         return $this->getAuthorization()->getToken($token, $verifier, $temporaryCredentials);
     }

@@ -1,6 +1,23 @@
 #Changelog
 All Notable changes to `trello-php` will be documented in this file
 
+## 0.3.1 - 2015-09-11
+
+### Added
+- Add temporary credentials support
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## 0.3.0 - 2015-09-03
 
 ### Added
