@@ -19,15 +19,6 @@ trait BatchTrait
     abstract public function getHttp();
 
     /**
-     * Creates a properly formatted query string from given parameters.
-     *
-     * @param  array  $parameters
-     *
-     * @return string
-     */
-    abstract protected function makeQuery($parameters = []);
-
-    /**
      * Adds single url to batch collection.
      *
      * @param string $url
@@ -67,7 +58,7 @@ trait BatchTrait
         $this->parseBatchAttributes($attributes);
 
         try {
-            $result = $this->getHttp()->get('batch' . $this->makeQuery(['urls' => $this->batchUrls]));
+            $result = $this->getHttp()->get('batch', ['urls' => $this->batchUrls]);
             $this->batchUrls = [];
 
             return $result;

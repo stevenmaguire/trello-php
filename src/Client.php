@@ -62,18 +62,6 @@ class Client
     }
 
     /**
-     * Creates a properly formatted query string from given parameters.
-     *
-     * @param  array  $parameters
-     *
-     * @return string
-     */
-    protected function makeQuery($parameters = [])
-    {
-        return !empty($parameters) ? '?' . http_build_query($parameters) : '';
-    }
-
-    /**
      * Updates the http client used by http broker.
      *
      * @param HttpClient  $httpClient

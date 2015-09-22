@@ -29,8 +29,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     public function testSetMany()
     {
         $settings = [
-            (uniqid() . rand(0,100)) => uniqid(),
-            (uniqid() . rand(0,100)) => uniqid(),
+            'one' => uniqid(),
+            'two' => uniqid(),
         ];
 
         $this->client->addConfig($settings);
@@ -44,13 +44,13 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     public function testSetManyWithExisting()
     {
         $first = [
-            (uniqid() . rand(0,100)) => uniqid(),
-            (uniqid() . rand(0,100)) => uniqid(),
+            'one' => uniqid(),
+            'two' => uniqid(),
         ];
 
         $second = [
-            (uniqid() . rand(0,100)) => uniqid(),
-            (uniqid() . rand(0,100)) => uniqid(),
+            'three' => uniqid(),
+            'four' => uniqid(),
         ];
 
         $this->client->addConfig($first)->addConfig($second);
@@ -65,13 +65,13 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     public function testSetManyWithDefaults()
     {
         $defaults = [
-            (uniqid() . rand(0,100)) => uniqid(),
-            (uniqid() . rand(0,100)) => uniqid(),
+            'one' => uniqid(),
+            'two' => uniqid(),
         ];
 
         $settings = [
-            (uniqid() . rand(0,100)) => uniqid(),
-            (uniqid() . rand(0,100)) => uniqid(),
+            'three' => uniqid(),
+            'four' => uniqid(),
         ];
 
         $this->client->addConfig($settings, $defaults);

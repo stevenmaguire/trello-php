@@ -86,10 +86,11 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $request = m::on(function ($request) use ($method, $domain, $path, $query, $authorizedQuery) {
             $uri = $request->getUri();
+
             return $request->getMethod() === strtoupper($method)
                 && $uri->getScheme().'://'.$uri->getHost() === $domain
                 && $uri->getPath() === $path
-                && (!empty($query) ? strpos($uri->getQuery(), $query) > -1 : true)
+                && (!empty($query) ? (strpos($uri->getQuery(), $query) > -1) : true)
                 && strpos($uri->getQuery(), $authorizedQuery) > -1;
         });
 

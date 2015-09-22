@@ -1,6 +1,23 @@
 #Changelog
 All Notable changes to `trello-php` will be documented in this file
 
+## 0.3.3 - 2015-09-22
+
+### Added
+- Nothing
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Remove `makeQuery` method from `Client`
+
+### Security
+- Nothing
+
 ## 0.3.2 - 2015-09-22
 
 ### Added

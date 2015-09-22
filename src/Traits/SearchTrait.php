@@ -10,15 +10,6 @@ trait SearchTrait
     abstract public function getHttp();
 
     /**
-     * Creates a properly formatted query string from given parameters.
-     *
-     * @param  array  $parameters
-     *
-     * @return string
-     */
-    abstract protected function makeQuery($parameters = []);
-
-    /**
      * Retrieves http response from Trello api for search query.
      *
      * @param  array $attributes
@@ -27,7 +18,7 @@ trait SearchTrait
      */
     public function getSearch($attributes = [])
     {
-        return $this->getHttp()->get('search' . $this->makeQuery($attributes));
+        return $this->getHttp()->get('search', $attributes);
     }
 
     /**
@@ -39,6 +30,6 @@ trait SearchTrait
      */
     public function getSearchMembers($attributes = [])
     {
-        return $this->getHttp()->get('search/members' . $this->makeQuery($attributes));
+        return $this->getHttp()->get('search/members', $attributes);
     }
 }

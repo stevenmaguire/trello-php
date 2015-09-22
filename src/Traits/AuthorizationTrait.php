@@ -19,15 +19,6 @@ trait AuthorizationTrait
     abstract public function getHttp();
 
     /**
-     * Creates a properly formatted query string from given parameters.
-     *
-     * @param  array  $parameters
-     *
-     * @return string
-     */
-    abstract protected function makeQuery($parameters = []);
-
-    /**
      * Retrieves http response from Trello api for authorization.
      *
      * @param  array $attributes
@@ -36,7 +27,7 @@ trait AuthorizationTrait
      */
     public function getAuthorize($attributes = [])
     {
-        return $this->getHttp()->get('authorize' . $this->makeQuery($attributes));
+        return $this->getHttp()->get('authorize', $attributes);
     }
 
     /**

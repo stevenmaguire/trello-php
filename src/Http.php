@@ -64,11 +64,11 @@ class Http
         );
 
         if ($queryString) {
-            $uri = $request->getUri();
-            array_walk($parameters, function ($value, $key) use (&$uri) {
-                $uri = $uri->withQueryValue($uri, $key, $value);
-            });
-            $request = $request->withUri($uri);
+            $request = $request->withUri(
+                $request->getUri()->withQuery(
+                    http_build_query($parameters)
+                )
+            );
         }
 
         return $request;
