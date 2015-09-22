@@ -66,12 +66,13 @@ class Http
      * Retrieves http response for a request with the delete method.
      *
      * @param  string $path
+     * @param  array  $parameters
      *
      * @return object
      */
-    public function delete($path)
+    public function delete($path, $parameters = [])
     {
-        $request = $this->getRequest('DELETE', $path);
+        $request = $this->getRequest('DELETE', $path, $parameters);
 
         return $this->sendRequest($request);
     }
@@ -80,12 +81,13 @@ class Http
      * Retrieves http response for a request with the get method.
      *
      * @param  string $path
+     * @param  array  $parameters
      *
      * @return object
      */
-    public function get($path)
+    public function get($path, $parameters = [])
     {
-        $request = $this->getRequest('GET', $path);
+        $request = $this->getRequest('GET', $path, $parameters);
 
         return $this->sendRequest($request);
     }
