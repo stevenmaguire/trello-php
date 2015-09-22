@@ -54,12 +54,24 @@ class Http
      */
     protected function createRequest($verb, $path, $parameters = [])
     {
-        return new Request(
+        $queryString = in_array(strtolower($verb), ['delete', 'get']);
+
+        $request = new Request(
             $verb,
             $this->getUrlFromPath($path),
             $this->getHeaders(),
-            json_encode($parameters)
+            (!$queryString ? json_encode($parameters) : '{}')
         );
+
+        if ($queryString) {
+            $uri = $request->getUri();
+            array_walk($parameters, function ($value, $key) use (&$uri) {
+                $uri = $uri->withQueryValue($uri, $key, $value);
+            });
+            $request = $request->withUri($uri);
+        }
+
+        return $request;
     }
 
     /**

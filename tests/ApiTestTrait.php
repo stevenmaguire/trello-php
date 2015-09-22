@@ -2083,10 +2083,11 @@ trait ApiTestTrait
     public function testGetListActions()
     {
         $listId = $this->getTestString();
+        $query = ['entities' => 'true'];
         $payload = $this->getSuccessPayload();
-        $this->prepareFor("GET", sprintf("/lists/%s/actions", $listId), "", $payload);
+        $this->prepareFor("GET", sprintf("/lists/%s/actions", $listId), http_build_query($query), $payload);
 
-        $result = $this->client->getListActions($listId);
+        $result = $this->client->getListActions($listId, $query);
 
         $this->assertExpectedEqualsResult($payload, $result);
     }
