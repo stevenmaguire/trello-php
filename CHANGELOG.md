@@ -1,6 +1,23 @@
 #Changelog
 All Notable changes to `trello-php` will be documented in this file
 
+## 0.3.2 - 2015-09-22
+
+### Added
+- Add parameters to GET and DELETE Http methods
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## 0.3.1 - 2015-09-11
 
 ### Added
