@@ -163,7 +163,7 @@ $result = $client->getBoardField($boardId, $fieldName);
 #### Get board actions
 
 ```php
-$result = $client->getBoardActions($boardId);
+$result = $client->getBoardActions($boardId, $attributes);
 ```
 #### Get board board stars
 
@@ -890,7 +890,7 @@ $result = $client->getListField($listId, $fieldName);
 #### Get list actions
 
 ```php
-$result = $client->getListActions($listId);
+$result = $client->getListActions($listId, $attributes);
 ```
 #### Add list archive all cards
 
@@ -973,7 +973,7 @@ $result = $client->getMemberField($memberId, $fieldName);
 #### Get member actions
 
 ```php
-$result = $client->getMemberActions($memberId);
+$result = $client->getMemberActions($memberId, $attributes);
 ```
 #### Add member avatar
 
@@ -1374,7 +1374,7 @@ $result = $client->getOrganizationField($organizationId, $fieldName);
 #### Get organization actions
 
 ```php
-$result = $client->getOrganizationActions($organizationId);
+$result = $client->getOrganizationActions($organizationId, $attributes);
 ```
 #### Get organization boards
 
