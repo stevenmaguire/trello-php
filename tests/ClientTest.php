@@ -94,8 +94,14 @@ class ClientTest extends \PHPUnit_Framework_TestCase
                 && strpos($uri->getQuery(), $authorizedQuery) > -1;
         });
 
+        if (is_string($payload)) {
+            $responseBody = $payload;
+        } else {
+            $responseBody = json_encode($payload);
+        }
+
         $stream = m::mock(StreamInterface::class);
-        $stream->shouldReceive('__toString')->andReturn(json_encode($payload));
+        $stream->shouldReceive('__toString')->andReturn($responseBody);
 
         $response = m::mock(ResponseInterface::class);
         $response->shouldReceive('getStatusCode')->andReturn($status);
@@ -139,10 +145,23 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException Stevenmaguire\Services\Trello\Exceptions\Exception
      */
-    public function testBadRequestThrowsExeption()
+    public function testBadRequestThrowsExeptionWithValidJson()
     {
         $path = uniqid();
-        $this->prepareFor("GET", $path, "", [], 400);
+        $responseBody = ['message' => 'Errors!'];
+        $this->prepareFor("GET", $path, "", $responseBody, 400);
+
+        $result = $this->client->getHttp()->get($path);
+    }
+
+    /**
+     * @expectedException Stevenmaguire\Services\Trello\Exceptions\Exception
+     */
+    public function testBadRequestThrowsExeptionWithoutValidJson()
+    {
+        $path = uniqid();
+        $responseBody = "Errors!";
+        $this->prepareFor("GET", $path, "", $responseBody, 400);
 
         $result = $this->client->getHttp()->get($path);
     }

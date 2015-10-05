@@ -182,7 +182,7 @@ class Http
      * @param  RequestInterface $request
      *
      * @return object
-     * @throws Exception
+     * @throws Exceptions\Exception
      */
     protected function sendRequest(RequestInterface $request)
     {
@@ -191,19 +191,9 @@ class Http
 
             return json_decode($response->getBody());
         } catch (RequestException $e) {
-            $exception = new Exceptions\Exception(
-                $e->getResponse()->getReasonPhrase(),
-                $e->getResponse()->getStatusCode(),
-                $e
-            );
-
-            throw $exception->setResponseBody(
-                json_decode(
-                    (string) $e->getResponse()->getBody()
-                )
-            );
+            $this->throwRequestException($e);
         }
-    }
+    } // @codeCoverageIgnore
 
     /**
      * Updates the http client.
@@ -217,5 +207,32 @@ class Http
         $this->httpClient = $httpClient;
 
         return $this;
+    }
+
+    /**
+     * Creates local exception from guzzle request exception, which includes
+     * response body.
+     *
+     * @param  RequestException  $requestException
+     *
+     * @return void
+     * @throws Exceptions\Exception
+     */
+    protected function throwRequestException(RequestException $requestException)
+    {
+        $exception = new Exceptions\Exception(
+            $requestException->getResponse()->getReasonPhrase(),
+            $requestException->getResponse()->getStatusCode(),
+            $requestException
+        );
+
+        $body = (string) $requestException->getResponse()->getBody();
+        $json = json_decode($body);
+
+        if (json_last_error() == JSON_ERROR_NONE) {
+            throw $exception->setResponseBody($json);
+        }
+
+        throw $exception->setResponseBody($body);
     }
 }
