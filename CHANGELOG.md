@@ -1,6 +1,24 @@
 #Changelog
 All Notable changes to `trello-php` will be documented in this file
 
+## 0.3.4 - 2015-10-05
+
+### Added
+- Add parameters to all Http methods. "Despite using POST and PUT, the Trello API actually expects the values to be in the query string rather than in the request body."
+- Improve thrown exception to check if response body is valid json.
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## 0.3.3 - 2015-09-22
 
 ### Added
