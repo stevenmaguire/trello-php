@@ -9,6 +9,13 @@ use Psr\Http\Message\RequestInterface;
 class Http
 {
     /**
+     * Multipart resources to include in next request.
+     *
+     * @var array
+     */
+    protected $multipartResources = [];
+
+    /**
      * Http client
      *
      * @var HttpClientInterface
@@ -54,6 +61,14 @@ class Http
      */
     protected function createRequest($verb, $path, $parameters = [])
     {
+        if (isset($parameters['file'])) {
+            $this->queueResourceAs(
+                'file',
+                \GuzzleHttp\Psr7\stream_for($parameters['file'])
+            );
+            unset($parameters['file']);
+        }
+
         $request = new Request(
             $verb,
             $this->getUrlFromPath($path),
@@ -170,6 +185,22 @@ class Http
     }
 
     /**
+     * Adds a given resource to multipart stream collection, to be processed by next request.
+     *
+     * @param  string                                           $name
+     * @param  resource|string|Psr\Http\Message\StreamInterface $resource
+     *
+     * @return void
+     */
+    protected function queueResourceAs($name, $resource)
+    {
+        array_push($this->multipartResources, [
+            'name' => $name,
+            'contents' => $resource,
+        ]);
+    }
+
+    /**
      * Retrieves http response for a given request.
      *
      * @param  RequestInterface $request
@@ -180,7 +211,11 @@ class Http
     protected function sendRequest(RequestInterface $request)
     {
         try {
-            $response = $this->httpClient->send($request);
+            $response = $this->httpClient->send($request, [
+                'multipart' => $this->multipartResources
+            ]);
+
+            $this->multipartResources = [];
 
             return json_decode($response->getBody());
         } catch (RequestException $e) {

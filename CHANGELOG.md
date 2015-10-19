@@ -1,6 +1,23 @@
 #Changelog
 All Notable changes to `trello-php` will be documented in this file
 
+## 0.3.5 - 2015-10-19
+
+### Added
+- Update Http client to handle file upload successfully.
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## 0.3.4 - 2015-10-05
 
 ### Added
