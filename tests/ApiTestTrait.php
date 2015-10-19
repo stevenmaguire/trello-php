@@ -1214,6 +1214,7 @@ trait ApiTestTrait
     {
         $cardId = $this->getTestString();
         $attributes = $this->getTestAttributes();
+        $attributes['file'] = uniqid();
         $payload = $this->getSuccessPayload();
         $this->prepareFor("POST", sprintf("/cards/%s/attachments", $cardId), "", $payload);
 

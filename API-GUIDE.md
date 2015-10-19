@@ -516,6 +516,13 @@ $result = $client->getCardAttachments($cardId);
 #### Add card attachment
 
 ```php
+$attributes = [
+    'name' => 'Cheddar Bo is delicious!',
+    'file' => fopen('/path/to/cheddar-bo.jpg', 'r'),
+    'mimeType' => 'image/jpeg',
+    'url' => null
+];
+
 $result = $client->addCardAttachment($cardId, $attributes);
 ```
 #### Delete card attachment

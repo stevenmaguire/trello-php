@@ -94,6 +94,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
                 && strpos($uri->getQuery(), $authorizedQuery) > -1;
         });
 
+        $requestOptions = m::on(function ($options) {
+            return is_array($options);
+        });
+
         if (is_string($payload)) {
             $responseBody = $payload;
         } else {
@@ -110,12 +114,12 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $client = m::mock(HttpClient::class);
         if ($status == 200) {
-            $client->shouldReceive('send')->with($request)->andReturn($response);
+            $client->shouldReceive('send')->with($request, $requestOptions)->andReturn($response);
         } else {
             $badRequest = m::mock(RequestInterface::class);
             $response->shouldReceive('getReasonPhrase')->andReturn("");
             $exception = new BadResponseException('test exception', $badRequest, $response);
-            $client->shouldReceive('send')->with($request)->andThrow($exception);
+            $client->shouldReceive('send')->with($request, $requestOptions)->andThrow($exception);
         }
 
         $this->client->setHttpClient($client);
