@@ -143,6 +143,25 @@ class Http
     }
 
     /**
+     * Prepares an array of important exception parts based on composition of a
+     * given exception.
+     *
+     * @param  RequestException  $requestException
+     *
+     * @return array
+     */
+    private function getRequestExceptionParts(RequestException $requestException)
+    {
+        $response = $requestException->getResponse();
+        $parts = [];
+        $parts['reason'] = $response ? $response->getReasonPhrase() : $requestException->getMessage();
+        $parts['code'] = $response ? $response->getStatusCode() : $requestException->getCode();
+        $parts['body'] = $response ? $response->getBody() : null;
+
+        return $parts;
+    }
+
+    /**
      * Creates fully qualified domain from given path.
      *
      * @param  string  $path
@@ -248,13 +267,15 @@ class Http
      */
     protected function throwRequestException(RequestException $requestException)
     {
+        $exceptionParts = $this->getRequestExceptionParts($requestException);
+
         $exception = new Exceptions\Exception(
-            $requestException->getResponse()->getReasonPhrase(),
-            $requestException->getResponse()->getStatusCode(),
+            $exceptionParts['reason'],
+            $exceptionParts['code'],
             $requestException
         );
 
-        $body = (string) $requestException->getResponse()->getBody();
+        $body = $exceptionParts['body'];
         $json = json_decode($body);
 
         if (json_last_error() == JSON_ERROR_NONE) {
