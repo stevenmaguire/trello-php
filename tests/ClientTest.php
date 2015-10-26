@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Stevenmaguire\Services\Trello\Authorization;
 use Stevenmaguire\Services\Trello\Client;
+use Stevenmaguire\Services\Trello\Exceptions\Exception as ServiceException;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -98,26 +99,32 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             return is_array($options);
         });
 
-        if (is_string($payload)) {
-            $responseBody = $payload;
+        if (is_null($payload)) {
+            $response = null;
         } else {
-            $responseBody = json_encode($payload);
+            if (is_string($payload)) {
+                $responseBody = $payload;
+            } else {
+                $responseBody = json_encode($payload);
+            }
+
+            $stream = m::mock(StreamInterface::class);
+            $stream->shouldReceive('__toString')->andReturn($responseBody);
+
+            $response = m::mock(ResponseInterface::class);
+            $response->shouldReceive('getStatusCode')->andReturn($status);
+            $response->shouldReceive('getBody')->andReturn($stream);
+            $response->shouldReceive('getHeader')->with('content-type')->andReturn('application/json');
         }
-
-        $stream = m::mock(StreamInterface::class);
-        $stream->shouldReceive('__toString')->andReturn($responseBody);
-
-        $response = m::mock(ResponseInterface::class);
-        $response->shouldReceive('getStatusCode')->andReturn($status);
-        $response->shouldReceive('getBody')->andReturn($stream);
-        $response->shouldReceive('getHeader')->with('content-type')->andReturn('application/json');
 
         $client = m::mock(HttpClient::class);
         if ($status == 200) {
             $client->shouldReceive('send')->with($request, $requestOptions)->andReturn($response);
         } else {
             $badRequest = m::mock(RequestInterface::class);
-            $response->shouldReceive('getReasonPhrase')->andReturn("");
+            if ($response) {
+                $response->shouldReceive('getReasonPhrase')->andReturn("");
+            }
             $exception = new BadResponseException('test exception', $badRequest, $response);
             $client->shouldReceive('send')->with($request, $requestOptions)->andThrow($exception);
         }
@@ -168,6 +175,20 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->prepareFor("GET", $path, "", $responseBody, 400);
 
         $result = $this->client->getHttp()->get($path);
+    }
+
+    public function testBadRequestThrowsExeptionWithoutResponse()
+    {
+        $path = uniqid();
+        $this->prepareFor("GET", $path, "", null, 400);
+
+        try {
+            $result = $this->client->getHttp()->get($path);
+        } catch (ServiceException $e) {
+            $this->assertTrue(is_string($e->getMessage()));
+            $this->assertTrue(is_numeric($e->getCode()));
+            $this->assertNull($e->getResponseBody());
+        }
     }
 
     /**

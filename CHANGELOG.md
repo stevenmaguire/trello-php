@@ -1,6 +1,23 @@
 #Changelog
 All Notable changes to `trello-php` will be documented in this file
 
+## 0.3.6 - 2015-10-26
+
+### Added
+- Add support for RequestExceptions that do not have a Response object.
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## 0.3.5 - 2015-10-19
 
 ### Added
