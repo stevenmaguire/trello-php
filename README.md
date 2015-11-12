@@ -129,7 +129,7 @@ After the user approves or denies access to your application, they will be redir
 
 ```php
 $token = $_GET['oauth_token'];
-$verifier = $_GET['verifier'];
+$verifier = $_GET['oauth_verifier'];
 
 $credentials = $client->getAccessToken($token, $verifier);
 $accessToken = $credentials->getIdentifier();
