@@ -137,7 +137,7 @@ $accessToken = $credentials->getIdentifier();
 
 If successful, `$credentials` with be an instance of [TokenCredentials](https://github.com/thephpleague/oauth1-client/blob/master/src/Client/Credentials/TokenCredentials.php). You can store the identifier within and use to authenticate requests on behalf of that user.
 
-#### User access token to make requests
+#### Use access token to make requests
 
 ```php
 $client->addConfig('token', $accessToken);
