@@ -231,7 +231,8 @@ class Http
     {
         try {
             $response = $this->httpClient->send($request, [
-                'multipart' => $this->multipartResources
+                'multipart' => $this->multipartResources,
+                'proxy' => Configuration::get('proxy')
             ]);
 
             $this->multipartResources = [];

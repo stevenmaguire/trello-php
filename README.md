@@ -42,6 +42,7 @@ Setting | Description
 `callbackUrl` | Required when using package to help get access tokens.
 `expiration` | Required when using package to help get access tokens.
 `scope` | Required when using package to help get access tokens.
+`proxy` | Optional setting to declare a host to use for proxy; [Read more on the Guzzle Docs](http://docs.guzzlephp.org/en/latest/request-options.html#proxy).
 
 #### Set configuration when creating client
 

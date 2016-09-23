@@ -3888,5 +3888,4 @@ trait ApiTestTrait
 
         $this->assertExpectedEqualsResult($payload, $result);
     }
-
 }

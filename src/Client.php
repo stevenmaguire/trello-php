@@ -18,6 +18,7 @@ class Client
     protected static $defaultOptions = [
         'domain' => 'https://trello.com',
         'key' => null,
+        'proxy' => null,
         'version' => '1',
         'secret' => null,
     ];

@@ -79,7 +79,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         return uniqid();
     }
 
-    protected function prepareFor($method, $path, $query = "", $payload = [], $status = 200)
+    protected function prepareFor($method, $path, $query = "", $payload = [], $status = 200, $proxy = null)
     {
         $path = $this->getFullPathFromPath($path);
         $domain = $this->getDomain();
@@ -95,7 +95,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
                 && strpos($uri->getQuery(), $authorizedQuery) > -1;
         });
 
-        $requestOptions = m::on(function ($options) {
+        $requestOptions = m::on(function ($options) use ($proxy) {
+            if ($proxy && (!isset($options['proxy']) || $options['proxy'] != $proxy)) {
+                return false;
+            }
             return is_array($options);
         });
 
@@ -199,5 +202,20 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $method = uniqid();
 
         $result = $this->client->$method();
+    }
+
+    public function testGetCurrentUserWithProxy()
+    {
+        $proxy = $this->getTestString();
+        $payload = $this->getSuccessPayload();
+        $this->prepareFor("GET", "/members/me", "", $payload, 200, $proxy);
+
+        $this->client->addConfig('proxy', $proxy);
+
+        $result = $this->client->getCurrentUser();
+
+        $this->client->addConfig('proxy', null);
+
+        $this->assertExpectedEqualsResult($payload, $result);
     }
 }

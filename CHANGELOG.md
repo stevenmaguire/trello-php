@@ -1,6 +1,23 @@
 #Changelog
 All Notable changes to `trello-php` will be documented in this file
 
+## 0.4.0 - 2016-09-23
+
+### Added
+- Add support for HTTP proxy configuration.
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## 0.3.6 - 2015-10-26
 
 ### Added
