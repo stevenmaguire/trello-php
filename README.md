@@ -57,6 +57,7 @@ $client = new Stevenmaguire\Services\Trello\Client(array(
     'secret' => 'my-application-secret',
     'token'  => 'abcdefghijklmnopqrstuvwxyz',
     'version' => '1',
+    'proxy' => 'tcp://localhost:8125',
 ));
 ```
 
