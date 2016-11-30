@@ -420,11 +420,12 @@ trait ApiTestTrait
 
     public function testGetBoardCards()
     {
+        $parameters = ['before' => uniqid()];
         $boardId = $this->getTestString();
         $payload = $this->getSuccessPayload();
-        $this->prepareFor("GET", sprintf("/boards/%s/cards", $boardId), "", $payload);
+        $this->prepareFor("GET", sprintf("/boards/%s/cards", $boardId), http_build_query($parameters), $payload);
 
-        $result = $this->client->getBoardCards($boardId);
+        $result = $this->client->getBoardCards($boardId, $parameters);
 
         $this->assertExpectedEqualsResult($payload, $result);
     }
