@@ -1,6 +1,23 @@
 #Changelog
 All Notable changes to `trello-php` will be documented in this file
 
+## 0.4.1 - 2017-03-22
+
+### Added
+- Nothing
+
+### Deprecated
+- Nothing
+
+### Fixed
+- HTTP client now omits multipart request option when multipart resources are not present - thanks @dragonee
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## 0.4.0 - 2016-09-23
 
 ### Added
