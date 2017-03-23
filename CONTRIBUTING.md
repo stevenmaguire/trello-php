@@ -25,7 +25,11 @@ We accept contributions via Pull Requests on [Github](https://github.com/stevenm
 ## Running Tests
 
 ``` bash
-$ phpunit
+$ ./vendor/bin/phpunit
+```
+
+``` bash
+$ ./vendor/bin/phpcs src --standard=psr2 -sp
 ```
 
 

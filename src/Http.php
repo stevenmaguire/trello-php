@@ -162,6 +162,25 @@ class Http
     }
 
     /**
+     * Creates an array of request options based on the current status of the
+     * http client.
+     *
+     * @return array
+     */
+    protected function getRequestOptions()
+    {
+        $options = [
+            'proxy' => Configuration::get('proxy')
+        ];
+
+        if (!empty(array_filter($this->multipartResources))) {
+            $options['multipart'] = $this->multipartResources;
+        }
+
+        return $options;
+    }
+
+    /**
      * Creates fully qualified domain from given path.
      *
      * @param  string  $path
@@ -230,10 +249,10 @@ class Http
     protected function sendRequest(RequestInterface $request)
     {
         try {
-            $response = $this->httpClient->send($request, [
-                'multipart' => $this->multipartResources,
-                'proxy' => Configuration::get('proxy')
-            ]);
+            $response = $this->httpClient->send(
+                $request,
+                $this->getRequestOptions()
+            );
 
             $this->multipartResources = [];
 
