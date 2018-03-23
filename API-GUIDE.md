@@ -865,7 +865,7 @@ $result = $client->updateCustomFieldOption($customFieldId, $optionId, $attribute
 #### Delete custom field
 
 ```php
-$result = $client->deleteCustomFieldOption($customFieldId);
+$result = $client->deleteCustomField($customFieldId);
 ```
 
 ### Labels
