@@ -608,6 +608,17 @@ trait ApiTestTrait
         $this->assertExpectedEqualsResult($payload, $result);
     }
 
+    public function testGetBoardCustomFields()
+    {
+        $boardId = $this->getTestString();
+        $payload = $this->getSuccessPayload();
+        $this->prepareFor("GET", sprintf("/boards/%s/customFields", $boardId), "", $payload);
+
+        $result = $this->client->getBoardCustomFields($boardId);
+
+        $this->assertExpectedEqualsResult($payload, $result);
+    }
+
     public function testGetBoardLabels()
     {
         $boardId = $this->getTestString();
@@ -1308,6 +1319,19 @@ trait ApiTestTrait
         $this->assertExpectedEqualsResult($payload, $result);
     }
 
+    public function testUpdateCardCustomField()
+    {
+        $cardId = $this->getTestString();
+        $customFieldId = $this->getTestString();
+        $attributes = $this->getTestAttributes();
+        $payload = $this->getSuccessPayload();
+        $this->prepareFor("PUT", sprintf("/cards/%s/customField/%s", $cardId, $customFieldId), "", $payload);
+
+        $result = $this->client->updateCardCustomField($cardId, $customFieldId, $attributes);
+
+        $this->assertExpectedEqualsResult($payload, $result);
+    }
+
     public function testUpdateCardChecklistCheckItem()
     {
         $cardId = $this->getTestString();
@@ -1940,6 +1964,54 @@ trait ApiTestTrait
         $this->prepareFor("PUT", sprintf("/checklists/%s/pos", $checklistId), "", $payload);
 
         $result = $this->client->updateChecklistPos($checklistId, $attributes);
+
+        $this->assertExpectedEqualsResult($payload, $result);
+    }
+
+    public function testAddCustomField()
+    {
+        $attributes = $this->getTestAttributes();
+        $payload = $this->getSuccessPayload();
+        $this->prepareFor("POST", "/customFields", "", $payload);
+
+        $result = $this->client->addCustomField($attributes);
+
+        $this->assertExpectedEqualsResult($payload, $result);
+    }
+
+    public function testAddCustomFieldOption()
+    {
+        $customFieldId = $this->getTestString();
+        $attributes = $this->getTestAttributes();
+        $payload = $this->getSuccessPayload();
+        $this->prepareFor("POST", sprintf("/customField/%s/options", $customFieldId), "", $payload);
+
+        $result = $this->client->addCustomFieldOption($customFieldId, $attributes);
+
+        $this->assertExpectedEqualsResult($payload, $result);
+    }
+
+    public function testUpdateCustomFieldOption()
+    {
+        $customFieldId = $this->getTestString();
+        $optionId = $this->getTestString();
+        $attributes = $this->getTestAttributes();
+        $payload = $this->getSuccessPayload();
+        $this->prepareFor("PUT", sprintf("/customField/%s/options/%s", $customFieldId, $optionId), "", $payload);
+
+        $result = $this->client->updateCustomFieldOption($customFieldId, $optionId, $attributes);
+
+        $this->assertExpectedEqualsResult($payload, $result);
+    }
+
+    public function testDeleteCustomFieldOption()
+    {
+        $customFieldId = $this->getTestString();
+        $attributes = $this->getTestAttributes();
+        $payload = $this->getSuccessPayload();
+        $this->prepareFor("DELETE", sprintf("/customField/%s", $customFieldId), "", $payload);
+
+        $result = $this->client->deleteCustomField($customFieldId);
 
         $this->assertExpectedEqualsResult($payload, $result);
     }

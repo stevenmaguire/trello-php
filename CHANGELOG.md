@@ -1,5 +1,23 @@
 #Changelog
+
 All Notable changes to `trello-php` will be documented in this file
+
+## 0.5.0 - 2018-03-23
+
+### Added
+- Added support for custom fields - https://developers.trello.com/docs/getting-started-custom-fields
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
 
 ## 0.4.1 - 2017-03-22
 
