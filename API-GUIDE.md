@@ -255,6 +255,13 @@ $result = $client->updateBoardLabelNameRed($boardId, $attributes);
 ```php
 $result = $client->updateBoardLabelNameYellow($boardId, $attributes);
 ```
+
+#### Get board custom fields
+
+```php
+$result = $client->getBoardCustomFields($boardId);
+```
+
 #### Get board labels
 
 ```php
@@ -600,6 +607,13 @@ $result = $client->addCardChecklist($cardId, $attributes);
 ```php
 $result = $client->deleteCardChecklist($cardId, $checklistId);
 ```
+
+#### Update card custom field
+
+```php
+$result = $client->updateCardCustomField($cardId, $customFieldId, $attributes);
+```
+
 #### Update card closed
 
 ```php
@@ -827,6 +841,31 @@ $result = $client->updateChecklistName($checklistId, $attributes);
 
 ```php
 $result = $client->updateChecklistPos($checklistId, $attributes);
+```
+### CustomFields
+
+#### Create custom field
+
+```php
+$result = $client->addCustomField($attributes);
+```
+
+#### Add option to a custom field
+
+```php
+$result = $client->addCustomFieldOption($customFieldId, $attributes);
+```
+
+#### Update custom field option
+
+```php
+$result = $client->updateCustomFieldOption($customFieldId, $optionId, $attributes);
+```
+
+#### Delete custom field
+
+```php
+$result = $client->deleteCustomField($customFieldId);
 ```
 
 ### Labels
