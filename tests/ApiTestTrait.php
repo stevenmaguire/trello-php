@@ -1319,6 +1319,18 @@ trait ApiTestTrait
         $this->assertExpectedEqualsResult($payload, $result);
     }
 
+    public function testGetCardCustomField()
+    {
+        $cardId = $this->getTestString();
+        $customFieldId = $this->getTestString();
+        $payload = $this->getSuccessPayload();
+        $this->prepareFor("GET", sprintf("/cards/%s/customField/%s", $cardId, $customFieldId), "", $payload);
+
+        $result = $this->client->getCardCustomField($cardId, $customFieldId);
+
+        $this->assertExpectedEqualsResult($payload, $result);
+    }
+
     public function testUpdateCardCustomField()
     {
         $cardId = $this->getTestString();

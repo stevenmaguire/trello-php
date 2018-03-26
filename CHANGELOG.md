@@ -1,6 +1,23 @@
-#Changelog
+# Changelog
 
 All Notable changes to `trello-php` will be documented in this file
+
+## 0.5.1 - 2018-03-26
+
+### Added
+- Added support for getting a custom fields for a given card
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
 
 ## 0.5.0 - 2018-03-23
 

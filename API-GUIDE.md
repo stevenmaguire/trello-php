@@ -608,6 +608,12 @@ $result = $client->addCardChecklist($cardId, $attributes);
 $result = $client->deleteCardChecklist($cardId, $checklistId);
 ```
 
+#### Get card custom field
+
+```php
+$result = $client->getCardCustomField($cardId, $customFieldId);
+```
+
 #### Update card custom field
 
 ```php
