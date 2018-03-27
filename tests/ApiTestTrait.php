@@ -1337,7 +1337,7 @@ trait ApiTestTrait
         $customFieldId = $this->getTestString();
         $attributes = $this->getTestAttributes();
         $payload = $this->getSuccessPayload();
-        $this->prepareFor("PUT", sprintf("/cards/%s/customField/%s", $cardId, $customFieldId), "", $payload);
+        $this->prepareFor("PUT", sprintf("/cards/%s/customField/%s/item", $cardId, $customFieldId), "", $payload);
 
         $result = $this->client->updateCardCustomField($cardId, $customFieldId, $attributes);
 

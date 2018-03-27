@@ -2,6 +2,23 @@
 
 All Notable changes to `trello-php` will be documented in this file
 
+## 0.5.2 - 2018-03-26
+
+### Added
+- Nothing
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Fixed path mapping for updateCardCustomField method
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## 0.5.1 - 2018-03-26
 
 ### Added

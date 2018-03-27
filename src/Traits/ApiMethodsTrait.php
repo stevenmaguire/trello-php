@@ -141,7 +141,7 @@ trait ApiMethodsTrait
         'updateCardLabel' => ['put', 'cards/%s/labels'],
         'deleteCardLabel' => ['delete', 'cards/%s/labels/%s'],
         'getCardCustomField' => ['get', 'cards/%s/customField/%s'],
-        'updateCardCustomField' => ['put', 'cards/%s/customField/%s'],
+        'updateCardCustomField' => ['put', 'cards/%s/customField/%s/item'],
         'getCardList' => ['get', 'cards/%s/list'],
         'getCardListField' => ['get', 'cards/%s/list/%s'],
         'addCardMarkAssociatedNotificationsRead' => ['post', 'cards/%s/markAssociatedNotificationsRead'],
