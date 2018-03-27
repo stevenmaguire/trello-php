@@ -11,7 +11,7 @@ All Notable changes to `trello-php` will be documented in this file
 - Nothing
 
 ### Fixed
-- Fixed path mapping for updateCardCustomField method
+- Update path mapping for updateCardCustomField method
 
 ### Removed
 - Nothing

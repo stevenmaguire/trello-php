@@ -3,11 +3,17 @@
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface as HttpClientInterface;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 
 class Http
 {
+    const HTTP_DELETE = 'DELETE';
+    const HTTP_GET = 'GET';
+    const HTTP_POST = 'POST';
+    const HTTP_PUT = 'PUT';
+
     /**
      * Multipart resources to include in next request.
      *
@@ -64,7 +70,7 @@ class Http
         if (isset($parameters['file'])) {
             $this->queueResourceAs(
                 'file',
-                \GuzzleHttp\Psr7\stream_for($parameters['file'])
+                Psr7\stream_for($parameters['file'])
             );
             unset($parameters['file']);
         }
@@ -92,7 +98,7 @@ class Http
      */
     public function delete($path, $parameters = [])
     {
-        $request = $this->getRequest('DELETE', $path, $parameters);
+        $request = $this->getRequest(static::HTTP_DELETE, $path, $parameters);
 
         return $this->sendRequest($request);
     }
@@ -107,7 +113,7 @@ class Http
      */
     public function get($path, $parameters = [])
     {
-        $request = $this->getRequest('GET', $path, $parameters);
+        $request = $this->getRequest(static::HTTP_GET, $path, $parameters);
 
         return $this->sendRequest($request);
     }
@@ -202,7 +208,7 @@ class Http
      */
     public function post($path, $parameters)
     {
-        $request = $this->getRequest('POST', $path, $parameters);
+        $request = $this->getRequest(static::HTTP_POST, $path, $parameters);
 
         return $this->sendRequest($request);
     }
@@ -217,7 +223,24 @@ class Http
      */
     public function put($path, $parameters)
     {
-        $request = $this->getRequest('PUT', $path, $parameters);
+        $request = $this->getRequest(static::HTTP_PUT, $path, $parameters);
+
+        return $this->sendRequest($request);
+    }
+
+    /**
+     * Retrieves http response for a request with the put method,
+     * ensuring parameters are passed as body.
+     *
+     * @param  string $path
+     * @param  array  $parameters
+     *
+     * @return object
+     */
+    public function putAsBody($path, $parameters)
+    {
+        $request = $this->getRequest(static::HTTP_PUT, $path)
+            ->withBody(Psr7\stream_for(json_encode($parameters)));
 
         return $this->sendRequest($request);
     }
