@@ -240,7 +240,8 @@ class Http
     public function putAsBody($path, $parameters)
     {
         $request = $this->getRequest(static::HTTP_PUT, $path)
-            ->withBody(Psr7\stream_for(json_encode($parameters)));
+            ->withBody(Psr7\stream_for(json_encode($parameters)))
+            ->withHeader('content-type', 'application/json');
 
         return $this->sendRequest($request);
     }

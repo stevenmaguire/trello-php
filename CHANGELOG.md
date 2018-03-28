@@ -2,6 +2,23 @@
 
 All Notable changes to `trello-php` will be documented in this file
 
+## 0.5.3 - 2018-03-28
+
+### Added
+- Nothing
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Update updateCardCustomField method to use send request as JSON with body
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## 0.5.2 - 2018-03-26
 
 ### Added
