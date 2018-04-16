@@ -214,6 +214,24 @@ class Http
     }
 
     /**
+     * Retrieves http response for a request with the put method,
+     * ensuring parameters are passed as body.
+     *
+     * @param  string $path
+     * @param  array  $parameters
+     *
+     * @return object
+     */
+    public function postAsBody($path, $parameters)
+    {
+        $request = $this->getRequest(static::HTTP_POST, $path)
+            ->withBody(Psr7\stream_for(json_encode($parameters)))
+            ->withHeader('content-type', 'application/json');
+
+        return $this->sendRequest($request);
+    }
+
+    /**
      * Retrieves http response for a request with the put method.
      *
      * @param  string $path

@@ -174,7 +174,7 @@ trait ApiMethodsTrait
         'updateChecklistName' => ['put', 'checklists/%s/name'],
         'updateChecklistPos' => ['put', 'checklists/%s/pos'],
         'addCustomField' => ['post', 'customFields'],
-        'addCustomFieldOption' => ['post', 'customField/%s/options'],
+        'addCustomFieldOption' => ['postAsBody', 'customField/%s/options'],
         'updateCustomFieldOption' => ['put', 'customField/%s/options/%s'],
         'deleteCustomField' => ['delete', 'customField/%s'],
         'addLabel' => ['post', 'labels'],
