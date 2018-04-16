@@ -1746,7 +1746,7 @@ $result = $client->addCustomFieldOption($customFieldId, $attributes);
 
 API Signature:
 ```php
-'addCustomFieldOption' => ['post', 'customField/%s/options']
+'addCustomFieldOption' => ['postAsBody', 'customField/%s/options']
 ```
 
 #### Update custom field option
