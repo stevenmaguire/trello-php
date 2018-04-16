@@ -1239,6 +1239,31 @@ API Signature:
 #### Update card custom field
 
 ```php
+// Updating a checkbox:
+$attributes = [
+    'value' => ['checked' => 'true'] // or 'false'
+];
+
+// Updating a date:
+$attributes = [
+    'value' => ['date' => date('c', $the_date)]  // or date('c') for 'now'
+];
+
+// Updating a dropdown:
+$attributes = [
+    'idValue' => '<insert option id>'
+];
+
+// Updating a number:
+$attributes = [
+    'value' => ['number' => '<insert number as string>']
+];
+
+// Updating a text field:
+$attributes = [
+    'value' => ['text' => '<insert text>']
+];
+
 $result = $client->updateCardCustomField($cardId, $customFieldId, $attributes);
 ```
 
