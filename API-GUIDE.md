@@ -376,6 +376,12 @@ API Signature:
 
 ```php
 $result = $client->getBoardCards($boardId);
+
+// Or to get the custom fields for a card, pass the 'customFieldItems' flag:
+$result = $client->getBoardCards($boardId, [
+    'customFieldItems' => true,
+]);
+
 ```
 
 API Signature:
