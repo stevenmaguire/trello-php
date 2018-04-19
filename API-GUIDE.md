@@ -11,9 +11,8 @@ $result = $client->getCurrentUser();
 ```
 
 API Signature:
-```php
-'getCurrentUser' => ['get', 'members/me']
-```
+GET /members/me
+
 
 #### Current User Boards
 
@@ -22,9 +21,8 @@ $result = $client->getCurrentUserBoards();
 ```
 
 API Signature:
-```php
-'getCurrentUserBoards' => ['get', 'members/my/boards']
-```
+GET /members/my/boards
+
 
 #### Get Current User Pinned Boards
 
@@ -33,9 +31,8 @@ $result = $client->getCurrentUserPinnedBoards();
 ```
 
 API Signature:
-```php
-'getCurrentUserPinnedBoards' => ['get', 'members/my/boards/pinned']
-```
+GET /members/my/boards/pinned
+
 
 #### Get Current User Cards
 
@@ -44,9 +41,8 @@ $result = $client->getCurrentUserCards();
 ```
 
 API Signature:
-```php
-'getCurrentUserCards' => ['get', 'members/my/cards']
-```
+GET /members/my/cards
+
 
 #### Get Current User Organizations
 
@@ -55,9 +51,8 @@ $result = $client->getCurrentUserOrganizations();
 ```
 
 API Signature:
-```php
-'getCurrentUserOrganizations' => ['get', 'members/my/organizations']
-```
+GET /members/my/organizations
+
 
 ### Actions
 
@@ -68,9 +63,8 @@ $result = $client->deleteAction($actionId);
 ```
 
 API Signature:
-```php
-'deleteAction' => ['delete', 'actions/%s']
-```
+DELETE /actions/{actionId}
+
 #### Get action
 
 ```php
@@ -78,9 +72,8 @@ $result = $client->getAction($actionId);
 ```
 
 API Signature:
-```php
-'getAction' => ['get', 'actions/%s']
-```
+GET /actions/{actionId}
+
 #### Update action
 
 ```php
@@ -88,9 +81,8 @@ $result = $client->updateAction($actionId, $attributes);
 ```
 
 API Signature:
-```php
-'updateAction' => ['put', 'actions/%s']
-```
+PUT /actions/{actionId}
+
 #### Get action field
 
 ```php
@@ -98,9 +90,8 @@ $result = $client->getActionField($actionId, $fieldName);
 ```
 
 API Signature:
-```php
-'getActionField' => ['get', 'actions/%s/%s']
-```
+GET /actions/{actionId}/{fieldName}
+
 #### Get action board
 
 ```php
@@ -108,9 +99,8 @@ $result = $client->getActionBoard($actionId);
 ```
 
 API Signature:
-```php
-'getActionBoard' => ['get', 'actions/%s/board']
-```
+GET /actions/{actionId}/board
+
 #### Get action board field
 
 ```php
@@ -118,9 +108,8 @@ $result = $client->getActionBoardField($actionId, $fieldName);
 ```
 
 API Signature:
-```php
-'getActionBoardField' => ['get', 'actions/%s/board/%s']
-```
+GET /actions/{actionId}/board/{fieldName}
+
 #### Get action card
 
 ```php
@@ -128,9 +117,8 @@ $result = $client->getActionCard($actionId);
 ```
 
 API Signature:
-```php
-'getActionCard' => ['get', 'actions/%s/card']
-```
+GET /actions/{actionId}/card
+
 #### Get action card field
 
 ```php
@@ -138,9 +126,8 @@ $result = $client->getActionCardField($actionId, $fieldName);
 ```
 
 API Signature:
-```php
-'getActionCardField' => ['get', 'actions/%s/card/%s']
-```
+GET /actions/{actionId}/card/{fieldName}
+
 #### Get action entities
 
 ```php
@@ -148,9 +135,8 @@ $result = $client->getActionEntities($actionId);
 ```
 
 API Signature:
-```php
-'getActionEntities' => ['get', 'actions/%s/entities']
-```
+GET /actions/{actionId}/entities
+
 #### Get action list
 
 ```php
@@ -158,9 +144,8 @@ $result = $client->getActionList($actionId);
 ```
 
 API Signature:
-```php
-'getActionList' => ['get', 'actions/%s/list']
-```
+GET /actions/{actionId}/list
+
 #### Get action list field
 
 ```php
@@ -168,9 +153,8 @@ $result = $client->getActionListField($actionId, $fieldName);
 ```
 
 API Signature:
-```php
-'getActionListField' => ['get', 'actions/%s/list/%s']
-```
+GET /actions/{actionId}/list/{fieldName}
+
 #### Get action member
 
 ```php
@@ -178,9 +162,8 @@ $result = $client->getActionMember($actionId);
 ```
 
 API Signature:
-```php
-'getActionMember' => ['get', 'actions/%s/member']
-```
+GET /actions/{actionId}/member
+
 #### Get action member field
 
 ```php
@@ -188,9 +171,8 @@ $result = $client->getActionMemberField($actionId, $fieldName);
 ```
 
 API Signature:
-```php
-'getActionMemberField' => ['get', 'actions/%s/member/%s']
-```
+GET /actions/{actionId}/member/{fieldName}
+
 #### Get action member creator
 
 ```php
@@ -198,9 +180,8 @@ $result = $client->getActionMemberCreator($actionId);
 ```
 
 API Signature:
-```php
-'getActionMemberCreator' => ['get', 'actions/%s/memberCreator']
-```
+GET /actions/{actionId}/memberCreator
+
 #### Get action member creator field
 
 ```php
@@ -208,9 +189,8 @@ $result = $client->getActionMemberCreatorField($actionId, $fieldName);
 ```
 
 API Signature:
-```php
-'getActionMemberCreatorField' => ['get', 'actions/%s/memberCreator/%s']
-```
+GET /actions/{actionId}/memberCreator/{fieldName}
+
 #### Get action organization
 
 ```php
@@ -218,9 +198,8 @@ $result = $client->getActionOrganization($actionId);
 ```
 
 API Signature:
-```php
-'getActionOrganization' => ['get', 'actions/%s/organization']
-```
+GET /actions/{actionId}/organization
+
 #### Get action organization field
 
 ```php
@@ -228,9 +207,8 @@ $result = $client->getActionOrganizationField($actionId, $fieldName);
 ```
 
 API Signature:
-```php
-'getActionOrganizationField' => ['get', 'actions/%s/organization/%s']
-```
+GET /actions/{actionId}/organization/{fieldName}
+
 #### Update action text
 
 ```php
@@ -238,9 +216,8 @@ $result = $client->updateActionText($actionId, $attributes);
 ```
 
 API Signature:
-```php
-'updateActionText' => ['put', 'actions/%s/text']
-```
+PUT /actions/{actionId}/text
+
 
 ### Authorization
 
@@ -251,9 +228,8 @@ $result = $client->getAuthorize($attributes);
 ```
 
 API Signature:
-```php
-'getAuthorize' => ['get', 'authorize']
-```
+GET /authorize
+
 
 #### Get authorization url
 
@@ -271,9 +247,8 @@ $result = $client->getToken($token, $verifier);
 ```
 
 API Signature:
-```php
-'getToken' => ['get', 'tokens/%s']
-```
+GET /tokens/{token}
+
 
 ### Batches
 
@@ -290,9 +265,8 @@ $result = $client->getBatch($attributes);
 ```
 
 API Signature:
-```php
-'getBatch' => ['get', 'batch']
-```
+GET /batch
+
 
 #### Get batch urls
 
@@ -309,9 +283,8 @@ $result = $client->addBoard($attributes);
 ```
 
 API Signature:
-```php
-'addBoard' => ['post', 'boards']
-```
+POST /boards
+
 #### Get board
 
 ```php
@@ -319,9 +292,8 @@ $result = $client->getBoard($boardId);
 ```
 
 API Signature:
-```php
-'getBoard' => ['get', 'boards/%s']
-```
+GET /boards/{boardId}
+
 #### Update board
 
 ```php
@@ -329,9 +301,8 @@ $result = $client->updateBoard($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoard' => ['put', 'boards/%s']
-```
+PUT /boards/{boardId}
+
 #### Get board field
 
 ```php
@@ -339,9 +310,8 @@ $result = $client->getBoardField($boardId, $fieldName);
 ```
 
 API Signature:
-```php
-'getBoardField' => ['get', 'boards/%s/%s']
-```
+GET /boards/{boardId}/{fieldName}
+
 #### Get board actions
 
 ```php
@@ -349,9 +319,8 @@ $result = $client->getBoardActions($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'getBoardActions' => ['get', 'boards/%s/actions']
-```
+GET /boards/{boardId}/actions
+
 #### Get board board stars
 
 ```php
@@ -359,9 +328,8 @@ $result = $client->getBoardBoardStars($boardId);
 ```
 
 API Signature:
-```php
-'getBoardBoardStars' => ['get', 'boards/%s/boardStars']
-```
+GET /boards/{boardId}/boardStars
+
 #### Add board calendar key generate
 
 ```php
@@ -369,9 +337,8 @@ $result = $client->addBoardCalendarKeyGenerate($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'addBoardCalendarKeyGenerate' => ['post', 'boards/%s/calendarKey/generate']
-```
+POST /boards/{boardId}/calendarKey/generate
+
 #### Get board cards
 
 ```php
@@ -385,9 +352,8 @@ $result = $client->getBoardCards($boardId, [
 ```
 
 API Signature:
-```php
-'getBoardCards' => ['get', 'boards/%s/cards']
-```
+GET /boards/{boardId}/cards
+
 #### Get board card
 
 ```php
@@ -395,9 +361,8 @@ $result = $client->getBoardCard($boardId, $cardId);
 ```
 
 API Signature:
-```php
-'getBoardCard' => ['get', 'boards/%s/cards/%s']
-```
+GET /boards/{boardId}/cards/{cardId}
+
 #### Get board cards with filter
 
 ```php
@@ -405,9 +370,8 @@ $result = $client->getBoardCardsWithFilter($boardId, $filter);
 ```
 
 API Signature:
-```php
-'getBoardCardsWithFilter' => ['get', 'boards/%s/cards/%s']
-```
+GET /boards/{boardId}/cards/{cardId}
+
 #### Get board checklists
 
 ```php
@@ -415,9 +379,8 @@ $result = $client->getBoardChecklists($boardId);
 ```
 
 API Signature:
-```php
-'getBoardChecklists' => ['get', 'boards/%s/checklists']
-```
+GET /boards/{boardId}/checklists
+
 #### Add board checklist
 
 ```php
@@ -425,9 +388,8 @@ $result = $client->addBoardChecklist($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'addBoardChecklist' => ['post', 'boards/%s/checklists']
-```
+POST /boards/{boardId}/checklists
+
 #### Update board closed
 
 ```php
@@ -435,9 +397,8 @@ $result = $client->updateBoardClosed($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardClosed' => ['put', 'boards/%s/closed']
-```
+PUT /boards/{boardId}/closed
+
 #### Get board deltas
 
 ```php
@@ -445,9 +406,8 @@ $result = $client->getBoardDeltas($boardId);
 ```
 
 API Signature:
-```php
-'getBoardDeltas' => ['get', 'boards/%s/deltas']
-```
+GET /boards/{boardId}/deltas
+
 #### Update board desc
 
 ```php
@@ -455,9 +415,8 @@ $result = $client->updateBoardDesc($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardDesc' => ['put', 'boards/%s/desc']
-```
+PUT /boards/{boardId}/desc
+
 #### Add board email key generate
 
 ```php
@@ -465,9 +424,8 @@ $result = $client->addBoardEmailKeyGenerate($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'addBoardEmailKeyGenerate' => ['post', 'boards/%s/emailKey/generate']
-```
+POST /boards/{boardId}/emailKey/generate
+
 #### Update board id organization
 
 ```php
@@ -475,9 +433,8 @@ $result = $client->updateBoardIdOrganization($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardIdOrganization' => ['put', 'boards/%s/idOrganization']
-```
+PUT /boards/{boardId}/idOrganization
+
 #### Update board label name blue
 
 ```php
@@ -485,9 +442,8 @@ $result = $client->updateBoardLabelNameBlue($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardLabelNameBlue' => ['put', 'boards/%s/labelNames/blue']
-```
+PUT /boards/{boardId}/labelNames/blue
+
 #### Update board label name green
 
 ```php
@@ -495,9 +451,8 @@ $result = $client->updateBoardLabelNameGreen($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardLabelNameGreen' => ['put', 'boards/%s/labelNames/green']
-```
+PUT /boards/{boardId}/labelNames/green
+
 #### Update board label name orange
 
 ```php
@@ -505,9 +460,8 @@ $result = $client->updateBoardLabelNameOrange($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardLabelNameOrange' => ['put', 'boards/%s/labelNames/orange']
-```
+PUT /boards/{boardId}/labelNames/orange
+
 #### Update board label name purple
 
 ```php
@@ -515,9 +469,8 @@ $result = $client->updateBoardLabelNamePurple($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardLabelNamePurple' => ['put', 'boards/%s/labelNames/purple']
-```
+PUT /boards/{boardId}/labelNames/purple
+
 #### Update board label name red
 
 ```php
@@ -525,9 +478,8 @@ $result = $client->updateBoardLabelNameRed($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardLabelNameRed' => ['put', 'boards/%s/labelNames/red']
-```
+PUT /boards/{boardId}/labelNames/red
+
 #### Update board label name yellow
 
 ```php
@@ -535,9 +487,8 @@ $result = $client->updateBoardLabelNameYellow($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardLabelNameYellow' => ['put', 'boards/%s/labelNames/yellow']
-```
+PUT /boards/{boardId}/labelNames/yellow
+
 
 #### Get board custom fields
 
@@ -546,9 +497,8 @@ $result = $client->getBoardCustomFields($boardId);
 ```
 
 API Signature:
-```php
-'getBoardCustomFields' => ['get', 'boards/%s/customFields']
-```
+GET /boards/{boardId}/customFields
+
 
 #### Get board labels
 
@@ -557,9 +507,8 @@ $result = $client->getBoardLabels($boardId);
 ```
 
 API Signature:
-```php
-'getBoardLabels' => ['get', 'boards/%s/labels']
-```
+GET /boards/{boardId}/labels
+
 #### Add board label
 
 ```php
@@ -567,9 +516,8 @@ $result = $client->addBoardLabel($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'addBoardLabel' => ['post', 'boards/%s/labels']
-```
+POST /boards/{boardId}/labels
+
 #### Get board label
 
 ```php
@@ -577,9 +525,8 @@ $result = $client->getBoardLabel($boardId, $labelId);
 ```
 
 API Signature:
-```php
-'getBoardLabel' => ['get', 'boards/%s/labels/%s']
-```
+GET /boards/{boardId}/labels/{labelId}
+
 #### Get board lists
 
 ```php
@@ -587,9 +534,8 @@ $result = $client->getBoardLists($boardId);
 ```
 
 API Signature:
-```php
-'getBoardLists' => ['get', 'boards/%s/lists']
-```
+GET /boards/{boardId}/lists
+
 #### Add board list
 
 ```php
@@ -597,9 +543,8 @@ $result = $client->addBoardList($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'addBoardList' => ['post', 'boards/%s/lists']
-```
+POST /boards/{boardId}/lists
+
 #### Get board list
 
 ```php
@@ -607,9 +552,8 @@ $result = $client->getBoardList($boardId, $listId);
 ```
 
 API Signature:
-```php
-'getBoardList' => ['get', 'boards/%s/lists/%s']
-```
+GET /boards/{boardId}/lists/{listId}
+
 #### Add board mark as viewed
 
 ```php
@@ -617,9 +561,8 @@ $result = $client->addBoardMarkAsViewed($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'addBoardMarkAsViewed' => ['post', 'boards/%s/markAsViewed']
-```
+POST /boards/{boardId}/markAsViewed
+
 #### Get board members
 
 ```php
@@ -627,9 +570,8 @@ $result = $client->getBoardMembers($boardId);
 ```
 
 API Signature:
-```php
-'getBoardMembers' => ['get', 'boards/%s/members']
-```
+GET /boards/{boardId}/members
+
 #### Update board members
 
 ```php
@@ -637,9 +579,8 @@ $result = $client->updateBoardMembers($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardMembers' => ['put', 'boards/%s/members']
-```
+PUT /boards/{boardId}/members
+
 #### Delete board member
 
 ```php
@@ -647,9 +588,8 @@ $result = $client->deleteBoardMember($boardId, $memberId);
 ```
 
 API Signature:
-```php
-'deleteBoardMember' => ['delete', 'boards/%s/members/%s']
-```
+DELETE /boards/{boardId}/members/{memberId}
+
 #### Get board member
 
 ```php
@@ -657,9 +597,8 @@ $result = $client->getBoardMember($boardId, $memberId);
 ```
 
 API Signature:
-```php
-'getBoardMember' => ['get', 'boards/%s/members/%s']
-```
+GET /boards/{boardId}/members/{memberId}
+
 #### Update board member
 
 ```php
@@ -667,9 +606,8 @@ $result = $client->updateBoardMember($boardId, $memberId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardMember' => ['put', 'boards/%s/members/%s']
-```
+PUT /boards/{boardId}/members/{memberId}
+
 #### Get board member cards
 
 ```php
@@ -677,9 +615,8 @@ $result = $client->getBoardMemberCards($boardId, $memberId);
 ```
 
 API Signature:
-```php
-'getBoardMemberCards' => ['get', 'boards/%s/members/%s/cards']
-```
+GET /boards/{boardId}/members/{memberId}/cards
+
 #### Get board memberships
 
 ```php
@@ -687,9 +624,8 @@ $result = $client->getBoardMemberships($boardId);
 ```
 
 API Signature:
-```php
-'getBoardMemberships' => ['get', 'boards/%s/memberships']
-```
+GET /boards/{boardId}/memberships
+
 #### Get board membership
 
 ```php
@@ -697,9 +633,8 @@ $result = $client->getBoardMembership($boardId, $membershipId);
 ```
 
 API Signature:
-```php
-'getBoardMembership' => ['get', 'boards/%s/memberships/%s']
-```
+GET /boards/{boardId}/memberships/{membershipId}
+
 #### Update board membership
 
 ```php
@@ -707,9 +642,8 @@ $result = $client->updateBoardMembership($boardId, $membershipId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardMembership' => ['put', 'boards/%s/memberships/%s']
-```
+PUT /boards/{boardId}/memberships/{membershipId}
+
 #### Get board members inviteds
 
 ```php
@@ -717,9 +651,8 @@ $result = $client->getBoardMembersInviteds($boardId);
 ```
 
 API Signature:
-```php
-'getBoardMembersInviteds' => ['get', 'boards/%s/membersInvited']
-```
+GET /boards/{boardId}/membersInvited
+
 #### Get board members invited
 
 ```php
@@ -727,9 +660,8 @@ $result = $client->getBoardMembersInvited($boardId, $membersInvitedId);
 ```
 
 API Signature:
-```php
-'getBoardMembersInvited' => ['get', 'boards/%s/membersInvited/%s']
-```
+GET /boards/{boardId}/membersInvited/{membersInvitedId}
+
 #### Get board my pref
 
 ```php
@@ -737,9 +669,8 @@ $result = $client->getBoardMyPref($boardId);
 ```
 
 API Signature:
-```php
-'getBoardMyPref' => ['get', 'boards/%s/myPrefs']
-```
+GET /boards/{boardId}/myPrefs
+
 #### Update board my pref email position
 
 ```php
@@ -747,9 +678,8 @@ $result = $client->updateBoardMyPrefEmailPosition($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardMyPrefEmailPosition' => ['put', 'boards/%s/myPrefs/emailPosition']
-```
+PUT /boards/{boardId}/myPrefs/emailPosition
+
 #### Update board my pref id email list
 
 ```php
@@ -757,9 +687,8 @@ $result = $client->updateBoardMyPrefIdEmailList($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardMyPrefIdEmailList' => ['put', 'boards/%s/myPrefs/idEmailList']
-```
+PUT /boards/{boardId}/myPrefs/idEmailList
+
 #### Update board my pref show list guide
 
 ```php
@@ -767,9 +696,8 @@ $result = $client->updateBoardMyPrefShowListGuide($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardMyPrefShowListGuide' => ['put', 'boards/%s/myPrefs/showListGuide']
-```
+PUT /boards/{boardId}/myPrefs/showListGuide
+
 #### Update board my pref show sidebar
 
 ```php
@@ -777,9 +705,8 @@ $result = $client->updateBoardMyPrefShowSidebar($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardMyPrefShowSidebar' => ['put', 'boards/%s/myPrefs/showSidebar']
-```
+PUT /boards/{boardId}/myPrefs/showSidebar
+
 #### Update board my pref show sidebar activity
 
 ```php
@@ -787,9 +714,8 @@ $result = $client->updateBoardMyPrefShowSidebarActivity($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardMyPrefShowSidebarActivity' => ['put', 'boards/%s/myPrefs/showSidebarActivity']
-```
+PUT /boards/{boardId}/myPrefs/showSidebarActivity
+
 #### Update board my pref show sidebar board action
 
 ```php
@@ -797,9 +723,8 @@ $result = $client->updateBoardMyPrefShowSidebarBoardAction($boardId, $attributes
 ```
 
 API Signature:
-```php
-'updateBoardMyPrefShowSidebarBoardAction' => ['put', 'boards/%s/myPrefs/showSidebarBoardActions']
-```
+PUT /boards/{boardId}/myPrefs/showSidebarBoardActions
+
 #### Update board my pref show sidebar member
 
 ```php
@@ -807,9 +732,8 @@ $result = $client->updateBoardMyPrefShowSidebarMember($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardMyPrefShowSidebarMember' => ['put', 'boards/%s/myPrefs/showSidebarMembers']
-```
+PUT /boards/{boardId}/myPrefs/showSidebarMembers
+
 #### Update board name
 
 ```php
@@ -817,9 +741,8 @@ $result = $client->updateBoardName($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardName' => ['put', 'boards/%s/name']
-```
+PUT /boards/{boardId}/name
+
 #### Get board organization
 
 ```php
@@ -827,9 +750,8 @@ $result = $client->getBoardOrganization($boardId);
 ```
 
 API Signature:
-```php
-'getBoardOrganization' => ['get', 'boards/%s/organization']
-```
+GET /boards/{boardId}/organization
+
 #### Get board organization field
 
 ```php
@@ -837,9 +759,8 @@ $result = $client->getBoardOrganizationField($boardId, $fieldName);
 ```
 
 API Signature:
-```php
-'getBoardOrganizationField' => ['get', 'boards/%s/organization/%s']
-```
+GET /boards/{boardId}/organization/{fieldName}
+
 #### Add board power up
 
 ```php
@@ -847,9 +768,8 @@ $result = $client->addBoardPowerUp($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'addBoardPowerUp' => ['post', 'boards/%s/powerUps']
-```
+POST /boards/{boardId}/powerUps
+
 #### Delete board power up
 
 ```php
@@ -857,9 +777,8 @@ $result = $client->deleteBoardPowerUp($boardId, $powerUpId);
 ```
 
 API Signature:
-```php
-'deleteBoardPowerUp' => ['delete', 'boards/%s/powerUps/%s']
-```
+DELETE /boards/{boardId}/powerUps/{powerUpId}
+
 #### Update board pref background
 
 ```php
@@ -867,9 +786,8 @@ $result = $client->updateBoardPrefBackground($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardPrefBackground' => ['put', 'boards/%s/prefs/background']
-```
+PUT /boards/{boardId}/prefs/background
+
 #### Update board pref calendar feed enabled
 
 ```php
@@ -877,9 +795,8 @@ $result = $client->updateBoardPrefCalendarFeedEnabled($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardPrefCalendarFeedEnabled' => ['put', 'boards/%s/prefs/calendarFeedEnabled']
-```
+PUT /boards/{boardId}/prefs/calendarFeedEnabled
+
 #### Update board pref card aging
 
 ```php
@@ -887,9 +804,8 @@ $result = $client->updateBoardPrefCardAging($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardPrefCardAging' => ['put', 'boards/%s/prefs/cardAging']
-```
+PUT /boards/{boardId}/prefs/cardAging
+
 #### Update board pref card covers
 
 ```php
@@ -897,9 +813,8 @@ $result = $client->updateBoardPrefCardCovers($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardPrefCardCovers' => ['put', 'boards/%s/prefs/cardCovers']
-```
+PUT /boards/{boardId}/prefs/cardCovers
+
 #### Update board pref comment
 
 ```php
@@ -907,9 +822,8 @@ $result = $client->updateBoardPrefComment($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardPrefComment' => ['put', 'boards/%s/prefs/comments']
-```
+PUT /boards/{boardId}/prefs/comments
+
 #### Update board pref invitation
 
 ```php
@@ -917,9 +831,8 @@ $result = $client->updateBoardPrefInvitation($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardPrefInvitation' => ['put', 'boards/%s/prefs/invitations']
-```
+PUT /boards/{boardId}/prefs/invitations
+
 #### Update board pref permission level
 
 ```php
@@ -927,9 +840,8 @@ $result = $client->updateBoardPrefPermissionLevel($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardPrefPermissionLevel' => ['put', 'boards/%s/prefs/permissionLevel']
-```
+PUT /boards/{boardId}/prefs/permissionLevel
+
 #### Update board pref self join
 
 ```php
@@ -937,9 +849,8 @@ $result = $client->updateBoardPrefSelfJoin($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardPrefSelfJoin' => ['put', 'boards/%s/prefs/selfJoin']
-```
+PUT /boards/{boardId}/prefs/selfJoin
+
 #### Update board pref voting
 
 ```php
@@ -947,9 +858,8 @@ $result = $client->updateBoardPrefVoting($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardPrefVoting' => ['put', 'boards/%s/prefs/voting']
-```
+PUT /boards/{boardId}/prefs/voting
+
 #### Update board subscribed
 
 ```php
@@ -957,9 +867,8 @@ $result = $client->updateBoardSubscribed($boardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateBoardSubscribed' => ['put', 'boards/%s/subscribed']
-```
+PUT /boards/{boardId}/subscribed
+
 
 ### Cards
 
@@ -970,9 +879,8 @@ $result = $client->addCard($attributes);
 ```
 
 API Signature:
-```php
-'addCard' => ['post', 'cards']
-```
+POST /cards
+
 #### Delete card
 
 ```php
@@ -980,9 +888,8 @@ $result = $client->deleteCard($cardId);
 ```
 
 API Signature:
-```php
-'deleteCard' => ['delete', 'cards/%s']
-```
+DELETE /cards/{cardId}
+
 #### Get card
 
 ```php
@@ -990,9 +897,8 @@ $result = $client->getCard($cardId);
 ```
 
 API Signature:
-```php
-'getCard' => ['get', 'cards/%s']
-```
+GET /cards/{cardId}
+
 #### Update card
 
 ```php
@@ -1000,9 +906,8 @@ $result = $client->updateCard($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateCard' => ['put', 'cards/%s']
-```
+PUT /cards/{cardId}
+
 #### Get card field
 
 ```php
@@ -1010,9 +915,8 @@ $result = $client->getCardField($cardId, $fieldName);
 ```
 
 API Signature:
-```php
-'getCardField' => ['get', 'cards/%s/%s']
-```
+GET /cards/{cardId}/{fieldName}
+
 #### Get card action
 
 ```php
@@ -1020,9 +924,8 @@ $result = $client->getCardAction($cardId);
 ```
 
 API Signature:
-```php
-'getCardAction' => ['get', 'cards/%s/actions']
-```
+GET /cards/{cardId}/actions
+
 #### Delete card action comment
 
 ```php
@@ -1030,9 +933,8 @@ $result = $client->deleteCardActionComment($cardId, $actionId);
 ```
 
 API Signature:
-```php
-'deleteCardActionComment' => ['delete', 'cards/%s/actions/%s/comments']
-```
+DELETE /cards/{cardId}/actions/{actionId}/comments
+
 #### Update card action comments
 
 ```php
@@ -1040,9 +942,8 @@ $result = $client->updateCardActionComments($cardId, $actionId, $attributes);
 ```
 
 API Signature:
-```php
-'updateCardActionComments' => ['put', 'cards/%s/actions/%s/comments']
-```
+PUT /cards/{cardId}/actions/{actionId}/comments
+
 #### Add card action comment
 
 ```php
@@ -1050,9 +951,8 @@ $result = $client->addCardActionComment($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'addCardActionComment' => ['post', 'cards/%s/actions/comments']
-```
+POST /cards/{cardId}/actions/comments
+
 #### Get card attachments
 
 ```php
@@ -1060,9 +960,8 @@ $result = $client->getCardAttachments($cardId);
 ```
 
 API Signature:
-```php
-'getCardAttachments' => ['get', 'cards/%s/attachments']
-```
+GET /cards/{cardId}/attachments
+
 #### Add card attachment
 
 ```php
@@ -1077,9 +976,8 @@ $result = $client->addCardAttachment($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'addCardAttachment' => ['post', 'cards/%s/attachments']
-```
+POST /cards/{cardId}/attachments
+
 #### Delete card attachment
 
 ```php
@@ -1087,9 +985,8 @@ $result = $client->deleteCardAttachment($cardId, $attachmentId);
 ```
 
 API Signature:
-```php
-'deleteCardAttachment' => ['delete', 'cards/%s/attachments/%s']
-```
+DELETE /cards/{cardId}/attachments/{attachmentId}
+
 #### Get card attachment
 
 ```php
@@ -1097,9 +994,8 @@ $result = $client->getCardAttachment($cardId, $attachmentId);
 ```
 
 API Signature:
-```php
-'getCardAttachment' => ['get', 'cards/%s/attachments/%s']
-```
+GET /cards/{cardId}/attachments/{attachmentId}
+
 #### Get card board
 
 ```php
@@ -1107,9 +1003,8 @@ $result = $client->getCardBoard($cardId);
 ```
 
 API Signature:
-```php
-'getCardBoard' => ['get', 'cards/%s/board']
-```
+GET /cards/{cardId}/board
+
 #### Get card board field
 
 ```php
@@ -1117,9 +1012,8 @@ $result = $client->getCardBoardField($cardId, $fieldName);
 ```
 
 API Signature:
-```php
-'getCardBoardField' => ['get', 'cards/%s/board/%s']
-```
+GET /cards/{cardId}/board/{fieldName}
+
 #### Get card check item state
 
 ```php
@@ -1127,9 +1021,8 @@ $result = $client->getCardCheckItemState($cardId);
 ```
 
 API Signature:
-```php
-'getCardCheckItemState' => ['get', 'cards/%s/checkItemStates']
-```
+GET /cards/{cardId}/checkItemStates
+
 #### Add card checklist check item
 
 ```php
@@ -1137,9 +1030,8 @@ $result = $client->addCardChecklistCheckItem($cardId, $checklistId, $attributes)
 ```
 
 API Signature:
-```php
-'addCardChecklistCheckItem' => ['post', 'cards/%s/checklist/%s/checkItem']
-```
+POST /cards/{cardId}/checklist/{checklistId}/checkItem
+
 #### Delete card checklist check item
 
 ```php
@@ -1147,9 +1039,8 @@ $result = $client->deleteCardChecklistCheckItem($cardId, $checklistId, $checkIte
 ```
 
 API Signature:
-```php
-'deleteCardChecklistCheckItem' => ['delete', 'cards/%s/checklist/%s/checkItem/%s']
-```
+DELETE /cards/{cardId}/checklist/{checklistId}/checkItem/{checkItemId}
+
 #### Update card checklist check item
 
 ```php
@@ -1157,9 +1048,8 @@ $result = $client->updateCardChecklistCheckItem($cardId, $checklistId, $checkIte
 ```
 
 API Signature:
-```php
-'updateCardChecklistCheckItem' => ['put', 'cards/%s/checklist/%s/checkItem/%s']
-```
+PUT /cards/{cardId}/checklist/{checklistId}/checkItem/{checkItemId}
+
 #### Add card checklist check item convert to card
 
 ```php
@@ -1167,9 +1057,8 @@ $result = $client->addCardChecklistCheckItemConvertToCard($cardId, $checklistId,
 ```
 
 API Signature:
-```php
-'addCardChecklistCheckItemConvertToCard' => ['post', 'cards/%s/checklist/%s/checkItem/%s/convertToCard']
-```
+POST /cards/{cardId}/checklist/{checklistId}/checkItem/{checkItemId}/convertToCard
+
 #### Update card checklist check item name
 
 ```php
@@ -1177,9 +1066,8 @@ $result = $client->updateCardChecklistCheckItemName($cardId, $checklistId, $chec
 ```
 
 API Signature:
-```php
-'updateCardChecklistCheckItemName' => ['put', 'cards/%s/checklist/%s/checkItem/%s/name']
-```
+PUT /cards/{cardId}/checklist/{checklistId}/checkItem/{checkItemId}/name
+
 #### Update card checklist check item pos
 
 ```php
@@ -1187,9 +1075,8 @@ $result = $client->updateCardChecklistCheckItemPos($cardId, $checklistId, $check
 ```
 
 API Signature:
-```php
-'updateCardChecklistCheckItemPos' => ['put', 'cards/%s/checklist/%s/checkItem/%s/pos']
-```
+PUT /cards/{cardId}/checklist/{checklistId}/checkItem/{checkItemId}/pos
+
 #### Update card checklist check item state
 
 ```php
@@ -1197,9 +1084,8 @@ $result = $client->updateCardChecklistCheckItemState($cardId, $checklistId, $che
 ```
 
 API Signature:
-```php
-'updateCardChecklistCheckItemState' => ['put', 'cards/%s/checklist/%s/checkItem/%s/state']
-```
+PUT /cards/{cardId}/checklist/{checklistId}/checkItem/{checkItemId}/state
+
 #### Get card checklists
 
 ```php
@@ -1207,9 +1093,8 @@ $result = $client->getCardChecklists($cardId);
 ```
 
 API Signature:
-```php
-'getCardChecklists' => ['get', 'cards/%s/checklists']
-```
+GET /cards/{cardId}/checklists
+
 #### Add card checklist
 
 ```php
@@ -1217,9 +1102,8 @@ $result = $client->addCardChecklist($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'addCardChecklist' => ['post', 'cards/%s/checklists']
-```
+POST /cards/{cardId}/checklists
+
 #### Delete card checklist
 
 ```php
@@ -1227,9 +1111,8 @@ $result = $client->deleteCardChecklist($cardId, $checklistId);
 ```
 
 API Signature:
-```php
-'deleteCardChecklist' => ['delete', 'cards/%s/checklists/%s']
-```
+DELETE /cards/{cardId}/checklists/{checklistId}
+
 
 #### Get card custom field
 
@@ -1238,9 +1121,8 @@ $result = $client->getCardCustomField($cardId, $customFieldId);
 ```
 
 API Signature:
-```php
-'getCardCustomField' => ['get', 'cards/%s/customField/%s']
-```
+GET /cards/{cardId}/customField/{customFieldId}
+
 
 #### Update card custom field
 
@@ -1274,9 +1156,8 @@ $result = $client->updateCardCustomField($cardId, $customFieldId, $attributes);
 ```
 
 API Signature:
-```php
-'updateCardCustomField' => ['putAsBody', 'cards/%s/customField/%s/item']
-```
+PUT /cards/{cardId}/customField/{customFieldId}/item
+
 
 #### Update card closed
 
@@ -1285,9 +1166,8 @@ $result = $client->updateCardClosed($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateCardClosed' => ['put', 'cards/%s/closed']
-```
+PUT /cards/{cardId}/closed
+
 #### Update card desc
 
 ```php
@@ -1295,9 +1175,8 @@ $result = $client->updateCardDesc($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateCardDesc' => ['put', 'cards/%s/desc']
-```
+PUT /cards/{cardId}/desc
+
 #### Update card due
 
 ```php
@@ -1305,9 +1184,8 @@ $result = $client->updateCardDue($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateCardDue' => ['put', 'cards/%s/due']
-```
+PUT /cards/{cardId}/due
+
 #### Update card id attachment cover
 
 ```php
@@ -1315,9 +1193,8 @@ $result = $client->updateCardIdAttachmentCover($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateCardIdAttachmentCover' => ['put', 'cards/%s/idAttachmentCover']
-```
+PUT /cards/{cardId}/idAttachmentCover
+
 #### Update card id board
 
 ```php
@@ -1325,9 +1202,8 @@ $result = $client->updateCardIdBoard($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateCardIdBoard' => ['put', 'cards/%s/idBoard']
-```
+PUT /cards/{cardId}/idBoard
+
 #### Add card id label
 
 ```php
@@ -1335,9 +1211,8 @@ $result = $client->addCardIdLabel($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'addCardIdLabel' => ['post', 'cards/%s/idLabels']
-```
+POST /cards/{cardId}/idLabels
+
 #### Delete card id label
 
 ```php
@@ -1345,9 +1220,8 @@ $result = $client->deleteCardIdLabel($cardId, $idLabelId);
 ```
 
 API Signature:
-```php
-'deleteCardIdLabel' => ['delete', 'cards/%s/idLabels/%s']
-```
+DELETE /cards/{cardId}/idLabels/{idLabelId}
+
 #### Update card id list
 
 ```php
@@ -1355,9 +1229,8 @@ $result = $client->updateCardIdList($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateCardIdList' => ['put', 'cards/%s/idList']
-```
+PUT /cards/{cardId}/idList
+
 #### Add card id member
 
 ```php
@@ -1365,9 +1238,8 @@ $result = $client->addCardIdMember($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'addCardIdMember' => ['post', 'cards/%s/idMembers']
-```
+POST /cards/{cardId}/idMembers
+
 #### Update card id members
 
 ```php
@@ -1375,9 +1247,8 @@ $result = $client->updateCardIdMembers($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateCardIdMembers' => ['put', 'cards/%s/idMembers']
-```
+PUT /cards/{cardId}/idMembers
+
 #### Delete card id member
 
 ```php
@@ -1385,9 +1256,8 @@ $result = $client->deleteCardIdMember($cardId, $idMemberId);
 ```
 
 API Signature:
-```php
-'deleteCardIdMember' => ['delete', 'cards/%s/idMembers/%s']
-```
+DELETE /cards/{cardId}/idMembers/{idMemberId}
+
 #### Add card label
 
 ```php
@@ -1395,9 +1265,8 @@ $result = $client->addCardLabel($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'addCardLabel' => ['post', 'cards/%s/labels']
-```
+POST /cards/{cardId}/labels
+
 #### Update card label
 
 ```php
@@ -1405,9 +1274,8 @@ $result = $client->updateCardLabel($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateCardLabel' => ['put', 'cards/%s/labels']
-```
+PUT /cards/{cardId}/labels
+
 #### Delete card label
 
 ```php
@@ -1415,9 +1283,8 @@ $result = $client->deleteCardLabel($cardId, $labelId);
 ```
 
 API Signature:
-```php
-'deleteCardLabel' => ['delete', 'cards/%s/labels/%s']
-```
+DELETE /cards/{cardId}/labels/{labelId}
+
 #### Get card list
 
 ```php
@@ -1425,9 +1292,8 @@ $result = $client->getCardList($cardId);
 ```
 
 API Signature:
-```php
-'getCardList' => ['get', 'cards/%s/list']
-```
+GET /cards/{cardId}/list
+
 #### Get card list field
 
 ```php
@@ -1435,9 +1301,8 @@ $result = $client->getCardListField($cardId, $fieldName);
 ```
 
 API Signature:
-```php
-'getCardListField' => ['get', 'cards/%s/list/%s']
-```
+GET /cards/{cardId}/list/{fieldName}
+
 #### Add card mark associated notifications read
 
 ```php
@@ -1445,9 +1310,8 @@ $result = $client->addCardMarkAssociatedNotificationsRead($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'addCardMarkAssociatedNotificationsRead' => ['post', 'cards/%s/markAssociatedNotificationsRead']
-```
+POST /cards/{cardId}/markAssociatedNotificationsRead
+
 #### Get card members
 
 ```php
@@ -1455,9 +1319,8 @@ $result = $client->getCardMembers($cardId);
 ```
 
 API Signature:
-```php
-'getCardMembers' => ['get', 'cards/%s/members']
-```
+GET /cards/{cardId}/members
+
 #### Get card members voted
 
 ```php
@@ -1465,9 +1328,8 @@ $result = $client->getCardMembersVoted($cardId);
 ```
 
 API Signature:
-```php
-'getCardMembersVoted' => ['get', 'cards/%s/membersVoted']
-```
+GET /cards/{cardId}/membersVoted
+
 #### Add card members voted
 
 ```php
@@ -1475,9 +1337,8 @@ $result = $client->addCardMembersVoted($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'addCardMembersVoted' => ['post', 'cards/%s/membersVoted']
-```
+POST /cards/{cardId}/membersVoted
+
 #### Delete card members voted
 
 ```php
@@ -1485,9 +1346,8 @@ $result = $client->deleteCardMembersVoted($cardId, $membersVotedId);
 ```
 
 API Signature:
-```php
-'deleteCardMembersVoted' => ['delete', 'cards/%s/membersVoted/%s']
-```
+DELETE /cards/{cardId}/membersVoted/{membersVotedId}
+
 #### Update card name
 
 ```php
@@ -1495,9 +1355,8 @@ $result = $client->updateCardName($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateCardName' => ['put', 'cards/%s/name']
-```
+PUT /cards/{cardId}/name
+
 #### Update card pos
 
 ```php
@@ -1505,9 +1364,8 @@ $result = $client->updateCardPos($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateCardPos' => ['put', 'cards/%s/pos']
-```
+PUT /cards/{cardId}/pos
+
 #### Get card stickers
 
 ```php
@@ -1515,9 +1373,8 @@ $result = $client->getCardStickers($cardId);
 ```
 
 API Signature:
-```php
-'getCardStickers' => ['get', 'cards/%s/stickers']
-```
+GET /cards/{cardId}/stickers
+
 #### Add card sticker
 
 ```php
@@ -1525,9 +1382,8 @@ $result = $client->addCardSticker($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'addCardSticker' => ['post', 'cards/%s/stickers']
-```
+POST /cards/{cardId}/stickers
+
 #### Delete card sticker
 
 ```php
@@ -1535,9 +1391,8 @@ $result = $client->deleteCardSticker($cardId, $stickerId);
 ```
 
 API Signature:
-```php
-'deleteCardSticker' => ['delete', 'cards/%s/stickers/%s']
-```
+DELETE /cards/{cardId}/stickers/{stickerId}
+
 #### Get card sticker
 
 ```php
@@ -1545,9 +1400,8 @@ $result = $client->getCardSticker($cardId, $stickerId);
 ```
 
 API Signature:
-```php
-'getCardSticker' => ['get', 'cards/%s/stickers/%s']
-```
+GET /cards/{cardId}/stickers/{stickerId}
+
 #### Update card sticker
 
 ```php
@@ -1555,9 +1409,8 @@ $result = $client->updateCardSticker($cardId, $stickerId, $attributes);
 ```
 
 API Signature:
-```php
-'updateCardSticker' => ['put', 'cards/%s/stickers/%s']
-```
+PUT /cards/{cardId}/stickers/{stickerId}
+
 #### Update card subscribed
 
 ```php
@@ -1565,9 +1418,8 @@ $result = $client->updateCardSubscribed($cardId, $attributes);
 ```
 
 API Signature:
-```php
-'updateCardSubscribed' => ['put', 'cards/%s/subscribed']
-```
+PUT /cards/{cardId}/subscribed
+
 
 ### Checklists
 
@@ -1578,9 +1430,8 @@ $result = $client->addChecklist($attributes);
 ```
 
 API Signature:
-```php
-'addChecklist' => ['post', 'checklists']
-```
+POST /checklists
+
 #### Delete checklist
 
 ```php
@@ -1588,9 +1439,8 @@ $result = $client->deleteChecklist($checklistId);
 ```
 
 API Signature:
-```php
-'deleteChecklist' => ['delete', 'checklists/%s']
-```
+DELETE /checklists/{checklistId}
+
 #### Get checklist
 
 ```php
@@ -1598,9 +1448,8 @@ $result = $client->getChecklist($checklistId);
 ```
 
 API Signature:
-```php
-'getChecklist' => ['get', 'checklists/%s']
-```
+GET /checklists/{checklistId}
+
 #### Update checklist
 
 ```php
@@ -1608,9 +1457,8 @@ $result = $client->updateChecklist($checklistId, $attributes);
 ```
 
 API Signature:
-```php
-'updateChecklist' => ['put', 'checklists/%s']
-```
+PUT /checklists/{checklistId}
+
 #### Get checklist field
 
 ```php
@@ -1618,9 +1466,8 @@ $result = $client->getChecklistField($checklistId, $fieldName);
 ```
 
 API Signature:
-```php
-'getChecklistField' => ['get', 'checklists/%s/%s']
-```
+GET /checklists/{checklistId}/{fieldName}
+
 #### Get checklist board
 
 ```php
@@ -1628,9 +1475,8 @@ $result = $client->getChecklistBoard($checklistId);
 ```
 
 API Signature:
-```php
-'getChecklistBoard' => ['get', 'checklists/%s/board']
-```
+GET /checklists/{checklistId}/board
+
 #### Get checklist board field
 
 ```php
@@ -1638,9 +1484,8 @@ $result = $client->getChecklistBoardField($checklistId, $fieldName);
 ```
 
 API Signature:
-```php
-'getChecklistBoardField' => ['get', 'checklists/%s/board/%s']
-```
+GET /checklists/{checklistId}/board/{fieldName}
+
 #### Get checklist cards
 
 ```php
@@ -1648,9 +1493,8 @@ $result = $client->getChecklistCards($checklistId);
 ```
 
 API Signature:
-```php
-'getChecklistCards' => ['get', 'checklists/%s/cards']
-```
+GET /checklists/{checklistId}/cards
+
 #### Get checklist card
 
 ```php
@@ -1658,9 +1502,8 @@ $result = $client->getChecklistCard($checklistId, $cardId);
 ```
 
 API Signature:
-```php
-'getChecklistCard' => ['get', 'checklists/%s/cards/%s']
-```
+GET /checklists/{checklistId}/cards/{cardId}
+
 #### Get checklist check items
 
 ```php
@@ -1668,9 +1511,8 @@ $result = $client->getChecklistCheckItems($checklistId);
 ```
 
 API Signature:
-```php
-'getChecklistCheckItems' => ['get', 'checklists/%s/checkItems']
-```
+GET /checklists/{checklistId}/checkItems
+
 #### Add checklist check item
 
 ```php
@@ -1678,9 +1520,8 @@ $result = $client->addChecklistCheckItem($checklistId, $attributes);
 ```
 
 API Signature:
-```php
-'addChecklistCheckItem' => ['post', 'checklists/%s/checkItems']
-```
+POST /checklists/{checklistId}/checkItems
+
 #### Delete checklist check item
 
 ```php
@@ -1688,9 +1529,8 @@ $result = $client->deleteChecklistCheckItem($checklistId, $checkItemId);
 ```
 
 API Signature:
-```php
-'deleteChecklistCheckItem' => ['delete', 'checklists/%s/checkItems/%s']
-```
+DELETE /checklists/{checklistId}/checkItems/{checkItemId}
+
 #### Get checklist check item
 
 ```php
@@ -1698,9 +1538,8 @@ $result = $client->getChecklistCheckItem($checklistId, $checkItemId);
 ```
 
 API Signature:
-```php
-'getChecklistCheckItem' => ['get', 'checklists/%s/checkItems/%s']
-```
+GET /checklists/{checklistId}/checkItems/{checkItemId}
+
 #### Update checklist id card
 
 ```php
@@ -1708,9 +1547,8 @@ $result = $client->updateChecklistIdCard($checklistId, $attributes);
 ```
 
 API Signature:
-```php
-'updateChecklistIdCard' => ['put', 'checklists/%s/idCard']
-```
+PUT /checklists/{checklistId}/idCard
+
 #### Update checklist name
 
 ```php
@@ -1718,9 +1556,8 @@ $result = $client->updateChecklistName($checklistId, $attributes);
 ```
 
 API Signature:
-```php
-'updateChecklistName' => ['put', 'checklists/%s/name']
-```
+PUT /checklists/{checklistId}/name
+
 #### Update checklist pos
 
 ```php
@@ -1728,9 +1565,8 @@ $result = $client->updateChecklistPos($checklistId, $attributes);
 ```
 
 API Signature:
-```php
-'updateChecklistPos' => ['put', 'checklists/%s/pos']
-```
+PUT /checklists/{checklistId}/pos
+
 ### CustomFields
 
 #### Create custom field
@@ -1740,9 +1576,8 @@ $result = $client->addCustomField($attributes);
 ```
 
 API Signature:
-```php
-'addCustomField' => ['post', 'customFields']
-```
+POST /customFields
+
 
 #### Add option to a custom field
 
@@ -1751,9 +1586,8 @@ $result = $client->addCustomFieldOption($customFieldId, $attributes);
 ```
 
 API Signature:
-```php
-'addCustomFieldOption' => ['postAsBody', 'customField/%s/options']
-```
+POST /customField/{customFieldId}/options
+
 
 #### Update custom field option
 
@@ -1762,9 +1596,8 @@ $result = $client->updateCustomFieldOption($customFieldId, $optionId, $attribute
 ```
 
 API Signature:
-```php
-'updateCustomFieldOption' => ['put', 'customField/%s/options/%s']
-```
+PUT /customField/{customFieldId}/options/{optionId}
+
 
 #### Delete custom field
 
@@ -1773,9 +1606,8 @@ $result = $client->deleteCustomField($customFieldId);
 ```
 
 API Signature:
-```php
-'deleteCustomField' => ['delete', 'customField/%s']
-```
+DELETE /customField/{customFieldId}
+
 
 ### Labels
 
@@ -1786,9 +1618,8 @@ $result = $client->addLabel($attributes);
 ```
 
 API Signature:
-```php
-'addLabel' => ['post', 'labels']
-```
+POST /labels
+
 #### Delete label
 
 ```php
@@ -1796,9 +1627,8 @@ $result = $client->deleteLabel($labelId);
 ```
 
 API Signature:
-```php
-'deleteLabel' => ['delete', 'labels/%s']
-```
+DELETE /labels/{labelId}
+
 #### Get label
 
 ```php
@@ -1806,9 +1636,8 @@ $result = $client->getLabel($labelId);
 ```
 
 API Signature:
-```php
-'getLabel' => ['get', 'labels/%s']
-```
+GET /labels/{labelId}
+
 #### Update label
 
 ```php
@@ -1816,9 +1645,8 @@ $result = $client->updateLabel($labelId, $attributes);
 ```
 
 API Signature:
-```php
-'updateLabel' => ['put', 'labels/%s']
-```
+PUT /labels/{labelId}
+
 #### Get label board
 
 ```php
@@ -1826,9 +1654,8 @@ $result = $client->getLabelBoard($labelId);
 ```
 
 API Signature:
-```php
-'getLabelBoard' => ['get', 'labels/%s/board']
-```
+GET /labels/{labelId}/board
+
 #### Get label board field
 
 ```php
@@ -1836,9 +1663,8 @@ $result = $client->getLabelBoardField($labelId, $fieldName);
 ```
 
 API Signature:
-```php
-'getLabelBoardField' => ['get', 'labels/%s/board/%s']
-```
+GET /labels/{labelId}/board/{fieldName}
+
 #### Update label color
 
 ```php
@@ -1846,9 +1672,8 @@ $result = $client->updateLabelColor($labelId, $attributes);
 ```
 
 API Signature:
-```php
-'updateLabelColor' => ['put', 'labels/%s/color']
-```
+PUT /labels/{labelId}/color
+
 #### Update label name
 
 ```php
@@ -1856,9 +1681,8 @@ $result = $client->updateLabelName($labelId, $attributes);
 ```
 
 API Signature:
-```php
-'updateLabelName' => ['put', 'labels/%s/name']
-```
+PUT /labels/{labelId}/name
+
 
 ### Lists
 
@@ -1869,9 +1693,8 @@ $result = $client->addList($attributes);
 ```
 
 API Signature:
-```php
-'addList' => ['post', 'lists']
-```
+POST /lists
+
 #### Get list
 
 ```php
@@ -1879,9 +1702,8 @@ $result = $client->getList($listId);
 ```
 
 API Signature:
-```php
-'getList' => ['get', 'lists/%s']
-```
+GET /lists/{listId}
+
 #### Update list
 
 ```php
@@ -1889,9 +1711,8 @@ $result = $client->updateList($listId, $attributes);
 ```
 
 API Signature:
-```php
-'updateList' => ['put', 'lists/%s']
-```
+PUT /lists/{listId}
+
 #### Get list field
 
 ```php
@@ -1899,9 +1720,8 @@ $result = $client->getListField($listId, $fieldName);
 ```
 
 API Signature:
-```php
-'getListField' => ['get', 'lists/%s/%s']
-```
+GET /lists/{listId}/{fieldName}
+
 #### Get list actions
 
 ```php
@@ -1909,9 +1729,8 @@ $result = $client->getListActions($listId, $attributes);
 ```
 
 API Signature:
-```php
-'getListActions' => ['get', 'lists/%s/actions']
-```
+GET /lists/{listId}/actions
+
 #### Add list archive all cards
 
 ```php
@@ -1919,9 +1738,8 @@ $result = $client->addListArchiveAllCards($listId, $attributes);
 ```
 
 API Signature:
-```php
-'addListArchiveAllCards' => ['post', 'lists/%s/archiveAllCards']
-```
+POST /lists/{listId}/archiveAllCards
+
 #### Get list board
 
 ```php
@@ -1929,9 +1747,8 @@ $result = $client->getListBoard($listId);
 ```
 
 API Signature:
-```php
-'getListBoard' => ['get', 'lists/%s/board']
-```
+GET /lists/{listId}/board
+
 #### Get list board field
 
 ```php
@@ -1939,9 +1756,8 @@ $result = $client->getListBoardField($listId, $fieldName);
 ```
 
 API Signature:
-```php
-'getListBoardField' => ['get', 'lists/%s/board/%s']
-```
+GET /lists/{listId}/board/{fieldName}
+
 #### Get list cards
 
 ```php
@@ -1949,9 +1765,8 @@ $result = $client->getListCards($listId);
 ```
 
 API Signature:
-```php
-'getListCards' => ['get', 'lists/%s/cards']
-```
+GET /lists/{listId}/cards
+
 #### Add list card
 
 ```php
@@ -1959,9 +1774,8 @@ $result = $client->addListCard($listId, $attributes);
 ```
 
 API Signature:
-```php
-'addListCard' => ['post', 'lists/%s/cards']
-```
+POST /lists/{listId}/cards
+
 #### Get list card
 
 ```php
@@ -1969,9 +1783,8 @@ $result = $client->getListCard($listId, $cardId);
 ```
 
 API Signature:
-```php
-'getListCard' => ['get', 'lists/%s/cards/%s']
-```
+GET /lists/{listId}/cards/{cardId}
+
 #### Update list closed
 
 ```php
@@ -1979,9 +1792,8 @@ $result = $client->updateListClosed($listId, $attributes);
 ```
 
 API Signature:
-```php
-'updateListClosed' => ['put', 'lists/%s/closed']
-```
+PUT /lists/{listId}/closed
+
 #### Update list id board
 
 ```php
@@ -1989,9 +1801,8 @@ $result = $client->updateListIdBoard($listId, $attributes);
 ```
 
 API Signature:
-```php
-'updateListIdBoard' => ['put', 'lists/%s/idBoard']
-```
+PUT /lists/{listId}/idBoard
+
 #### Add list move all cards
 
 ```php
@@ -1999,9 +1810,8 @@ $result = $client->addListMoveAllCards($listId, $attributes);
 ```
 
 API Signature:
-```php
-'addListMoveAllCards' => ['post', 'lists/%s/moveAllCards']
-```
+POST /lists/{listId}/moveAllCards
+
 #### Update list name
 
 ```php
@@ -2009,9 +1819,8 @@ $result = $client->updateListName($listId, $attributes);
 ```
 
 API Signature:
-```php
-'updateListName' => ['put', 'lists/%s/name']
-```
+PUT /lists/{listId}/name
+
 #### Update list pos
 
 ```php
@@ -2019,9 +1828,8 @@ $result = $client->updateListPos($listId, $attributes);
 ```
 
 API Signature:
-```php
-'updateListPos' => ['put', 'lists/%s/pos']
-```
+PUT /lists/{listId}/pos
+
 #### Update list subscribed
 
 ```php
@@ -2029,9 +1837,8 @@ $result = $client->updateListSubscribed($listId, $attributes);
 ```
 
 API Signature:
-```php
-'updateListSubscribed' => ['put', 'lists/%s/subscribed']
-```
+PUT /lists/{listId}/subscribed
+
 
 ### Members
 
@@ -2042,9 +1849,8 @@ $result = $client->getMember($memberId);
 ```
 
 API Signature:
-```php
-'getMember' => ['get', 'members/%s']
-```
+GET /members/{memberId}
+
 #### Update member
 
 ```php
@@ -2052,9 +1858,8 @@ $result = $client->updateMember($memberId, $attributes);
 ```
 
 API Signature:
-```php
-'updateMember' => ['put', 'members/%s']
-```
+PUT /members/{memberId}
+
 #### Get member field
 
 ```php
@@ -2062,9 +1867,8 @@ $result = $client->getMemberField($memberId, $fieldName);
 ```
 
 API Signature:
-```php
-'getMemberField' => ['get', 'members/%s/%s']
-```
+GET /members/{memberId}/{fieldName}
+
 #### Get member actions
 
 ```php
@@ -2072,9 +1876,8 @@ $result = $client->getMemberActions($memberId, $attributes);
 ```
 
 API Signature:
-```php
-'getMemberActions' => ['get', 'members/%s/actions']
-```
+GET /members/{memberId}/actions
+
 #### Add member avatar
 
 ```php
@@ -2082,9 +1885,8 @@ $result = $client->addMemberAvatar($memberId, $attributes);
 ```
 
 API Signature:
-```php
-'addMemberAvatar' => ['post', 'members/%s/avatar']
-```
+POST /members/{memberId}/avatar
+
 #### Update member avatar source
 
 ```php
@@ -2092,9 +1894,8 @@ $result = $client->updateMemberAvatarSource($memberId, $attributes);
 ```
 
 API Signature:
-```php
-'updateMemberAvatarSource' => ['put', 'members/%s/avatarSource']
-```
+PUT /members/{memberId}/avatarSource
+
 #### Update member bio
 
 ```php
@@ -2102,9 +1903,8 @@ $result = $client->updateMemberBio($memberId, $attributes);
 ```
 
 API Signature:
-```php
-'updateMemberBio' => ['put', 'members/%s/bio']
-```
+PUT /members/{memberId}/bio
+
 #### Get member board backgrounds
 
 ```php
@@ -2112,9 +1912,8 @@ $result = $client->getMemberBoardBackgrounds($memberId);
 ```
 
 API Signature:
-```php
-'getMemberBoardBackgrounds' => ['get', 'members/%s/boardBackgrounds']
-```
+GET /members/{memberId}/boardBackgrounds
+
 #### Add member board background
 
 ```php
@@ -2122,9 +1921,8 @@ $result = $client->addMemberBoardBackground($memberId, $attributes);
 ```
 
 API Signature:
-```php
-'addMemberBoardBackground' => ['post', 'members/%s/boardBackgrounds']
-```
+POST /members/{memberId}/boardBackgrounds
+
 #### Delete member board background
 
 ```php
@@ -2132,9 +1930,8 @@ $result = $client->deleteMemberBoardBackground($memberId, $boardBackgroundId);
 ```
 
 API Signature:
-```php
-'deleteMemberBoardBackground' => ['delete', 'members/%s/boardBackgrounds/%s']
-```
+DELETE /members/{memberId}/boardBackgrounds/{boardBackgroundId}
+
 #### Get member board background
 
 ```php
@@ -2142,9 +1939,8 @@ $result = $client->getMemberBoardBackground($memberId, $boardBackgroundId);
 ```
 
 API Signature:
-```php
-'getMemberBoardBackground' => ['get', 'members/%s/boardBackgrounds/%s']
-```
+GET /members/{memberId}/boardBackgrounds/{boardBackgroundId}
+
 #### Update member board background
 
 ```php
@@ -2152,9 +1948,8 @@ $result = $client->updateMemberBoardBackground($memberId, $boardBackgroundId, $a
 ```
 
 API Signature:
-```php
-'updateMemberBoardBackground' => ['put', 'members/%s/boardBackgrounds/%s']
-```
+PUT /members/{memberId}/boardBackgrounds/{boardBackgroundId}
+
 #### Get member boards
 
 ```php
@@ -2162,9 +1957,8 @@ $result = $client->getMemberBoards($memberId);
 ```
 
 API Signature:
-```php
-'getMemberBoards' => ['get', 'members/%s/boards']
-```
+GET /members/{memberId}/boards
+
 #### Get member board
 
 ```php
@@ -2172,9 +1966,8 @@ $result = $client->getMemberBoard($memberId, $boardId);
 ```
 
 API Signature:
-```php
-'getMemberBoard' => ['get', 'members/%s/boards/%s']
-```
+GET /members/{memberId}/boards/{boardId}
+
 #### Get member boards invited
 
 ```php
@@ -2182,9 +1975,8 @@ $result = $client->getMemberBoardsInvited($memberId);
 ```
 
 API Signature:
-```php
-'getMemberBoardsInvited' => ['get', 'members/%s/boardsInvited']
-```
+GET /members/{memberId}/boardsInvited
+
 #### Get member boards invited field
 
 ```php
@@ -2192,9 +1984,8 @@ $result = $client->getMemberBoardsInvitedField($memberId, $fieldName);
 ```
 
 API Signature:
-```php
-'getMemberBoardsInvitedField' => ['get', 'members/%s/boardsInvited/%s']
-```
+GET /members/{memberId}/boardsInvited/{fieldName}
+
 #### Get member board stars
 
 ```php
@@ -2202,9 +1993,8 @@ $result = $client->getMemberBoardStars($memberId);
 ```
 
 API Signature:
-```php
-'getMemberBoardStars' => ['get', 'members/%s/boardStars']
-```
+GET /members/{memberId}/boardStars
+
 #### Add member board star
 
 ```php
@@ -2212,9 +2002,8 @@ $result = $client->addMemberBoardStar($memberId, $attributes);
 ```
 
 API Signature:
-```php
-'addMemberBoardStar' => ['post', 'members/%s/boardStars']
-```
+POST /members/{memberId}/boardStars
+
 #### Delete member board star
 
 ```php
@@ -2222,9 +2011,8 @@ $result = $client->deleteMemberBoardStar($memberId, $boardStarId);
 ```
 
 API Signature:
-```php
-'deleteMemberBoardStar' => ['delete', 'members/%s/boardStars/%s']
-```
+DELETE /members/{memberId}/boardStars/{boardStarId}
+
 #### Get member board star
 
 ```php
@@ -2232,9 +2020,8 @@ $result = $client->getMemberBoardStar($memberId, $boardStarId);
 ```
 
 API Signature:
-```php
-'getMemberBoardStar' => ['get', 'members/%s/boardStars/%s']
-```
+GET /members/{memberId}/boardStars/{boardStarId}
+
 #### Update member board star
 
 ```php
@@ -2242,9 +2029,8 @@ $result = $client->updateMemberBoardStar($memberId, $boardStarId, $attributes);
 ```
 
 API Signature:
-```php
-'updateMemberBoardStar' => ['put', 'members/%s/boardStars/%s']
-```
+PUT /members/{memberId}/boardStars/{boardStarId}
+
 #### Update member board star id board
 
 ```php
@@ -2252,9 +2038,8 @@ $result = $client->updateMemberBoardStarIdBoard($memberId, $boardStarId, $attrib
 ```
 
 API Signature:
-```php
-'updateMemberBoardStarIdBoard' => ['put', 'members/%s/boardStars/%s/idBoard']
-```
+PUT /members/{memberId}/boardStars/{boardStarId}/idBoard
+
 #### Update member board star pos
 
 ```php
@@ -2262,9 +2047,8 @@ $result = $client->updateMemberBoardStarPos($memberId, $boardStarId, $attributes
 ```
 
 API Signature:
-```php
-'updateMemberBoardStarPos' => ['put', 'members/%s/boardStars/%s/pos']
-```
+PUT /members/{memberId}/boardStars/{boardStarId}/pos
+
 #### Get member cards
 
 ```php
@@ -2272,9 +2056,8 @@ $result = $client->getMemberCards($memberId);
 ```
 
 API Signature:
-```php
-'getMemberCards' => ['get', 'members/%s/cards']
-```
+GET /members/{memberId}/cards
+
 #### Get member card
 
 ```php
@@ -2282,9 +2065,8 @@ $result = $client->getMemberCard($memberId, $cardId);
 ```
 
 API Signature:
-```php
-'getMemberCard' => ['get', 'members/%s/cards/%s']
-```
+GET /members/{memberId}/cards/{cardId}
+
 #### Get member custom board backgrounds
 
 ```php
@@ -2292,9 +2074,8 @@ $result = $client->getMemberCustomBoardBackgrounds($memberId);
 ```
 
 API Signature:
-```php
-'getMemberCustomBoardBackgrounds' => ['get', 'members/%s/customBoardBackgrounds']
-```
+GET /members/{memberId}/customBoardBackgrounds
+
 #### Add member custom board background
 
 ```php
@@ -2302,9 +2083,8 @@ $result = $client->addMemberCustomBoardBackground($memberId, $attributes);
 ```
 
 API Signature:
-```php
-'addMemberCustomBoardBackground' => ['post', 'members/%s/customBoardBackgrounds']
-```
+POST /members/{memberId}/customBoardBackgrounds
+
 #### Delete member custom board background
 
 ```php
@@ -2312,9 +2092,8 @@ $result = $client->deleteMemberCustomBoardBackground($memberId, $customBoardBack
 ```
 
 API Signature:
-```php
-'deleteMemberCustomBoardBackground' => ['delete', 'members/%s/customBoardBackgrounds/%s']
-```
+DELETE /members/{memberId}/customBoardBackgrounds/{customBoardBackgroundId}
+
 #### Get member custom board background
 
 ```php
@@ -2322,9 +2101,8 @@ $result = $client->getMemberCustomBoardBackground($memberId, $customBoardBackgro
 ```
 
 API Signature:
-```php
-'getMemberCustomBoardBackground' => ['get', 'members/%s/customBoardBackgrounds/%s']
-```
+GET /members/{memberId}/customBoardBackgrounds/{customBoardBackgroundId}
+
 #### Update member custom board background
 
 ```php
@@ -2332,9 +2110,8 @@ $result = $client->updateMemberCustomBoardBackground($memberId, $customBoardBack
 ```
 
 API Signature:
-```php
-'updateMemberCustomBoardBackground' => ['put', 'members/%s/customBoardBackgrounds/%s']
-```
+PUT /members/{memberId}/customBoardBackgrounds/{customBoardBackgroundId}
+
 #### Get member custom emojis
 
 ```php
@@ -2342,9 +2119,8 @@ $result = $client->getMemberCustomEmojis($memberId);
 ```
 
 API Signature:
-```php
-'getMemberCustomEmojis' => ['get', 'members/%s/customEmoji']
-```
+GET /members/{memberId}/customEmoji
+
 #### Add member custom emoji
 
 ```php
@@ -2352,9 +2128,8 @@ $result = $client->addMemberCustomEmoji($memberId, $attributes);
 ```
 
 API Signature:
-```php
-'addMemberCustomEmoji' => ['post', 'members/%s/customEmoji']
-```
+POST /members/{memberId}/customEmoji
+
 #### Get member custom emoji
 
 ```php
@@ -2362,9 +2137,8 @@ $result = $client->getMemberCustomEmoji($memberId, $customEmojiId);
 ```
 
 API Signature:
-```php
-'getMemberCustomEmoji' => ['get', 'members/%s/customEmoji/%s']
-```
+GET /members/{memberId}/customEmoji/{customEmojiId}
+
 #### Get member custom stickers
 
 ```php
@@ -2372,9 +2146,8 @@ $result = $client->getMemberCustomStickers($memberId);
 ```
 
 API Signature:
-```php
-'getMemberCustomStickers' => ['get', 'members/%s/customStickers']
-```
+GET /members/{memberId}/customStickers
+
 #### Add member custom sticker
 
 ```php
@@ -2382,9 +2155,8 @@ $result = $client->addMemberCustomSticker($memberId, $attributes);
 ```
 
 API Signature:
-```php
-'addMemberCustomSticker' => ['post', 'members/%s/customStickers']
-```
+POST /members/{memberId}/customStickers
+
 #### Delete member custom sticker
 
 ```php
@@ -2392,9 +2164,8 @@ $result = $client->deleteMemberCustomSticker($memberId, $customStickerId);
 ```
 
 API Signature:
-```php
-'deleteMemberCustomSticker' => ['delete', 'members/%s/customStickers/%s']
-```
+DELETE /members/{memberId}/customStickers/{customStickerId}
+
 #### Get member custom sticker
 
 ```php
@@ -2402,9 +2173,8 @@ $result = $client->getMemberCustomSticker($memberId, $customStickerId);
 ```
 
 API Signature:
-```php
-'getMemberCustomSticker' => ['get', 'members/%s/customStickers/%s']
-```
+GET /members/{memberId}/customStickers/{customStickerId}
+
 #### Get member deltas
 
 ```php
@@ -2412,9 +2182,8 @@ $result = $client->getMemberDeltas($memberId);
 ```
 
 API Signature:
-```php
-'getMemberDeltas' => ['get', 'members/%s/deltas']
-```
+GET /members/{memberId}/deltas
+
 #### Update member full name
 
 ```php
@@ -2422,9 +2191,8 @@ $result = $client->updateMemberFullName($memberId, $attributes);
 ```
 
 API Signature:
-```php
-'updateMemberFullName' => ['put', 'members/%s/fullName']
-```
+PUT /members/{memberId}/fullName
+
 #### Update member initials
 
 ```php
@@ -2432,9 +2200,8 @@ $result = $client->updateMemberInitials($memberId, $attributes);
 ```
 
 API Signature:
-```php
-'updateMemberInitials' => ['put', 'members/%s/initials']
-```
+PUT /members/{memberId}/initials
+
 #### Get member notifications
 
 ```php
@@ -2442,9 +2209,8 @@ $result = $client->getMemberNotifications($memberId);
 ```
 
 API Signature:
-```php
-'getMemberNotifications' => ['get', 'members/%s/notifications']
-```
+GET /members/{memberId}/notifications
+
 #### Get member notification
 
 ```php
@@ -2452,9 +2218,8 @@ $result = $client->getMemberNotification($memberId, $notificationId);
 ```
 
 API Signature:
-```php
-'getMemberNotification' => ['get', 'members/%s/notifications/%s']
-```
+GET /members/{memberId}/notifications/{notificationId}
+
 #### Add member one time messages dismissed
 
 ```php
@@ -2462,9 +2227,8 @@ $result = $client->addMemberOneTimeMessagesDismissed($memberId, $attributes);
 ```
 
 API Signature:
-```php
-'addMemberOneTimeMessagesDismissed' => ['post', 'members/%s/oneTimeMessagesDismissed']
-```
+POST /members/{memberId}/oneTimeMessagesDismissed
+
 #### Get member organizations
 
 ```php
@@ -2472,9 +2236,8 @@ $result = $client->getMemberOrganizations($memberId);
 ```
 
 API Signature:
-```php
-'getMemberOrganizations' => ['get', 'members/%s/organizations']
-```
+GET /members/{memberId}/organizations
+
 #### Get member organization
 
 ```php
@@ -2482,9 +2245,8 @@ $result = $client->getMemberOrganization($memberId, $organizationId);
 ```
 
 API Signature:
-```php
-'getMemberOrganization' => ['get', 'members/%s/organizations/%s']
-```
+GET /members/{memberId}/organizations/{organizationId}
+
 #### Get member organizations invited
 
 ```php
@@ -2492,9 +2254,8 @@ $result = $client->getMemberOrganizationsInvited($memberId);
 ```
 
 API Signature:
-```php
-'getMemberOrganizationsInvited' => ['get', 'members/%s/organizationsInvited']
-```
+GET /members/{memberId}/organizationsInvited
+
 #### Get member organizations invited field
 
 ```php
@@ -2502,9 +2263,8 @@ $result = $client->getMemberOrganizationsInvitedField($memberId, $fieldName);
 ```
 
 API Signature:
-```php
-'getMemberOrganizationsInvitedField' => ['get', 'members/%s/organizationsInvited/%s']
-```
+GET /members/{memberId}/organizationsInvited/{fieldName}
+
 #### Update member pref color blind
 
 ```php
@@ -2512,9 +2272,8 @@ $result = $client->updateMemberPrefColorBlind($memberId, $attributes);
 ```
 
 API Signature:
-```php
-'updateMemberPrefColorBlind' => ['put', 'members/%s/prefs/colorBlind']
-```
+PUT /members/{memberId}/prefs/colorBlind
+
 #### Update member pref minutes between summaries
 
 ```php
@@ -2522,9 +2281,8 @@ $result = $client->updateMemberPrefMinutesBetweenSummaries($memberId, $attribute
 ```
 
 API Signature:
-```php
-'updateMemberPrefMinutesBetweenSummaries' => ['put', 'members/%s/prefs/minutesBetweenSummaries']
-```
+PUT /members/{memberId}/prefs/minutesBetweenSummaries
+
 #### Get member saved searches
 
 ```php
@@ -2532,9 +2290,8 @@ $result = $client->getMemberSavedSearches($memberId);
 ```
 
 API Signature:
-```php
-'getMemberSavedSearches' => ['get', 'members/%s/savedSearches']
-```
+GET /members/{memberId}/savedSearches
+
 #### Add member saved search
 
 ```php
@@ -2542,9 +2299,8 @@ $result = $client->addMemberSavedSearch($memberId, $attributes);
 ```
 
 API Signature:
-```php
-'addMemberSavedSearch' => ['post', 'members/%s/savedSearches']
-```
+POST /members/{memberId}/savedSearches
+
 #### Delete member saved search
 
 ```php
@@ -2552,9 +2308,8 @@ $result = $client->deleteMemberSavedSearch($memberId, $savedSearcheId);
 ```
 
 API Signature:
-```php
-'deleteMemberSavedSearch' => ['delete', 'members/%s/savedSearches/%s']
-```
+DELETE /members/{memberId}/savedSearches/{savedSearcheId}
+
 #### Get member saved search
 
 ```php
@@ -2562,9 +2317,8 @@ $result = $client->getMemberSavedSearch($memberId, $savedSearcheId);
 ```
 
 API Signature:
-```php
-'getMemberSavedSearch' => ['get', 'members/%s/savedSearches/%s']
-```
+GET /members/{memberId}/savedSearches/{savedSearcheId}
+
 #### Update member saved search
 
 ```php
@@ -2572,9 +2326,8 @@ $result = $client->updateMemberSavedSearch($memberId, $savedSearcheId, $attribut
 ```
 
 API Signature:
-```php
-'updateMemberSavedSearch' => ['put', 'members/%s/savedSearches/%s']
-```
+PUT /members/{memberId}/savedSearches/{savedSearcheId}
+
 #### Update member saved search name
 
 ```php
@@ -2582,9 +2335,8 @@ $result = $client->updateMemberSavedSearchName($memberId, $savedSearcheId, $attr
 ```
 
 API Signature:
-```php
-'updateMemberSavedSearchName' => ['put', 'members/%s/savedSearches/%s/name']
-```
+PUT /members/{memberId}/savedSearches/{savedSearcheId}/name
+
 #### Update member saved search pos
 
 ```php
@@ -2592,9 +2344,8 @@ $result = $client->updateMemberSavedSearchPos($memberId, $savedSearcheId, $attri
 ```
 
 API Signature:
-```php
-'updateMemberSavedSearchPos' => ['put', 'members/%s/savedSearches/%s/pos']
-```
+PUT /members/{memberId}/savedSearches/{savedSearcheId}/pos
+
 #### Update member saved search query
 
 ```php
@@ -2602,9 +2353,8 @@ $result = $client->updateMemberSavedSearchQuery($memberId, $savedSearcheId, $att
 ```
 
 API Signature:
-```php
-'updateMemberSavedSearchQuery' => ['put', 'members/%s/savedSearches/%s/query']
-```
+PUT /members/{memberId}/savedSearches/{savedSearcheId}/query
+
 #### Get member tokens
 
 ```php
@@ -2612,9 +2362,8 @@ $result = $client->getMemberTokens($memberId);
 ```
 
 API Signature:
-```php
-'getMemberTokens' => ['get', 'members/%s/tokens']
-```
+GET /members/{memberId}/tokens
+
 #### Update member username
 
 ```php
@@ -2622,9 +2371,8 @@ $result = $client->updateMemberUsername($memberId, $attributes);
 ```
 
 API Signature:
-```php
-'updateMemberUsername' => ['put', 'members/%s/username']
-```
+PUT /members/{memberId}/username
+
 
 ### Notifications
 
@@ -2635,9 +2383,8 @@ $result = $client->getNotification($notificationId);
 ```
 
 API Signature:
-```php
-'getNotification' => ['get', 'notifications/%s']
-```
+GET /notifications/{notificationId}
+
 #### Update notification
 
 ```php
@@ -2645,9 +2392,8 @@ $result = $client->updateNotification($notificationId, $attributes);
 ```
 
 API Signature:
-```php
-'updateNotification' => ['put', 'notifications/%s']
-```
+PUT /notifications/{notificationId}
+
 #### Get notification field
 
 ```php
@@ -2655,9 +2401,8 @@ $result = $client->getNotificationField($notificationId, $fieldName);
 ```
 
 API Signature:
-```php
-'getNotificationField' => ['get', 'notifications/%s/%s']
-```
+GET /notifications/{notificationId}/{fieldName}
+
 #### Get notification board
 
 ```php
@@ -2665,9 +2410,8 @@ $result = $client->getNotificationBoard($notificationId);
 ```
 
 API Signature:
-```php
-'getNotificationBoard' => ['get', 'notifications/%s/board']
-```
+GET /notifications/{notificationId}/board
+
 #### Get notification board field
 
 ```php
@@ -2675,9 +2419,8 @@ $result = $client->getNotificationBoardField($notificationId, $fieldName);
 ```
 
 API Signature:
-```php
-'getNotificationBoardField' => ['get', 'notifications/%s/board/%s']
-```
+GET /notifications/{notificationId}/board/{fieldName}
+
 #### Get notification card
 
 ```php
@@ -2685,9 +2428,8 @@ $result = $client->getNotificationCard($notificationId);
 ```
 
 API Signature:
-```php
-'getNotificationCard' => ['get', 'notifications/%s/card']
-```
+GET /notifications/{notificationId}/card
+
 #### Get notification card field
 
 ```php
@@ -2695,9 +2437,8 @@ $result = $client->getNotificationCardField($notificationId, $fieldName);
 ```
 
 API Signature:
-```php
-'getNotificationCardField' => ['get', 'notifications/%s/card/%s']
-```
+GET /notifications/{notificationId}/card/{fieldName}
+
 #### Get notification entities
 
 ```php
@@ -2705,9 +2446,8 @@ $result = $client->getNotificationEntities($notificationId);
 ```
 
 API Signature:
-```php
-'getNotificationEntities' => ['get', 'notifications/%s/entities']
-```
+GET /notifications/{notificationId}/entities
+
 #### Get notification list
 
 ```php
@@ -2715,9 +2455,8 @@ $result = $client->getNotificationList($notificationId);
 ```
 
 API Signature:
-```php
-'getNotificationList' => ['get', 'notifications/%s/list']
-```
+GET /notifications/{notificationId}/list
+
 #### Get notification list field
 
 ```php
@@ -2725,9 +2464,8 @@ $result = $client->getNotificationListField($notificationId, $fieldName);
 ```
 
 API Signature:
-```php
-'getNotificationListField' => ['get', 'notifications/%s/list/%s']
-```
+GET /notifications/{notificationId}/list/{fieldName}
+
 #### Get notification member
 
 ```php
@@ -2735,9 +2473,8 @@ $result = $client->getNotificationMember($notificationId);
 ```
 
 API Signature:
-```php
-'getNotificationMember' => ['get', 'notifications/%s/member']
-```
+GET /notifications/{notificationId}/member
+
 #### Get notification member field
 
 ```php
@@ -2745,9 +2482,8 @@ $result = $client->getNotificationMemberField($notificationId, $fieldName);
 ```
 
 API Signature:
-```php
-'getNotificationMemberField' => ['get', 'notifications/%s/member/%s']
-```
+GET /notifications/{notificationId}/member/{fieldName}
+
 #### Get notification member creator
 
 ```php
@@ -2755,9 +2491,8 @@ $result = $client->getNotificationMemberCreator($notificationId);
 ```
 
 API Signature:
-```php
-'getNotificationMemberCreator' => ['get', 'notifications/%s/memberCreator']
-```
+GET /notifications/{notificationId}/memberCreator
+
 #### Get notification member creator field
 
 ```php
@@ -2765,9 +2500,8 @@ $result = $client->getNotificationMemberCreatorField($notificationId, $fieldName
 ```
 
 API Signature:
-```php
-'getNotificationMemberCreatorField' => ['get', 'notifications/%s/memberCreator/%s']
-```
+GET /notifications/{notificationId}/memberCreator/{fieldName}
+
 #### Get notification organization
 
 ```php
@@ -2775,9 +2509,8 @@ $result = $client->getNotificationOrganization($notificationId);
 ```
 
 API Signature:
-```php
-'getNotificationOrganization' => ['get', 'notifications/%s/organization']
-```
+GET /notifications/{notificationId}/organization
+
 #### Get notification organization field
 
 ```php
@@ -2785,9 +2518,8 @@ $result = $client->getNotificationOrganizationField($notificationId, $fieldName)
 ```
 
 API Signature:
-```php
-'getNotificationOrganizationField' => ['get', 'notifications/%s/organization/%s']
-```
+GET /notifications/{notificationId}/organization/{fieldName}
+
 #### Update notification unread
 
 ```php
@@ -2795,9 +2527,8 @@ $result = $client->updateNotificationUnread($notificationId, $attributes);
 ```
 
 API Signature:
-```php
-'updateNotificationUnread' => ['put', 'notifications/%s/unread']
-```
+PUT /notifications/{notificationId}/unread
+
 #### Add notification all read
 
 ```php
@@ -2805,9 +2536,8 @@ $result = $client->addNotificationAllRead($attributes);
 ```
 
 API Signature:
-```php
-'addNotificationAllRead' => ['post', 'notifications/all/read']
-```
+POST /notifications/all/read
+
 
 ### Organizations
 
@@ -2818,9 +2548,8 @@ $result = $client->addOrganization($attributes);
 ```
 
 API Signature:
-```php
-'addOrganization' => ['post', 'organizations']
-```
+POST /organizations
+
 #### Delete organization
 
 ```php
@@ -2828,9 +2557,8 @@ $result = $client->deleteOrganization($organizationId);
 ```
 
 API Signature:
-```php
-'deleteOrganization' => ['delete', 'organizations/%s']
-```
+DELETE /organizations/{organizationId}
+
 #### Get organization
 
 ```php
@@ -2838,9 +2566,8 @@ $result = $client->getOrganization($organizationId);
 ```
 
 API Signature:
-```php
-'getOrganization' => ['get', 'organizations/%s']
-```
+GET /organizations/{organizationId}
+
 #### Update organization
 
 ```php
@@ -2848,9 +2575,8 @@ $result = $client->updateOrganization($organizationId, $attributes);
 ```
 
 API Signature:
-```php
-'updateOrganization' => ['put', 'organizations/%s']
-```
+PUT /organizations/{organizationId}
+
 #### Get organization field
 
 ```php
@@ -2858,9 +2584,8 @@ $result = $client->getOrganizationField($organizationId, $fieldName);
 ```
 
 API Signature:
-```php
-'getOrganizationField' => ['get', 'organizations/%s/%s']
-```
+GET /organizations/{organizationId}/{fieldName}
+
 #### Get organization actions
 
 ```php
@@ -2868,9 +2593,8 @@ $result = $client->getOrganizationActions($organizationId, $attributes);
 ```
 
 API Signature:
-```php
-'getOrganizationActions' => ['get', 'organizations/%s/actions']
-```
+GET /organizations/{organizationId}/actions
+
 #### Get organization boards
 
 ```php
@@ -2878,9 +2602,8 @@ $result = $client->getOrganizationBoards($organizationId);
 ```
 
 API Signature:
-```php
-'getOrganizationBoards' => ['get', 'organizations/%s/boards']
-```
+GET /organizations/{organizationId}/boards
+
 #### Get organization boards filter
 
 ```php
@@ -2888,9 +2611,8 @@ $result = $client->getOrganizationBoardsFilter($organizationId, $filter);
 ```
 
 API Signature:
-```php
-'getOrganizationBoardsFilter' => ['get', 'organizations/%s/boards/%s']
-```
+GET /organizations/{organizationId}/boards/{filter}
+
 #### Get organization deltas
 
 ```php
@@ -2898,9 +2620,8 @@ $result = $client->getOrganizationDeltas($organizationId);
 ```
 
 API Signature:
-```php
-'getOrganizationDeltas' => ['get', 'organizations/%s/deltas']
-```
+GET /organizations/{organizationId}/deltas
+
 #### Update organization desc
 
 ```php
@@ -2908,9 +2629,8 @@ $result = $client->updateOrganizationDesc($organizationId, $attributes);
 ```
 
 API Signature:
-```php
-'updateOrganizationDesc' => ['put', 'organizations/%s/desc']
-```
+PUT /organizations/{organizationId}/desc
+
 #### Update organization display name
 
 ```php
@@ -2918,9 +2638,8 @@ $result = $client->updateOrganizationDisplayName($organizationId, $attributes);
 ```
 
 API Signature:
-```php
-'updateOrganizationDisplayName' => ['put', 'organizations/%s/displayName']
-```
+PUT /organizations/{organizationId}/displayName
+
 #### Delete organization logo
 
 ```php
@@ -2928,9 +2647,8 @@ $result = $client->deleteOrganizationLogo($organizationId);
 ```
 
 API Signature:
-```php
-'deleteOrganizationLogo' => ['delete', 'organizations/%s/logo']
-```
+DELETE /organizations/{organizationId}/logo
+
 #### Add organization logo
 
 ```php
@@ -2938,9 +2656,8 @@ $result = $client->addOrganizationLogo($organizationId, $attributes);
 ```
 
 API Signature:
-```php
-'addOrganizationLogo' => ['post', 'organizations/%s/logo']
-```
+POST /organizations/{organizationId}/logo
+
 #### Get organization members
 
 ```php
@@ -2948,9 +2665,8 @@ $result = $client->getOrganizationMembers($organizationId);
 ```
 
 API Signature:
-```php
-'getOrganizationMembers' => ['get', 'organizations/%s/members']
-```
+GET /organizations/{organizationId}/members
+
 #### Update organization members
 
 ```php
@@ -2958,9 +2674,8 @@ $result = $client->updateOrganizationMembers($organizationId, $attributes);
 ```
 
 API Signature:
-```php
-'updateOrganizationMembers' => ['put', 'organizations/%s/members']
-```
+PUT /organizations/{organizationId}/members
+
 #### Delete organization member
 
 ```php
@@ -2968,9 +2683,8 @@ $result = $client->deleteOrganizationMember($organizationId, $memberId);
 ```
 
 API Signature:
-```php
-'deleteOrganizationMember' => ['delete', 'organizations/%s/members/%s']
-```
+DELETE /organizations/{organizationId}/members/{memberId}
+
 #### Get organization members filter
 
 ```php
@@ -2978,9 +2692,8 @@ $result = $client->getOrganizationMembersFilter($organizationId, $filter);
 ```
 
 API Signature:
-```php
-'getOrganizationMembersFilter' => ['get', 'organizations/%s/members/%s']
-```
+GET /organizations/{organizationId}/members/{filter}
+
 #### Update organization member
 
 ```php
@@ -2988,9 +2701,8 @@ $result = $client->updateOrganizationMember($organizationId, $memberId, $attribu
 ```
 
 API Signature:
-```php
-'updateOrganizationMember' => ['put', 'organizations/%s/members/%s']
-```
+PUT /organizations/{organizationId}/members/{memberId}
+
 #### Delete organization member all
 
 ```php
@@ -2998,9 +2710,8 @@ $result = $client->deleteOrganizationMemberAll($organizationId, $memberId);
 ```
 
 API Signature:
-```php
-'deleteOrganizationMemberAll' => ['delete', 'organizations/%s/members/%s/all']
-```
+DELETE /organizations/{organizationId}/members/{memberId}/all
+
 #### Get organization member cards
 
 ```php
@@ -3008,9 +2719,8 @@ $result = $client->getOrganizationMemberCards($organizationId, $memberId);
 ```
 
 API Signature:
-```php
-'getOrganizationMemberCards' => ['get', 'organizations/%s/members/%s/cards']
-```
+GET /organizations/{organizationId}/members/{memberId}/cards
+
 #### Update organization member deactivated
 
 ```php
@@ -3018,9 +2728,8 @@ $result = $client->updateOrganizationMemberDeactivated($organizationId, $memberI
 ```
 
 API Signature:
-```php
-'updateOrganizationMemberDeactivated' => ['put', 'organizations/%s/members/%s/deactivated']
-```
+PUT /organizations/{organizationId}/members/{memberId}/deactivated
+
 #### Get organization memberships
 
 ```php
@@ -3028,9 +2737,8 @@ $result = $client->getOrganizationMemberships($organizationId);
 ```
 
 API Signature:
-```php
-'getOrganizationMemberships' => ['get', 'organizations/%s/memberships']
-```
+GET /organizations/{organizationId}/memberships
+
 #### Get organization membership
 
 ```php
@@ -3038,9 +2746,8 @@ $result = $client->getOrganizationMembership($organizationId, $membershipId);
 ```
 
 API Signature:
-```php
-'getOrganizationMembership' => ['get', 'organizations/%s/memberships/%s']
-```
+GET /organizations/{organizationId}/memberships/{membershipId}
+
 #### Update organization membership
 
 ```php
@@ -3048,9 +2755,8 @@ $result = $client->updateOrganizationMembership($organizationId, $membershipId, 
 ```
 
 API Signature:
-```php
-'updateOrganizationMembership' => ['put', 'organizations/%s/memberships/%s']
-```
+PUT /organizations/{organizationId}/memberships/{membershipId}
+
 #### Get organization members invited
 
 ```php
@@ -3058,9 +2764,8 @@ $result = $client->getOrganizationMembersInvited($organizationId);
 ```
 
 API Signature:
-```php
-'getOrganizationMembersInvited' => ['get', 'organizations/%s/membersInvited']
-```
+GET /organizations/{organizationId}/membersInvited
+
 #### Get organization members invited field
 
 ```php
@@ -3068,9 +2773,8 @@ $result = $client->getOrganizationMembersInvitedField($organizationId, $fieldNam
 ```
 
 API Signature:
-```php
-'getOrganizationMembersInvitedField' => ['get', 'organizations/%s/membersInvited/%s']
-```
+GET /organizations/{organizationId}/membersInvited/{fieldName}
+
 #### Update organization name
 
 ```php
@@ -3078,9 +2782,8 @@ $result = $client->updateOrganizationName($organizationId, $attributes);
 ```
 
 API Signature:
-```php
-'updateOrganizationName' => ['put', 'organizations/%s/name']
-```
+PUT /organizations/{organizationId}/name
+
 #### Delete organization pref associated domain
 
 ```php
@@ -3088,9 +2791,8 @@ $result = $client->deleteOrganizationPrefAssociatedDomain($organizationId);
 ```
 
 API Signature:
-```php
-'deleteOrganizationPrefAssociatedDomain' => ['delete', 'organizations/%s/prefs/associatedDomain']
-```
+DELETE /organizations/{organizationId}/prefs/associatedDomain
+
 #### Update organization pref associated domain
 
 ```php
@@ -3098,9 +2800,8 @@ $result = $client->updateOrganizationPrefAssociatedDomain($organizationId, $attr
 ```
 
 API Signature:
-```php
-'updateOrganizationPrefAssociatedDomain' => ['put', 'organizations/%s/prefs/associatedDomain']
-```
+PUT /organizations/{organizationId}/prefs/associatedDomain
+
 #### Update organization pref board visibility restrict org
 
 ```php
@@ -3108,9 +2809,8 @@ $result = $client->updateOrganizationPrefBoardVisibilityRestrictOrg($organizatio
 ```
 
 API Signature:
-```php
-'updateOrganizationPrefBoardVisibilityRestrictOrg' => ['put', 'organizations/%s/prefs/boardVisibilityRestrict/org']
-```
+PUT /organizations/{organizationId}/prefs/boardVisibilityRestrict/org
+
 #### Update organization pref board visibility restrict private
 
 ```php
@@ -3118,9 +2818,8 @@ $result = $client->updateOrganizationPrefBoardVisibilityRestrictPrivate($organiz
 ```
 
 API Signature:
-```php
-'updateOrganizationPrefBoardVisibilityRestrictPrivate' => ['put', 'organizations/%s/prefs/boardVisibilityRestrict/private']
-```
+PUT /organizations/{organizationId}/prefs/boardVisibilityRestrict/private
+
 #### Update organization pref board visibility restrict public
 
 ```php
@@ -3128,9 +2827,8 @@ $result = $client->updateOrganizationPrefBoardVisibilityRestrictPublic($organiza
 ```
 
 API Signature:
-```php
-'updateOrganizationPrefBoardVisibilityRestrictPublic' => ['put', 'organizations/%s/prefs/boardVisibilityRestrict/public']
-```
+PUT /organizations/{organizationId}/prefs/boardVisibilityRestrict/public
+
 #### Update organization pref external members disabled
 
 ```php
@@ -3138,9 +2836,8 @@ $result = $client->updateOrganizationPrefExternalMembersDisabled($organizationId
 ```
 
 API Signature:
-```php
-'updateOrganizationPrefExternalMembersDisabled' => ['put', 'organizations/%s/prefs/externalMembersDisabled']
-```
+PUT /organizations/{organizationId}/prefs/externalMembersDisabled
+
 #### Update organization pref google apps version
 
 ```php
@@ -3148,9 +2845,8 @@ $result = $client->updateOrganizationPrefGoogleAppsVersion($organizationId, $att
 ```
 
 API Signature:
-```php
-'updateOrganizationPrefGoogleAppsVersion' => ['put', 'organizations/%s/prefs/googleAppsVersion']
-```
+PUT /organizations/{organizationId}/prefs/googleAppsVersion
+
 #### Delete organization pref org invite restrict
 
 ```php
@@ -3158,9 +2854,8 @@ $result = $client->deleteOrganizationPrefOrgInviteRestrict($organizationId);
 ```
 
 API Signature:
-```php
-'deleteOrganizationPrefOrgInviteRestrict' => ['delete', 'organizations/%s/prefs/orgInviteRestrict']
-```
+DELETE /organizations/{organizationId}/prefs/orgInviteRestrict
+
 #### Update organization pref org invite restrict
 
 ```php
@@ -3168,9 +2863,8 @@ $result = $client->updateOrganizationPrefOrgInviteRestrict($organizationId, $att
 ```
 
 API Signature:
-```php
-'updateOrganizationPrefOrgInviteRestrict' => ['put', 'organizations/%s/prefs/orgInviteRestrict']
-```
+PUT /organizations/{organizationId}/prefs/orgInviteRestrict
+
 #### Update organization pref permission level
 
 ```php
@@ -3178,9 +2872,8 @@ $result = $client->updateOrganizationPrefPermissionLevel($organizationId, $attri
 ```
 
 API Signature:
-```php
-'updateOrganizationPrefPermissionLevel' => ['put', 'organizations/%s/prefs/permissionLevel']
-```
+PUT /organizations/{organizationId}/prefs/permissionLevel
+
 #### Update organization website
 
 ```php
@@ -3188,9 +2881,8 @@ $result = $client->updateOrganizationWebsite($organizationId, $attributes);
 ```
 
 API Signature:
-```php
-'updateOrganizationWebsite' => ['put', 'organizations/%s/website']
-```
+PUT /organizations/{organizationId}/website
+
 
 ### Search
 
@@ -3201,9 +2893,8 @@ $result = $client->getSearch($attributes);
 ```
 
 API Signature:
-```php
-'getSearch' => ['get', 'search']
-```
+GET /search
+
 #### Get search member
 
 ```php
@@ -3211,9 +2902,8 @@ $result = $client->getSearchMembers($attributes);
 ```
 
 API Signature:
-```php
-'getSearchMembers' => ['get', 'search/members']
-```
+GET /search/members
+
 
 ### Sessions
 
@@ -3224,9 +2914,8 @@ $result = $client->addSession($attributes);
 ```
 
 API Signature:
-```php
-'addSession' => ['post', 'sessions']
-```
+POST /sessions
+
 #### Update session
 
 ```php
@@ -3234,9 +2923,8 @@ $result = $client->updateSession($sessionId, $attributes);
 ```
 
 API Signature:
-```php
-'updateSession' => ['put', 'sessions/%s']
-```
+PUT /sessions/{sessionId}
+
 #### Update session status
 
 ```php
@@ -3244,9 +2932,8 @@ $result = $client->updateSessionStatus($sessionId, $attributes);
 ```
 
 API Signature:
-```php
-'updateSessionStatus' => ['put', 'sessions/%s/status']
-```
+PUT /sessions/{sessionId}/status
+
 #### Get session socket
 
 ```php
@@ -3254,9 +2941,8 @@ $result = $client->getSessionSocket();
 ```
 
 API Signature:
-```php
-'getSessionSocket' => ['get', 'sessions/socket']
-```
+GET /sessions/socket
+
 
 ### Tokens
 
@@ -3267,9 +2953,8 @@ $result = $client->deleteToken($tokenId);
 ```
 
 API Signature:
-```php
-'deleteToken' => ['delete', 'tokens/%s']
-```
+DELETE /tokens/{tokenId}
+
 #### Get token
 
 ```php
@@ -3277,9 +2962,8 @@ $result = $client->getToken($tokenId);
 ```
 
 API Signature:
-```php
-'getToken' => ['get', 'tokens/%s']
-```
+GET /tokens/{token}
+
 #### Get token field
 
 ```php
@@ -3287,9 +2971,8 @@ $result = $client->getTokenField($tokenId, $fieldName);
 ```
 
 API Signature:
-```php
-'getTokenField' => ['get', 'tokens/%s/%s']
-```
+GET /tokens/{tokenId}/{fieldName}
+
 #### Get token member
 
 ```php
@@ -3297,9 +2980,8 @@ $result = $client->getTokenMember($tokenId);
 ```
 
 API Signature:
-```php
-'getTokenMember' => ['get', 'tokens/%s/member']
-```
+GET /tokens/{tokenId}/member
+
 #### Get token member field
 
 ```php
@@ -3307,9 +2989,8 @@ $result = $client->getTokenMemberField($tokenId, $fieldName);
 ```
 
 API Signature:
-```php
-'getTokenMemberField' => ['get', 'tokens/%s/member/%s']
-```
+GET /tokens/{tokenId}/member/{fieldName}
+
 #### Get token webhooks
 
 ```php
@@ -3317,9 +2998,8 @@ $result = $client->getTokenWebhooks($tokenId);
 ```
 
 API Signature:
-```php
-'getTokenWebhooks' => ['get', 'tokens/%s/webhooks']
-```
+GET /tokens/{tokenId}/webhooks
+
 #### Add token webhook
 
 ```php
@@ -3327,9 +3007,8 @@ $result = $client->addTokenWebhook($tokenId, $attributes);
 ```
 
 API Signature:
-```php
-'addTokenWebhook' => ['post', 'tokens/%s/webhooks']
-```
+POST /tokens/{tokenId}/webhooks
+
 #### Update token webhooks
 
 ```php
@@ -3337,9 +3016,8 @@ $result = $client->updateTokenWebhooks($tokenId, $attributes);
 ```
 
 API Signature:
-```php
-'updateTokenWebhooks' => ['put', 'tokens/%s/webhooks']
-```
+PUT /tokens/{tokenId}/webhooks
+
 #### Delete token webhook
 
 ```php
@@ -3347,9 +3025,8 @@ $result = $client->deleteTokenWebhook($tokenId, $webhookId);
 ```
 
 API Signature:
-```php
-'deleteTokenWebhook' => ['delete', 'tokens/%s/webhooks/%s']
-```
+DELETE /tokens/{tokenId}/webhooks/{webhookId}
+
 #### Get token webhook
 
 ```php
@@ -3357,9 +3034,8 @@ $result = $client->getTokenWebhook($tokenId, $webhookId);
 ```
 
 API Signature:
-```php
-'getTokenWebhook' => ['get', 'tokens/%s/webhooks/%s']
-```
+GET /tokens/{tokenId}/webhooks/{webhookId}
+
 
 ### Types
 
@@ -3370,9 +3046,8 @@ $result = $client->getType($typeId);
 ```
 
 API Signature:
-```php
-'getType' => ['get', 'types/%s']
-```
+GET /types/{typeId}
+
 
 ### Webhooks
 
@@ -3383,9 +3058,8 @@ $result = $client->addWebhook($attributes);
 ```
 
 API Signature:
-```php
-'addWebhook' => ['post', 'webhooks']
-```
+POST /webhooks
+
 #### Delete webhook
 
 ```php
@@ -3393,9 +3067,8 @@ $result = $client->deleteWebhook($webhookId);
 ```
 
 API Signature:
-```php
-'deleteWebhook' => ['delete', 'webhooks/%s']
-```
+DELETE /webhooks/{webhookId}
+
 #### Get webhook
 
 ```php
@@ -3403,9 +3076,8 @@ $result = $client->getWebhook($webhookId);
 ```
 
 API Signature:
-```php
-'getWebhook' => ['get', 'webhooks/%s']
-```
+GET /webhooks/{webhookId}
+
 #### Update webhook
 
 ```php
@@ -3413,9 +3085,8 @@ $result = $client->updateWebhook($webhookId, $attributes);
 ```
 
 API Signature:
-```php
-'updateWebhook' => ['put', 'webhooks/%s']
-```
+PUT /webhooks/{webhookId}
+
 #### Get webhook field
 
 ```php
@@ -3423,9 +3094,8 @@ $result = $client->getWebhookField($webhookId, $fieldName);
 ```
 
 API Signature:
-```php
-'getWebhookField' => ['get', 'webhooks/%s/%s']
-```
+GET /webhooks/{webhookId}/{fieldName}
+
 #### Update webhook active
 
 ```php
@@ -3433,9 +3103,8 @@ $result = $client->updateWebhookActive($webhookId, $attributes);
 ```
 
 API Signature:
-```php
-'updateWebhookActive' => ['put', 'webhooks/%s/active']
-```
+PUT /webhooks/{webhookId}/active
+
 #### Update webhook callback
 
 ```php
@@ -3443,9 +3112,8 @@ $result = $client->updateWebhookCallbackURL($webhookId, $attributes);
 ```
 
 API Signature:
-```php
-'updateWebhookCallbackURL' => ['put', 'webhooks/%s/callbackURL']
-```
+PUT /webhooks/{webhookId}/callbackURL
+
 #### Update webhook description
 
 ```php
@@ -3453,9 +3121,8 @@ $result = $client->updateWebhookDescription($webhookId, $attributes);
 ```
 
 API Signature:
-```php
-'updateWebhookDescription' => ['put', 'webhooks/%s/description']
-```
+PUT /webhooks/{webhookId}/description
+
 #### Update webhook id model
 
 ```php
@@ -3463,6 +3130,6 @@ $result = $client->updateWebhookIdModel($webhookId, $attributes);
 ```
 
 API Signature:
-```php
-'updateWebhookIdModel' => ['put', 'webhooks/%s/idModel']
-```
+PUT /webhooks/{webhookId}/idModel
+
+####
