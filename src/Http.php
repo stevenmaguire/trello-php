@@ -214,7 +214,7 @@ class Http
     }
 
     /**
-     * Retrieves http response for a request with the put method,
+     * Retrieves http response for a request with the post method,
      * ensuring parameters are passed as body.
      *
      * @param  string $path
