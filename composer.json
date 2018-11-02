@@ -1,7 +1,7 @@
 {
     "name" : "stevenmaguire/trello-php",
     "description" : "PHP wrapper for Trello API",
-    "keywords" : ["trello","php","client","wrapper","trello gold"],
+    "keywords" : ["trello","php","client","wrapper","trello gold", "psr-7", "psr-17", "psr-18"],
     "homepage" : "http://github.com/stevenmaguire/trello-php",
     "license" : "MIT",
     "authors" : [
