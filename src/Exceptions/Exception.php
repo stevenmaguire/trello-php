@@ -55,7 +55,7 @@ class Exception extends BaseException
      *
      * @param  ClientExceptionInterface $clientException
      *
-     * @return \Psr\Http\Message\RequestInterface|null
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public static function getResponseFromClientException(ClientExceptionInterface $clientException)
     {
