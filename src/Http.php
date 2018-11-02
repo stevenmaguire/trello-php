@@ -79,7 +79,7 @@ class Http
      * @param  string $path
      * @param  array  $parameters
      *
-     * @return Request
+     * @return RequestInterface
      */
     protected function createRequest($verb, $path, $parameters = [])
     {
@@ -170,36 +170,6 @@ class Http
     }
 
     /**
-     * Prepares an anonymous class of important exception parts based on composition of a
-     * given exception.
-     *
-     * @param  ClientExceptionInterface  $clientException
-     *
-     * @return class
-     */
-    private function getRequestExceptionParts(ClientExceptionInterface $clientException)
-    {
-        try {
-            if (is_callable([$clientException, 'getResponse'])) {
-                $response = $clientException->getResponse();
-            } else {
-                throw new Exception('ClientException does not implement getResponse');
-            }
-        } catch (Exception $e) {
-            $response = null;
-        }
-
-        $parts = new class {
-
-        };
-        $parts->reason = $response ? $response->getReasonPhrase() : $clientException->getMessage();
-        $parts->code = $response ? $response->getStatusCode() : $clientException->getCode();
-        $parts->body = $response ? $response->getBody() : null;
-
-        return $parts;
-    }
-
-    /**
      * Creates an array of request options based on the current status of the
      * http client.
      *
@@ -281,8 +251,8 @@ class Http
     /**
      * Adds a given resource to multipart stream collection, to be processed by next request.
      *
-     * @param  string                                           $name
-     * @param  resource|string|Psr\Http\Message\StreamInterface $resource
+     * @param  string                           $name
+     * @param  Psr\Http\Message\StreamInterface $resource
      *
      * @return void
      */
@@ -305,16 +275,14 @@ class Http
     protected function sendRequest(RequestInterface $request)
     {
         try {
-            $response = $this->httpClient->send(
-                $request,
-                $this->getRequestOptions()
-            );
+            $options = $this->getRequestOptions();
+            $response = $this->httpClient->sendRequest($request/*, $options*/);
 
             $this->multipartResources = [];
 
             return json_decode($response->getBody());
         } catch (ClientExceptionInterface $e) {
-            $this->throwRequestException($e);
+            throw Exceptions\Exception::fromClientException($e);
         }
     } // @codeCoverageIgnore
 
@@ -358,34 +326,5 @@ class Http
         $this->httpStreamFactory = $httpStreamFactory;
 
         return $this;
-    }
-
-    /**
-     * Creates local exception from guzzle request exception, which includes
-     * response body.
-     *
-     * @param  ClientExceptionInterface  $clientException
-     *
-     * @return void
-     * @throws Exceptions\Exception
-     */
-    protected function throwRequestException(ClientExceptionInterface $clientException)
-    {
-        $exceptionParts = $this->getRequestExceptionParts($clientException);
-
-        $exception = new Exceptions\Exception(
-            $exceptionParts->reason,
-            $exceptionParts->code,
-            $clientException
-        );
-
-        $body = $exceptionParts->body;
-        $json = json_decode($body);
-
-        if (json_last_error() == JSON_ERROR_NONE) {
-            throw $exception->setResponseBody($json);
-        }
-
-        throw $exception->setResponseBody($body);
     }
 }

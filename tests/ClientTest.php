@@ -153,7 +153,7 @@ class ClientTest extends TestCase
         }));
 
         if ($status == 200) {
-            $client->shouldReceive('send')->with($requestMatcher, $requestOptions)->andReturn($response);
+            $client->shouldReceive('sendRequest')->with($requestMatcher/*, $requestOptions*/)->andReturn($response);
         } else {
             if ($response) {
                 $response->shouldReceive('getReasonPhrase')->andReturn("");
@@ -169,7 +169,7 @@ class ClientTest extends TestCase
                 $exception->setResponse($response);
             }
 
-            $client->shouldReceive('send')->with($requestMatcher, $requestOptions)->andThrow($exception);
+            $client->shouldReceive('sendRequest')->with($requestMatcher/*, $requestOptions*/)->andThrow($exception);
         }
 
         $this->client
