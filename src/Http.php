@@ -252,7 +252,7 @@ class Http
      * Adds a given resource to multipart stream collection, to be processed by next request.
      *
      * @param  string                           $name
-     * @param  Psr\Http\Message\StreamInterface $resource
+     * @param  \Psr\Http\Message\StreamInterface $resource
      *
      * @return void
      */

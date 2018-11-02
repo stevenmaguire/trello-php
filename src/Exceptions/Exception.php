@@ -20,20 +20,11 @@ class Exception extends BaseException
      *
      * @param  ClientExceptionInterface  $clientException
      *
-     * @return Exceptions\Exception
+     * @return Exception
      */
     public static function fromClientException(ClientExceptionInterface $clientException)
     {
-        try {
-            if (is_callable([$clientException, 'getResponse'])) {
-                $response = $clientException->getResponse();
-            } else {
-                throw new Exception('ClientException does not implement getResponse');
-            }
-        } catch (Exception $e) {
-            $response = null;
-        }
-
+        $response = static::getResponseFromClientException($clientException);
         $reason = $response ? $response->getReasonPhrase() : $clientException->getMessage();
         $code = $response ? $response->getStatusCode() : $clientException->getCode();
         $body = $response ? $response->getBody() : null;
@@ -57,6 +48,28 @@ class Exception extends BaseException
     public function getResponseBody()
     {
         return $this->responseBody;
+    }
+
+    /**
+     * Attempts to extract an http response message from the given client exception.
+     *
+     * @param  ClientExceptionInterface $clientException
+     *
+     * @return \Psr\Http\Message\RequestInterface|null
+     */
+    public static function getResponseFromClientException(ClientExceptionInterface $clientException)
+    {
+        try {
+            if (is_callable([$clientException, 'getResponse'])) {
+                $response = $clientException->getResponse();
+            } else {
+                throw new Exception('ClientException does not implement getResponse');
+            }
+        } catch (Exception $e) {
+            $response = null;
+        }
+
+        return $response;
     }
 
     /**
