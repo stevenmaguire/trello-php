@@ -1,8 +1,11 @@
-<?php namespace Stevenmaguire\Services\Trello\Tests;
+<?php
 
+namespace Stevenmaguire\Services\Trello\Tests;
+
+use PHPUnit\Framework\TestCase;
 use Stevenmaguire\Services\Trello\Client;
 
-class BuilderTest extends \PHPUnit_Framework_TestCase
+class BuilderTest extends TestCase
 {
     protected $build = false;
 
@@ -67,6 +70,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     public function testBuilder()
     {
         if ($this->build) {
+            $this->assertTrue($this->build);
             $ref = new \ReflectionClass(Client::class);
 
             $dontWrite = ['__construct','setHttpClient','getHttp','parseDefaultOptions','makeQuery','addBatchUrl','getBatchUrls','parseBatchAttributes'];
@@ -122,6 +126,8 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
             print_r($details);
 
             //file_put_contents(__DIR__."/useage.md", $testCase);
+        } else {
+            $this->assertFalse($this->build);
         }
     }
 }

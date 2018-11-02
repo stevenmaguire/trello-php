@@ -1,14 +1,19 @@
-<?php namespace Stevenmaguire\Services\Trello\Tests;
+<?php
+
+namespace Stevenmaguire\Services\Trello\Tests;
 
 use League\OAuth1\Client\Credentials\TemporaryCredentials;
 use League\OAuth1\Client\Credentials\TokenCredentials;
 use League\OAuth1\Client\Server\Trello as OAuth;
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Stevenmaguire\Services\Trello\Authorization;
 use Stevenmaguire\Services\Trello\Client;
 use Stevenmaguire\Services\Trello\Configuration;
 
-class AuthorizationTest extends \PHPUnit_Framework_TestCase
+class AuthorizationTest extends TestCase
 {
     public function setUp()
     {
@@ -22,7 +27,6 @@ class AuthorizationTest extends \PHPUnit_Framework_TestCase
 
         Configuration::setMany($settings);
 
-        $this->auth = new Authorization;
         $this->client = m::mock(Client::class)->makePartial();
     }
 
@@ -33,25 +37,31 @@ class AuthorizationTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAuthorizationUrlWithNoCredentials()
     {
+        $authorizationUrl = uniqid();
         $tempCredentials = new TemporaryCredentials;
-        $mock = $this->getClientMock();
-        $mock->shouldReceive('getTemporaryCredentials')->andReturn($tempCredentials);
-        $mock->shouldReceive('getAuthorizationUrl')->with($tempCredentials);
-        $this->auth->setClient($mock);
-        $this->client->shouldReceive('getAuthorization')->andReturn($this->auth);
+        $oAuthMock = $this->getClientMock();
+        $oAuthMock->shouldReceive('getTemporaryCredentials')->andReturn($tempCredentials);
+        $oAuthMock->shouldReceive('getAuthorizationUrl')->with($tempCredentials)->andReturn($authorizationUrl);
+        $auth = new Authorization;
+        $auth->setClient($oAuthMock);
 
-        $url = $this->client->getAuthorizationUrl();
+        $url = $this->client->setAuthorization($auth)->getAuthorizationUrl();
+
+        $this->assertEquals($authorizationUrl, $url);
     }
 
     public function testGetAuthorizationUrlWithCredentials()
     {
+        $authorizationUrl = uniqid();
         $tempCredentials = new TemporaryCredentials;
-        $mock = $this->getClientMock();
-        $mock->shouldReceive('getAuthorizationUrl')->with($tempCredentials);
-        $this->auth->setClient($mock);
-        $this->client->shouldReceive('getAuthorization')->andReturn($this->auth);
+        $oAuthMock = $this->getClientMock();
+        $oAuthMock->shouldReceive('getAuthorizationUrl')->with($tempCredentials)->andReturn($authorizationUrl);
+        $auth = new Authorization;
+        $auth->setClient($oAuthMock);
 
-        $url = $this->client->getAuthorizationUrl($tempCredentials);
+        $url = $this->client->setAuthorization($auth)->getAuthorizationUrl($tempCredentials);
+
+        $this->assertEquals($authorizationUrl, $url);
     }
 
     public function testGetTokenWithNoCredentials()
@@ -63,14 +73,14 @@ class AuthorizationTest extends \PHPUnit_Framework_TestCase
         $oauthToken = uniqid();
         $oauthVerifier = uniqid();
         $tokenCredentials = new TokenCredentials;
-        $mock = $this->getClientMock();
-        $mock->shouldReceive('getTokenCredentials')->with(m::on(function ($creds) {
+        $oAuthMock = $this->getClientMock();
+        $oAuthMock->shouldReceive('getTokenCredentials')->with(m::on(function ($creds) {
             return is_a($creds, TemporaryCredentials::class);
         }), $oauthToken, $oauthVerifier)->andReturn($tokenCredentials);
-        $this->auth->setClient($mock);
-        $this->client->shouldReceive('getAuthorization')->andReturn($this->auth);
+        $auth = new Authorization;
+        $auth->setClient($oAuthMock);
 
-        $token = $this->client->getAccessToken($oauthToken, $oauthVerifier);
+        $token = $this->client->setAuthorization($auth)->getAccessToken($oauthToken, $oauthVerifier);
 
         $this->assertInstanceOf(TokenCredentials::class, $token);
     }
@@ -81,14 +91,14 @@ class AuthorizationTest extends \PHPUnit_Framework_TestCase
         $oauthToken = uniqid();
         $oauthVerifier = uniqid();
         $tokenCredentials = new TokenCredentials;
-        $mock = $this->getClientMock();
-        $mock->shouldReceive('getTokenCredentials')->with(m::on(function ($creds) use ($tempCredentials) {
+        $oAuthMock = $this->getClientMock();
+        $oAuthMock->shouldReceive('getTokenCredentials')->with(m::on(function ($creds) use ($tempCredentials) {
             return $tempCredentials === $creds;
         }), $oauthToken, $oauthVerifier)->andReturn($tokenCredentials);
-        $this->auth->setClient($mock);
-        $this->client->shouldReceive('getAuthorization')->andReturn($this->auth);
+        $auth = new Authorization;
+        $auth->setClient($oAuthMock);
 
-        $token = $this->client->getAccessToken($oauthToken, $oauthVerifier, $tempCredentials);
+        $token = $this->client->setAuthorization($auth)->getAccessToken($oauthToken, $oauthVerifier, $tempCredentials);
 
         $this->assertInstanceOf(TokenCredentials::class, $token);
     }
@@ -96,12 +106,12 @@ class AuthorizationTest extends \PHPUnit_Framework_TestCase
     public function testGetTemporaryCredentials()
     {
         $tempCredentials = new TemporaryCredentials;
-        $mock = $this->getClientMock();
-        $mock->shouldReceive('getTemporaryCredentials')->andReturn($tempCredentials);
-        $this->auth->setClient($mock);
-        $this->client->shouldReceive('getAuthorization')->andReturn($this->auth);
+        $oAuthMock = $this->getClientMock();
+        $oAuthMock->shouldReceive('getTemporaryCredentials')->andReturn($tempCredentials);
+        $auth = new Authorization;
+        $auth->setClient($oAuthMock);
 
-        $credentials = $this->client->getTemporaryCredentials();
+        $credentials = $this->client->setAuthorization($auth)->getTemporaryCredentials();
         $this->assertEquals($tempCredentials, $credentials);
     }
 }

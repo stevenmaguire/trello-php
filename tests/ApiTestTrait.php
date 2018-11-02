@@ -1,5 +1,8 @@
-<?php namespace Stevenmaguire\Services\Trello\Tests;
+<?php
 
+namespace Stevenmaguire\Services\Trello\Tests;
+
+use Psr\Http\Client\ClientExceptionInterface;
 use Stevenmaguire\Services\Trello\Exceptions\Exception;
 
 trait ApiTestTrait
@@ -301,8 +304,7 @@ trait ApiTestTrait
         $urlCount = rand(2,10);
         $urls = [];
         for ($i = 0; $i < $urlCount; $i++) {
-            $request = $this->client->getHttp()->getRequest('get', '/', [], false);
-            $path = $request->getUri()->getPath();
+            $path = sprintf('/?key=%s&token=%s', $this->config['key'], $this->config['token']);
             $this->client->addBatchUrl($path);
             $urls[] = $path;
         }
@@ -320,13 +322,12 @@ trait ApiTestTrait
         $urlCount = rand(2,10);
         $urls = [];
         for ($i = 0; $i < $urlCount; $i++) {
-            $request = $this->client->getHttp()->getRequest('get', '/', [], false);
-            $path = $request->getUri()->getPath();
+            $path = sprintf('/?key=%s&token=%s', $this->config['key'], $this->config['token']);
             $this->client->addBatchUrl($path);
             $urls[] = $path;
         }
         $error = $this->getSuccessPayload();
-        $this->prepareFor("GET", "/batch", http_build_query(['urls' => $urls]), $error, 401);
+        $this->prepareFor("GET", "/batch", http_build_query(['urls' => $urls]), $error, 401, null, Exceptions\ClientResponseException::class);
 
         try {
             $this->client->getBatch();
@@ -1226,7 +1227,8 @@ trait ApiTestTrait
     {
         $cardId = $this->getTestString();
         $attributes = $this->getTestAttributes();
-        $attributes['file'] = uniqid();
+        // TODO - Let's make sure this is actually a resource...
+        $attributes['file'] = tmpfile();
         $payload = $this->getSuccessPayload();
         $this->prepareFor("POST", sprintf("/cards/%s/attachments", $cardId), "", $payload);
 

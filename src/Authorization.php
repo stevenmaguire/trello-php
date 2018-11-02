@@ -1,4 +1,6 @@
-<?php namespace Stevenmaguire\Services\Trello;
+<?php
+
+namespace Stevenmaguire\Services\Trello;
 
 use League\OAuth1\Client\Credentials\CredentialsInterface;
 use League\OAuth1\Client\Credentials\TemporaryCredentials;
@@ -29,12 +31,12 @@ class Authorization
     protected function createClient()
     {
         $this->client = new OAuthServer([
-            'identifier' => Configuration::get('key'),
-            'secret' => Configuration::get('secret'),
-            'callback_uri' => Configuration::get('callbackUrl'),
-            'name' => Configuration::get('name'),
-            'expiration' => Configuration::get('expiration'),
-            'scope' => Configuration::get('scope'),
+            'identifier'    => Configuration::get('key'),
+            'secret'        => Configuration::get('secret'),
+            'callback_uri'  => Configuration::get('callbackUrl'),
+            'name'          => Configuration::get('name'),
+            'expiration'    => Configuration::get('expiration'),
+            'scope'         => Configuration::get('scope'),
         ]);
 
         return $this;

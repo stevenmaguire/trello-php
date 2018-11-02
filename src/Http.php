@@ -1,11 +1,13 @@
-<?php namespace Stevenmaguire\Services\Trello;
+<?php
 
-use GuzzleHttp\Client as HttpClient;
-use GuzzleHttp\ClientInterface as HttpClientInterface;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7;
-use GuzzleHttp\Psr7\Request;
+namespace Stevenmaguire\Services\Trello;
+
+use Exception;
+use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
 class Http
 {
@@ -24,16 +26,30 @@ class Http
     /**
      * Http client
      *
-     * @var HttpClientInterface
+     * @var ClientInterface
      */
     protected $httpClient;
+
+    /**
+     * Http request factory
+     *
+     * @var RequestFactoryInterface
+     */
+    protected $httpRequestFactory;
+
+    /**
+     * Http stream factory
+     *
+     * @var StreamFactoryInterface
+     */
+    protected $httpStreamFactory;
 
     /**
      * Creates a new http broker.
      */
     public function __construct()
     {
-        $this->httpClient = new HttpClient;
+        //
     }
 
     /**
@@ -70,16 +86,21 @@ class Http
         if (isset($parameters['file'])) {
             $this->queueResourceAs(
                 'file',
-                Psr7\stream_for($parameters['file'])
+                $this->httpStreamFactory->createStreamFromResource($parameters['file'])
             );
             unset($parameters['file']);
         }
 
-        $request = new Request(
+        $request = $this->httpRequestFactory->createRequest(
             $verb,
-            $this->getUrlFromPath($path),
-            $this->getHeaders()
+            $this->getUrlFromPath($path)
         );
+
+        $headers = $this->getHeaders();
+
+        array_walk($headers, function ($value, $key) use (&$request) {
+            $request = $request->withHeader($key, $value);
+        });
 
         return $request->withUri(
             $request->getUri()->withQuery(
@@ -145,24 +166,35 @@ class Http
      */
     protected function getHeaders()
     {
-        return [];
+        return ['accept' => 'application/json'];
     }
 
     /**
-     * Prepares an array of important exception parts based on composition of a
+     * Prepares an anonymous class of important exception parts based on composition of a
      * given exception.
      *
-     * @param  RequestException  $requestException
+     * @param  ClientExceptionInterface  $clientException
      *
-     * @return array
+     * @return class
      */
-    private function getRequestExceptionParts(RequestException $requestException)
+    private function getRequestExceptionParts(ClientExceptionInterface $clientException)
     {
-        $response = $requestException->getResponse();
-        $parts = [];
-        $parts['reason'] = $response ? $response->getReasonPhrase() : $requestException->getMessage();
-        $parts['code'] = $response ? $response->getStatusCode() : $requestException->getCode();
-        $parts['body'] = $response ? $response->getBody() : null;
+        try {
+            if (is_callable([$clientException, 'getResponse'])) {
+                $response = $clientException->getResponse();
+            } else {
+                throw new Exception('ClientException does not implement getResponse');
+            }
+        } catch (Exception $e) {
+            $response = null;
+        }
+
+        $parts = new class {
+
+        };
+        $parts->reason = $response ? $response->getReasonPhrase() : $clientException->getMessage();
+        $parts->code = $response ? $response->getStatusCode() : $clientException->getCode();
+        $parts->body = $response ? $response->getBody() : null;
 
         return $parts;
     }
@@ -193,7 +225,7 @@ class Http
      *
      * @return string
      */
-    protected function getUrlFromPath($path = '/')
+    public function getUrlFromPath($path = '/')
     {
         return Configuration::get('domain').'/'.Configuration::get('version').'/'.ltrim($path, '/');
     }
@@ -240,7 +272,7 @@ class Http
     public function putAsBody($path, $parameters)
     {
         $request = $this->getRequest(static::HTTP_PUT, $path)
-            ->withBody(Psr7\stream_for(json_encode($parameters)))
+            ->withBody($this->httpStreamFactory->createStream(json_encode($parameters)))
             ->withHeader('content-type', 'application/json');
 
         return $this->sendRequest($request);
@@ -281,7 +313,7 @@ class Http
             $this->multipartResources = [];
 
             return json_decode($response->getBody());
-        } catch (RequestException $e) {
+        } catch (ClientExceptionInterface $e) {
             $this->throwRequestException($e);
         }
     } // @codeCoverageIgnore
@@ -289,13 +321,41 @@ class Http
     /**
      * Updates the http client.
      *
-     * @param HttpClientInterface  $httpClient
+     * @param ClientInterface  $httpClient
      *
      * @return Http
      */
-    public function setClient(HttpClientInterface $httpClient)
+    public function setClient(ClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
+
+        return $this;
+    }
+
+    /**
+     * Updates the http request factory.
+     *
+     * @param RequestFactoryInterface  $httpRequestFactory
+     *
+     * @return Http
+     */
+    public function setRequestFactory(RequestFactoryInterface $httpRequestFactory)
+    {
+        $this->httpRequestFactory = $httpRequestFactory;
+
+        return $this;
+    }
+
+    /**
+     * Updates the http stream factory.
+     *
+     * @param StreamFactoryInterface  $httpStreamFactory
+     *
+     * @return Http
+     */
+    public function setStreamFactory(StreamFactoryInterface $httpStreamFactory)
+    {
+        $this->httpStreamFactory = $httpStreamFactory;
 
         return $this;
     }
@@ -304,22 +364,22 @@ class Http
      * Creates local exception from guzzle request exception, which includes
      * response body.
      *
-     * @param  RequestException  $requestException
+     * @param  ClientExceptionInterface  $clientException
      *
      * @return void
      * @throws Exceptions\Exception
      */
-    protected function throwRequestException(RequestException $requestException)
+    protected function throwRequestException(ClientExceptionInterface $clientException)
     {
-        $exceptionParts = $this->getRequestExceptionParts($requestException);
+        $exceptionParts = $this->getRequestExceptionParts($clientException);
 
         $exception = new Exceptions\Exception(
-            $exceptionParts['reason'],
-            $exceptionParts['code'],
-            $requestException
+            $exceptionParts->reason,
+            $exceptionParts->code,
+            $clientException
         );
 
-        $body = $exceptionParts['body'];
+        $body = $exceptionParts->body;
         $json = json_decode($body);
 
         if (json_last_error() == JSON_ERROR_NONE) {

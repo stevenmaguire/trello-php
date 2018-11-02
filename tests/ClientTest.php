@@ -1,16 +1,24 @@
-<?php namespace Stevenmaguire\Services\Trello\Tests;
+<?php
 
-use GuzzleHttp\ClientInterface as HttpClient;
+namespace Stevenmaguire\Services\Trello\Tests;
+
+use Exception;
 use Mockery as m;
-use GuzzleHttp\Exception\BadResponseException;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\UriInterface;
+use GuzzleHttp\Psr7;
 use Stevenmaguire\Services\Trello\Authorization;
 use Stevenmaguire\Services\Trello\Client;
 use Stevenmaguire\Services\Trello\Exceptions\Exception as ServiceException;
 
-class ClientTest extends \PHPUnit_Framework_TestCase
+class ClientTest extends TestCase
 {
     use ApiTestTrait;
 
@@ -20,11 +28,11 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $this->config = [
-            'domain' => 'https://'.uniqid(),
+            'domain' => 'https://could.be.trello',
             'key' => uniqid(),
             'token' => uniqid(),
             'secret' => uniqid(),
-            'version' => 'v'.uniqid(),
+            'version' => 'v'.random_int(1, 9),
         ];
 
         $this->client = new Client($this->config);
@@ -79,16 +87,26 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         return uniqid();
     }
 
-    protected function prepareFor($method, $path, $query = "", $payload = [], $status = 200, $proxy = null)
+    protected function classImplementsInterface($className, $interfaceName)
     {
+        $interfaces = class_implements($className);
+
+        return isset($interfaces[$interfaceName]);
+    }
+
+    protected function prepareFor($method, $path, $query = "", $payload = [], $status = 200, $proxy = null, $clientException = null)
+    {
+        $url = $this->client->getHttp()->getUrlFromPath($path);
         $path = $this->getFullPathFromPath($path);
         $domain = $this->getDomain();
         $authorizedQuery = $this->getAuthorizedQuery();
 
-        $request = m::on(function ($request) use ($method, $domain, $path, $query, $authorizedQuery) {
-            $uri = $request->getUri();
+        $request = new Psr7\Request($method, $url);
 
-            return $request->getMethod() === strtoupper($method)
+        $requestMatcher = m::on(function ($request) use ($method, $domain, $path, $query, $authorizedQuery) {
+            $uri = $request->getUri();
+            return is_a($request, RequestInterface::class)
+                && $request->getMethod() === strtoupper($method)
                 && $uri->getScheme().'://'.$uri->getHost() === $domain
                 && $uri->getPath() === $path
                 && (!empty($query) ? (strpos($uri->getQuery(), $query) > -1) : true)
@@ -120,19 +138,44 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $response->shouldReceive('getHeader')->with('content-type')->andReturn('application/json');
         }
 
-        $client = m::mock(HttpClient::class);
+        $client = m::mock(ClientInterface::class);
+        $requestFactory = m::mock(RequestFactoryInterface::class);
+        $streamFactory = m::mock(StreamFactoryInterface::class);
+
+        $requestFactory->shouldReceive('createRequest')->with($method, $url)->andReturn($request);
+
+        $streamFactory->allows('createStream')->with(m::on(function ($streamable) {
+            return is_string($streamable);
+        }));
+
+        $streamFactory->allows('createStreamFromResource')->with(m::on(function ($streamable) {
+            return is_resource($streamable);
+        }));
+
         if ($status == 200) {
-            $client->shouldReceive('send')->with($request, $requestOptions)->andReturn($response);
+            $client->shouldReceive('send')->with($requestMatcher, $requestOptions)->andReturn($response);
         } else {
-            $badRequest = m::mock(RequestInterface::class);
             if ($response) {
                 $response->shouldReceive('getReasonPhrase')->andReturn("");
             }
-            $exception = new BadResponseException('test exception', $badRequest, $response);
-            $client->shouldReceive('send')->with($request, $requestOptions)->andThrow($exception);
+
+            if ($clientException && $this->classImplementsInterface($clientException, ClientExceptionInterface::class)) {
+                $exception = new $clientException();
+            } else {
+                $exception = new Exceptions\ClientException();
+            }
+
+            if (is_callable([$exception, 'setResponse'])) {
+                $exception->setResponse($response);
+            }
+
+            $client->shouldReceive('send')->with($requestMatcher, $requestOptions)->andThrow($exception);
         }
 
-        $this->client->setHttpClient($client);
+        $this->client
+            ->setHttpClient($client)
+            ->setHttpRequestFactory($requestFactory)
+            ->setHttpStreamFactory($streamFactory);
     }
 
     public function testGetAuthorization()
@@ -144,16 +187,50 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAuthenticatedRequest()
     {
-        $request = $this->client->getHttp()->getRequest('get', '/');
+        $authorizedQuery = $this->getAuthorizedQuery();
+        $method = 'get';
+        $path = '/some-path';
+        $url = $this->client->getHttp()->getUrlFromPath($path);
 
-        $this->assertContains($this->getAuthorizedQuery(), $request->getUri()->getQuery());
+        $request = new Psr7\Request($method, $url);
+
+        $client = m::mock(ClientInterface::class);
+        $requestFactory = m::mock(RequestFactoryInterface::class);
+        $requestFactory->shouldReceive('createRequest')->with($method, m::on(function ($url) use ($path) {
+            return (substr($url, -strlen($path)) === $path);
+        }))->andReturn($request);
+
+        $newRequest = $this->client
+            ->setHttpClient($client)
+            ->setHttpRequestFactory($requestFactory)
+            ->getHttp()
+            ->getRequest($method, $path);
+
+        $this->assertContains($authorizedQuery, $newRequest->getUri()->getQuery());
     }
 
     public function testGetNonAuthenticatedRequest()
     {
-        $request = $this->client->getHttp()->getRequest('get', '/', [], false);
+        $authorizedQuery = $this->getAuthorizedQuery();
+        $method = 'get';
+        $path = '/some-path';
+        $url = $this->client->getHttp()->getUrlFromPath($path);
 
-        $this->assertNotContains($this->getAuthorizedQuery(), $request->getUri()->getQuery());
+        $request = new Psr7\Request($method, $url);
+
+        $client = m::mock(ClientInterface::class);
+        $requestFactory = m::mock(RequestFactoryInterface::class);
+        $requestFactory->shouldReceive('createRequest')->with($method, m::on(function ($url) use ($path) {
+            return (substr($url, -strlen($path)) === $path);
+        }))->andReturn($request);
+
+        $newRequest = $this->client
+            ->setHttpClient($client)
+            ->setHttpRequestFactory($requestFactory)
+            ->getHttp()
+            ->getRequest($method, $path, [], false);
+
+        $this->assertNotContains($authorizedQuery, $request->getUri()->getQuery());
     }
 
     /**
@@ -163,7 +240,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $path = uniqid();
         $responseBody = ['message' => 'Errors!'];
-        $this->prepareFor("GET", $path, "", $responseBody, 400);
+        $this->prepareFor("GET", $path, "", $responseBody, 400, null, Exceptions\ClientResponseException::class);
 
         $result = $this->client->getHttp()->get($path);
     }

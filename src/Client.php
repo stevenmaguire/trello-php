@@ -1,6 +1,10 @@
-<?php namespace Stevenmaguire\Services\Trello;
+<?php
 
-use GuzzleHttp\ClientInterface as HttpClient;
+namespace Stevenmaguire\Services\Trello;
+
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
 class Client
 {
@@ -24,6 +28,13 @@ class Client
     ];
 
     /**
+     * Authorization broker
+     *
+     * @var Authorization
+     */
+    protected $authorization;
+
+    /**
      * Http broker
      *
      * @var Http
@@ -43,13 +54,17 @@ class Client
     }
 
     /**
-     * Retrieves a new authorization broker.
+     * Retrieves the authorization broker.
      *
      * @return Stevenmaguire\Services\Trello\Authorization
      */
     public function getAuthorization()
     {
-        return new Authorization;
+        if (is_null($this->authorization)) {
+            $this->authorization = new Authorization;
+        }
+
+        return $this->authorization;
     }
 
     /**
@@ -63,15 +78,57 @@ class Client
     }
 
     /**
-     * Updates the http client used by http broker.
+     * Updates the authorization broker.
      *
-     * @param HttpClient  $httpClient
+     * @param Authorization $authorization
      *
      * @return Client
      */
-    public function setHttpClient(HttpClient $httpClient)
+    public function setAuthorization(Authorization $authorization)
+    {
+        $this->authorization = $authorization;
+
+        return $this;
+    }
+
+    /**
+     * Updates the http client used by http broker.
+     *
+     * @param ClientInterface  $httpClient
+     *
+     * @return Client
+     */
+    public function setHttpClient(ClientInterface $httpClient)
     {
         $this->http->setClient($httpClient);
+
+        return $this;
+    }
+
+    /**
+     * Updates the http request factory used by http broker.
+     *
+     * @param RequestFactoryInterface  $httpRequestFactory
+     *
+     * @return Client
+     */
+    public function setHttpRequestFactory(RequestFactoryInterface $httpRequestFactory)
+    {
+        $this->http->setRequestFactory($httpRequestFactory);
+
+        return $this;
+    }
+
+    /**
+     * Updates the http stream factory used by http broker.
+     *
+     * @param StreamFactoryInterface  $httpStreamFactory
+     *
+     * @return Client
+     */
+    public function setHttpStreamFactory(StreamFactoryInterface $httpStreamFactory)
+    {
+        $this->http->setStreamFactory($httpStreamFactory);
 
         return $this;
     }

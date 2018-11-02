@@ -1,9 +1,12 @@
-<?php namespace Stevenmaguire\Services\Trello\Tests;
+<?php
 
+namespace Stevenmaguire\Services\Trello\Tests;
+
+use PHPUnit\Framework\TestCase;
 use Stevenmaguire\Services\Trello\Client;
 use Stevenmaguire\Services\Trello\Configuration;
 
-class ConfigurationTest extends \PHPUnit_Framework_TestCase
+class ConfigurationTest extends TestCase
 {
     public function setUp()
     {

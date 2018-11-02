@@ -1,4 +1,6 @@
-<?php namespace Stevenmaguire\Services\Trello\Traits;
+<?php
+
+namespace Stevenmaguire\Services\Trello\Traits;
 
 use Stevenmaguire\Services\Trello\Configuration;
 
