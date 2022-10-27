@@ -6,3 +6,4 @@ docs
 /vendor
 .environment.php
 .phpunit.result.cache
+.php-cs-fixer.cache
