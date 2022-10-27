@@ -7,6 +7,18 @@ All Notable changes to `trello-php` will be documented in this file
 ### Added
 - Support for PHP 8 and Guzzle 7
 
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## [0.5.3] - 2018-03-28
 
 ### Added
