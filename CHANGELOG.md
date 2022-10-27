@@ -2,7 +2,12 @@
 
 All Notable changes to `trello-php` will be documented in this file
 
-## 0.5.3 - 2018-03-28
+## [Unreleased]
+
+### Added
+- Support for PHP 8 and Guzzle 7
+
+## [0.5.3] - 2018-03-28
 
 ### Added
 - Nothing
@@ -19,7 +24,7 @@ All Notable changes to `trello-php` will be documented in this file
 ### Security
 - Nothing
 
-## 0.5.2 - 2018-03-26
+## [0.5.2] - 2018-03-26
 
 ### Added
 - Nothing
@@ -36,7 +41,7 @@ All Notable changes to `trello-php` will be documented in this file
 ### Security
 - Nothing
 
-## 0.5.1 - 2018-03-26
+## [0.5.1] - 2018-03-26
 
 ### Added
 - Added support for getting a custom fields for a given card
@@ -53,7 +58,7 @@ All Notable changes to `trello-php` will be documented in this file
 ### Security
 - Nothing
 
-## 0.5.0 - 2018-03-23
+## [0.5.0] - 2018-03-23
 
 ### Added
 - Added support for custom fields - https://developers.trello.com/docs/getting-started-custom-fields
@@ -70,7 +75,7 @@ All Notable changes to `trello-php` will be documented in this file
 ### Security
 - Nothing
 
-## 0.4.1 - 2017-03-22
+## [0.4.1] - 2017-03-22
 
 ### Added
 - Nothing
@@ -87,7 +92,7 @@ All Notable changes to `trello-php` will be documented in this file
 ### Security
 - Nothing
 
-## 0.4.0 - 2016-09-23
+## [0.4.0] - 2016-09-23
 
 ### Added
 - Add support for HTTP proxy configuration.
@@ -104,7 +109,7 @@ All Notable changes to `trello-php` will be documented in this file
 ### Security
 - Nothing
 
-## 0.3.6 - 2015-10-26
+## [0.3.6] - 2015-10-26
 
 ### Added
 - Add support for RequestExceptions that do not have a Response object.
@@ -121,7 +126,7 @@ All Notable changes to `trello-php` will be documented in this file
 ### Security
 - Nothing
 
-## 0.3.5 - 2015-10-19
+## [0.3.5] - 2015-10-19
 
 ### Added
 - Update Http client to handle file upload successfully.
@@ -138,7 +143,7 @@ All Notable changes to `trello-php` will be documented in this file
 ### Security
 - Nothing
 
-## 0.3.4 - 2015-10-05
+## [0.3.4] - 2015-10-05
 
 ### Added
 - Add parameters to all Http methods. "Despite using POST and PUT, the Trello API actually expects the values to be in the query string rather than in the request body."
@@ -156,7 +161,7 @@ All Notable changes to `trello-php` will be documented in this file
 ### Security
 - Nothing
 
-## 0.3.3 - 2015-09-22
+## [0.3.3] - 2015-09-22
 
 ### Added
 - Nothing
@@ -173,7 +178,7 @@ All Notable changes to `trello-php` will be documented in this file
 ### Security
 - Nothing
 
-## 0.3.2 - 2015-09-22
+## [0.3.2] - 2015-09-22
 
 ### Added
 - Add parameters to GET and DELETE Http methods
@@ -190,7 +195,7 @@ All Notable changes to `trello-php` will be documented in this file
 ### Security
 - Nothing
 
-## 0.3.1 - 2015-09-11
+## [0.3.1] - 2015-09-11
 
 ### Added
 - Add temporary credentials support
@@ -207,7 +212,7 @@ All Notable changes to `trello-php` will be documented in this file
 ### Security
 - Nothing
 
-## 0.3.0 - 2015-09-03
+## [0.3.0] - 2015-09-03
 
 ### Added
 - Central configuration object
@@ -227,7 +232,7 @@ All Notable changes to `trello-php` will be documented in this file
 ### Security
 - Nothing
 
-## 0.2.1 - 2015-08-06
+## [0.2.1] - 2015-08-06
 
 ### Added
 - Dynamic method implementation (faster execution)
@@ -244,7 +249,7 @@ All Notable changes to `trello-php` will be documented in this file
 ### Security
 - Nothing
 
-## 0.2.0 - 2015-08-04
+## [0.2.0] - 2015-08-04
 
 ### Added
 - New client api
