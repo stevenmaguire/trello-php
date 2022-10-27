@@ -4,13 +4,14 @@ use League\OAuth1\Client\Credentials\TemporaryCredentials;
 use League\OAuth1\Client\Credentials\TokenCredentials;
 use League\OAuth1\Client\Server\Trello as OAuth;
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Stevenmaguire\Services\Trello\Authorization;
 use Stevenmaguire\Services\Trello\Client;
 use Stevenmaguire\Services\Trello\Configuration;
 
-class AuthorizationTest extends \PHPUnit_Framework_TestCase
+class AuthorizationTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         session_unset();

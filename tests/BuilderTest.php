@@ -1,12 +1,13 @@
 <?php namespace Stevenmaguire\Services\Trello\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Stevenmaguire\Services\Trello\Client;
 
-class BuilderTest extends \PHPUnit_Framework_TestCase
+class BuilderTest extends TestCase
 {
     protected $build = false;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->client = new Client();

@@ -1,8 +1,10 @@
 <?php namespace Stevenmaguire\Services\Trello\Tests;
 
+use BadMethodCallException;
 use GuzzleHttp\ClientInterface as HttpClient;
 use Mockery as m;
 use GuzzleHttp\Exception\BadResponseException;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
@@ -10,13 +12,13 @@ use Stevenmaguire\Services\Trello\Authorization;
 use Stevenmaguire\Services\Trello\Client;
 use Stevenmaguire\Services\Trello\Exceptions\Exception as ServiceException;
 
-class ClientTest extends \PHPUnit_Framework_TestCase
+class ClientTest extends TestCase
 {
     use ApiTestTrait;
 
     protected $config;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->config = [
@@ -102,8 +104,11 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             return is_array($options);
         });
 
+        $response = m::mock(ResponseInterface::class);
+        $response->shouldReceive('getStatusCode')->andReturn($status);
+
         if (is_null($payload)) {
-            $response = null;
+            $response->shouldReceive('getBody')->andReturn(null);
         } else {
             if (is_string($payload)) {
                 $responseBody = $payload;
@@ -114,8 +119,6 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $stream = m::mock(StreamInterface::class);
             $stream->shouldReceive('__toString')->andReturn($responseBody);
 
-            $response = m::mock(ResponseInterface::class);
-            $response->shouldReceive('getStatusCode')->andReturn($status);
             $response->shouldReceive('getBody')->andReturn($stream);
             $response->shouldReceive('getHeader')->with('content-type')->andReturn('application/json');
         }
@@ -125,9 +128,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $client->shouldReceive('send')->with($request, $requestOptions)->andReturn($response);
         } else {
             $badRequest = m::mock(RequestInterface::class);
-            if ($response) {
-                $response->shouldReceive('getReasonPhrase')->andReturn("");
-            }
+            $response->shouldReceive('getReasonPhrase')->andReturn("");
+
             $exception = new BadResponseException('test exception', $badRequest, $response);
             $client->shouldReceive('send')->with($request, $requestOptions)->andThrow($exception);
         }
