@@ -8,6 +8,7 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\StreamInterface;
 
 class Http
 {
@@ -72,7 +73,7 @@ class Http
         if (isset($parameters['file'])) {
             $this->queueResourceAs(
                 'file',
-                Psr7\stream_for($parameters['file'])
+                Psr7\Utils::streamFor($parameters['file'])
             );
             unset($parameters['file']);
         }
@@ -242,7 +243,7 @@ class Http
     public function putAsBody($path, $parameters)
     {
         $request = $this->getRequest(static::HTTP_PUT, $path)
-            ->withBody(Psr7\stream_for(json_encode($parameters)))
+            ->withBody(Psr7\Utils::streamFor(json_encode($parameters)))
             ->withHeader('content-type', 'application/json');
 
         return $this->sendRequest($request);
@@ -252,7 +253,7 @@ class Http
      * Adds a given resource to multipart stream collection, to be processed by next request.
      *
      * @param  string                                           $name
-     * @param  resource|string|Psr\Http\Message\StreamInterface $resource
+     * @param  resource|string|StreamInterface $resource
      *
      * @return void
      */
