@@ -5,3 +5,4 @@ docs
 /logs
 /vendor
 .environment.php
+.phpunit.result.cache

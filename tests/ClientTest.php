@@ -151,36 +151,34 @@ class ClientTest extends TestCase
     {
         $request = $this->client->getHttp()->getRequest('get', '/');
 
-        $this->assertContains($this->getAuthorizedQuery(), $request->getUri()->getQuery());
+        $this->assertStringContainsString($this->getAuthorizedQuery(), $request->getUri()->getQuery());
     }
 
     public function testGetNonAuthenticatedRequest()
     {
         $request = $this->client->getHttp()->getRequest('get', '/', [], false);
 
-        $this->assertNotContains($this->getAuthorizedQuery(), $request->getUri()->getQuery());
+        $this->assertStringNotContainsString($this->getAuthorizedQuery(), $request->getUri()->getQuery());
     }
 
-    /**
-     * @expectedException Stevenmaguire\Services\Trello\Exceptions\Exception
-     */
     public function testBadRequestThrowsExeptionWithValidJson()
     {
         $path = uniqid();
         $responseBody = ['message' => 'Errors!'];
         $this->prepareFor("GET", $path, "", $responseBody, 400);
 
+        $this->expectException(ServiceException::class);
+
         $result = $this->client->getHttp()->get($path);
     }
 
-    /**
-     * @expectedException Stevenmaguire\Services\Trello\Exceptions\Exception
-     */
     public function testBadRequestThrowsExeptionWithoutValidJson()
     {
         $path = uniqid();
         $responseBody = "Errors!";
         $this->prepareFor("GET", $path, "", $responseBody, 400);
+
+        $this->expectException(ServiceException::class);
 
         $result = $this->client->getHttp()->get($path);
     }
@@ -199,12 +197,11 @@ class ClientTest extends TestCase
         }
     }
 
-    /**
-     * @expectedException BadMethodCallException
-     */
     public function testBadMethodCallThrowsException()
     {
         $method = uniqid();
+
+        $this->expectException(BadMethodCallException::class);
 
         $result = $this->client->$method();
     }
