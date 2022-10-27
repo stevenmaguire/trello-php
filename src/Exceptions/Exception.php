@@ -1,4 +1,6 @@
-<?php namespace Stevenmaguire\Services\Trello\Exceptions;
+<?php
+
+namespace Stevenmaguire\Services\Trello\Exceptions;
 
 use Exception as BaseException;
 

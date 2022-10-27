@@ -1,4 +1,6 @@
-<?php namespace Stevenmaguire\Services\Trello\Traits;
+<?php
+
+namespace Stevenmaguire\Services\Trello\Traits;
 
 use BadMethodCallException;
 
@@ -309,13 +311,13 @@ trait ApiMethodsTrait
         'deleteOrganizationPrefAssociatedDomain' => ['delete', 'organizations/%s/prefs/associatedDomain'],
         'updateOrganizationPrefAssociatedDomain' => ['put', 'organizations/%s/prefs/associatedDomain'],
         'updateOrganizationPrefBoardVisibilityRestrictOrg' => [
-            'put', 'organizations/%s/prefs/boardVisibilityRestrict/org'
+            'put', 'organizations/%s/prefs/boardVisibilityRestrict/org',
         ],
         'updateOrganizationPrefBoardVisibilityRestrictPrivate' => [
-            'put', 'organizations/%s/prefs/boardVisibilityRestrict/private'
+            'put', 'organizations/%s/prefs/boardVisibilityRestrict/private',
         ],
         'updateOrganizationPrefBoardVisibilityRestrictPublic' => [
-            'put', 'organizations/%s/prefs/boardVisibilityRestrict/public'
+            'put', 'organizations/%s/prefs/boardVisibilityRestrict/public',
         ],
         'updateOrganizationPrefExternalMembersDisabled' => ['put', 'organizations/%s/prefs/externalMembersDisabled'],
         'updateOrganizationPrefGoogleAppsVersion' => ['put', 'organizations/%s/prefs/googleAppsVersion'],
