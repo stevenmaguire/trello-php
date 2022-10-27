@@ -1,4 +1,6 @@
-<?php namespace Stevenmaguire\Services\Trello\Tests;
+<?php
+
+namespace Stevenmaguire\Services\Trello\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Stevenmaguire\Services\Trello\Client;
@@ -40,7 +42,7 @@ class BuilderTest extends TestCase
         preg_match_all('/((?:^|[A-Z])[a-z]+)/', $method, $matches);
         $parts = $matches[0];
         array_shift($parts);
-        if (!empty($parts)) {
+        if (! empty($parts)) {
             $parts[0] = $parts[0].'s';
 
             $parts = array_map('strtolower', $parts);
@@ -75,7 +77,7 @@ class BuilderTest extends TestCase
             $details = '['."\n";
 
             foreach ($ref->getMethods() as $method) {
-                if (!in_array($method->getName(), $dontWrite)) {
+                if (! in_array($method->getName(), $dontWrite)) {
                     $contents = [];
                     $contents['name'] = $method->getName();
                     $filename = $method->getFileName();

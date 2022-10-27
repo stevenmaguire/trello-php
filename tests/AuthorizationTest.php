@@ -1,4 +1,6 @@
-<?php namespace Stevenmaguire\Services\Trello\Tests;
+<?php
+
+namespace Stevenmaguire\Services\Trello\Tests;
 
 use League\OAuth1\Client\Credentials\TemporaryCredentials;
 use League\OAuth1\Client\Credentials\TokenCredentials;
@@ -23,7 +25,7 @@ class AuthorizationTest extends TestCase
 
         Configuration::setMany($settings);
 
-        $this->auth = new Authorization;
+        $this->auth = new Authorization();
         $this->client = m::mock(Client::class)->makePartial();
     }
 
@@ -34,7 +36,7 @@ class AuthorizationTest extends TestCase
 
     public function testGetAuthorizationUrlWithNoCredentials()
     {
-        $tempCredentials = new TemporaryCredentials;
+        $tempCredentials = new TemporaryCredentials();
         $mock = $this->getClientMock();
         $mock->shouldReceive('getTemporaryCredentials')->andReturn($tempCredentials);
         $mock->shouldReceive('getAuthorizationUrl')->with($tempCredentials);
@@ -46,7 +48,7 @@ class AuthorizationTest extends TestCase
 
     public function testGetAuthorizationUrlWithCredentials()
     {
-        $tempCredentials = new TemporaryCredentials;
+        $tempCredentials = new TemporaryCredentials();
         $mock = $this->getClientMock();
         $mock->shouldReceive('getAuthorizationUrl')->with($tempCredentials);
         $this->auth->setClient($mock);
@@ -58,12 +60,12 @@ class AuthorizationTest extends TestCase
     public function testGetTokenWithNoCredentials()
     {
         $sessionKey = Authorization::class.':temporary_credentials';
-        $tempCredentials = new TemporaryCredentials;
+        $tempCredentials = new TemporaryCredentials();
         $_SESSION[$sessionKey] = serialize($tempCredentials);
         session_write_close();
         $oauthToken = uniqid();
         $oauthVerifier = uniqid();
-        $tokenCredentials = new TokenCredentials;
+        $tokenCredentials = new TokenCredentials();
         $mock = $this->getClientMock();
         $mock->shouldReceive('getTokenCredentials')->with(m::on(function ($creds) {
             return is_a($creds, TemporaryCredentials::class);
@@ -78,10 +80,10 @@ class AuthorizationTest extends TestCase
 
     public function testGetTokenWithCredentials()
     {
-        $tempCredentials = new TemporaryCredentials;
+        $tempCredentials = new TemporaryCredentials();
         $oauthToken = uniqid();
         $oauthVerifier = uniqid();
-        $tokenCredentials = new TokenCredentials;
+        $tokenCredentials = new TokenCredentials();
         $mock = $this->getClientMock();
         $mock->shouldReceive('getTokenCredentials')->with(m::on(function ($creds) use ($tempCredentials) {
             return $tempCredentials === $creds;
@@ -96,7 +98,7 @@ class AuthorizationTest extends TestCase
 
     public function testGetTemporaryCredentials()
     {
-        $tempCredentials = new TemporaryCredentials;
+        $tempCredentials = new TemporaryCredentials();
         $mock = $this->getClientMock();
         $mock->shouldReceive('getTemporaryCredentials')->andReturn($tempCredentials);
         $this->auth->setClient($mock);

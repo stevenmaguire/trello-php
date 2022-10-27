@@ -1,6 +1,7 @@
-<?php namespace Stevenmaguire\Services\Trello;
+<?php
 
-use League\OAuth1\Client\Credentials\CredentialsInterface;
+namespace Stevenmaguire\Services\Trello;
+
 use League\OAuth1\Client\Credentials\TemporaryCredentials;
 use League\OAuth1\Client\Server\Trello as OAuthServer;
 

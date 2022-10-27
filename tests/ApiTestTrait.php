@@ -1,4 +1,6 @@
-<?php namespace Stevenmaguire\Services\Trello\Tests;
+<?php
+
+namespace Stevenmaguire\Services\Trello\Tests;
 
 use Stevenmaguire\Services\Trello\Exceptions\Exception;
 
@@ -298,7 +300,7 @@ trait ApiTestTrait
 
     public function testAddBatchUrlsAndGetBatch()
     {
-        $urlCount = rand(2,10);
+        $urlCount = rand(2, 10);
         $urls = [];
         for ($i = 0; $i < $urlCount; $i++) {
             $request = $this->client->getHttp()->getRequest('get', '/', [], false);
@@ -317,7 +319,7 @@ trait ApiTestTrait
 
     public function testGetBatchRetainsUrlsWithFailure()
     {
-        $urlCount = rand(2,10);
+        $urlCount = rand(2, 10);
         $urls = [];
         for ($i = 0; $i < $urlCount; $i++) {
             $request = $this->client->getHttp()->getRequest('get', '/', [], false);
