@@ -44,6 +44,8 @@ class AuthorizationTest extends TestCase
         $this->client->shouldReceive('getAuthorization')->andReturn($this->auth);
 
         $url = $this->client->getAuthorizationUrl();
+
+        $this->expectNotToPerformAssertions();
     }
 
     public function testGetAuthorizationUrlWithCredentials()
@@ -55,6 +57,8 @@ class AuthorizationTest extends TestCase
         $this->client->shouldReceive('getAuthorization')->andReturn($this->auth);
 
         $url = $this->client->getAuthorizationUrl($tempCredentials);
+
+        $this->expectNotToPerformAssertions();
     }
 
     public function testGetTokenWithNoCredentials()

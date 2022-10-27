@@ -126,5 +126,7 @@ class BuilderTest extends TestCase
 
             //file_put_contents(__DIR__."/useage.md", $testCase);
         }
+
+        $this->assertTrue(true);
     }
 }

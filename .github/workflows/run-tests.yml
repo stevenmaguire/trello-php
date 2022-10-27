@@ -9,7 +9,7 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        php: [7.3, 8.0]
+        php: [7.2, 7.3, 7.4, 8.0]
         stability: [prefer-lowest, prefer-stable]
 
     name: P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
@@ -36,4 +36,4 @@ jobs:
       - name: Execute tests
         run: |
           vendor/bin/phpcs --standard=psr2 src/
-          vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+          vendor/bin/phpunit

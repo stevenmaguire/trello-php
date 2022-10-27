@@ -283,7 +283,7 @@ class Http
 
             $this->multipartResources = [];
 
-            return json_decode($response->getBody());
+            return json_decode((string) $response->getBody());
         } catch (RequestException $e) {
             $this->throwRequestException($e);
         }
@@ -322,11 +322,13 @@ class Http
             $requestException
         );
 
-        $body = $exceptionParts['body'];
-        $json = json_decode($body);
 
-        if (json_last_error() == JSON_ERROR_NONE) {
-            throw $exception->setResponseBody($json);
+        if ($body = $exceptionParts['body']) {
+            $json = json_decode($body);
+
+            if (json_last_error() == JSON_ERROR_NONE) {
+                throw $exception->setResponseBody($json);
+            }
         }
 
         throw $exception->setResponseBody($body);
