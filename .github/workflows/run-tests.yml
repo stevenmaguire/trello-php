@@ -34,4 +34,8 @@ jobs:
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Execute tests
-        run: vendor/bin/pest
+        run: |
+          - vendor/bin/phpcs --standard=psr2 src/
+          - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+          - wget https://scrutinizer-ci.com/ocular.phar
+          - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
