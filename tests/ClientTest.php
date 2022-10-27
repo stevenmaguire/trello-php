@@ -1,8 +1,10 @@
-<?php namespace Stevenmaguire\Services\Trello\Tests;
+<?php
+
+namespace Stevenmaguire\Services\Trello\Tests;
 
 use GuzzleHttp\ClientInterface as HttpClient;
-use Mockery as m;
 use GuzzleHttp\Exception\BadResponseException;
+use Mockery as m;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
@@ -91,14 +93,15 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             return $request->getMethod() === strtoupper($method)
                 && $uri->getScheme().'://'.$uri->getHost() === $domain
                 && $uri->getPath() === $path
-                && (!empty($query) ? (strpos($uri->getQuery(), $query) > -1) : true)
+                && (! empty($query) ? (strpos($uri->getQuery(), $query) > -1) : true)
                 && strpos($uri->getQuery(), $authorizedQuery) > -1;
         });
 
         $requestOptions = m::on(function ($options) use ($proxy) {
-            if ($proxy && (!isset($options['proxy']) || $options['proxy'] != $proxy)) {
+            if ($proxy && (! isset($options['proxy']) || $options['proxy'] != $proxy)) {
                 return false;
             }
+
             return is_array($options);
         });
 

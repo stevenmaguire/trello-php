@@ -1,4 +1,6 @@
-<?php namespace Stevenmaguire\Services\Trello\Traits;
+<?php
+
+namespace Stevenmaguire\Services\Trello\Traits;
 
 use Stevenmaguire\Services\Trello\Exceptions\Exception;
 
@@ -32,7 +34,6 @@ trait BatchTrait
 
         return $this;
     }
-
 
     /**
      * Adds multiple urls to batch collection.

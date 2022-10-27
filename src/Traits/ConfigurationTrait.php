@@ -1,4 +1,6 @@
-<?php namespace Stevenmaguire\Services\Trello\Traits;
+<?php
+
+namespace Stevenmaguire\Services\Trello\Traits;
 
 use Stevenmaguire\Services\Trello\Configuration;
 
@@ -7,7 +9,7 @@ trait ConfigurationTrait
     /**
      * Confirms that a given key exists in configuration settings.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasConfig()
     {
@@ -34,7 +36,7 @@ trait ConfigurationTrait
     {
         $params = func_get_args();
 
-        if (!empty($params)) {
+        if (! empty($params)) {
             if (is_array($params[0])) {
                 forward_static_call_array([Configuration::class, 'setMany'], $params);
             } else {

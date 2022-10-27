@@ -1,4 +1,6 @@
-<?php namespace Stevenmaguire\Services\Trello\Tests;
+<?php
+
+namespace Stevenmaguire\Services\Trello\Tests;
 
 use Stevenmaguire\Services\Trello\Client;
 use Stevenmaguire\Services\Trello\Configuration;
@@ -8,7 +10,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->client = new Client;
+        $this->client = new Client();
         $config = new \ReflectionClass(Configuration::class);
         $settings = $config->getProperty('settings');
         $settings->setAccessible(true);

@@ -1,14 +1,16 @@
-<?php namespace Stevenmaguire\Services\Trello;
+<?php
+
+namespace Stevenmaguire\Services\Trello;
 
 use GuzzleHttp\ClientInterface as HttpClient;
 
 class Client
 {
-    use Traits\ApiMethodsTrait,
-        Traits\AuthorizationTrait,
-        Traits\BatchTrait,
-        Traits\ConfigurationTrait,
-        Traits\SearchTrait;
+    use Traits\ApiMethodsTrait;
+    use Traits\AuthorizationTrait;
+    use Traits\BatchTrait;
+    use Traits\ConfigurationTrait;
+    use Traits\SearchTrait;
 
     /**
      * Default client options
@@ -39,7 +41,7 @@ class Client
     {
         Configuration::setMany($options, static::$defaultOptions);
 
-        $this->http = new Http;
+        $this->http = new Http();
     }
 
     /**
@@ -49,7 +51,7 @@ class Client
      */
     public function getAuthorization()
     {
-        return new Authorization;
+        return new Authorization();
     }
 
     /**

@@ -1,4 +1,6 @@
-<?php namespace Stevenmaguire\Services\Trello;
+<?php
+
+namespace Stevenmaguire\Services\Trello;
 
 class Configuration
 {
@@ -14,7 +16,7 @@ class Configuration
      *
      * @param  string $key
      *
-     * @return boolean
+     * @return bool
      */
     public static function has($key)
     {
@@ -32,7 +34,7 @@ class Configuration
      */
     public static function get($key = null, $default = null)
     {
-        if (!empty($key)) {
+        if (! empty($key)) {
             return isset(static::$settings[$key]) ? static::$settings[$key] : $default;
         }
 
@@ -50,7 +52,7 @@ class Configuration
     public static function parseDefaultOptions($options = [], $defaults = [])
     {
         array_walk($defaults, function ($value, $key) use (&$options) {
-            if (!isset($options[$key])) {
+            if (! isset($options[$key])) {
                 $options[$key] = $value;
             }
         });

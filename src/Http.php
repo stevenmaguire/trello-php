@@ -1,4 +1,6 @@
-<?php namespace Stevenmaguire\Services\Trello;
+<?php
+
+namespace Stevenmaguire\Services\Trello;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface as HttpClientInterface;
@@ -9,10 +11,10 @@ use Psr\Http\Message\RequestInterface;
 
 class Http
 {
-    const HTTP_DELETE = 'DELETE';
-    const HTTP_GET = 'GET';
-    const HTTP_POST = 'POST';
-    const HTTP_PUT = 'PUT';
+    public const HTTP_DELETE = 'DELETE';
+    public const HTTP_GET = 'GET';
+    public const HTTP_POST = 'POST';
+    public const HTTP_PUT = 'PUT';
 
     /**
      * Multipart resources to include in next request.
@@ -33,7 +35,7 @@ class Http
      */
     public function __construct()
     {
-        $this->httpClient = new HttpClient;
+        $this->httpClient = new HttpClient();
     }
 
     /**
@@ -176,10 +178,10 @@ class Http
     protected function getRequestOptions()
     {
         $options = [
-            'proxy' => Configuration::get('proxy')
+            'proxy' => Configuration::get('proxy'),
         ];
 
-        if (!empty(array_filter($this->multipartResources))) {
+        if (! empty(array_filter($this->multipartResources))) {
             $options['multipart'] = $this->multipartResources;
         }
 
