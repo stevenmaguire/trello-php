@@ -2,6 +2,28 @@
 
 All Notable changes to `trello-php` will be documented in this file
 
+## Unreleased
+
+### Added
+
+- Nothing
+
+### Deprecated
+
+- Nothing
+
+### Fixed
+
+- Nothing
+
+### Removed
+
+- Nothing
+
+### Security
+
+- Nothing
+
 ## 1.0.0 - 2022-10-27
 
 ### Added
@@ -24,29 +46,7 @@ All Notable changes to `trello-php` will be documented in this file
 
 - Nothing
 
-## [Unreleased]
-
-### Added
-
-- Support for PHP 8 and Guzzle 7
-
-### Deprecated
-
-- Nothing
-
-### Fixed
-
-- Nothing
-
-### Removed
-
-- Nothing
-
-### Security
-
-- Nothing
-
-## [0.5.3] - 2018-03-28
+## 0.5.3 - 2018-03-28
 
 ### Added
 
@@ -68,7 +68,7 @@ All Notable changes to `trello-php` will be documented in this file
 
 - Nothing
 
-## [0.5.2] - 2018-03-26
+## 0.5.2 - 2018-03-26
 
 ### Added
 
@@ -90,7 +90,7 @@ All Notable changes to `trello-php` will be documented in this file
 
 - Nothing
 
-## [0.5.1] - 2018-03-26
+## 0.5.1 - 2018-03-26
 
 ### Added
 
@@ -112,7 +112,7 @@ All Notable changes to `trello-php` will be documented in this file
 
 - Nothing
 
-## [0.5.0] - 2018-03-23
+## 0.5.0 - 2018-03-23
 
 ### Added
 
@@ -134,7 +134,7 @@ All Notable changes to `trello-php` will be documented in this file
 
 - Nothing
 
-## [0.4.1] - 2017-03-22
+## 0.4.1 - 2017-03-22
 
 ### Added
 
@@ -156,7 +156,7 @@ All Notable changes to `trello-php` will be documented in this file
 
 - Nothing
 
-## [0.4.0] - 2016-09-23
+## 0.4.0 - 2016-09-23
 
 ### Added
 
@@ -178,7 +178,7 @@ All Notable changes to `trello-php` will be documented in this file
 
 - Nothing
 
-## [0.3.6] - 2015-10-26
+## 0.3.6 - 2015-10-26
 
 ### Added
 
@@ -200,7 +200,7 @@ All Notable changes to `trello-php` will be documented in this file
 
 - Nothing
 
-## [0.3.5] - 2015-10-19
+## 0.3.5 - 2015-10-19
 
 ### Added
 
@@ -222,7 +222,7 @@ All Notable changes to `trello-php` will be documented in this file
 
 - Nothing
 
-## [0.3.4] - 2015-10-05
+## 0.3.4 - 2015-10-05
 
 ### Added
 
@@ -245,7 +245,7 @@ All Notable changes to `trello-php` will be documented in this file
 
 - Nothing
 
-## [0.3.3] - 2015-09-22
+## 0.3.3 - 2015-09-22
 
 ### Added
 
@@ -267,7 +267,7 @@ All Notable changes to `trello-php` will be documented in this file
 
 - Nothing
 
-## [0.3.2] - 2015-09-22
+## 0.3.2 - 2015-09-22
 
 ### Added
 
@@ -289,7 +289,7 @@ All Notable changes to `trello-php` will be documented in this file
 
 - Nothing
 
-## [0.3.1] - 2015-09-11
+## 0.3.1 - 2015-09-11
 
 ### Added
 
@@ -311,7 +311,7 @@ All Notable changes to `trello-php` will be documented in this file
 
 - Nothing
 
-## [0.3.0] - 2015-09-03
+## 0.3.0 - 2015-09-03
 
 ### Added
 
@@ -336,7 +336,7 @@ All Notable changes to `trello-php` will be documented in this file
 
 - Nothing
 
-## [0.2.1] - 2015-08-06
+## 0.2.1 - 2015-08-06
 
 ### Added
 
@@ -358,7 +358,7 @@ All Notable changes to `trello-php` will be documented in this file
 
 - Nothing
 
-## [0.2.0] - 2015-08-04
+## 0.2.0 - 2015-08-04
 
 ### Added
 
